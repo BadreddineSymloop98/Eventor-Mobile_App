@@ -1,0 +1,416 @@
+{
+  "@@locale": "en",
+
+  "appName": "Eventor",
+  "@appName": {
+    "description": "The name of the app, shown in the task switcher and in app bars."
+  },
+
+  "loginTitle": "Welcome back",
+  "@loginTitle": {
+    "description": "Heading over the photograph on the login screen."
+  },
+
+  "loginSubtitle": "Log in to pick up where you left off.",
+  "@loginSubtitle": {
+    "description": "Line under the login heading."
+  },
+
+  "forgotPassword": "Forgot password ?",
+  "@forgotPassword": {
+    "description": "Link under the login form, for a user who cannot remember their password."
+  },
+
+  "loginNewPrompt": "New to Eventor ?",
+  "@loginNewPrompt": {
+    "description": "Question beside the create-account link at the bottom of the login screen."
+  },
+
+  "homeTitle": "Home",
+  "@homeTitle": {
+    "description": "Heading shown on the home screen."
+  },
+
+  "splashTagline": "Everything your event needs, in one place",
+  "@splashTagline": {
+    "description": "Line under the logo on the splash screen, describing what the app is for."
+  },
+
+  "splashByline": "by SYMLOOP",
+  "@splashByline": {
+    "description": "Attribution at the very bottom of the splash screen. SYMLOOP is the studio name and is not translated, but the word before it is."
+  },
+
+  "onboardingServicesTitle": "Every service your event needs",
+  "@onboardingServicesTitle": {
+    "description": "Title of the first onboarding section."
+  },
+
+  "onboardingServicesDescription": "Photographers, venues, caterers, DJs, florists and decorators, all in one place.",
+  "@onboardingServicesDescription": {
+    "description": "Body of the first onboarding section."
+  },
+
+  "onboardingCompareTitle": "Compare, then book with confidence",
+  "@onboardingCompareTitle": {
+    "description": "Title of the second onboarding section."
+  },
+
+  "onboardingCompareDescription": "Real reviews, clear prices and open dates. Message a provider before you commit.",
+  "@onboardingCompareDescription": {
+    "description": "Body of the second onboarding section."
+  },
+
+  "onboardingTrackTitle": "Keep the whole event on track",
+  "@onboardingTrackTitle": {
+    "description": "Title of the third onboarding section."
+  },
+
+  "onboardingTrackDescription": "Follow every booking and watch your budget as the day comes together.",
+  "@onboardingTrackDescription": {
+    "description": "Body of the third onboarding section."
+  },
+
+  "welcomeTitle": "Let’s get started",
+  "@welcomeTitle": {
+    "description": "Heading on the welcome screen, shown after onboarding."
+  },
+
+  "welcomeSubtitle": "Create an account to start booking or log in if you have been here before.",
+  "@welcomeSubtitle": {
+    "description": "Body under the welcome heading, explaining the two choices below it."
+  },
+
+  "createAccount": "Create an account",
+  "@createAccount": {
+    "description": "Offers account creation. The primary button on the welcome screen, and the link at the foot of the login form."
+  },
+
+  "welcomeHaveAccount": "I already have an account",
+  "@welcomeHaveAccount": {
+    "description": "Secondary button on the welcome screen, which goes to the login form."
+  },
+
+  "roleSelectionTitle": "How will you use Eventor ?",
+  "@roleSelectionTitle": {
+    "description": "Heading on the role selection screen. The space before the question mark is the design's own."
+  },
+
+  "roleSelectionSubtitle": "This shapes your whole experience in the app. It cannot be changed later.",
+  "@roleSelectionSubtitle": {
+    "description": "Warning under the role selection heading that the choice is permanent."
+  },
+
+  "rolePlannerTitle": "I'm planning an event",
+  "@rolePlannerTitle": {
+    "description": "Title of the role for someone booking services for their own event."
+  },
+
+  "rolePlannerDescription": "Find and book my event team",
+  "@rolePlannerDescription": {
+    "description": "One-line description of the event planner role."
+  },
+
+  "roleProviderTitle": "I offer a service",
+  "@roleProviderTitle": {
+    "description": "Title of the role for someone selling a service on the marketplace."
+  },
+
+  "roleProviderDescription": "List my services and manage bookings",
+  "@roleProviderDescription": {
+    "description": "One-line description of the service provider role."
+  },
+
+  "roleInstitutionTitle": "I represent an institution",
+  "@roleInstitutionTitle": {
+    "description": "Title of the role for someone requesting events for an organisation."
+  },
+
+  "roleInstitutionDescription": "Submit and track event requests",
+  "@roleInstitutionDescription": {
+    "description": "One-line description of the institution role."
+  },
+
+  "continueAction": "Continue",
+  "@continueAction": {
+    "description": "Button that confirms a choice and moves to the next step. Named with a suffix because `continue` is a Dart keyword."
+  },
+
+  "backLabel": "Back",
+  "@backLabel": {
+    "description": "Screen-reader label for the back control in a screen's top bar."
+  },
+
+  "registerTitle": "Create your account",
+  "@registerTitle": {
+    "description": "Heading in the register screen's header. Stays visible as the header collapses."
+  },
+
+  "registerSubtitle": "Just a few details, then you can start booking your event team.",
+  "@registerSubtitle": {
+    "description": "Body under the register heading. Hidden once the header collapses."
+  },
+
+  "registerCreateAccount": "Create account",
+  "@registerCreateAccount": {
+    "description": "Button that submits the register form."
+  },
+
+  "registerSuccess": "Account creation successful",
+  "@registerSuccess": {
+    "description": "Toast shown after the account has been created."
+  },
+
+  "registerTermsPrefix": "By continuing you agree to our ",
+  "@registerTermsPrefix": {
+    "description": "First half of the terms line under the register form, before the linked text. The trailing space is deliberate."
+  },
+
+  "registerTermsLink": "Terms and Privacy Policy",
+  "@registerTermsLink": {
+    "description": "The linked portion of the terms line, shown in the brand colour."
+  },
+
+  "registerHasAccountPrompt": "Already have an account ?",
+  "@registerHasAccountPrompt": {
+    "description": "Question beside the log in link at the bottom of the register screen."
+  },
+
+  "logIn": "Log in",
+  "@logIn": {
+    "description": "Link that leaves the register form for the login form."
+  },
+
+  "nameLabel": "Full name",
+  "@nameLabel": {
+    "description": "Label of the full name field."
+  },
+
+  "phoneLabel": "Phone",
+  "@phoneLabel": {
+    "description": "Label of the phone number field."
+  },
+
+  "nameRequired": "Enter your full name.",
+  "@nameRequired": {
+    "description": "Validation message shown when the name field is left empty."
+  },
+
+  "nameTooShort": "{count, plural, one{Use at least {count} character.} other{Use at least {count} characters.}}",
+  "@nameTooShort": {
+    "description": "Validation message shown when the name is below the minimum length.",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "phoneRequired": "Enter your phone number.",
+  "@phoneRequired": {
+    "description": "Validation message shown when the phone field is left empty."
+  },
+
+  "phoneInvalid": "{count, plural, one{Enter {count} digit, starting with {leadingDigit}.} other{Enter {count} digits, starting with {leadingDigit}.}}",
+  "@phoneInvalid": {
+    "description": "Validation message shown when the phone number is not a whole local number.",
+    "placeholders": {
+      "count": { "type": "int" },
+      "leadingDigit": { "type": "String" }
+    }
+  },
+
+  "forgotPasswordTitle": "Reset your password",
+  "@forgotPasswordTitle": {
+    "description": "Heading over the photograph on the forgot-password screen."
+  },
+
+  "forgotPasswordSubtitle": "Enter the email on your account and we will send you a reset link.",
+  "@forgotPasswordSubtitle": {
+    "description": "Line under the forgot-password heading, explaining what the field is for."
+  },
+
+  "sendResetLink": "Send reset link",
+  "@sendResetLink": {
+    "description": "Button that submits the forgot-password form."
+  },
+
+  "backToLogIn": "Back to log in",
+  "@backToLogIn": {
+    "description": "Link under the send button that returns to the login form."
+  },
+
+  "verifyCodeTitle": "Verify your number",
+  "@verifyCodeTitle": {
+    "description": "Heading over the photograph on the code-entry screen."
+  },
+
+  "verifyCodeSubtitle": "We sent a 6-digit code to {destination}.",
+  "@verifyCodeSubtitle": {
+    "description": "Line under the code-entry heading, naming where the code was sent.",
+    "placeholders": {
+      "destination": { "type": "String" }
+    }
+  },
+
+  "verifyCodeDestinationFallback": "your number",
+  "@verifyCodeDestinationFallback": {
+    "description": "Stands in for the phone number or address when the screen was opened without one."
+  },
+
+  "verificationCodeLabel": "Verification code",
+  "@verificationCodeLabel": {
+    "description": "Label above the row of digit boxes."
+  },
+
+  "verifyAction": "Verify",
+  "@verifyAction": {
+    "description": "Button that submits the verification code."
+  },
+
+  "verifyNoCodePrompt": "Didn't get the code ?",
+  "@verifyNoCodePrompt": {
+    "description": "Question beside the resend link."
+  },
+
+  "verifyResendCountdown": "{count, plural, one{You can resend after {count} second.} other{You can resend after {count} seconds.}}",
+  "@verifyResendCountdown": {
+    "description": "Shown in place of the resend line while the wait for another code is still running. Counts down once a second.",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "resend": "Resend",
+  "@resend": {
+    "description": "Link that asks for a new verification code."
+  },
+
+  "verifyCodeResent": "A new code is on its way",
+  "@verifyCodeResent": {
+    "description": "Toast shown after a new verification code has been requested."
+  },
+
+  "languageSwitchLabel": "Language",
+  "@languageSwitchLabel": {
+    "description": "Screen-reader label for the EN / Arabic switch. The two options label themselves, each in its own script."
+  },
+
+  "skip": "Skip",
+  "@skip": {
+    "description": "Button that leaves onboarding without reading it."
+  },
+
+  "next": "Next",
+  "@next": {
+    "description": "Button that advances to the next onboarding section."
+  },
+
+  "getStarted": "Get Started",
+  "@getStarted": {
+    "description": "Button on the last onboarding section, which finishes the flow. Replaces `next` there so the final step reads as an ending rather than as one more page."
+  },
+
+  "sectionProgress": "Section {current} of {total}",
+  "@sectionProgress": {
+    "description": "Screen-reader announcement of the position within a paged flow. Not shown visually.",
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+
+  "emailLabel": "Email",
+  "@emailLabel": {
+    "description": "Label of the email field."
+  },
+
+  "passwordLabel": "Password",
+  "@passwordLabel": {
+    "description": "Label of the password field."
+  },
+
+  "showPassword": "Show password",
+  "@showPassword": {
+    "description": "Tooltip and screen-reader label of the button that reveals the password."
+  },
+
+  "hidePassword": "Hide password",
+  "@hidePassword": {
+    "description": "Tooltip and screen-reader label of the button that re-hides the password."
+  },
+
+  "nameHint": "{count, plural, one{At least {count} letter, no digits or symbols.} other{At least {count} letters, no digits or symbols.}}",
+  "@nameHint": {
+    "description": "Instruction under the full name field, stating the minimum length and the characters it refuses.",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "phoneHint": "{count, plural, one{{count} digit, starting with {leadingDigit}.} other{{count} digits, starting with {leadingDigit}.}}",
+  "@phoneHint": {
+    "description": "Instruction under the phone field, stating the exact length of a local number and the digit it opens with.",
+    "placeholders": {
+      "count": { "type": "int" },
+      "leadingDigit": { "type": "String" }
+    }
+  },
+
+  "emailHint": "Example: name@example.com",
+  "@emailHint": {
+    "description": "Instruction under the email field, describing the expected format."
+  },
+
+  "passwordHint": "{count, plural, one{At least {count} character, no spaces.} other{At least {count} characters, no spaces.}}",
+  "@passwordHint": {
+    "description": "Instruction under the password field, stating the minimum length.",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "emailRequired": "Enter your email address.",
+  "@emailRequired": {
+    "description": "Validation message shown when the email field is left empty."
+  },
+
+  "emailInvalid": "Enter a valid email address, like name@example.com.",
+  "@emailInvalid": {
+    "description": "Validation message shown when the email is not a plausible address."
+  },
+
+  "passwordRequired": "Enter your password.",
+  "@passwordRequired": {
+    "description": "Validation message shown when the password field is left empty."
+  },
+
+  "passwordTooShort": "{count, plural, one{Use at least {count} character.} other{Use at least {count} characters.}}",
+  "@passwordTooShort": {
+    "description": "Validation message shown when the password is below the minimum length.",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "unknownRouteTitle": "Page not found",
+  "@unknownRouteTitle": {
+    "description": "App bar title of the screen shown for an unrecognised route."
+  },
+
+  "unknownRouteMessage": "No route defined for \"{routeName}\".",
+  "@unknownRouteMessage": {
+    "description": "Body of the screen shown for an unrecognised route.",
+    "placeholders": {
+      "routeName": { "type": "String" }
+    }
+  },
+
+  "errorUnexpected": "Something went wrong. Please try again.",
+  "@errorUnexpected": {
+    "description": "Fallback message for a failure the app has no specific wording for."
+  },
+
+  "errorStorage": "Could not save your changes on this device.",
+  "@errorStorage": {
+    "description": "Message shown when writing to on-device storage failed."
+  }
+}

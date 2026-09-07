@@ -1,0 +1,118 @@
+name: eventor
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.1
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.5+1
+  shared_preferences: ^2.5.5
+
+  # Remote imagery — vendor and listing photos, once the marketplace screens
+  # exist. Nothing renders an image yet; the package is here so the choice is
+  # settled in one place rather than made again on the first screen that needs
+  # it. Its on-disk cache pulls in sqflite and path_provider, which register
+  # native code on Android and iOS only — no concern for a mobile-only app.
+  cached_network_image: ^4.0.0
+
+  # The design's icons are vectors, and they export from Figma cleanly (unlike
+  # its photographs). Rendering them as SVG rather than as bitmaps keeps them
+  # sharp at any density and lets a single file be recoloured per state, which
+  # is exactly how the design describes them: "recolour by overriding the
+  # vector fill".
+  flutter_svg: ^2.3.0
+
+  # Left unpinned so the version shipped with flutter_localizations wins.
+  intl: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^6.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # Generates AppLocalizations from the ARB files in lib/l10n, following the
+  # settings in l10n.yaml. This runs as part of the build; build_runner is
+  # not involved.
+  generate: true
+
+  # Exported from the design file. Photographs ship as JPEG, the logo needs its
+  # transparency and stays a PNG, and the icons are SVG — see the note on
+  # flutter_svg above.
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+
+  # The two typefaces the design is set in. Named in `AppFontFamilies`
+  # (core/constants/ui_helpers.dart) and selected per locale by `AppFonts`.
+  #
+  # Both are variable fonts carrying a `wght` axis, so one file covers every
+  # weight in the type ramp instead of four static cuts — smaller to ship and
+  # impossible to get out of step with each other. Flutter maps `fontWeight`
+  # onto that axis; `app_theme_test.dart` holds the check that it really does.
+  #
+  # Upstream (unsubsetted) files from github.com/google/fonts. Both are
+  # SIL Open Font License 1.1 — the licences sit beside them.
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Variable.ttf
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo-Variable.ttf
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package

@@ -1,0 +1,97 @@
+{
+  "@@locale": "ar",
+
+  "appName": "Eventor",
+  "loginTitle": "مرحبًا بعودتك",
+  "loginSubtitle": "سجّل الدخول لتكمل من حيث توقّفت.",
+  "forgotPassword": "نسيت كلمة المرور ؟",
+  "loginNewPrompt": "جديد على Eventor ؟",
+  "homeTitle": "الرئيسية",
+  "splashTagline": "كل ما تحتاجه مناسبتك في مكان واحد",
+  "splashByline": "من SYMLOOP",
+
+  "onboardingServicesTitle": "كل الخدمات التي تحتاجها مناسبتك",
+  "onboardingServicesDescription": "مصوّرون، قاعات، متعهّدو طعام، منسّقو أغانٍ، بائعو زهور ومزيّنون، في مكان واحد.",
+  "onboardingCompareTitle": "قارن، ثم احجز بثقة",
+  "onboardingCompareDescription": "تقييمات حقيقية، أسعار واضحة وتواريخ متاحة. راسل مقدّم الخدمة قبل أن تلتزم.",
+  "onboardingTrackTitle": "تابع مناسبتك خطوة بخطوة",
+  "onboardingTrackDescription": "تابع كل حجز وراقب ميزانيتك مع اقتراب اليوم الكبير.",
+
+  "welcomeTitle": "لنبدأ",
+  "welcomeSubtitle": "أنشئ حسابًا لتبدأ الحجز، أو سجّل الدخول إن كنت هنا من قبل.",
+  "createAccount": "إنشاء حساب",
+  "welcomeHaveAccount": "لديّ حساب بالفعل",
+
+  "roleSelectionTitle": "كيف ستستخدم Eventor ؟",
+  "roleSelectionSubtitle": "هذا يحدّد تجربتك بالكامل في التطبيق. ولا يمكن تغييره لاحقًا.",
+
+  "rolePlannerTitle": "أخطّط لمناسبة",
+  "rolePlannerDescription": "أجد فريق مناسبتي وأحجزه",
+  "roleProviderTitle": "أقدّم خدمة",
+  "roleProviderDescription": "أعرض خدماتي وأدير الحجوزات",
+  "roleInstitutionTitle": "أمثّل مؤسسة",
+  "roleInstitutionDescription": "أقدّم طلبات المناسبات وأتابعها",
+
+  "continueAction": "متابعة",
+  "backLabel": "رجوع",
+
+  "registerTitle": "أنشئ حسابك",
+  "registerSubtitle": "بعض المعلومات فقط، ثم يمكنك البدء بحجز فريق مناسبتك.",
+  "registerCreateAccount": "إنشاء الحساب",
+  "registerSuccess": "تم إنشاء الحساب بنجاح",
+  "registerTermsPrefix": "بالمتابعة، أنت توافق على ",
+  "registerTermsLink": "الشروط وسياسة الخصوصية",
+  "registerHasAccountPrompt": "لديك حساب بالفعل ؟",
+  "logIn": "تسجيل الدخول",
+
+  "nameLabel": "الاسم الكامل",
+  "phoneLabel": "رقم الهاتف",
+
+  "nameRequired": "أدخل اسمك الكامل.",
+  "nameTooShort": "{count, plural, zero{أدخل اسمك الكامل.} one{استخدم حرفًا واحدًا على الأقل.} two{استخدم حرفين على الأقل.} few{استخدم {count} أحرف على الأقل.} many{استخدم {count} حرفًا على الأقل.} other{استخدم {count} حرف على الأقل.}}",
+  "phoneRequired": "أدخل رقم هاتفك.",
+  "phoneInvalid": "{count, plural, zero{أدخل رقم هاتفك.} one{أدخل رقمًا واحدًا يبدأ بـ {leadingDigit}.} two{أدخل رقمين يبدآن بـ {leadingDigit}.} few{أدخل {count} أرقام تبدأ بـ {leadingDigit}.} many{أدخل {count} رقمًا تبدأ بـ {leadingDigit}.} other{أدخل {count} رقم يبدأ بـ {leadingDigit}.}}",
+
+  "forgotPasswordTitle": "إعادة تعيين كلمة المرور",
+  "forgotPasswordSubtitle": "أدخل البريد الإلكتروني المرتبط بحسابك وسنرسل لك رابط إعادة التعيين.",
+  "sendResetLink": "إرسال رابط إعادة التعيين",
+  "backToLogIn": "العودة إلى تسجيل الدخول",
+
+  "verifyCodeTitle": "تحقّق من رقم هاتفك",
+  "verifyCodeSubtitle": "أرسلنا رمزًا من 6 أرقام إلى {destination}",
+  "verifyCodeDestinationFallback": "رقمك",
+  "verificationCodeLabel": "رمز التحقق",
+  "verifyAction": "تأكيد",
+  "verifyNoCodePrompt": "لم يصلك الرمز ؟",
+  "verifyResendCountdown": "{count, plural, zero{يمكنك إعادة الإرسال الآن.} one{يمكنك إعادة الإرسال بعد ثانية واحدة.} two{يمكنك إعادة الإرسال بعد ثانيتين.} few{يمكنك إعادة الإرسال بعد {count} ثوانٍ.} many{يمكنك إعادة الإرسال بعد {count} ثانية.} other{يمكنك إعادة الإرسال بعد {count} ثانية.}}",
+  "resend": "إعادة الإرسال",
+  "verifyCodeResent": "تم إرسال رمز جديد",
+
+  "languageSwitchLabel": "اللغة",
+
+  "skip": "تخطي",
+  "next": "التالي",
+  "getStarted": "ابدأ الآن",
+  "sectionProgress": "القسم {current} من {total}",
+
+  "emailLabel": "البريد الإلكتروني",
+  "passwordLabel": "كلمة المرور",
+  "showPassword": "إظهار كلمة المرور",
+  "hidePassword": "إخفاء كلمة المرور",
+
+  "nameHint": "{count, plural, zero{بدون أرقام أو رموز.} one{حرف واحد على الأقل، بدون أرقام أو رموز.} two{حرفان على الأقل، بدون أرقام أو رموز.} few{{count} أحرف على الأقل، بدون أرقام أو رموز.} many{{count} حرفًا على الأقل، بدون أرقام أو رموز.} other{{count} حرف على الأقل، بدون أرقام أو رموز.}}",
+  "phoneHint": "{count, plural, zero{أرقام تبدأ بـ {leadingDigit}.} one{رقم واحد يبدأ بـ {leadingDigit}.} two{رقمان يبدآن بـ {leadingDigit}.} few{{count} أرقام تبدأ بـ {leadingDigit}.} many{{count} رقمًا تبدأ بـ {leadingDigit}.} other{{count} رقم يبدأ بـ {leadingDigit}.}}",
+  "emailHint": "مثال: name@example.com",
+  "passwordHint": "{count, plural, zero{بدون مسافات.} one{حرف واحد على الأقل، بدون مسافات.} two{حرفان على الأقل، بدون مسافات.} few{{count} أحرف على الأقل، بدون مسافات.} many{{count} حرفًا على الأقل، بدون مسافات.} other{{count} حرف على الأقل، بدون مسافات.}}",
+
+  "emailRequired": "أدخل بريدك الإلكتروني.",
+  "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا، مثل name@example.com.",
+  "passwordRequired": "أدخل كلمة المرور.",
+  "passwordTooShort": "{count, plural, zero{أدخل كلمة المرور.} one{استخدم حرفًا واحدًا على الأقل.} two{استخدم حرفين على الأقل.} few{استخدم {count} أحرف على الأقل.} many{استخدم {count} حرفًا على الأقل.} other{استخدم {count} حرف على الأقل.}}",
+
+  "unknownRouteTitle": "الصفحة غير موجودة",
+  "unknownRouteMessage": "لا يوجد مسار معرّف لـ \"{routeName}\".",
+
+  "errorUnexpected": "حدث خطأ غير متوقع. حاول مرة أخرى.",
+  "errorStorage": "تعذّر حفظ التغييرات على هذا الجهاز."
+}

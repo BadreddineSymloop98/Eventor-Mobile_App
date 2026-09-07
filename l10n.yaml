@@ -1,0 +1,19 @@
+# Configuration for `flutter gen-l10n`, which runs automatically because
+# `generate: true` is set in pubspec.yaml.
+#
+# The generated AppLocalizations class lands next to the ARB files in
+# lib/l10n. Only the .arb files are edited by hand; the .dart files beside
+# them are regenerated on every build.
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+
+# Every key must exist in every locale. Without this a missing Arabic string
+# silently falls back to English instead of failing the build.
+required-resource-attributes: true
+untranslated-messages-file: l10n_missing.json
+
+# Lets `AppLocalizations.of(context)` return a non-nullable value, so views do
+# not have to null-assert on every string.
+nullable-getter: false
