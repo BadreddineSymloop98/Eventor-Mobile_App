@@ -60,6 +60,7 @@ class LoginView extends StatelessWidget {
                   inputFormatters: InputRules.emailFormatters,
                   // Credentials stay Latin whatever the app's language is.
                   textDirection: TextDirection.ltr,
+                  hintText: l10n.emailPlaceholder,
                   errorText: viewModel.emailError == null
                       ? null
                       : l10n.forEmailError(viewModel.emailError!),

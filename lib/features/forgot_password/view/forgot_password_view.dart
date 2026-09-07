@@ -61,6 +61,7 @@ class ForgotPasswordView extends StatelessWidget {
             inputFormatters: InputRules.emailFormatters,
             // An address is Latin text even in an Arabic UI.
             textDirection: TextDirection.ltr,
+            hintText: l10n.emailPlaceholder,
             errorText: viewModel.emailError == null
                 ? null
                 : l10n.forEmailError(viewModel.emailError!),

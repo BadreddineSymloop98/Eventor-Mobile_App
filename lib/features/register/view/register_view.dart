@@ -8,9 +8,12 @@ import '../../../core/routing/app_routes.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/widgets/app_toast.dart';
 import '../../../core/widgets/content_container.dart';
+import '../../../core/widgets/document_actions_sheet.dart';
+import '../../../core/widgets/document_upload_field.dart';
 import '../../../core/widgets/main_button.dart';
 import '../../../core/widgets/prompt_row.dart';
 import '../../../l10n/app_localizations.dart';
+import '../model/account_document.dart';
 import '../view_model/register_view_model.dart';
 import 'widgets/register_header.dart';
 
@@ -43,6 +46,37 @@ class RegisterView extends StatelessWidget {
     );
   }
 
+  /// Decides what a tap on a document field means.
+  ///
+  /// An empty field has one obvious gesture, so it goes straight to the
+  /// browser. A field that already holds a file has two — replace it or drop
+  /// it — and one tap cannot mean both, so it asks.
+  Future<void> _onDocumentTap(
+    BuildContext context,
+    RegisterViewModel viewModel,
+    AccountDocument document,
+  ) async {
+    final String? fileName = viewModel.fileNameFor(document);
+    if (fileName == null) {
+      await viewModel.pickDocument(document);
+      return;
+    }
+
+    final DocumentAction? action = await showDocumentActionsSheet(
+      context,
+      fileName: fileName,
+    );
+    // Dismissed without choosing, which is not an answer.
+    if (action == null || !context.mounted) return;
+
+    switch (action) {
+      case DocumentAction.replace:
+        await viewModel.pickDocument(document);
+      case DocumentAction.remove:
+        viewModel.removeDocument(document);
+    }
+  }
+
   void _goToLogin(BuildContext context) =>
       Navigator.of(context).pushReplacementNamed(AppRoutes.login);
 
@@ -55,7 +89,12 @@ class RegisterView extends StatelessWidget {
       backgroundColor: AppColors.bgSurface,
       body: CustomScrollView(
         slivers: <Widget>[
-          const RegisterHeader(),
+          RegisterHeader(
+            // A role that never made it this far — a deep link, or a reload —
+            // still gets the planner's wording rather than an empty header.
+            subtitle:
+                viewModel.role?.registerSubtitle(l10n) ?? l10n.registerSubtitle,
+          ),
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsetsDirectional.symmetric(
@@ -68,6 +107,15 @@ class RegisterView extends StatelessWidget {
                     children: <Widget>[
                       SizedBox(height: AppSpacing.xl.dh),
                       _Form(viewModel: viewModel, l10n: l10n),
+                      if (viewModel.isReviewed) ...<Widget>[
+                        SizedBox(height: AppSpacing.xl.dh),
+                        _Documents(
+                          viewModel: viewModel,
+                          l10n: l10n,
+                          onTapDocument: (AccountDocument document) =>
+                              _onDocumentTap(context, viewModel, document),
+                        ),
+                      ],
                       SizedBox(height: AppSpacing.xl.dh),
                       const _Terms(),
                       SizedBox(height: AppSpacing.sm.dh),
@@ -99,7 +147,10 @@ class RegisterView extends StatelessWidget {
   }
 }
 
-/// The four fields, each with the rules its own value follows.
+/// The typed fields, each with the rules its own value follows.
+///
+/// The institution field only exists for the role that acts on behalf of one,
+/// which is why the focus chain steps over it rather than through it.
 class _Form extends StatelessWidget {
   const _Form({required this.viewModel, required this.l10n});
 
@@ -118,14 +169,34 @@ class _Form extends StatelessWidget {
           keyboardType: TextInputType.name,
           autofillHints: const <String>[AutofillHints.name],
           inputFormatters: InputRules.nameFormatters,
+          hintText: l10n.namePlaceholder,
           helperText: viewModel.isNameSatisfied
               ? null
               : l10n.nameHint(InputRules.minNameLength),
           errorText: viewModel.nameError == null
               ? null
               : l10n.forNameError(viewModel.nameError!),
-          onSubmitted: (_) => viewModel.moveFocusToEmail(),
+          onSubmitted: (_) => viewModel.moveFocusAfterName(),
         ),
+        if (viewModel.needsInstitution) ...<Widget>[
+          SizedBox(height: AppSpacing.md.dh),
+          AppTextField(
+            controller: viewModel.institutionController,
+            focusNode: viewModel.institutionFocusNode,
+            label: l10n.institutionLabel,
+            keyboardType: TextInputType.text,
+            autofillHints: const <String>[AutofillHints.organizationName],
+            inputFormatters: InputRules.institutionFormatters,
+            hintText: l10n.institutionPlaceholder,
+            helperText: viewModel.isInstitutionSatisfied
+                ? null
+                : l10n.institutionHint(InputRules.minInstitutionLength),
+            errorText: viewModel.institutionError == null
+                ? null
+                : l10n.forInstitutionError(viewModel.institutionError!),
+            onSubmitted: (_) => viewModel.moveFocusToEmail(),
+          ),
+        ],
         SizedBox(height: AppSpacing.md.dh),
         AppTextField(
           controller: viewModel.emailController,
@@ -136,6 +207,7 @@ class _Form extends StatelessWidget {
           inputFormatters: InputRules.emailFormatters,
           // An address is Latin text even in an Arabic UI.
           textDirection: TextDirection.ltr,
+          hintText: l10n.emailPlaceholder,
           helperText: viewModel.isEmailSatisfied ? null : l10n.emailHint,
           errorText: viewModel.emailError == null
               ? null
@@ -152,6 +224,7 @@ class _Form extends StatelessWidget {
           inputFormatters: InputRules.phoneFormatters,
           // A number reads left to right whatever the surrounding language.
           textDirection: TextDirection.ltr,
+          hintText: l10n.phonePlaceholder,
           helperText: viewModel.isPhoneSatisfied
               ? null
               : l10n.phoneHint(
@@ -180,6 +253,65 @@ class _Form extends StatelessWidget {
               ? null
               : l10n.forPasswordError(viewModel.passwordError!),
         ),
+      ],
+    );
+  }
+}
+
+/// The papers a reviewed account has to attach, under a heading that says what
+/// the review is for.
+///
+/// Only built when the role supplies documents, so a planner never sees an
+/// empty heading.
+class _Documents extends StatelessWidget {
+  const _Documents({
+    required this.viewModel,
+    required this.l10n,
+    required this.onTapDocument,
+  });
+
+  final RegisterViewModel viewModel;
+  final AppLocalizations l10n;
+
+  /// What a tap on one field means is the screen's decision, not the
+  /// field's — see [RegisterView._onDocumentTap].
+  final ValueChanged<AccountDocument> onTapDocument;
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final String? note = viewModel.role?.documentsNote(l10n);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Text(
+          l10n.registerDocumentsTitle,
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: AppColors.textPrimary,
+          ),
+        ),
+        if (note != null) ...<Widget>[
+          SizedBox(height: AppSpacing.xs2.dh),
+          Text(
+            note,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ],
+        for (final AccountDocument document in viewModel.documents) ...<Widget>[
+          SizedBox(height: AppSpacing.md.dh),
+          DocumentUploadField(
+            label: document.label(l10n),
+            fileName: viewModel.fileNameFor(document),
+            helperText: document.hint(l10n),
+            errorText: viewModel.errorFor(document) == null
+                ? null
+                : l10n.forDocumentError(viewModel.errorFor(document)!),
+            onTap: () => onTapDocument(document),
+          ),
+        ],
       ],
     );
   }

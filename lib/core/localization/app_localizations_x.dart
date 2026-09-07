@@ -53,4 +53,21 @@ extension AppLocalizationsX on AppLocalizations {
         passwordTooShort(minimumLength),
     };
   }
+
+  String forInstitutionError(InstitutionError error) {
+    return switch (error) {
+      InstitutionRequired() => institutionRequired,
+      InstitutionTooShort(:final int minimumLength) =>
+        institutionTooShort(minimumLength),
+    };
+  }
+
+  String forDocumentError(DocumentError error) {
+    return switch (error) {
+      DocumentMissing() => documentMissing,
+      DocumentTooLarge(:final int maximumMegabytes) =>
+        documentTooLarge(maximumMegabytes),
+      DocumentWrongType() => documentWrongType,
+    };
+  }
 }

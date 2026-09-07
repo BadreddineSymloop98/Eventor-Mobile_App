@@ -151,6 +151,31 @@
     "description": "Body under the register heading. Hidden once the header collapses."
   },
 
+  "registerSubtitleProvider": "A few details and your documents, then you can list your services.",
+  "@registerSubtitleProvider": {
+    "description": "Subtitle of the register screen when the chosen role is a service provider."
+  },
+
+  "registerSubtitleInstitution": "A few details and your documents, then you can submit event requests.",
+  "@registerSubtitleInstitution": {
+    "description": "Subtitle of the register screen when the chosen role is an institution."
+  },
+
+  "registerDocumentsTitle": "Verification documents",
+  "@registerDocumentsTitle": {
+    "description": "Heading above the documents a reviewed account has to attach."
+  },
+
+  "registerDocumentsProviderNote": "We review these before your services go live.",
+  "@registerDocumentsProviderNote": {
+    "description": "Line under the documents heading, telling a provider what the review gates."
+  },
+
+  "registerDocumentsInstitutionNote": "We review these before your first request is approved.",
+  "@registerDocumentsInstitutionNote": {
+    "description": "Line under the documents heading, telling an institution what the review gates."
+  },
+
   "registerCreateAccount": "Create account",
   "@registerCreateAccount": {
     "description": "Button that submits the register form."
@@ -338,6 +363,125 @@
     "description": "Tooltip and screen-reader label of the button that re-hides the password."
   },
 
+  "institutionLabel": "Institution",
+  "@institutionLabel": {
+    "description": "Label of the field naming the university, faculty, club or association an academic account acts for."
+  },
+
+  "institutionHint": "{count, plural, one{At least {count} character.} other{At least {count} characters, as it appears on your accreditation.}}",
+  "@institutionHint": {
+    "description": "Instruction under the institution field.",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "institutionRequired": "Enter the institution you represent.",
+  "@institutionRequired": {
+    "description": "Validation message shown when the institution field is left empty."
+  },
+
+  "institutionTooShort": "{count, plural, one{Use at least {count} character.} other{Use at least {count} characters.}}",
+  "@institutionTooShort": {
+    "description": "Validation message shown when the institution name is below the minimum length.",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "documentUploadAction": "Upload file",
+  "@documentUploadAction": {
+    "description": "Placeholder inside an empty document field, standing where the file name will go."
+  },
+
+  "documentMissing": "Attach this document.",
+  "@documentMissing": {
+    "description": "Validation message shown when a required document has no file attached."
+  },
+
+  "documentReplace": "Choose a different file",
+  "@documentReplace": {
+    "description": "Bottom sheet action that reopens the file browser for a document that already has a file."
+  },
+
+  "documentRemove": "Remove file",
+  "@documentRemove": {
+    "description": "Bottom sheet action that detaches the file currently on a document field."
+  },
+
+  "documentTooLarge": "This file is over {count} MB. Attach a smaller one.",
+  "@documentTooLarge": {
+    "description": "Validation message shown when an attached document exceeds the size limit.",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "documentWrongType": "Attach a PDF or an image.",
+  "@documentWrongType": {
+    "description": "Validation message shown when an attached document is neither a PDF nor an image."
+  },
+
+  "documentIdentityCard": "National ID card",
+  "@documentIdentityCard": {
+    "description": "Label of the identity document field. The Algerian carte nationale d'identité."
+  },
+
+  "documentIdentityCardHint": "Front and back, in one file",
+  "@documentIdentityCardHint": {
+    "description": "Instruction under the identity card field."
+  },
+
+  "documentCommercialRegister": "Commercial register or artisan card",
+  "@documentCommercialRegister": {
+    "description": "Label of the trading licence field. Either the registre de commerce or the carte d'artisan — providers hold one or the other."
+  },
+
+  "documentCommercialRegisterHint": "Whichever body you are registered with",
+  "@documentCommercialRegisterHint": {
+    "description": "Instruction under the commercial register field, explaining that either document is accepted."
+  },
+
+  "documentTaxRegistration": "Tax registration card (NIF)",
+  "@documentTaxRegistration": {
+    "description": "Label of the fiscal registration field. NIF is the Algerian numéro d'identification fiscale and is not translated."
+  },
+
+  "documentTaxRegistrationHint": "Shows your fiscal identification number",
+  "@documentTaxRegistrationHint": {
+    "description": "Instruction under the tax registration field."
+  },
+
+  "documentAccreditation": "Accreditation",
+  "@documentAccreditation": {
+    "description": "Label of the accreditation field. The Algerian agrément issued to an association or club."
+  },
+
+  "documentAccreditationHint": "The agrément issued to your association or club",
+  "@documentAccreditationHint": {
+    "description": "Instruction under the accreditation field."
+  },
+
+  "documentAuthorisationLetter": "Letter of authorisation",
+  "@documentAuthorisationLetter": {
+    "description": "Label of the field proving the applicant may act for the institution."
+  },
+
+  "documentAuthorisationLetterHint": "Signed proof that you represent the institution",
+  "@documentAuthorisationLetterHint": {
+    "description": "Instruction under the letter of authorisation field."
+  },
+
+  "documentAssociationStatutes": "Association statutes (optional)",
+  "@documentAssociationStatutes": {
+    "description": "Label of the bylaws field. Marked optional in the label because not every academic body is an association."
+  },
+
+  "documentAssociationStatutesHint": "Required for associations and clubs",
+  "@documentAssociationStatutesHint": {
+    "description": "Instruction under the association statutes field."
+  },
+
   "nameHint": "{count, plural, one{At least {count} letter, no digits or symbols.} other{At least {count} letters, no digits or symbols.}}",
   "@nameHint": {
     "description": "Instruction under the full name field, stating the minimum length and the characters it refuses.",
@@ -355,9 +499,29 @@
     }
   },
 
-  "emailHint": "Example: name@example.com",
+  "namePlaceholder": "Amina Benali",
+  "@namePlaceholder": {
+    "description": "Greyed example inside the empty full name field. A plausible Algerian name, not an instruction."
+  },
+
+  "institutionPlaceholder": "Université d'Alger 1",
+  "@institutionPlaceholder": {
+    "description": "Greyed example inside the empty institution field."
+  },
+
+  "emailPlaceholder": "name@example.com",
+  "@emailPlaceholder": {
+    "description": "Greyed example inside the empty email field, showing the shape of an address."
+  },
+
+  "phonePlaceholder": "0X XX XX XX XX",
+  "@phonePlaceholder": {
+    "description": "Greyed example inside the empty phone field, showing an Algerian number the way it is written."
+  },
+
+  "emailHint": "No spaces, and one @.",
   "@emailHint": {
-    "description": "Instruction under the email field, describing the expected format."
+    "description": "Instruction under the email field. States the rule; the example lives in the field's own placeholder, so it is not repeated here."
   },
 
   "passwordHint": "{count, plural, one{At least {count} character, no spaces.} other{At least {count} characters, no spaces.}}",

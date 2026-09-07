@@ -47,6 +47,14 @@ class _EventorMaterialApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(locale),
       darkTheme: AppTheme.dark(locale),
+      // Light until there is a dark design to follow.
+      //
+      // The Figma file publishes a single "Light" mode, and every colour the
+      // widgets reach for is a light value from `AppColors`. Only the pieces
+      // that read the `ColorScheme` — the buttons — would follow the system
+      // into dark, so a phone with dark mode on got a lilac primary button on
+      // an otherwise white screen. Better to be honestly light than half dark.
+      themeMode: ThemeMode.light,
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

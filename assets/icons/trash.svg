@@ -1,0 +1,8 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Trash">
+<path id="lid" d="M4 7H20" stroke="#2B075D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="handle" d="M9 7V5C9 4.44772 9.44772 4 10 4H14C14.5523 4 15 4.44772 15 5V7" stroke="#2B075D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="body" d="M6.5 7L7.2 19.1C7.26 20.16 8.14 21 9.2 21H14.8C15.86 21 16.74 20.16 16.8 19.1L17.5 7" stroke="#2B075D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="lines" d="M10 11V17M14 11V17" stroke="#2B075D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

@@ -16,7 +16,11 @@ import '../../../../l10n/app_localizations.dart';
 /// The top bar never leaves. Losing the way back, or the language switch, part
 /// way down a sign-up form would be worse than losing the picture.
 class RegisterHeader extends StatelessWidget {
-  const RegisterHeader({super.key});
+  const RegisterHeader({required this.subtitle, super.key});
+
+  /// The line under the heading. Passed in because it names what the account
+  /// is being opened to do, and the three roles do different things.
+  final String subtitle;
 
   static const String _backgroundImage = 'assets/images/welcome_background.jpg';
 
@@ -51,7 +55,7 @@ class RegisterHeader extends StatelessWidget {
           final double progress =
               ((expanded - content) / (expanded - collapsed)).clamp(0.0, 1.0);
 
-          return _HeaderContent(progress: progress);
+          return _HeaderContent(progress: progress, subtitle: subtitle);
         },
       ),
     );
@@ -59,10 +63,12 @@ class RegisterHeader extends StatelessWidget {
 }
 
 class _HeaderContent extends StatelessWidget {
-  const _HeaderContent({required this.progress});
+  const _HeaderContent({required this.progress, required this.subtitle});
 
   /// 0 while the header is fully open, 1 once it is fully shut.
   final double progress;
+
+  final String subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +139,7 @@ class _HeaderContent extends StatelessWidget {
                           top: AppSpacing.xs.dh,
                         ),
                         child: Text(
-                          l10n.registerSubtitle,
+                          subtitle,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: AppColors.textOnBrand.withValues(
                               alpha: 0.78,

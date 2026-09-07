@@ -278,6 +278,36 @@ abstract class AppLocalizations {
   /// **'Just a few details, then you can start booking your event team.'**
   String get registerSubtitle;
 
+  /// Subtitle of the register screen when the chosen role is a service provider.
+  ///
+  /// In en, this message translates to:
+  /// **'A few details and your documents, then you can list your services.'**
+  String get registerSubtitleProvider;
+
+  /// Subtitle of the register screen when the chosen role is an institution.
+  ///
+  /// In en, this message translates to:
+  /// **'A few details and your documents, then you can submit event requests.'**
+  String get registerSubtitleInstitution;
+
+  /// Heading above the documents a reviewed account has to attach.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification documents'**
+  String get registerDocumentsTitle;
+
+  /// Line under the documents heading, telling a provider what the review gates.
+  ///
+  /// In en, this message translates to:
+  /// **'We review these before your services go live.'**
+  String get registerDocumentsProviderNote;
+
+  /// Line under the documents heading, telling an institution what the review gates.
+  ///
+  /// In en, this message translates to:
+  /// **'We review these before your first request is approved.'**
+  String get registerDocumentsInstitutionNote;
+
   /// Button that submits the register form.
   ///
   /// In en, this message translates to:
@@ -482,6 +512,138 @@ abstract class AppLocalizations {
   /// **'Hide password'**
   String get hidePassword;
 
+  /// Label of the field naming the university, faculty, club or association an academic account acts for.
+  ///
+  /// In en, this message translates to:
+  /// **'Institution'**
+  String get institutionLabel;
+
+  /// Instruction under the institution field.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{At least {count} character.} other{At least {count} characters, as it appears on your accreditation.}}'**
+  String institutionHint(int count);
+
+  /// Validation message shown when the institution field is left empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the institution you represent.'**
+  String get institutionRequired;
+
+  /// Validation message shown when the institution name is below the minimum length.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Use at least {count} character.} other{Use at least {count} characters.}}'**
+  String institutionTooShort(int count);
+
+  /// Placeholder inside an empty document field, standing where the file name will go.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload file'**
+  String get documentUploadAction;
+
+  /// Validation message shown when a required document has no file attached.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach this document.'**
+  String get documentMissing;
+
+  /// Bottom sheet action that reopens the file browser for a document that already has a file.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a different file'**
+  String get documentReplace;
+
+  /// Bottom sheet action that detaches the file currently on a document field.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove file'**
+  String get documentRemove;
+
+  /// Validation message shown when an attached document exceeds the size limit.
+  ///
+  /// In en, this message translates to:
+  /// **'This file is over {count} MB. Attach a smaller one.'**
+  String documentTooLarge(int count);
+
+  /// Validation message shown when an attached document is neither a PDF nor an image.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach a PDF or an image.'**
+  String get documentWrongType;
+
+  /// Label of the identity document field. The Algerian carte nationale d'identité.
+  ///
+  /// In en, this message translates to:
+  /// **'National ID card'**
+  String get documentIdentityCard;
+
+  /// Instruction under the identity card field.
+  ///
+  /// In en, this message translates to:
+  /// **'Front and back, in one file'**
+  String get documentIdentityCardHint;
+
+  /// Label of the trading licence field. Either the registre de commerce or the carte d'artisan — providers hold one or the other.
+  ///
+  /// In en, this message translates to:
+  /// **'Commercial register or artisan card'**
+  String get documentCommercialRegister;
+
+  /// Instruction under the commercial register field, explaining that either document is accepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Whichever body you are registered with'**
+  String get documentCommercialRegisterHint;
+
+  /// Label of the fiscal registration field. NIF is the Algerian numéro d'identification fiscale and is not translated.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax registration card (NIF)'**
+  String get documentTaxRegistration;
+
+  /// Instruction under the tax registration field.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows your fiscal identification number'**
+  String get documentTaxRegistrationHint;
+
+  /// Label of the accreditation field. The Algerian agrément issued to an association or club.
+  ///
+  /// In en, this message translates to:
+  /// **'Accreditation'**
+  String get documentAccreditation;
+
+  /// Instruction under the accreditation field.
+  ///
+  /// In en, this message translates to:
+  /// **'The agrément issued to your association or club'**
+  String get documentAccreditationHint;
+
+  /// Label of the field proving the applicant may act for the institution.
+  ///
+  /// In en, this message translates to:
+  /// **'Letter of authorisation'**
+  String get documentAuthorisationLetter;
+
+  /// Instruction under the letter of authorisation field.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed proof that you represent the institution'**
+  String get documentAuthorisationLetterHint;
+
+  /// Label of the bylaws field. Marked optional in the label because not every academic body is an association.
+  ///
+  /// In en, this message translates to:
+  /// **'Association statutes (optional)'**
+  String get documentAssociationStatutes;
+
+  /// Instruction under the association statutes field.
+  ///
+  /// In en, this message translates to:
+  /// **'Required for associations and clubs'**
+  String get documentAssociationStatutesHint;
+
   /// Instruction under the full name field, stating the minimum length and the characters it refuses.
   ///
   /// In en, this message translates to:
@@ -494,10 +656,34 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{{count} digit, starting with {leadingDigit}.} other{{count} digits, starting with {leadingDigit}.}}'**
   String phoneHint(int count, String leadingDigit);
 
-  /// Instruction under the email field, describing the expected format.
+  /// Greyed example inside the empty full name field. A plausible Algerian name, not an instruction.
   ///
   /// In en, this message translates to:
-  /// **'Example: name@example.com'**
+  /// **'Amina Benali'**
+  String get namePlaceholder;
+
+  /// Greyed example inside the empty institution field.
+  ///
+  /// In en, this message translates to:
+  /// **'Université d\'Alger 1'**
+  String get institutionPlaceholder;
+
+  /// Greyed example inside the empty email field, showing the shape of an address.
+  ///
+  /// In en, this message translates to:
+  /// **'name@example.com'**
+  String get emailPlaceholder;
+
+  /// Greyed example inside the empty phone field, showing an Algerian number the way it is written.
+  ///
+  /// In en, this message translates to:
+  /// **'0X XX XX XX XX'**
+  String get phonePlaceholder;
+
+  /// Instruction under the email field. States the rule; the example lives in the field's own placeholder, so it is not repeated here.
+  ///
+  /// In en, this message translates to:
+  /// **'No spaces, and one @.'**
   String get emailHint;
 
   /// Instruction under the password field, stating the minimum length.

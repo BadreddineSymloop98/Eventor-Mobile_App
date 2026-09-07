@@ -22,6 +22,7 @@ class AppTextField extends StatefulWidget {
     required this.controller,
     required this.label,
     this.focusNode,
+    this.hintText,
     this.helperText,
     this.errorText,
     this.keyboardType = TextInputType.text,
@@ -47,6 +48,14 @@ class AppTextField extends StatefulWidget {
   /// The caller owns and disposes any node it passes; when this is `null` the
   /// widget makes and disposes its own.
   final FocusNode? focusNode;
+
+  /// Shown inside the empty box, in place of the value.
+  ///
+  /// It shows the *shape* of an acceptable value — `name@example.com`, a phone
+  /// written the way it is dialled — which is a different job from
+  /// [helperText], which states the rule. Keep the two from repeating each
+  /// other: an example belongs here, a constraint belongs underneath.
+  final String? hintText;
 
   /// Instruction under the field, shown only while this field holds the caret
   /// and there is no error to show instead.
@@ -186,6 +195,17 @@ class _AppTextFieldState extends State<AppTextField> {
                   obscureText: _isObscured,
                   textInputAction: widget.textInputAction,
                   textDirection: widget.textDirection,
+                  // Which way the value *reads* and which side it *starts on*
+                  // are different questions. An address or a phone number is
+                  // a Latin run and has to be laid out left to right, but it
+                  // still belongs on the edge the rest of the form starts
+                  // from — otherwise an Arabic form has some fields flush
+                  // right and others flush left. `TextAlign.start` cannot say
+                  // this: it resolves against the field's own direction, not
+                  // the screen's.
+                  textAlign: Directionality.of(context) == TextDirection.rtl
+                      ? TextAlign.right
+                      : TextAlign.left,
                   autofillHints: widget.autofillHints,
                   inputFormatters: widget.inputFormatters,
                   onSubmitted: widget.onSubmitted,
@@ -194,10 +214,16 @@ class _AppTextFieldState extends State<AppTextField> {
                   ),
                   // The box is drawn by the Container above, so the field
                   // itself contributes no chrome at all.
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: InputBorder.none,
                     isDense: true,
                     contentPadding: EdgeInsets.zero,
+                    hintText: widget.hintText,
+                    // Lighter than the value, so an empty field never looks
+                    // like a filled one.
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.textDisabled,
+                    ),
                   ),
                 ),
               ),

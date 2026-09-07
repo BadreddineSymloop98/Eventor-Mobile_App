@@ -106,6 +106,24 @@ class AppLocalizationsAr extends AppLocalizations {
       'بعض المعلومات فقط، ثم يمكنك البدء بحجز فريق مناسبتك.';
 
   @override
+  String get registerSubtitleProvider =>
+      'بعض المعلومات ووثائقك، ثم يمكنك عرض خدماتك.';
+
+  @override
+  String get registerSubtitleInstitution =>
+      'بعض المعلومات ووثائقك، ثم يمكنك تقديم طلبات المناسبات.';
+
+  @override
+  String get registerDocumentsTitle => 'وثائق التحقق';
+
+  @override
+  String get registerDocumentsProviderNote => 'نراجعها قبل نشر خدماتك.';
+
+  @override
+  String get registerDocumentsInstitutionNote =>
+      'نراجعها قبل الموافقة على أول طلب لك.';
+
+  @override
   String get registerCreateAccount => 'إنشاء الحساب';
 
   @override
@@ -249,6 +267,99 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hidePassword => 'إخفاء كلمة المرور';
 
   @override
+  String get institutionLabel => 'المؤسسة';
+
+  @override
+  String institutionHint(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count حرف على الأقل، كما يظهر في اعتمادك.',
+      many: '$count حرفًا على الأقل، كما يظهر في اعتمادك.',
+      few: '$count أحرف على الأقل، كما يظهر في اعتمادك.',
+      two: 'حرفان على الأقل، كما يظهر في اعتمادك.',
+      one: 'حرف واحد على الأقل، كما يظهر في اعتمادك.',
+      zero: 'كما يظهر في اعتمادك.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get institutionRequired => 'أدخل اسم المؤسسة التي تمثّلها.';
+
+  @override
+  String institutionTooShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'استخدم $count حرف على الأقل.',
+      many: 'استخدم $count حرفًا على الأقل.',
+      few: 'استخدم $count أحرف على الأقل.',
+      two: 'استخدم حرفين على الأقل.',
+      one: 'استخدم حرفًا واحدًا على الأقل.',
+      zero: 'أدخل اسم المؤسسة.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get documentUploadAction => 'إرفاق ملف';
+
+  @override
+  String get documentMissing => 'أرفق هذه الوثيقة.';
+
+  @override
+  String get documentReplace => 'اختيار ملف آخر';
+
+  @override
+  String get documentRemove => 'إزالة الملف';
+
+  @override
+  String documentTooLarge(int count) {
+    return 'هذا الملف يتجاوز $count ميغابايت. أرفق ملفًا أصغر.';
+  }
+
+  @override
+  String get documentWrongType => 'أرفق ملف PDF أو صورة.';
+
+  @override
+  String get documentIdentityCard => 'بطاقة التعريف الوطنية';
+
+  @override
+  String get documentIdentityCardHint => 'الوجهان في ملف واحد';
+
+  @override
+  String get documentCommercialRegister => 'السجل التجاري أو بطاقة الحرفي';
+
+  @override
+  String get documentCommercialRegisterHint => 'حسب الجهة المسجّل لديها';
+
+  @override
+  String get documentTaxRegistration => 'بطاقة التعريف الجبائي (NIF)';
+
+  @override
+  String get documentTaxRegistrationHint => 'تحمل رقم التعريف الجبائي';
+
+  @override
+  String get documentAccreditation => 'الاعتماد';
+
+  @override
+  String get documentAccreditationHint => 'الاعتماد الممنوح لجمعيتك أو ناديك';
+
+  @override
+  String get documentAuthorisationLetter => 'تفويض بالتمثيل';
+
+  @override
+  String get documentAuthorisationLetterHint =>
+      'إثبات موقّع بأنك تمثّل المؤسسة';
+
+  @override
+  String get documentAssociationStatutes => 'القانون الأساسي (اختياري)';
+
+  @override
+  String get documentAssociationStatutesHint => 'مطلوب للجمعيات والنوادي';
+
+  @override
   String nameHint(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -279,7 +390,19 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get emailHint => 'مثال: name@example.com';
+  String get namePlaceholder => 'أمينة بن علي';
+
+  @override
+  String get institutionPlaceholder => 'جامعة الجزائر 1';
+
+  @override
+  String get emailPlaceholder => 'name@example.com';
+
+  @override
+  String get phonePlaceholder => '0X XX XX XX XX';
+
+  @override
+  String get emailHint => 'بدون مسافات، وعلامة @ واحدة.';
 
   @override
   String passwordHint(int count) {

@@ -106,6 +106,25 @@ class AppLocalizationsEn extends AppLocalizations {
       'Just a few details, then you can start booking your event team.';
 
   @override
+  String get registerSubtitleProvider =>
+      'A few details and your documents, then you can list your services.';
+
+  @override
+  String get registerSubtitleInstitution =>
+      'A few details and your documents, then you can submit event requests.';
+
+  @override
+  String get registerDocumentsTitle => 'Verification documents';
+
+  @override
+  String get registerDocumentsProviderNote =>
+      'We review these before your services go live.';
+
+  @override
+  String get registerDocumentsInstitutionNote =>
+      'We review these before your first request is approved.';
+
+  @override
   String get registerCreateAccount => 'Create account';
 
   @override
@@ -237,6 +256,96 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hidePassword => 'Hide password';
 
   @override
+  String get institutionLabel => 'Institution';
+
+  @override
+  String institutionHint(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'At least $count characters, as it appears on your accreditation.',
+      one: 'At least $count character.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get institutionRequired => 'Enter the institution you represent.';
+
+  @override
+  String institutionTooShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Use at least $count characters.',
+      one: 'Use at least $count character.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get documentUploadAction => 'Upload file';
+
+  @override
+  String get documentMissing => 'Attach this document.';
+
+  @override
+  String get documentReplace => 'Choose a different file';
+
+  @override
+  String get documentRemove => 'Remove file';
+
+  @override
+  String documentTooLarge(int count) {
+    return 'This file is over $count MB. Attach a smaller one.';
+  }
+
+  @override
+  String get documentWrongType => 'Attach a PDF or an image.';
+
+  @override
+  String get documentIdentityCard => 'National ID card';
+
+  @override
+  String get documentIdentityCardHint => 'Front and back, in one file';
+
+  @override
+  String get documentCommercialRegister =>
+      'Commercial register or artisan card';
+
+  @override
+  String get documentCommercialRegisterHint =>
+      'Whichever body you are registered with';
+
+  @override
+  String get documentTaxRegistration => 'Tax registration card (NIF)';
+
+  @override
+  String get documentTaxRegistrationHint =>
+      'Shows your fiscal identification number';
+
+  @override
+  String get documentAccreditation => 'Accreditation';
+
+  @override
+  String get documentAccreditationHint =>
+      'The agrément issued to your association or club';
+
+  @override
+  String get documentAuthorisationLetter => 'Letter of authorisation';
+
+  @override
+  String get documentAuthorisationLetterHint =>
+      'Signed proof that you represent the institution';
+
+  @override
+  String get documentAssociationStatutes => 'Association statutes (optional)';
+
+  @override
+  String get documentAssociationStatutesHint =>
+      'Required for associations and clubs';
+
+  @override
   String nameHint(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -259,7 +368,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get emailHint => 'Example: name@example.com';
+  String get namePlaceholder => 'Amina Benali';
+
+  @override
+  String get institutionPlaceholder => 'Université d\'Alger 1';
+
+  @override
+  String get emailPlaceholder => 'name@example.com';
+
+  @override
+  String get phonePlaceholder => '0X XX XX XX XX';
+
+  @override
+  String get emailHint => 'No spaces, and one @.';
 
   @override
   String passwordHint(int count) {

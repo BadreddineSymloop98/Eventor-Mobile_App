@@ -99,4 +99,121 @@ void main() {
       expect(find.text('At least 6 characters, no spaces.'), findsNothing);
     });
   });
+
+  group('AppTextField alignment', () {
+    late TextEditingController controller;
+
+    setUp(() => controller = TextEditingController());
+    tearDown(() => controller.dispose());
+
+    /// The rendered alignment of the field's value.
+    TextAlign alignOf(WidgetTester tester) =>
+        tester.widget<TextField>(find.byType(TextField)).textAlign;
+
+    testWidgets('starts the value on the left in English',
+        (WidgetTester tester) async {
+      await pumpAppWidget(
+        tester,
+        AppTextField(controller: controller, label: 'Email'),
+      );
+
+      expect(alignOf(tester), TextAlign.left);
+    });
+
+    testWidgets('starts the value on the right in Arabic',
+        (WidgetTester tester) async {
+      await pumpAppWidget(
+        tester,
+        AppTextField(controller: controller, label: 'البريد الإلكتروني'),
+        locale: arabicLocale,
+      );
+
+      expect(alignOf(tester), TextAlign.right);
+    });
+
+    testWidgets('keeps a Latin value on the Arabic side of the form',
+        (WidgetTester tester) async {
+      // The regression this guards: an address is laid out left to right, and
+      // `TextAlign.start` resolves against *that*, so the field ended up flush
+      // left while the name field beside it sat flush right.
+      await pumpAppWidget(
+        tester,
+        AppTextField(
+          controller: controller,
+          label: 'البريد الإلكتروني',
+          textDirection: TextDirection.ltr,
+        ),
+        locale: arabicLocale,
+      );
+
+      expect(alignOf(tester), TextAlign.right);
+      // The value still reads left to right; only where it sits changed.
+      expect(
+        tester.widget<TextField>(find.byType(TextField)).textDirection,
+        TextDirection.ltr,
+      );
+    });
+  });
+
+  group('AppTextField placeholder', () {
+    late TextEditingController controller;
+
+    setUp(() => controller = TextEditingController());
+    tearDown(() => controller.dispose());
+
+    testWidgets('shows the example while the field is empty',
+        (WidgetTester tester) async {
+      await pumpAppWidget(
+        tester,
+        AppTextField(
+          controller: controller,
+          label: 'Email',
+          hintText: 'name@example.com',
+        ),
+      );
+
+      expect(find.text('name@example.com'), findsOneWidget);
+    });
+
+    testWidgets('gives the example up to the value', (WidgetTester tester) async {
+      await pumpAppWidget(
+        tester,
+        AppTextField(
+          controller: controller,
+          label: 'Email',
+          hintText: 'name@example.com',
+        ),
+      );
+
+      await tester.enterText(find.byType(TextField), 'zaki@example.com');
+      await tester.pump();
+
+      expect(find.text('name@example.com'), findsNothing);
+      expect(find.text('zaki@example.com'), findsOneWidget);
+    });
+
+    testWidgets('sits alongside the rule rather than repeating it',
+        (WidgetTester tester) async {
+      final FocusNode focusNode = FocusNode();
+      addTearDown(focusNode.dispose);
+
+      await pumpAppWidget(
+        tester,
+        AppTextField(
+          controller: controller,
+          focusNode: focusNode,
+          label: 'Email',
+          // The example shows the shape; the helper states the constraint.
+          hintText: 'name@example.com',
+          helperText: 'No spaces, and one @.',
+        ),
+      );
+
+      focusNode.requestFocus();
+      await tester.pump();
+
+      expect(find.text('name@example.com'), findsOneWidget);
+      expect(find.text('No spaces, and one @.'), findsOneWidget);
+    });
+  });
 }

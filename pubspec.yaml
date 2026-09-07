@@ -53,6 +53,12 @@ dependencies:
   # vector fill".
   flutter_svg: ^2.3.0
 
+  # The register form asks a provider or an institution for identity and
+  # licence papers, which arrive as either a scan or a photograph. image_picker
+  # would have been lighter but it cannot return a PDF, and a registre de
+  # commerce is almost always a PDF.
+  file_picker: ^12.2.0
+
   # Left unpinned so the version shipped with flutter_localizations wins.
   intl: any
 

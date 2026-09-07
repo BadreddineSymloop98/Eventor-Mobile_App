@@ -36,4 +36,26 @@ enum UserRole {
       UserRole.institution => l10n.roleInstitutionDescription,
     };
   }
+
+  /// The line under "Create your account" on the register screen.
+  ///
+  /// A planner is signing up to book; the other two are signing up to be
+  /// reviewed, and the subtitle is where that is first said out loud.
+  String registerSubtitle(AppLocalizations l10n) {
+    return switch (this) {
+      UserRole.planner => l10n.registerSubtitle,
+      UserRole.provider => l10n.registerSubtitleProvider,
+      UserRole.institution => l10n.registerSubtitleInstitution,
+    };
+  }
+
+  /// What the document review gates for this role, or `null` for a role that
+  /// supplies no documents.
+  String? documentsNote(AppLocalizations l10n) {
+    return switch (this) {
+      UserRole.planner => null,
+      UserRole.provider => l10n.registerDocumentsProviderNote,
+      UserRole.institution => l10n.registerDocumentsInstitutionNote,
+    };
+  }
 }

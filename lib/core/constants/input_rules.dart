@@ -32,6 +32,31 @@ abstract final class InputRules {
     LengthLimitingTextInputFormatter(maxPasswordLength),
   ];
 
+  /// What an attached document may be.
+  ///
+  /// A scan arrives as a PDF and a photograph of a card as an image, and
+  /// nothing else is a document. Kept lower-case because that is what the
+  /// comparison expects.
+  static const List<String> documentExtensions = <String>[
+    'pdf',
+    'jpg',
+    'jpeg',
+    'png',
+  ];
+
+  /// Stated in whole megabytes because that is how the message says it.
+  static const int maxDocumentMegabytes = 5;
+  static const int maxDocumentBytes = maxDocumentMegabytes * 1024 * 1024;
+
+  /// Whether [extension] is a document this app accepts.
+  static bool isAcceptableDocumentType(String extension) =>
+      documentExtensions.contains(extension.toLowerCase());
+
+  /// An institution name is a proper noun like a person's, so it follows the
+  /// same floor rather than inventing a second one.
+  static const int minInstitutionLength = 2;
+  static const int maxInstitutionLength = 120;
+
   static const int minNameLength = 2;
   static const int maxNameLength = 80;
 
@@ -42,6 +67,13 @@ abstract final class InputRules {
   /// state, to check and to store than two.
   static const int phoneLength = 10;
   static const String phoneLeadingDigit = '0';
+
+  /// An institution name legitimately carries digits and punctuation —
+  /// "Université d'Alger 1" — so only its length is bounded.
+  static final List<TextInputFormatter> institutionFormatters =
+      <TextInputFormatter>[
+    LengthLimitingTextInputFormatter(maxInstitutionLength),
+  ];
 
   /// A name is rejected for what it must *not* contain rather than for what it
   /// may. An allow-list of letters would have to enumerate every script the

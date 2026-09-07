@@ -87,7 +87,13 @@ class PhotoSheetLayout extends StatelessWidget {
                                 AppColors.textOnBrand.withValues(alpha: 0.78),
                           ),
                         ),
-                        SizedBox(height: AppSpacing.xl.dh),
+                        // The gap under the copy is the first thing to give
+                        // when the keyboard takes the screen. Fixed, it makes
+                        // the header overflow its own flex share; flexible,
+                        // it simply closes up.
+                        Flexible(
+                          child: SizedBox(height: AppSpacing.xl.dh),
+                        ),
                       ],
                     ),
                   ),
@@ -128,14 +134,32 @@ class _Sheet extends StatelessWidget {
       child: SafeArea(
         top: false,
         minimum: EdgeInsets.only(bottom: AppSpacing.md.dh),
-        child: Padding(
-          padding: EdgeInsetsDirectional.only(
-            start: AppSpacing.md.dw,
-            end: AppSpacing.md.dw,
-            top: AppSpacing.xl2.dh,
-            bottom: AppSpacing.xl2.dh,
-          ),
-          child: child,
+        // The sheet loses height to the keyboard, and its contents have to go
+        // somewhere. Scrolling is that somewhere: without it the form is
+        // squashed against the actions and a focused field can end up under
+        // the keyboard with no way to reach it.
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                // Fill the sheet when there is room, so the actions stay
+                // pinned to the bottom edge as the design draws them, and
+                // only start scrolling once there is not.
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(
+                      start: AppSpacing.md.dw,
+                      end: AppSpacing.md.dw,
+                      top: AppSpacing.xl2.dh,
+                      bottom: AppSpacing.xl2.dh,
+                    ),
+                    child: child,
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

@@ -17,10 +17,13 @@ void main() {
         );
       });
 
-      test('skips onboarding once it has been completed', () {
+      test('lands on welcome once onboarding has been completed', () {
+        // Welcome, not login: it is the design's landing point for anyone
+        // without a session, and logging in is one of the two choices it
+        // offers rather than the default one.
         expect(
           AppRoutes.afterSplash(hasSeenOnboarding: true),
-          AppRoutes.login,
+          AppRoutes.welcome,
         );
       });
     });

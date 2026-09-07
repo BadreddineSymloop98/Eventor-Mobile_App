@@ -83,3 +83,45 @@ class PasswordTooShort extends PasswordError {
 
   final int minimumLength;
 }
+
+/// Why an institution name was rejected.
+sealed class InstitutionError {
+  const InstitutionError();
+}
+
+/// The field was left empty.
+class InstitutionRequired extends InstitutionError {
+  const InstitutionRequired();
+}
+
+/// The value is shorter than [minimumLength].
+class InstitutionTooShort extends InstitutionError {
+  const InstitutionTooShort(this.minimumLength);
+
+  final int minimumLength;
+}
+
+/// Why a document was rejected.
+sealed class DocumentError {
+  const DocumentError();
+}
+
+/// Nothing was attached.
+class DocumentMissing extends DocumentError {
+  const DocumentMissing();
+}
+
+/// The file is over [maximumMegabytes].
+///
+/// The bound travels with the error so the message can state it without the
+/// view having to know the rule.
+class DocumentTooLarge extends DocumentError {
+  const DocumentTooLarge(this.maximumMegabytes);
+
+  final int maximumMegabytes;
+}
+
+/// The file is not one of the accepted kinds.
+class DocumentWrongType extends DocumentError {
+  const DocumentWrongType();
+}
