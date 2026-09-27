@@ -16,6 +16,7 @@ import '../../../core/widgets/molecules/app_toast.dart';
 import '../../../core/widgets/molecules/offline_banner.dart';
 import '../../../core/widgets/molecules/state_card.dart';
 import '../../../core/widgets/organisms/divided_card.dart';
+import '../../../core/session/session_controller.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../messages/view/widgets/conversation_row.dart';
 import '../view_model/notifications_view_model.dart';
@@ -137,8 +138,13 @@ class NotificationsView extends StatelessWidget {
         children: <Widget>[
           _Header(
             canMarkAll: viewModel.canMarkAll,
-            onBack: () =>
-                context.canPop() ? context.pop() : context.go(AppRoutes.home),
+            onBack: () => context.canPop()
+                ? context.pop()
+                : context.go(
+                    context.read<SessionController>().user?.isProvider ?? false
+                        ? AppRoutes.providerHome
+                        : AppRoutes.home,
+                  ),
             onMarkAll: () => _markAll(context),
           ),
           Expanded(

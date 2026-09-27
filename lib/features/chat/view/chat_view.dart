@@ -20,6 +20,7 @@ import '../../../core/widgets/atoms/app_spinner.dart';
 import '../../../core/widgets/molecules/app_toast.dart';
 import '../../../core/widgets/molecules/conversation_avatar.dart';
 import '../../../core/widgets/molecules/state_card.dart';
+import '../../../core/session/session_controller.dart';
 import '../../../l10n/app_localizations.dart';
 import '../view_model/chat_view_model.dart';
 import 'widgets/chat_composer.dart';
@@ -57,8 +58,15 @@ class _ChatViewState extends State<ChatView> {
     super.dispose();
   }
 
-  void _back() =>
-      context.canPop() ? context.pop() : context.go(AppRoutes.messages);
+  /// Back to the list it came from — the Messages tab of whichever shell
+  /// this account has.
+  void _back() => context.canPop()
+      ? context.pop()
+      : context.go(
+          context.read<SessionController>().user?.isProvider ?? false
+              ? AppRoutes.providerMessages
+              : AppRoutes.messages,
+        );
 
   void _toast(String message, {AppToastTone tone = AppToastTone.error}) {
     if (mounted) showAppToast(context, message, tone: tone);

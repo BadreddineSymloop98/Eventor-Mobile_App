@@ -5,6 +5,7 @@ import '../molecules/price_text.dart';
 import '../../localization/app_localizations_x.dart';
 import '../atoms/app_avatar.dart';
 import '../atoms/app_icon.dart';
+import '../atoms/app_network_image.dart';
 import '../atoms/icon_tile.dart';
 import '../atoms/rating_line.dart';
 import '../atoms/rating_view.dart';
@@ -199,6 +200,7 @@ class RequestCard extends StatelessWidget {
     this.photoUrl,
     this.onTap,
     this.isBusy = false,
+    this.isAccepting = false,
     super.key,
   });
 
@@ -214,6 +216,9 @@ class RequestCard extends StatelessWidget {
 
   /// Disables both actions while one of them is being sent.
   final bool isBusy;
+
+  /// Accept is the one being sent — its button shows the spinner.
+  final bool isAccepting;
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +259,8 @@ class RequestCard extends StatelessWidget {
                 child: MainButton(
                   label: context.l10n.requestAccept,
                   onPressed: onAccept,
-                  canBeTapped: !isBusy,
+                  isLoading: isAccepting,
+                  canBeTapped: !isBusy || isAccepting,
                 ),
               ),
             ],
@@ -271,8 +277,10 @@ class ServiceItem extends StatelessWidget {
   const ServiceItem({
     required this.title,
     required this.price,
-    required this.unit,
-    required this.isAvailable,
+    this.unit,
+    this.isAvailable = true,
+    this.badge,
+    this.photoUrl,
     this.icon = AppIcons.camera,
     this.onTap,
     super.key,
@@ -280,12 +288,20 @@ class ServiceItem extends StatelessWidget {
 
   final String title;
 
-  /// "45 000 DA".
+  /// The amount, grouped — "45 000". The currency is added as its own
+  /// token, so the digits keep their order in Arabic.
   final String price;
 
-  /// "per day".
-  final String unit;
+  /// "per day" — `null` when the price has no unit to show.
+  final String? unit;
   final bool isAvailable;
+
+  /// Stands in for the availability badge — a service's publishing status on
+  /// the provider's own home (21).
+  final Widget? badge;
+
+  /// The service's cover; the category glyph stands in until it has one.
+  final String? photoUrl;
 
   /// The category glyph on the thumb, until the service has a photo.
   final AppIcons icon;
@@ -300,7 +316,15 @@ class ServiceItem extends StatelessWidget {
       padding: EdgeInsetsDirectional.all(AppSpacing.sm.dw),
       child: Row(
         children: <Widget>[
-          IconTile.serviceThumb(icon),
+          if (photoUrl case final String url)
+            AppNetworkImage(
+              url: url,
+              width: IconTile.thumbSize.dw,
+              height: IconTile.thumbSize.dw,
+              radius: AppRadii.mdAll,
+            )
+          else
+            IconTile.serviceThumb(icon),
           SizedBox(width: AppSpacing.sm.dw),
           Expanded(
             child: Column(
@@ -326,29 +350,38 @@ class ServiceItem extends StatelessWidget {
                         color: AppColors.textSecondary,
                       ),
                     ),
+                    SizedBox(width: AppSpacing.xs2.dw),
                     Text(
-                      ' · ',
+                      context.l10n.currencyDzd,
                       style: textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    Flexible(
-                      child: Text(
-                        unit,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                    if (unit case final String perUnit) ...<Widget>[
+                      Text(
+                        ' · ',
                         style: textTheme.bodySmall?.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
-                    ),
+                      Flexible(
+                        child: Text(
+                          perUnit,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ],
             ),
           ),
           SizedBox(width: AppSpacing.sm.dw),
-          AvailabilityBadge(isAvailable: isAvailable),
+          badge ?? AvailabilityBadge(isAvailable: isAvailable),
         ],
       ),
     );

@@ -102,8 +102,18 @@ abstract final class AppRoutes {
   /// `18h`. Carries [LinkBookingArgs] as `extra`.
   static const String budgetLinkBooking = '/budget/link';
 
-  /// A provider's placeholder home until `21` is built.
+  /// `21` / `21a` / `21b` — the provider's first tab.
   static const String providerHome = '/provider';
+
+  // The provider shell's other tabs.
+  static const String providerRequests = '/provider/requests';
+  static const String providerServices = '/provider/services';
+  static const String providerMessages = '/provider/messages';
+  static const String providerProfile = '/provider/profile';
+
+  /// `08d` — sending again the documents a reviewer refused. Full screen,
+  /// over the provider's tabs.
+  static const String resubmitDocuments = '/documents/resubmit';
 
   /// The component gallery. Only registered in debug builds.
   static const String gallery = '/gallery';
@@ -193,9 +203,16 @@ abstract final class AppRoutes {
       path.startsWith('$packs/') ||
       path == favourites ||
       path == budget ||
-      path.startsWith('$budget/') ||
-      path.startsWith('$conversations/') ||
-      path == notifications;
+      path.startsWith('$budget/');
+
+  /// The screens only a provider may see: their shell and their documents.
+  /// A client is sent to [home] instead. Chat (`15`) and the bell (`16`) are
+  /// shared, so they are in neither list.
+  static bool isProviderOnly(String path) =>
+      path == providerHome ||
+      path.startsWith('$providerHome/') ||
+      path == documents ||
+      path.startsWith('$documents/');
 
   static String resetCodeFor(String email) => Uri(
         path: resetCode,

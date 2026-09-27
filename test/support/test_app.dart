@@ -20,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'budget_fakes.dart';
 import 'fakes.dart';
+import 'provider_fakes.dart';
 
 /// The locales the suite exercises.
 const Locale englishLocale = Locale('en');
@@ -39,6 +40,7 @@ class TestApp {
     this.notifications,
     this.budget,
     this.bookings,
+    this.provider,
   );
 
   final AppServices services;
@@ -51,6 +53,7 @@ class TestApp {
   final FakeNotificationsRepository notifications;
   final FakeBudgetRepository budget;
   final FakeBookingsRepository bookings;
+  final FakeProviderRepository provider;
 
   SessionController get session => services.session;
 
@@ -74,6 +77,7 @@ Future<TestApp> buildTestApp({
   FakeNotificationsRepository? notifications,
   FakeBudgetRepository? budget,
   FakeBookingsRepository? bookings,
+  FakeProviderRepository? provider,
   AppConfig config = const AppConfig(),
 }) async {
   SharedPreferences.setMockInitialValues(<String, Object>{
@@ -96,6 +100,7 @@ Future<TestApp> buildTestApp({
       notifications ?? FakeNotificationsRepository();
   final FakeBudgetRepository fakeBudget = budget ?? FakeBudgetRepository();
   final FakeBookingsRepository fakeBookings = bookings ?? FakeBookingsRepository();
+  final FakeProviderRepository fakeProvider = provider ?? FakeProviderRepository();
   final SessionController session = SessionController(fakeAuth);
   final AppStartup startup = AppStartup(config: fakeConfig, session: session);
   final TokenStore tokens = TokenStore();
@@ -116,6 +121,7 @@ Future<TestApp> buildTestApp({
     notifications: fakeNotifications,
     bookings: fakeBookings,
     budget: fakeBudget,
+    provider: fakeProvider,
     badges: ShellBadges(notifications: fakeNotifications),
     session: session,
     startup: startup,
@@ -137,6 +143,7 @@ Future<TestApp> buildTestApp({
     fakeNotifications,
     fakeBudget,
     fakeBookings,
+    fakeProvider,
   );
 }
 

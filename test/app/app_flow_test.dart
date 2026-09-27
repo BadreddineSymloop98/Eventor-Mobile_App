@@ -7,6 +7,7 @@ import 'package:eventor/features/documents/view/documents_view.dart';
 import 'package:eventor/features/home/view/home_view.dart';
 import 'package:eventor/features/provider_home/view/provider_home_view.dart';
 import 'package:eventor/features/shell/view/client_shell.dart';
+import 'package:eventor/features/shell/view/provider_shell.dart';
 import 'package:eventor/features/login/view/login_view.dart';
 import 'package:eventor/features/onboarding/view/onboarding_view.dart';
 import 'package:eventor/features/register/view/register_view.dart';
@@ -190,7 +191,7 @@ void main() {
       expect(app.auth.verifications.single, (email: email, code: '123456'));
       expect(find.byType(HomeView), findsOneWidget);
       // A client has no review to wait for.
-      expect(find.text(l10n(tester).homeProviderPendingTitle), findsNothing);
+      expect(find.text(l10n(tester).providerFinishTitle), findsNothing);
     });
 
     testWidgets('a provider lands on their documents, then home', (
@@ -210,13 +211,14 @@ void main() {
       expect(app.auth.registrations.single.role, UserRole.provider);
       expect(find.byType(DocumentsView), findsOneWidget);
 
-      // "I'll do it later" — home then says the review is waiting.
+      // "I'll do it later" — 21a then asks for what is still missing.
       await tapAndSettle(tester, button(l10n(tester).documentsLater));
       final AppLocalizations strings = l10n(tester);
       // The provider's own home — the client shell is not theirs.
       expect(find.byType(ProviderHomeView), findsOneWidget);
+      expect(find.byType(ProviderShell), findsOneWidget);
       expect(find.byType(ClientShell), findsNothing);
-      expect(find.text(strings.homeProviderPendingTitle), findsOneWidget);
+      expect(find.text(strings.providerFinishTitle), findsOneWidget);
       expect(button(strings.homeUploadDocuments), findsOneWidget);
     });
 

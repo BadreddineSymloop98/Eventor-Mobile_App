@@ -232,14 +232,15 @@ void main() {
         tester,
         const ServiceItem(
           title: 'Wedding photography',
-          price: '45 000 DA',
+          price: '45 000',
           unit: 'per day',
           isAvailable: true,
         ),
       );
 
       expect(find.text('Wedding photography'), findsOneWidget);
-      expect(find.text('45 000 DA'), findsOneWidget);
+      expect(find.text('45 000'), findsOneWidget);
+      expect(find.text(l10n(tester).currencyDzd), findsOneWidget);
       expect(find.text('per day'), findsOneWidget);
       expect(find.text(l10n(tester).availabilityAvailable), findsOneWidget);
     });
@@ -250,7 +251,7 @@ void main() {
         tester,
         const ServiceItem(
           title: 'تصوير الأعراس',
-          price: '45 000 DA',
+          price: '45 000',
           unit: 'في اليوم',
           isAvailable: false,
         ),
@@ -259,9 +260,26 @@ void main() {
 
       expect(find.text(l10n(tester).availabilityUnavailable), findsOneWidget);
       expect(
-        tester.widget<Text>(find.text('45 000 DA')).textDirection,
+        tester.widget<Text>(find.text('45 000')).textDirection,
         TextDirection.ltr,
       );
+    });
+  });
+
+  group('ServiceItem on the provider home', () {
+    testWidgets('takes a status badge and no unit', (WidgetTester tester) async {
+      await _pumpCard(
+        tester,
+        const ServiceItem(
+          title: 'Event coverage',
+          price: '60 000',
+          badge: ServiceStatusBadge(ServiceStatusKind.draft),
+        ),
+      );
+
+      expect(find.text(l10n(tester).serviceStatusDraft), findsOneWidget);
+      expect(find.text(l10n(tester).availabilityAvailable), findsNothing);
+      expect(find.text(' · '), findsNothing);
     });
   });
 }

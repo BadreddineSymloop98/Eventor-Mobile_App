@@ -13,6 +13,7 @@ import '../core/localization/locale_controller.dart';
 import '../core/messaging/messaging_repository.dart';
 import '../core/network/api_client.dart';
 import '../core/notifications/notifications_repository.dart';
+import '../core/provider/provider_repository.dart';
 import '../core/reference/reference_repository.dart';
 import '../core/routing/app_router.dart';
 import '../core/services/preferences_service.dart';
@@ -26,6 +27,7 @@ import '../mock/mock_budget.dart';
 import '../features/shell/shell_badges.dart';
 import '../mock/mock_catalog.dart';
 import '../mock/mock_messaging.dart';
+import '../mock/mock_provider.dart';
 import '../mock/mock_repositories.dart';
 
 /// Everything that lives for the whole run of the app, built once.
@@ -51,6 +53,7 @@ class AppServices {
     required this.notifications,
     required this.bookings,
     required this.budget,
+    required this.provider,
     required this.badges,
     required this.session,
     required this.startup,
@@ -126,6 +129,13 @@ class AppServices {
             MockCatalogLookups(mock, languageCode: languageCode),
           )
         : ApiBudgetRepository(api);
+    final ProviderRepository provider = mock != null
+        ? MockProviderRepository(
+            mock,
+            MockCatalogLookups(mock, languageCode: languageCode),
+            messaging: messagingStore,
+          )
+        : ApiProviderRepository(api);
     final SessionController session = SessionController(auth);
     final FavouritesController favourites =
         FavouritesController(favouritesRepository);
@@ -158,6 +168,7 @@ class AppServices {
       notifications: notifications,
       bookings: bookings,
       budget: budget,
+      provider: provider,
       badges: badges,
       mockBackend: mock,
       session: session,
@@ -195,6 +206,9 @@ class AppServices {
 
   /// Section 7.
   final BudgetRepository budget;
+
+  /// The provider's home (21) and their answers to requests.
+  final ProviderRepository provider;
 
   /// The bottom nav's counts.
   final ShellBadges badges;

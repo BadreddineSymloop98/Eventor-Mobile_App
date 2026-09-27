@@ -13,6 +13,7 @@ import '../../../core/widgets/molecules/app_toast.dart';
 import '../../../core/widgets/molecules/offline_banner.dart';
 import '../../../core/widgets/molecules/state_card.dart';
 import '../../../core/widgets/organisms/divided_card.dart';
+import '../../../core/session/session_controller.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../shell/shell_badges.dart';
 import '../../shell/view/client_shell.dart';
@@ -150,6 +151,14 @@ class _MessagesBody extends StatelessWidget {
     if (rows.isEmpty) {
       if (viewModel.hasError) return StateCard.error(onRetry: viewModel.load);
       return switch (viewModel.empty) {
+        // A provider is written to; a client writes first, from a profile.
+        MessagesEmpty.all
+            when context.read<SessionController>().user?.isProvider ?? false =>
+          StateCard.empty(
+            icon: AppIcons.message,
+            title: l10n.messagesEmptyTitle,
+            body: l10n.messagesEmptyBodyProvider,
+          ),
         MessagesEmpty.all => StateCard.empty(
           icon: AppIcons.message,
           title: l10n.messagesEmptyTitle,

@@ -708,35 +708,6 @@
   "@supportEmailSubject": {
     "description": "Subject of the support email opened from 10g."
   },
-  "homeTitle": "Home",
-  "@homeTitle": {
-    "description": "Home app bar title."
-  },
-  "homeGreeting": "Hello, {name}",
-  "@homeGreeting": {
-    "description": "Greeting on the placeholder home.",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "homeComingSoon": "Your home screen is being built. You are signed in.",
-  "@homeComingSoon": {
-    "description": "Body of the placeholder home."
-  },
-  "homeProviderPendingTitle": "Your profile is under review",
-  "@homeProviderPendingTitle": {
-    "description": "Provider pending card title."
-  },
-  "homeProviderPendingBody": "You can browse the app. Services go live once your documents are approved.",
-  "@homeProviderPendingBody": {
-    "description": "Provider pending card body."
-  },
-  "homeProviderRejectedTitle": "Some documents need your attention",
-  "@homeProviderRejectedTitle": {
-    "description": "Provider rejected card title."
-  },
   "homeUploadDocuments": "Upload documents",
   "@homeUploadDocuments": {
     "description": "Leads to 08e from home."
@@ -2311,6 +2282,407 @@
   "discardKeep": "Keep editing",
   "@discardKeep": {
     "description": "Cancel button of the discard sheet."
+  },
+  "navRequests": "Requests",
+  "@navRequests": {
+    "description": "The provider's second tab."
+  },
+  "navServices": "Services",
+  "@navServices": {
+    "description": "The provider's third tab."
+  },
+  "profileDocuments": "My documents",
+  "@profileDocuments": {
+    "description": "Row on the provider's Profile tab."
+  },
+  "providerAccepting": "Accepting bookings",
+  "@providerAccepting": {
+    "description": "21's availability pill, and its first choice."
+  },
+  "providerPaused": "Bookings paused",
+  "@providerPaused": {
+    "description": "21's availability pill when paused, and its second choice."
+  },
+  "providerAcceptingHint": "Clients can send you new requests.",
+  "@providerAcceptingHint": {
+    "description": "Under the Accepting choice."
+  },
+  "providerPausedHint": "No new requests until you turn it back on. Your services stay visible.",
+  "@providerPausedHint": {
+    "description": "Under the Paused choice."
+  },
+  "providerAvailabilityTitle": "Your availability",
+  "@providerAvailabilityTitle": {
+    "description": "Title of the availability sheet on 21."
+  },
+  "providerAvailabilityBody": "Pausing keeps the bookings you already have.",
+  "@providerAvailabilityBody": {
+    "description": "Subtitle of the availability sheet."
+  },
+  "providerNowAccepting": "You are accepting bookings again.",
+  "@providerNowAccepting": {
+    "description": "Toast after turning bookings back on."
+  },
+  "providerNowPaused": "New bookings are paused.",
+  "@providerNowPaused": {
+    "description": "Toast after pausing bookings."
+  },
+  "providerStatRequests": "Requests",
+  "@providerStatRequests": {
+    "description": "21's counter."
+  },
+  "providerStatUpcoming": "Upcoming",
+  "@providerStatUpcoming": {
+    "description": "21's counter."
+  },
+  "providerStatServices": "Services",
+  "@providerStatServices": {
+    "description": "21's counter."
+  },
+  "providerRequestsTitle": "Booking requests",
+  "@providerRequestsTitle": {
+    "description": "21's section."
+  },
+  "providerNoRequestsTitle": "No new requests",
+  "@providerNoRequestsTitle": {
+    "description": "21 with no pending request."
+  },
+  "providerNoRequestsBody": "New booking requests show up here, and you have {hours} h to answer each one.",
+  "@providerNoRequestsBody": {
+    "description": "21 with no pending request.",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "providerNoRequestsPausedBody": "Your bookings are paused, so clients cannot send new requests.",
+  "@providerNoRequestsPausedBody": {
+    "description": "21 with no request while paused."
+  },
+  "providerReplyWithin": "{hours, plural, =0{reply now} other{reply within {hours} h}}",
+  "@providerReplyWithin": {
+    "description": "End of a request row's meta line on 21.",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "providerAccepted": "Request from {name} accepted.",
+  "@providerAccepted": {
+    "description": "Toast after Accept.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "providerDeclined": "Request declined.",
+  "@providerDeclined": {
+    "description": "Toast after P3."
+  },
+  "providerUpcomingTitle": "Upcoming bookings",
+  "@providerUpcomingTitle": {
+    "description": "21's section."
+  },
+  "providerNoUpcoming": "No confirmed bookings ahead yet.",
+  "@providerNoUpcoming": {
+    "description": "21's upcoming section when empty."
+  },
+  "providerAvailabilityCalendar": "Availability calendar",
+  "@providerAvailabilityCalendar": {
+    "description": "21's button."
+  },
+  "providerServicesTitle": "Your services",
+  "@providerServicesTitle": {
+    "description": "21's section."
+  },
+  "providerManage": "Manage",
+  "@providerManage": {
+    "description": "21's link beside Your services."
+  },
+  "providerAddService": "Add a service",
+  "@providerAddService": {
+    "description": "21's button."
+  },
+  "providerServicesAfterApproval": "Available once your profile is approved.",
+  "@providerServicesAfterApproval": {
+    "description": "Under the disabled Add a service on 21a/21b."
+  },
+  "serviceStatusPublished": "Published",
+  "@serviceStatusPublished": {
+    "description": "Service status badge."
+  },
+  "serviceStatusDraft": "Draft",
+  "@serviceStatusDraft": {
+    "description": "Service status badge."
+  },
+  "serviceStatusHidden": "Hidden",
+  "@serviceStatusHidden": {
+    "description": "Service status badge."
+  },
+  "documentStateInReview": "In review",
+  "@documentStateInReview": {
+    "description": "Document status pill."
+  },
+  "documentStateApproved": "Approved",
+  "@documentStateApproved": {
+    "description": "Document status pill."
+  },
+  "documentStateRejected": "Rejected",
+  "@documentStateRejected": {
+    "description": "Document status pill."
+  },
+  "documentStateMissing": "Missing",
+  "@documentStateMissing": {
+    "description": "Document status pill."
+  },
+  "documentRegisterShort": "Register or artisan card",
+  "@documentRegisterShort": {
+    "description": "The register document in lists (21a/21b/08d)."
+  },
+  "documentPhraseNationalId": "national ID card",
+  "@documentPhraseNationalId": {
+    "description": "The ID card inside a sentence."
+  },
+  "documentPhraseRegister": "register or artisan card",
+  "@documentPhraseRegister": {
+    "description": "The register inside a sentence."
+  },
+  "documentPhraseTaxCard": "tax card (NIF)",
+  "@documentPhraseTaxCard": {
+    "description": "The tax card inside a sentence."
+  },
+  "providerFinishTitle": "Finish your verification",
+  "@providerFinishTitle": {
+    "description": "21a title while documents are missing."
+  },
+  "providerMissingOne": "Send your {document} so we can start the review. It usually takes one to two days.",
+  "@providerMissingOne": {
+    "description": "21a body with one document missing.",
+    "placeholders": {
+      "document": {
+        "type": "String"
+      }
+    }
+  },
+  "providerMissingMany": "{count, plural, other{Send your remaining {count} documents so we can start the review. It usually takes one to two days.}}",
+  "@providerMissingMany": {
+    "description": "21a body with several missing.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerReviewTitle": "Profile under review",
+  "@providerReviewTitle": {
+    "description": "21a title once everything is sent."
+  },
+  "providerReviewBody": "We are checking your documents. It usually takes one to two days — we will let you know.",
+  "@providerReviewBody": {
+    "description": "21a body once everything is sent."
+  },
+  "providerRejectedTitle": "Profile not approved",
+  "@providerRejectedTitle": {
+    "description": "21b title."
+  },
+  "providerRejectedOne": "Your {document} was not accepted. Send a new one to go back into review.",
+  "@providerRejectedOne": {
+    "description": "21b body, one refused document.",
+    "placeholders": {
+      "document": {
+        "type": "String"
+      }
+    }
+  },
+  "providerRejectedMany": "{count, plural, other{{count} documents were not accepted. Send new ones to go back into review.}}",
+  "@providerRejectedMany": {
+    "description": "21b body, several refused.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerStepAccount": "Account created",
+  "@providerStepAccount": {
+    "description": "Verification step."
+  },
+  "providerStepDocuments": "Documents sent",
+  "@providerStepDocuments": {
+    "description": "Verification step."
+  },
+  "providerStepDocumentsCount": "Documents sent · {sent} of {total}",
+  "@providerStepDocumentsCount": {
+    "description": "Verification step while some are missing.",
+    "placeholders": {
+      "sent": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "providerStepUnderReview": "Under review",
+  "@providerStepUnderReview": {
+    "description": "Verification step."
+  },
+  "providerStepReviewed": "Reviewed",
+  "@providerStepReviewed": {
+    "description": "Verification step on 21b."
+  },
+  "providerStepApproved": "Approved",
+  "@providerStepApproved": {
+    "description": "Verification step."
+  },
+  "providerStepNotApproved": "Not approved",
+  "@providerStepNotApproved": {
+    "description": "Verification step on 21b."
+  },
+  "providerYourDocuments": "Your documents",
+  "@providerYourDocuments": {
+    "description": "Heading on 21a/21b/08d."
+  },
+  "providerResubmit": "Resubmit documents",
+  "@providerResubmit": {
+    "description": "21b and 08d button."
+  },
+  "providerUploadNationalId": "Upload ID card",
+  "@providerUploadNationalId": {
+    "description": "21a button, ID card missing."
+  },
+  "providerUploadRegister": "Upload register card",
+  "@providerUploadRegister": {
+    "description": "21a button, register missing."
+  },
+  "providerUploadTaxCard": "Upload tax card",
+  "@providerUploadTaxCard": {
+    "description": "21a button, tax card missing."
+  },
+  "declineTitle": "Decline this request ?",
+  "@declineTitle": {
+    "description": "P3 title."
+  },
+  "declineBody": "{name} is told straight away and the date is released on your calendar. You cannot undo this — a new request would be needed.",
+  "@declineBody": {
+    "description": "P3 body.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "declineReasonLabel": "Why are you declining ?",
+  "@declineReasonLabel": {
+    "description": "P3 field label."
+  },
+  "declineReasonHint": "e.g. Already booked that day",
+  "@declineReasonHint": {
+    "description": "P3 field placeholder."
+  },
+  "declineReasonHelper": "{name} will see this reason.",
+  "@declineReasonHelper": {
+    "description": "Under the P3 field.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "declineNote": "The date opens up for other clients as soon as you decline.",
+  "@declineNote": {
+    "description": "P3 note."
+  },
+  "declineConfirm": "Decline request",
+  "@declineConfirm": {
+    "description": "P3 destructive button."
+  },
+  "declineGoBack": "Go back",
+  "@declineGoBack": {
+    "description": "P3 cancel button."
+  },
+  "resubmitTitle": "Action needed",
+  "@resubmitTitle": {
+    "description": "08d title."
+  },
+  "resubmitBody": "{count, plural, =1{One document was not accepted. Upload it again and your services go back for review.} other{{count} documents were not accepted. Upload them again and your services go back for review.}}",
+  "@resubmitBody": {
+    "description": "08d body.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "resubmitMissingBody": "{count, plural, =1{One document is still missing. Send it and your profile goes into review.} other{{count} documents are still missing. Send them and your profile goes into review.}}",
+  "@resubmitMissingBody": {
+    "description": "08d body when nothing was refused, only missing.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "resubmitNothingBody": "Nothing to fix: your documents are with the reviewers.",
+  "@resubmitNothingBody": {
+    "description": "08d when nothing needs sending."
+  },
+  "resubmitRejectedOn": "Rejected {date}",
+  "@resubmitRejectedOn": {
+    "description": "08d reason card badge.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "resubmitReasonGiven": "Reason given",
+  "@resubmitReasonGiven": {
+    "description": "08d reason card label."
+  },
+  "resubmitNoReason": "Not accepted",
+  "@resubmitNoReason": {
+    "description": "08d reason card when the reviewer gave no reason."
+  },
+  "resubmitUploadNew": "Upload a new file",
+  "@resubmitUploadNew": {
+    "description": "08d upload slot."
+  },
+  "resubmitHint": "PDF or image, max {mb} MB",
+  "@resubmitHint": {
+    "description": "Under the 08d upload slot.",
+    "placeholders": {
+      "mb": {
+        "type": "int"
+      }
+    }
+  },
+  "resubmitChange": "Change",
+  "@resubmitChange": {
+    "description": "Swap the picked file on 08d."
+  },
+  "resubmitRemove": "Remove this file",
+  "@resubmitRemove": {
+    "description": "Screen-reader label of the x on a picked file."
+  },
+  "resubmitNotNow": "Not now",
+  "@resubmitNotNow": {
+    "description": "08d secondary button."
+  },
+  "resubmitSent": "Documents sent — we will review them within a day or two.",
+  "@resubmitSent": {
+    "description": "Toast after 08d."
+  },
+  "resubmitFailed": "A file did not go through. Nothing else was lost — try again.",
+  "@resubmitFailed": {
+    "description": "Toast when an 08d upload fails."
+  },
+  "messagesEmptyBodyProvider": "When a client writes to you, the conversation appears here.",
+  "@messagesEmptyBodyProvider": {
+    "description": "14's empty state for a provider."
   },
   "budgetDelete": "Delete budget",
   "@budgetDelete": {

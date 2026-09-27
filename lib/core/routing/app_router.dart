@@ -53,6 +53,12 @@ import '../catalog/recent_searches.dart';
 import '../catalog/service_query.dart';
 import '../catalog/catalog_repository.dart';
 import '../../features/provider_home/view/provider_home_view.dart';
+import '../../features/provider_home/view_model/provider_home_view_model.dart';
+import '../../features/resubmit_documents/view/resubmit_documents_view.dart';
+import '../../features/resubmit_documents/view_model/resubmit_documents_view_model.dart';
+import '../../features/shell/view/provider_profile_tab_view.dart';
+import '../../features/shell/view/provider_shell.dart';
+import '../provider/provider_repository.dart';
 import '../../features/shell/view/client_shell.dart';
 import '../../features/shell/view/placeholder_tab_view.dart';
 import '../../features/shell/view/profile_tab_view.dart';
@@ -143,15 +149,12 @@ class AppRedirect {
     if (session.isSignedIn) {
       final AppUser user = session.user!;
       if (isPublic) return _landing();
-      if (path == AppRoutes.documents && !user.isProvider) {
-        return AppRoutes.home;
-      }
-      // Two homes: the client shell and, until 21 is built, the provider's
-      // placeholder. A deep link or a stale stack never crosses over.
+      // Two shells, the client's and the provider's. A deep link or a stale
+      // stack never crosses over; chat and the bell belong to both.
       if (user.isProvider && AppRoutes.isClientOnly(path)) {
         return AppRoutes.providerHome;
       }
-      if (!user.isProvider && path == AppRoutes.providerHome) {
+      if (!user.isProvider && AppRoutes.isProviderOnly(path)) {
         return AppRoutes.home;
       }
       // Reached the one-off landing (a new provider's documents): retire it.
@@ -431,9 +434,87 @@ abstract final class AppRouter {
             ),
           ],
         ),
+        // The provider's five tabs (21). Home and Messages are real; the
+        // request, service and profile modules are still to come.
+        StatefulShellRoute.indexedStack(
+          builder: (_, _, StatefulNavigationShell shell) =>
+              ProviderShell(navigationShell: shell),
+          branches: <StatefulShellBranch>[
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: AppRoutes.providerHome,
+                  builder: (_, _) => _withViewModel<ProviderHomeViewModel>(
+                    (BuildContext context) => ProviderHomeViewModel(
+                      provider: context.read<ProviderRepository>(),
+                      session: context.read<SessionController>(),
+                      badges: context.read<ShellBadges>(),
+                      replyDeadlineHours: context
+                          .read<AppConfigRepository>()
+                          .current
+                          .bookingReplyDeadlineHours,
+                    ),
+                    const ProviderHomeView(),
+                  ),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: AppRoutes.providerRequests,
+                  builder: (BuildContext context, _) => PlaceholderTabView(
+                    title: context.l10n.navRequests,
+                    icon: AppIcons.calendar,
+                  ),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: AppRoutes.providerServices,
+                  builder: (BuildContext context, _) => PlaceholderTabView(
+                    title: context.l10n.navServices,
+                    icon: AppIcons.briefcase,
+                  ),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: AppRoutes.providerMessages,
+                  builder: (_, _) => _withViewModel<MessagesViewModel>(
+                    (BuildContext context) => MessagesViewModel(
+                      messaging: context.read<MessagingRepository>(),
+                      badges: context.read<ShellBadges>(),
+                    ),
+                    const MessagesView(),
+                  ),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: AppRoutes.providerProfile,
+                  builder: (_, _) => const ProviderProfileTabView(),
+                ),
+              ],
+            ),
+          ],
+        ),
+        // 08d, full screen over the provider's tabs.
         GoRoute(
-          path: AppRoutes.providerHome,
-          builder: (_, _) => const ProviderHomeView(),
+          path: AppRoutes.resubmitDocuments,
+          builder: (_, _) => _withViewModel<ResubmitDocumentsViewModel>(
+            (BuildContext context) => ResubmitDocumentsViewModel(
+              documents: context.read<DocumentsRepository>(),
+              session: context.read<SessionController>(),
+            ),
+            const ResubmitDocumentsView(),
+          ),
         ),
         GoRoute(
           path: AppRoutes.notifications,

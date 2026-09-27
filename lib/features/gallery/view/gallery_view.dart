@@ -288,7 +288,7 @@ class _GalleryViewState extends State<GalleryView> {
           _gap(),
           RequestCard(clientName: 'Nadia Kaci', meta: 'Wedding photography · Sat 14 Mar · 150 guests', onAccept: () {}, onDecline: () {}),
           _gap(),
-          const ServiceItem(title: 'Wedding photography', price: '45 000 DA', unit: 'per day', isAvailable: true),
+          const ServiceItem(title: 'Wedding photography', price: '45 000', unit: 'per day', isAvailable: true),
           _gap(),
           const ProviderCard(name: 'Corporate event stage', meta: 'Limousine Prestige', amount: '0.00', unit: '', isNew: true, quoteLabel: 'On quote'),
           _section('Prices & ratings'),

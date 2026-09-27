@@ -32,6 +32,7 @@ class ProviderDocument {
     required this.status,
     this.rejectReason,
     this.rejectNote,
+    this.reviewedAt,
   });
 
   factory ProviderDocument.fromJson(Map<String, Object?> json) =>
@@ -46,6 +47,9 @@ class ProviderDocument {
         },
         rejectReason: json['rejectReasonLabel'] as String?,
         rejectNote: json['rejectNote'] as String?,
+        reviewedAt: json['reviewedAt'] is String
+            ? DateTime.tryParse(json['reviewedAt']! as String)?.toLocal()
+            : null,
       );
 
   final ProviderDocumentType type;
@@ -54,6 +58,15 @@ class ProviderDocument {
   /// Already translated by the server.
   final String? rejectReason;
   final String? rejectNote;
+
+  /// When a reviewer last decided on it — "Rejected 12 May 2025" on 08d.
+  final DateTime? reviewedAt;
+
+  /// Still to be sent, or sent again: nothing on file the reviewer accepts
+  /// or is looking at.
+  bool get needsAction =>
+      status == ProviderDocumentStatus.missing ||
+      status == ProviderDocumentStatus.rejected;
 }
 
 /// The provider's documents and what the server accepts.
@@ -89,6 +102,21 @@ class ProviderDocuments {
   final List<ProviderDocument> documents;
   final int maxFileSizeMb;
   final List<String> acceptedTypes;
+
+  /// Documents that are missing or were rejected — what 21a/21b and 08d ask
+  /// the provider to send, in the design's order.
+  List<ProviderDocument> get needingAction => <ProviderDocument>[
+        for (final ProviderDocumentType type in ProviderDocumentType.values)
+          if (byType(type) case final ProviderDocument document
+              when document.needsAction)
+            document,
+      ];
+
+  /// How many of the three are on file, in review or approved — the
+  /// "Documents sent · 2 of 3" step.
+  int get sentCount => documents
+      .where((ProviderDocument d) => d.status != ProviderDocumentStatus.missing)
+      .length;
 
   ProviderDocument? byType(ProviderDocumentType type) {
     for (final ProviderDocument document in documents) {

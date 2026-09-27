@@ -360,11 +360,15 @@ void main() {
       await auth.login(email: 'provider@eventor.test', password: 'Eventor2026');
     });
 
-    test('start missing, and an upload lands as pending', () async {
+    test('start as 21a draws them, and an upload lands as pending', () async {
       final ProviderDocuments before = await documents.fetch();
       expect(
         before.documents.map((ProviderDocument d) => d.status),
-        everyElement(ProviderDocumentStatus.missing),
+        <ProviderDocumentStatus>[
+          ProviderDocumentStatus.pending,
+          ProviderDocumentStatus.pending,
+          ProviderDocumentStatus.missing,
+        ],
       );
 
       final ProviderDocuments after = await documents.upload(

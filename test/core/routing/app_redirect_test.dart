@@ -289,10 +289,38 @@ void main() {
         AppRoutes.packs,
         AppRoutes.packFor('k-1'),
         AppRoutes.favourites,
-        AppRoutes.chatFor('x'),
-        AppRoutes.notifications,
+        AppRoutes.budget,
+        AppRoutes.budgetEdit,
       ]) {
         expect(world.go(path), AppRoutes.providerHome, reason: path);
+      }
+    });
+
+    test('lets a provider into chat, the bell and their own tabs', () async {
+      final _World world = await _world(user: testUser(role: UserRole.provider));
+
+      for (final String path in <String>[
+        AppRoutes.chatFor('x'),
+        AppRoutes.notifications,
+        AppRoutes.providerRequests,
+        AppRoutes.providerMessages,
+        AppRoutes.providerProfile,
+        AppRoutes.resubmitDocuments,
+      ]) {
+        expect(world.go(path), isNull, reason: path);
+      }
+    });
+
+    test('keeps a client out of every provider screen', () async {
+      final _World world = await _world(user: testUser());
+
+      for (final String path in <String>[
+        AppRoutes.providerRequests,
+        AppRoutes.providerMessages,
+        AppRoutes.documents,
+        AppRoutes.resubmitDocuments,
+      ]) {
+        expect(world.go(path), AppRoutes.home, reason: path);
       }
     });
 

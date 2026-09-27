@@ -162,4 +162,10 @@ abstract final class ApiErrorCode {
   static const String budgetItemNotFound = 'BUDGET_ITEM_NOT_FOUND';
   static const String budgetItemLimit = 'BUDGET_ITEM_LIMIT';
   static const String bookingNotFound = 'BOOKING_NOT_FOUND';
+
+  // Provider.
+  static const String providerNotVerified = 'PROVIDER_NOT_VERIFIED';
+  static const String bookingInvalidTransition = 'BOOKING_INVALID_TRANSITION';
+  static const String dateUnavailable = 'DATE_UNAVAILABLE';
+  static const String notAProvider = 'NOT_A_PROVIDER';
 }

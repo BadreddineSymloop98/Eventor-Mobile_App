@@ -28,7 +28,10 @@ class MockAccount {
     this.categoryId,
     List<int>? wilayaCodes,
     Map<String, String>? documents,
-  })  : verificationStatus = verificationStatus ??
+    Map<String, Map<String, Object?>>? documentReviews,
+    this.acceptingBookings = true,
+  })  : documentReviews = documentReviews ?? <String, Map<String, Object?>>{},
+        verificationStatus = verificationStatus ??
             (role == UserRole.provider
                 ? VerificationStatus.pending
                 : VerificationStatus.notRequired),
@@ -57,6 +60,15 @@ class MockAccount {
         documents: (json['documents'] as Map<String, Object?>? ??
                 <String, Object?>{})
             .map((String k, Object? v) => MapEntry<String, String>(k, '$v')),
+        documentReviews: (json['documentReviews'] as Map<String, Object?>? ??
+                <String, Object?>{})
+            .map(
+              (String k, Object? v) => MapEntry<String, Map<String, Object?>>(
+                k,
+                Map<String, Object?>.of(v! as Map<String, Object?>),
+              ),
+            ),
+        acceptingBookings: json['acceptingBookings'] as bool? ?? true,
       );
 
   final String id;
@@ -83,6 +95,13 @@ class MockAccount {
 
   /// Document type (API name) → status (`pending`, `approved`, `rejected`).
   Map<String, String> documents;
+
+  /// Document type → the reviewer's decision: `reason`, `reasonLabel`,
+  /// `note`, `reviewedAt` (epoch ms). Cleared when the type is sent again.
+  Map<String, Map<String, Object?>> documentReviews;
+
+  /// 21's "Accepting bookings".
+  bool acceptingBookings;
 
   AppUser toUser() => AppUser(
         id: id,
@@ -120,6 +139,8 @@ class MockAccount {
         'categoryId': categoryId,
         'wilayaCodes': wilayaCodes,
         'documents': documents,
+        'documentReviews': documentReviews,
+        'acceptingBookings': acceptingBookings,
       };
 }
 
@@ -228,6 +249,40 @@ class MockBackend {
           businessName: 'Studio Lumière',
           categoryId: '7d3855dd-4bd3-430a-9ffc-09d4f269eb4a',
           wilayaCodes: <int>[16, 9],
+          // 21a as drawn: two in review, the tax card still to send.
+          documents: <String, String>{
+            ProviderDocumentType.nationalId.apiValue: 'pending',
+            ProviderDocumentType.commercialRegister.apiValue: 'pending',
+          },
+        ),
+        // 21b / 08d as drawn: the tax card was refused.
+        MockAccount(
+          id: 'mock-rejected-provider',
+          role: UserRole.provider,
+          fullName: 'Rym Belaid',
+          email: 'rejected.provider@eventor.test',
+          phone: '+213555000007',
+          password: seedPassword,
+          language: 'en',
+          emailVerified: true,
+          verificationStatus: VerificationStatus.rejected,
+          businessName: 'Rym Events Déco',
+          categoryId: '9ec8cbe5-ead7-42b4-99d1-fccc49fdad50',
+          wilayaCodes: <int>[16],
+          documents: <String, String>{
+            ProviderDocumentType.nationalId.apiValue: 'approved',
+            ProviderDocumentType.commercialRegister.apiValue: 'approved',
+            ProviderDocumentType.taxCard.apiValue: 'rejected',
+          },
+          documentReviews: <String, Map<String, Object?>>{
+            ProviderDocumentType.taxCard.apiValue: <String, Object?>{
+              'reason': 'name_mismatch',
+              'reasonLabel': 'Details do not match the account',
+              'note':
+                  'The name on the NIF card does not match your account name. Send a card in the same name.',
+              'daysAgo': 2,
+            },
+          },
         ),
         MockAccount(
           id: 'mock-verified-provider',
@@ -298,6 +353,7 @@ class MockBackend {
     _failedLogins.clear();
     _lockedUntil.clear();
     _codeSentAt.clear();
+    _providerBookings.clear();
     _seedFavourites();
     _seedBudgets();
     await _save();
@@ -321,6 +377,10 @@ class MockBackend {
             MockAccount.fromJson(a! as Map<String, Object?>);
         _accounts[account.email] = account;
       }
+      // Seed accounts added since this state was saved.
+      for (final MockAccount seed in seedAccounts()) {
+        _accounts.putIfAbsent(seed.email, () => seed);
+      }
       _sessionEmail = json['session'] as String?;
       final Object? favourites = json['favourites'];
       if (favourites is Map<String, Object?>) {
@@ -333,6 +393,15 @@ class MockBackend {
       } else {
         // State saved before favourites existed.
         _seedFavourites();
+      }
+      final Object? bookings = json['providerBookings'];
+      if (bookings is Map<String, Object?>) {
+        bookings.forEach((String email, Object? rows) {
+          _providerBookings[email] = <Map<String, Object?>>[
+            for (final Object? row in rows as List<Object?>)
+              Map<String, Object?>.of(row! as Map<String, Object?>),
+          ];
+        });
       }
       final Object? budgets = json['budgets'];
       if (budgets is Map<String, Object?>) {
@@ -363,6 +432,7 @@ class MockBackend {
           'session': _sessionEmail,
           'favourites': _favourites,
           'budgets': _budgets,
+          'providerBookings': _providerBookings,
         }),
       );
 
@@ -719,7 +789,50 @@ class MockBackend {
     final MockAccount? account = sessionAccount;
     if (account == null) return;
     account.documents[type.apiValue] = status;
+    // A new version wipes the old verdict.
+    account.documentReviews.remove(type.apiValue);
+    // status-rules §2: the account follows its current documents.
+    final List<String?> statuses = <String?>[
+      for (final ProviderDocumentType t in ProviderDocumentType.values)
+        account.documents[t.apiValue],
+    ];
+    account.verificationStatus = statuses.contains('rejected')
+        ? VerificationStatus.rejected
+        : statuses.every((String? s) => s == 'approved')
+            ? VerificationStatus.verified
+            : VerificationStatus.pending;
     await _save();
+  }
+
+  // ------------------------------------------------------------- provider
+
+  /// Requests and bookings made to each provider, per account email, as
+  /// `AppBookingCardDto` rows.
+  final Map<String, List<Map<String, Object?>>> _providerBookings =
+      <String, List<Map<String, Object?>>>{};
+
+  /// The signed-in provider's bookings. Seeded lazily from [seed] the first
+  /// time a verified provider asks, so every verified account has 21 as
+  /// drawn.
+  List<Map<String, Object?>> providerBookings(
+    List<Map<String, Object?>> Function() seed,
+  ) {
+    final MockAccount account = requireProvider();
+    return _providerBookings.putIfAbsent(account.email, seed);
+  }
+
+  Future<void> saveProvider() => _save();
+
+  MockAccount requireProvider() {
+    final MockAccount account = requireSession();
+    if (account.role != UserRole.provider) {
+      throw _failure(
+        422,
+        ApiErrorCode.notAProvider,
+        'This action is only available for provider accounts.',
+      );
+    }
+    return account;
   }
 
   MockAccount requireSession() {

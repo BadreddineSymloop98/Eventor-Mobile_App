@@ -6,6 +6,7 @@ import '../core/reference/reference_repository.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/documents_repository.dart';
 import 'mock_backend.dart';
+import 'mock_provider.dart';
 import 'mock_reference_data.dart';
 
 /// [AuthRepository] on the in-app [MockBackend].
@@ -160,26 +161,9 @@ class MockDocumentsRepository implements DocumentsRepository {
     return _snapshot();
   }
 
-  ProviderDocuments _snapshot() {
-    final MockAccount account = _backend.requireSession();
-    return ProviderDocuments(
-      verificationStatus: account.verificationStatus,
-      maxFileSizeMb: 5,
-      acceptedTypes: const <String>['pdf', 'jpeg', 'png'],
-      documents: <ProviderDocument>[
-        for (final ProviderDocumentType type in ProviderDocumentType.values)
-          ProviderDocument(
-            type: type,
-            status: switch (account.documents[type.apiValue]) {
-              'pending' => ProviderDocumentStatus.pending,
-              'approved' => ProviderDocumentStatus.approved,
-              'rejected' => ProviderDocumentStatus.rejected,
-              _ => ProviderDocumentStatus.missing,
-            },
-          ),
-      ],
-    );
-  }
+  ProviderDocuments _snapshot() => ProviderDocuments.fromJson(
+        mockDocumentsJson(_backend.requireSession(), _backend.now),
+      );
 }
 
 /// [AppConfigRepository] answering with today's live config, never touching

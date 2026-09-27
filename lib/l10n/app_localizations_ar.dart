@@ -567,27 +567,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get supportEmailSubject => 'مساعدة بخصوص حسابي على Eventor';
 
   @override
-  String get homeTitle => 'الرئيسية';
-
-  @override
-  String homeGreeting(String name) {
-    return 'مرحبًا، $name';
-  }
-
-  @override
-  String get homeComingSoon => 'يجري بناء شاشتك الرئيسية. أنت مسجّل الدخول.';
-
-  @override
-  String get homeProviderPendingTitle => 'ملفك قيد المراجعة';
-
-  @override
-  String get homeProviderPendingBody =>
-      'يمكنك تصفح التطبيق. تُنشر خدماتك بعد قبول مستنداتك.';
-
-  @override
-  String get homeProviderRejectedTitle => 'بعض المستندات تحتاج انتباهك';
-
-  @override
   String get homeUploadDocuments => 'رفع المستندات';
 
   @override
@@ -1924,6 +1903,319 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get discardKeep => 'متابعة التعديل';
+
+  @override
+  String get navRequests => 'الطلبات';
+
+  @override
+  String get navServices => 'الخدمات';
+
+  @override
+  String get profileDocuments => 'وثائقي';
+
+  @override
+  String get providerAccepting => 'أقبل الحجوزات';
+
+  @override
+  String get providerPaused => 'الحجوزات متوقفة';
+
+  @override
+  String get providerAcceptingHint => 'يمكن للعملاء إرسال طلبات جديدة إليك.';
+
+  @override
+  String get providerPausedHint =>
+      'لا طلبات جديدة حتى تعيد التفعيل. تبقى خدماتك ظاهرة.';
+
+  @override
+  String get providerAvailabilityTitle => 'توفّرك';
+
+  @override
+  String get providerAvailabilityBody => 'الإيقاف لا يمسّ حجوزاتك الحالية.';
+
+  @override
+  String get providerNowAccepting => 'أصبحت تقبل الحجوزات من جديد.';
+
+  @override
+  String get providerNowPaused => 'تم إيقاف الحجوزات الجديدة.';
+
+  @override
+  String get providerStatRequests => 'الطلبات';
+
+  @override
+  String get providerStatUpcoming => 'القادمة';
+
+  @override
+  String get providerStatServices => 'الخدمات';
+
+  @override
+  String get providerRequestsTitle => 'طلبات الحجز';
+
+  @override
+  String get providerNoRequestsTitle => 'لا طلبات جديدة';
+
+  @override
+  String providerNoRequestsBody(int hours) {
+    return 'تظهر هنا طلبات الحجز الجديدة، ولديك $hours ساعة للردّ على كل طلب.';
+  }
+
+  @override
+  String get providerNoRequestsPausedBody =>
+      'حجوزاتك متوقفة، لذا لا يمكن للعملاء إرسال طلبات جديدة.';
+
+  @override
+  String providerReplyWithin(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'ردّ خلال $hours ساعة',
+      zero: 'ردّ الآن',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String providerAccepted(String name) {
+    return 'تم قبول طلب $name.';
+  }
+
+  @override
+  String get providerDeclined => 'تم رفض الطلب.';
+
+  @override
+  String get providerUpcomingTitle => 'الحجوزات القادمة';
+
+  @override
+  String get providerNoUpcoming => 'لا حجوزات مؤكدة قادمة بعد.';
+
+  @override
+  String get providerAvailabilityCalendar => 'تقويم التوفر';
+
+  @override
+  String get providerServicesTitle => 'خدماتك';
+
+  @override
+  String get providerManage => 'إدارة';
+
+  @override
+  String get providerAddService => 'إضافة خدمة';
+
+  @override
+  String get providerServicesAfterApproval => 'يتاح بعد الموافقة على ملفك.';
+
+  @override
+  String get serviceStatusPublished => 'منشورة';
+
+  @override
+  String get serviceStatusDraft => 'مسودة';
+
+  @override
+  String get serviceStatusHidden => 'مخفية';
+
+  @override
+  String get documentStateInReview => 'قيد المراجعة';
+
+  @override
+  String get documentStateApproved => 'مقبولة';
+
+  @override
+  String get documentStateRejected => 'مرفوضة';
+
+  @override
+  String get documentStateMissing => 'ناقص';
+
+  @override
+  String get documentRegisterShort => 'السجل التجاري أو بطاقة الحرفي';
+
+  @override
+  String get documentPhraseNationalId => 'بطاقة التعريف الوطنية';
+
+  @override
+  String get documentPhraseRegister => 'السجل التجاري أو بطاقة الحرفي';
+
+  @override
+  String get documentPhraseTaxCard => 'البطاقة الجبائية (NIF)';
+
+  @override
+  String get providerFinishTitle => 'أكمل التحقق';
+
+  @override
+  String providerMissingOne(String document) {
+    return 'أرسل $document لنبدأ المراجعة. تستغرق عادةً يومًا إلى يومين.';
+  }
+
+  @override
+  String providerMissingMany(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'أرسل الوثائق المتبقية ($count) لنبدأ المراجعة. تستغرق عادةً يومًا إلى يومين.',
+      two: 'أرسل الوثيقتين المتبقيتين لنبدأ المراجعة. تستغرق عادةً يومًا إلى يومين.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerReviewTitle => 'ملفك قيد المراجعة';
+
+  @override
+  String get providerReviewBody =>
+      'نراجع وثائقك الآن. تستغرق المراجعة عادةً يومًا إلى يومين، وسنُعلمك بالنتيجة.';
+
+  @override
+  String get providerRejectedTitle => 'لم تتم الموافقة على الملف';
+
+  @override
+  String providerRejectedOne(String document) {
+    return 'لم نقبل $document. أرسل نسخة جديدة لتعود إلى المراجعة.';
+  }
+
+  @override
+  String providerRejectedMany(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'لم نقبل $count وثائق. أرسل نسخًا جديدة لتعود إلى المراجعة.',
+      two: 'لم نقبل وثيقتين. أرسل نسختين جديدتين لتعود إلى المراجعة.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerStepAccount => 'تم إنشاء الحساب';
+
+  @override
+  String get providerStepDocuments => 'تم إرسال المستندات';
+
+  @override
+  String providerStepDocumentsCount(int sent, int total) {
+    return 'المستندات المرسلة · $sent من $total';
+  }
+
+  @override
+  String get providerStepUnderReview => 'قيد المراجعة';
+
+  @override
+  String get providerStepReviewed => 'تمت المراجعة';
+
+  @override
+  String get providerStepApproved => 'تمت الموافقة';
+
+  @override
+  String get providerStepNotApproved => 'لم تتم الموافقة';
+
+  @override
+  String get providerYourDocuments => 'وثائقك';
+
+  @override
+  String get providerResubmit => 'إعادة إرسال الوثائق';
+
+  @override
+  String get providerUploadNationalId => 'رفع بطاقة التعريف';
+
+  @override
+  String get providerUploadRegister => 'رفع السجل التجاري';
+
+  @override
+  String get providerUploadTaxCard => 'رفع البطاقة الجبائية';
+
+  @override
+  String get declineTitle => 'رفض هذا الطلب ؟';
+
+  @override
+  String declineBody(String name) {
+    return 'سيُبلَّغ $name فورًا ويُحرَّر التاريخ في تقويمك. لا يمكن التراجع عن هذا — سيلزم إرسال طلب جديد.';
+  }
+
+  @override
+  String get declineReasonLabel => 'لماذا ترفض الطلب ؟';
+
+  @override
+  String get declineReasonHint => 'مثال: لديّ حجز آخر في ذلك اليوم';
+
+  @override
+  String declineReasonHelper(String name) {
+    return 'سيطّلع $name على هذا السبب.';
+  }
+
+  @override
+  String get declineNote => 'يصبح التاريخ متاحًا لعملاء آخرين فور رفضك.';
+
+  @override
+  String get declineConfirm => 'رفض الطلب';
+
+  @override
+  String get declineGoBack => 'رجوع';
+
+  @override
+  String get resubmitTitle => 'مطلوب إجراء';
+
+  @override
+  String resubmitBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'لم تُقبل $count وثائق. أعد إرسالها لتعود خدماتك إلى المراجعة.',
+      two: 'لم تُقبل وثيقتان. أعد إرسالهما لتعود خدماتك إلى المراجعة.',
+      one: 'لم تُقبل إحدى الوثائق. أعد إرسالها لتعود خدماتك إلى المراجعة.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String resubmitMissingBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'ما زالت $count وثائق ناقصة. أرسلها ليدخل ملفك المراجعة.',
+      two: 'ما زالت وثيقتان ناقصتين. أرسلهما ليدخل ملفك المراجعة.',
+      one: 'ما زالت وثيقة واحدة ناقصة. أرسلها ليدخل ملفك المراجعة.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get resubmitNothingBody =>
+      'لا شيء يحتاج إلى تصحيح: وثائقك لدى المراجعين.';
+
+  @override
+  String resubmitRejectedOn(String date) {
+    return 'مرفوضة في $date';
+  }
+
+  @override
+  String get resubmitReasonGiven => 'السبب المذكور';
+
+  @override
+  String get resubmitNoReason => 'غير مقبولة';
+
+  @override
+  String get resubmitUploadNew => 'إرفاق ملف جديد';
+
+  @override
+  String resubmitHint(int mb) {
+    return 'PDF أو صورة، $mb ميغابايت كحد أقصى';
+  }
+
+  @override
+  String get resubmitChange => 'تغيير';
+
+  @override
+  String get resubmitRemove => 'إزالة هذا الملف';
+
+  @override
+  String get resubmitNotNow => 'ليس الآن';
+
+  @override
+  String get resubmitSent => 'تم إرسال الوثائق — سنراجعها خلال يوم أو يومين.';
+
+  @override
+  String get resubmitFailed =>
+      'لم يُرسل أحد الملفات. لم يضع شيء آخر — أعد المحاولة.';
+
+  @override
+  String get messagesEmptyBodyProvider =>
+      'عندما يراسلك عميل، تظهر المحادثة هنا.';
 
   @override
   String get budgetDelete => 'حذف الميزانية';

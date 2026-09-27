@@ -23,7 +23,10 @@ import '../view_model/documents_view_model.dart';
 class DocumentsView extends StatelessWidget {
   const DocumentsView({super.key});
 
-  void _later(BuildContext context) => context.go(AppRoutes.home);
+  /// Back where it was opened from — the provider's home or profile — or,
+  /// as the landing right after sign-up, to the home.
+  void _later(BuildContext context) =>
+      context.canPop() ? context.pop() : context.go(AppRoutes.home);
 
   Future<void> _submit(BuildContext context) async {
     final DocumentsViewModel viewModel = context.read<DocumentsViewModel>();
@@ -39,7 +42,7 @@ class DocumentsView extends StatelessWidget {
       return;
     }
     showAppToast(context, context.l10n.documentsSubmitted);
-    context.go(AppRoutes.home);
+    _later(context);
   }
 
   @override

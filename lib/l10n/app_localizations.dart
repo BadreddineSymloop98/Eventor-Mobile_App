@@ -1058,42 +1058,6 @@ abstract class AppLocalizations {
   /// **'Help with my Eventor account'**
   String get supportEmailSubject;
 
-  /// Home app bar title.
-  ///
-  /// In en, this message translates to:
-  /// **'Home'**
-  String get homeTitle;
-
-  /// Greeting on the placeholder home.
-  ///
-  /// In en, this message translates to:
-  /// **'Hello, {name}'**
-  String homeGreeting(String name);
-
-  /// Body of the placeholder home.
-  ///
-  /// In en, this message translates to:
-  /// **'Your home screen is being built. You are signed in.'**
-  String get homeComingSoon;
-
-  /// Provider pending card title.
-  ///
-  /// In en, this message translates to:
-  /// **'Your profile is under review'**
-  String get homeProviderPendingTitle;
-
-  /// Provider pending card body.
-  ///
-  /// In en, this message translates to:
-  /// **'You can browse the app. Services go live once your documents are approved.'**
-  String get homeProviderPendingBody;
-
-  /// Provider rejected card title.
-  ///
-  /// In en, this message translates to:
-  /// **'Some documents need your attention'**
-  String get homeProviderRejectedTitle;
-
   /// Leads to 08e from home.
   ///
   /// In en, this message translates to:
@@ -3115,6 +3079,498 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Keep editing'**
   String get discardKeep;
+
+  /// The provider's second tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get navRequests;
+
+  /// The provider's third tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get navServices;
+
+  /// Row on the provider's Profile tab.
+  ///
+  /// In en, this message translates to:
+  /// **'My documents'**
+  String get profileDocuments;
+
+  /// 21's availability pill, and its first choice.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepting bookings'**
+  String get providerAccepting;
+
+  /// 21's availability pill when paused, and its second choice.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings paused'**
+  String get providerPaused;
+
+  /// Under the Accepting choice.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients can send you new requests.'**
+  String get providerAcceptingHint;
+
+  /// Under the Paused choice.
+  ///
+  /// In en, this message translates to:
+  /// **'No new requests until you turn it back on. Your services stay visible.'**
+  String get providerPausedHint;
+
+  /// Title of the availability sheet on 21.
+  ///
+  /// In en, this message translates to:
+  /// **'Your availability'**
+  String get providerAvailabilityTitle;
+
+  /// Subtitle of the availability sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Pausing keeps the bookings you already have.'**
+  String get providerAvailabilityBody;
+
+  /// Toast after turning bookings back on.
+  ///
+  /// In en, this message translates to:
+  /// **'You are accepting bookings again.'**
+  String get providerNowAccepting;
+
+  /// Toast after pausing bookings.
+  ///
+  /// In en, this message translates to:
+  /// **'New bookings are paused.'**
+  String get providerNowPaused;
+
+  /// 21's counter.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get providerStatRequests;
+
+  /// 21's counter.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get providerStatUpcoming;
+
+  /// 21's counter.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get providerStatServices;
+
+  /// 21's section.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking requests'**
+  String get providerRequestsTitle;
+
+  /// 21 with no pending request.
+  ///
+  /// In en, this message translates to:
+  /// **'No new requests'**
+  String get providerNoRequestsTitle;
+
+  /// 21 with no pending request.
+  ///
+  /// In en, this message translates to:
+  /// **'New booking requests show up here, and you have {hours} h to answer each one.'**
+  String providerNoRequestsBody(int hours);
+
+  /// 21 with no request while paused.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings are paused, so clients cannot send new requests.'**
+  String get providerNoRequestsPausedBody;
+
+  /// End of a request row's meta line on 21.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours, plural, =0{reply now} other{reply within {hours} h}}'**
+  String providerReplyWithin(int hours);
+
+  /// Toast after Accept.
+  ///
+  /// In en, this message translates to:
+  /// **'Request from {name} accepted.'**
+  String providerAccepted(String name);
+
+  /// Toast after P3.
+  ///
+  /// In en, this message translates to:
+  /// **'Request declined.'**
+  String get providerDeclined;
+
+  /// 21's section.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming bookings'**
+  String get providerUpcomingTitle;
+
+  /// 21's upcoming section when empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No confirmed bookings ahead yet.'**
+  String get providerNoUpcoming;
+
+  /// 21's button.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability calendar'**
+  String get providerAvailabilityCalendar;
+
+  /// 21's section.
+  ///
+  /// In en, this message translates to:
+  /// **'Your services'**
+  String get providerServicesTitle;
+
+  /// 21's link beside Your services.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get providerManage;
+
+  /// 21's button.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a service'**
+  String get providerAddService;
+
+  /// Under the disabled Add a service on 21a/21b.
+  ///
+  /// In en, this message translates to:
+  /// **'Available once your profile is approved.'**
+  String get providerServicesAfterApproval;
+
+  /// Service status badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Published'**
+  String get serviceStatusPublished;
+
+  /// Service status badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get serviceStatusDraft;
+
+  /// Service status badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden'**
+  String get serviceStatusHidden;
+
+  /// Document status pill.
+  ///
+  /// In en, this message translates to:
+  /// **'In review'**
+  String get documentStateInReview;
+
+  /// Document status pill.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get documentStateApproved;
+
+  /// Document status pill.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get documentStateRejected;
+
+  /// Document status pill.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing'**
+  String get documentStateMissing;
+
+  /// The register document in lists (21a/21b/08d).
+  ///
+  /// In en, this message translates to:
+  /// **'Register or artisan card'**
+  String get documentRegisterShort;
+
+  /// The ID card inside a sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'national ID card'**
+  String get documentPhraseNationalId;
+
+  /// The register inside a sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'register or artisan card'**
+  String get documentPhraseRegister;
+
+  /// The tax card inside a sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'tax card (NIF)'**
+  String get documentPhraseTaxCard;
+
+  /// 21a title while documents are missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish your verification'**
+  String get providerFinishTitle;
+
+  /// 21a body with one document missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Send your {document} so we can start the review. It usually takes one to two days.'**
+  String providerMissingOne(String document);
+
+  /// 21a body with several missing.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{Send your remaining {count} documents so we can start the review. It usually takes one to two days.}}'**
+  String providerMissingMany(int count);
+
+  /// 21a title once everything is sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile under review'**
+  String get providerReviewTitle;
+
+  /// 21a body once everything is sent.
+  ///
+  /// In en, this message translates to:
+  /// **'We are checking your documents. It usually takes one to two days — we will let you know.'**
+  String get providerReviewBody;
+
+  /// 21b title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile not approved'**
+  String get providerRejectedTitle;
+
+  /// 21b body, one refused document.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {document} was not accepted. Send a new one to go back into review.'**
+  String providerRejectedOne(String document);
+
+  /// 21b body, several refused.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{{count} documents were not accepted. Send new ones to go back into review.}}'**
+  String providerRejectedMany(int count);
+
+  /// Verification step.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created'**
+  String get providerStepAccount;
+
+  /// Verification step.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents sent'**
+  String get providerStepDocuments;
+
+  /// Verification step while some are missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents sent · {sent} of {total}'**
+  String providerStepDocumentsCount(int sent, int total);
+
+  /// Verification step.
+  ///
+  /// In en, this message translates to:
+  /// **'Under review'**
+  String get providerStepUnderReview;
+
+  /// Verification step on 21b.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed'**
+  String get providerStepReviewed;
+
+  /// Verification step.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get providerStepApproved;
+
+  /// Verification step on 21b.
+  ///
+  /// In en, this message translates to:
+  /// **'Not approved'**
+  String get providerStepNotApproved;
+
+  /// Heading on 21a/21b/08d.
+  ///
+  /// In en, this message translates to:
+  /// **'Your documents'**
+  String get providerYourDocuments;
+
+  /// 21b and 08d button.
+  ///
+  /// In en, this message translates to:
+  /// **'Resubmit documents'**
+  String get providerResubmit;
+
+  /// 21a button, ID card missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload ID card'**
+  String get providerUploadNationalId;
+
+  /// 21a button, register missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload register card'**
+  String get providerUploadRegister;
+
+  /// 21a button, tax card missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload tax card'**
+  String get providerUploadTaxCard;
+
+  /// P3 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline this request ?'**
+  String get declineTitle;
+
+  /// P3 body.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is told straight away and the date is released on your calendar. You cannot undo this — a new request would be needed.'**
+  String declineBody(String name);
+
+  /// P3 field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Why are you declining ?'**
+  String get declineReasonLabel;
+
+  /// P3 field placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Already booked that day'**
+  String get declineReasonHint;
+
+  /// Under the P3 field.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} will see this reason.'**
+  String declineReasonHelper(String name);
+
+  /// P3 note.
+  ///
+  /// In en, this message translates to:
+  /// **'The date opens up for other clients as soon as you decline.'**
+  String get declineNote;
+
+  /// P3 destructive button.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline request'**
+  String get declineConfirm;
+
+  /// P3 cancel button.
+  ///
+  /// In en, this message translates to:
+  /// **'Go back'**
+  String get declineGoBack;
+
+  /// 08d title.
+  ///
+  /// In en, this message translates to:
+  /// **'Action needed'**
+  String get resubmitTitle;
+
+  /// 08d body.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One document was not accepted. Upload it again and your services go back for review.} other{{count} documents were not accepted. Upload them again and your services go back for review.}}'**
+  String resubmitBody(int count);
+
+  /// 08d body when nothing was refused, only missing.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One document is still missing. Send it and your profile goes into review.} other{{count} documents are still missing. Send them and your profile goes into review.}}'**
+  String resubmitMissingBody(int count);
+
+  /// 08d when nothing needs sending.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to fix: your documents are with the reviewers.'**
+  String get resubmitNothingBody;
+
+  /// 08d reason card badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected {date}'**
+  String resubmitRejectedOn(String date);
+
+  /// 08d reason card label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason given'**
+  String get resubmitReasonGiven;
+
+  /// 08d reason card when the reviewer gave no reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Not accepted'**
+  String get resubmitNoReason;
+
+  /// 08d upload slot.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a new file'**
+  String get resubmitUploadNew;
+
+  /// Under the 08d upload slot.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF or image, max {mb} MB'**
+  String resubmitHint(int mb);
+
+  /// Swap the picked file on 08d.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get resubmitChange;
+
+  /// Screen-reader label of the x on a picked file.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this file'**
+  String get resubmitRemove;
+
+  /// 08d secondary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get resubmitNotNow;
+
+  /// Toast after 08d.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents sent — we will review them within a day or two.'**
+  String get resubmitSent;
+
+  /// Toast when an 08d upload fails.
+  ///
+  /// In en, this message translates to:
+  /// **'A file did not go through. Nothing else was lost — try again.'**
+  String get resubmitFailed;
+
+  /// 14's empty state for a provider.
+  ///
+  /// In en, this message translates to:
+  /// **'When a client writes to you, the conversation appears here.'**
+  String get messagesEmptyBodyProvider;
 
   /// 18f link at the end of the form.
   ///

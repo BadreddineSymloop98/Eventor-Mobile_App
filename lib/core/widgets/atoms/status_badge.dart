@@ -128,3 +128,77 @@ class _OutlinedPill extends StatelessWidget {
     );
   }
 }
+
+/// Where one of the provider's services stands — Published, Draft, Hidden.
+///
+/// The design has no badge variant for it (a component gap), so it borrows
+/// [AvailabilityBadge]'s fully rounded anatomy: it is a property of a
+/// service, not the state of a booking.
+enum ServiceStatusKind { published, draft, hidden }
+
+class ServiceStatusBadge extends StatelessWidget {
+  const ServiceStatusBadge(this.status, {super.key});
+
+  final ServiceStatusKind status;
+
+  @override
+  Widget build(BuildContext context) {
+    return _OutlinedPill(
+      color: status == ServiceStatusKind.published
+          ? AppColors.statusAccepted
+          : AppColors.statusCompleted,
+      label: switch (status) {
+        ServiceStatusKind.published => context.l10n.serviceStatusPublished,
+        ServiceStatusKind.draft => context.l10n.serviceStatusDraft,
+        ServiceStatusKind.hidden => context.l10n.serviceStatusHidden,
+      },
+      radius: AppRadii.full,
+      dotSize: StatusBadge._dotSize,
+    );
+  }
+}
+
+/// Where one verification document stands — the soft, filled pills of
+/// 21a / 21b / 08d ("In review", "Approved", "Rejected", "Missing"), set apart
+/// from the outlined booking badges.
+enum DocumentStatusKind { inReview, approved, rejected, missing }
+
+class DocumentStatusPill extends StatelessWidget {
+  const DocumentStatusPill(this.status, {super.key});
+
+  /// The wash behind the label, as a share of its colour.
+  static const double _washAlpha = 0.12;
+
+  final DocumentStatusKind status;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color color = switch (status) {
+      DocumentStatusKind.inReview => AppColors.statusPending,
+      DocumentStatusKind.approved => AppColors.statusAccepted,
+      DocumentStatusKind.rejected => AppColors.statusDeclined,
+      DocumentStatusKind.missing => AppColors.statusCompleted,
+    };
+    return Container(
+      padding: EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.xs.dw,
+        vertical: AppSpacing.xs2.dh / 2,
+      ),
+      decoration: BoxDecoration(
+        color: status == DocumentStatusKind.missing
+            ? AppColors.bgDisabled
+            : color.withValues(alpha: _washAlpha),
+        borderRadius: AppRadii.smAll,
+      ),
+      child: Text(
+        switch (status) {
+          DocumentStatusKind.inReview => context.l10n.documentStateInReview,
+          DocumentStatusKind.approved => context.l10n.documentStateApproved,
+          DocumentStatusKind.rejected => context.l10n.documentStateRejected,
+          DocumentStatusKind.missing => context.l10n.documentStateMissing,
+        },
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(color: color),
+      ),
+    );
+  }
+}

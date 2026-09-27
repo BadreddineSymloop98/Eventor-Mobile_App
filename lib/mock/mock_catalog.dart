@@ -1001,6 +1001,38 @@ class MockCatalogLookups {
 
   Map<String, Object?>? category(String? id) => _catalog._categoryRef(id);
 
+  /// The services of the catalog provider trading as [businessName], as
+  /// `AppProviderServiceRowDto`s — what a mock provider's 21 lists. Reads no
+  /// favourites, so it works for a provider's session.
+  List<Map<String, Object?>> providerServices(String? businessName) {
+    String? providerId;
+    for (final Map<String, Object?> p in _MockCatalog._providers.values) {
+      if (p['businessName'] == businessName) providerId = p['id'] as String?;
+    }
+    if (providerId == null) return <Map<String, Object?>>[];
+    return <Map<String, Object?>>[
+      for (final Map<String, Object?> s in _MockCatalog._services.values)
+        if (s['providerId'] == providerId)
+          <String, Object?>{
+            'id': s['id'],
+            'title': _catalog._isArabic ? s['titleAr'] : s['titleEn'],
+            'titleEn': s['titleEn'],
+            'titleAr': s['titleAr'],
+            'status': 'published',
+            'visibleInApp': true,
+            'basePrice': s['basePrice'],
+            'avgRating': s['avgRating'],
+            'ratingCount': s['ratingCount'],
+            'bookingsCount': s['bookingsCount'],
+            'photosCount': _MockCatalog._files(s).length,
+            'coverUrl': _MockCatalog._files(s).isEmpty
+                ? null
+                : _photoUrl(_MockCatalog._files(s).first),
+            'wilayas': <Object?>[],
+          },
+    ];
+  }
+
   /// One of the signed-in client's bookings, or `null` — someone else's
   /// reads as missing, as live.
   Map<String, Object?>? booking(String id) {

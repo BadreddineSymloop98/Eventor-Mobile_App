@@ -564,28 +564,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportEmailSubject => 'Help with my Eventor account';
 
   @override
-  String get homeTitle => 'Home';
-
-  @override
-  String homeGreeting(String name) {
-    return 'Hello, $name';
-  }
-
-  @override
-  String get homeComingSoon =>
-      'Your home screen is being built. You are signed in.';
-
-  @override
-  String get homeProviderPendingTitle => 'Your profile is under review';
-
-  @override
-  String get homeProviderPendingBody =>
-      'You can browse the app. Services go live once your documents are approved.';
-
-  @override
-  String get homeProviderRejectedTitle => 'Some documents need your attention';
-
-  @override
   String get homeUploadDocuments => 'Upload documents';
 
   @override
@@ -1843,6 +1821,322 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get discardKeep => 'Keep editing';
+
+  @override
+  String get navRequests => 'Requests';
+
+  @override
+  String get navServices => 'Services';
+
+  @override
+  String get profileDocuments => 'My documents';
+
+  @override
+  String get providerAccepting => 'Accepting bookings';
+
+  @override
+  String get providerPaused => 'Bookings paused';
+
+  @override
+  String get providerAcceptingHint => 'Clients can send you new requests.';
+
+  @override
+  String get providerPausedHint =>
+      'No new requests until you turn it back on. Your services stay visible.';
+
+  @override
+  String get providerAvailabilityTitle => 'Your availability';
+
+  @override
+  String get providerAvailabilityBody =>
+      'Pausing keeps the bookings you already have.';
+
+  @override
+  String get providerNowAccepting => 'You are accepting bookings again.';
+
+  @override
+  String get providerNowPaused => 'New bookings are paused.';
+
+  @override
+  String get providerStatRequests => 'Requests';
+
+  @override
+  String get providerStatUpcoming => 'Upcoming';
+
+  @override
+  String get providerStatServices => 'Services';
+
+  @override
+  String get providerRequestsTitle => 'Booking requests';
+
+  @override
+  String get providerNoRequestsTitle => 'No new requests';
+
+  @override
+  String providerNoRequestsBody(int hours) {
+    return 'New booking requests show up here, and you have $hours h to answer each one.';
+  }
+
+  @override
+  String get providerNoRequestsPausedBody =>
+      'Your bookings are paused, so clients cannot send new requests.';
+
+  @override
+  String providerReplyWithin(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'reply within $hours h',
+      zero: 'reply now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String providerAccepted(String name) {
+    return 'Request from $name accepted.';
+  }
+
+  @override
+  String get providerDeclined => 'Request declined.';
+
+  @override
+  String get providerUpcomingTitle => 'Upcoming bookings';
+
+  @override
+  String get providerNoUpcoming => 'No confirmed bookings ahead yet.';
+
+  @override
+  String get providerAvailabilityCalendar => 'Availability calendar';
+
+  @override
+  String get providerServicesTitle => 'Your services';
+
+  @override
+  String get providerManage => 'Manage';
+
+  @override
+  String get providerAddService => 'Add a service';
+
+  @override
+  String get providerServicesAfterApproval =>
+      'Available once your profile is approved.';
+
+  @override
+  String get serviceStatusPublished => 'Published';
+
+  @override
+  String get serviceStatusDraft => 'Draft';
+
+  @override
+  String get serviceStatusHidden => 'Hidden';
+
+  @override
+  String get documentStateInReview => 'In review';
+
+  @override
+  String get documentStateApproved => 'Approved';
+
+  @override
+  String get documentStateRejected => 'Rejected';
+
+  @override
+  String get documentStateMissing => 'Missing';
+
+  @override
+  String get documentRegisterShort => 'Register or artisan card';
+
+  @override
+  String get documentPhraseNationalId => 'national ID card';
+
+  @override
+  String get documentPhraseRegister => 'register or artisan card';
+
+  @override
+  String get documentPhraseTaxCard => 'tax card (NIF)';
+
+  @override
+  String get providerFinishTitle => 'Finish your verification';
+
+  @override
+  String providerMissingOne(String document) {
+    return 'Send your $document so we can start the review. It usually takes one to two days.';
+  }
+
+  @override
+  String providerMissingMany(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Send your remaining $count documents so we can start the review. It usually takes one to two days.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerReviewTitle => 'Profile under review';
+
+  @override
+  String get providerReviewBody =>
+      'We are checking your documents. It usually takes one to two days — we will let you know.';
+
+  @override
+  String get providerRejectedTitle => 'Profile not approved';
+
+  @override
+  String providerRejectedOne(String document) {
+    return 'Your $document was not accepted. Send a new one to go back into review.';
+  }
+
+  @override
+  String providerRejectedMany(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count documents were not accepted. Send new ones to go back into review.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerStepAccount => 'Account created';
+
+  @override
+  String get providerStepDocuments => 'Documents sent';
+
+  @override
+  String providerStepDocumentsCount(int sent, int total) {
+    return 'Documents sent · $sent of $total';
+  }
+
+  @override
+  String get providerStepUnderReview => 'Under review';
+
+  @override
+  String get providerStepReviewed => 'Reviewed';
+
+  @override
+  String get providerStepApproved => 'Approved';
+
+  @override
+  String get providerStepNotApproved => 'Not approved';
+
+  @override
+  String get providerYourDocuments => 'Your documents';
+
+  @override
+  String get providerResubmit => 'Resubmit documents';
+
+  @override
+  String get providerUploadNationalId => 'Upload ID card';
+
+  @override
+  String get providerUploadRegister => 'Upload register card';
+
+  @override
+  String get providerUploadTaxCard => 'Upload tax card';
+
+  @override
+  String get declineTitle => 'Decline this request ?';
+
+  @override
+  String declineBody(String name) {
+    return '$name is told straight away and the date is released on your calendar. You cannot undo this — a new request would be needed.';
+  }
+
+  @override
+  String get declineReasonLabel => 'Why are you declining ?';
+
+  @override
+  String get declineReasonHint => 'e.g. Already booked that day';
+
+  @override
+  String declineReasonHelper(String name) {
+    return '$name will see this reason.';
+  }
+
+  @override
+  String get declineNote =>
+      'The date opens up for other clients as soon as you decline.';
+
+  @override
+  String get declineConfirm => 'Decline request';
+
+  @override
+  String get declineGoBack => 'Go back';
+
+  @override
+  String get resubmitTitle => 'Action needed';
+
+  @override
+  String resubmitBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count documents were not accepted. Upload them again and your services go back for review.',
+      one: 'One document was not accepted. Upload it again and your services go back for review.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String resubmitMissingBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count documents are still missing. Send them and your profile goes into review.',
+      one: 'One document is still missing. Send it and your profile goes into review.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get resubmitNothingBody =>
+      'Nothing to fix: your documents are with the reviewers.';
+
+  @override
+  String resubmitRejectedOn(String date) {
+    return 'Rejected $date';
+  }
+
+  @override
+  String get resubmitReasonGiven => 'Reason given';
+
+  @override
+  String get resubmitNoReason => 'Not accepted';
+
+  @override
+  String get resubmitUploadNew => 'Upload a new file';
+
+  @override
+  String resubmitHint(int mb) {
+    return 'PDF or image, max $mb MB';
+  }
+
+  @override
+  String get resubmitChange => 'Change';
+
+  @override
+  String get resubmitRemove => 'Remove this file';
+
+  @override
+  String get resubmitNotNow => 'Not now';
+
+  @override
+  String get resubmitSent =>
+      'Documents sent — we will review them within a day or two.';
+
+  @override
+  String get resubmitFailed =>
+      'A file did not go through. Nothing else was lost — try again.';
+
+  @override
+  String get messagesEmptyBodyProvider =>
+      'When a client writes to you, the conversation appears here.';
 
   @override
   String get budgetDelete => 'Delete budget';

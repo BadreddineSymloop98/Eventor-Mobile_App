@@ -19,6 +19,7 @@ class AppConfig {
     this.maxPhotoMb = 10,
     this.imageTypes = const <String>['jpeg', 'png', 'webp', 'heic'],
     this.bookingMinNoticeDays = 1,
+    this.bookingReplyDeadlineHours = 48,
   });
 
   factory AppConfig.fromJson(Map<String, Object?> json) {
@@ -48,6 +49,8 @@ class AppConfig {
       imageTypes: _stringList(uploads['imageTypes']) ?? fallback.imageTypes,
       bookingMinNoticeDays:
           _int(booking['minNoticeDays']) ?? fallback.bookingMinNoticeDays,
+      bookingReplyDeadlineHours: _int(booking['replyDeadlineHours']) ??
+          fallback.bookingReplyDeadlineHours,
     );
   }
 
@@ -94,6 +97,10 @@ class AppConfig {
   /// 1 day's notice". Stated by the server; the design's "3 days" was a
   /// placeholder.
   final int bookingMinNoticeDays;
+
+  /// How long a provider has to answer a request before it lapses — the
+  /// "reply within 47 h" on 21.
+  final int bookingReplyDeadlineHours;
 
   static Map<String, Object?>? _object(Object? value) =>
       value is Map<String, Object?> ? value : null;
