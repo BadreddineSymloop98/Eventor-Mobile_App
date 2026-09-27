@@ -22,7 +22,12 @@ class EmailInvalid extends EmailError {
   const EmailInvalid();
 }
 
-/// Why a person's name was rejected.
+/// Another account already uses it — the server's `EMAIL_TAKEN`.
+class EmailTaken extends EmailError {
+  const EmailTaken();
+}
+
+/// Why a person's or a business's name was rejected.
 sealed class NameError {
   const NameError();
 }
@@ -49,19 +54,14 @@ class PhoneRequired extends PhoneError {
   const PhoneRequired();
 }
 
-/// The value is not [requiredDigits] digits beginning with [leadingDigit].
-///
-/// A local number has one shape, so there is one way to be wrong about it and
-/// one sentence that says so — the same sentence the field states as its rule
-/// before anything is typed.
+/// Not a whole Algerian number in either accepted form.
 class PhoneInvalid extends PhoneError {
-  const PhoneInvalid({
-    required this.requiredDigits,
-    required this.leadingDigit,
-  });
+  const PhoneInvalid();
+}
 
-  final int requiredDigits;
-  final String leadingDigit;
+/// Another account already uses it — the server's `PHONE_TAKEN`.
+class PhoneTaken extends PhoneError {
+  const PhoneTaken();
 }
 
 /// Why a password was rejected.
@@ -84,21 +84,29 @@ class PasswordTooShort extends PasswordError {
   final int minimumLength;
 }
 
-/// Why an institution name was rejected.
-sealed class InstitutionError {
-  const InstitutionError();
+/// Long enough, but without both a letter and a digit.
+class PasswordNeedsLetterAndDigit extends PasswordError {
+  const PasswordNeedsLetterAndDigit();
 }
 
-/// The field was left empty.
-class InstitutionRequired extends InstitutionError {
-  const InstitutionRequired();
+/// The server refused it as too common or too weak — `PASSWORD_WEAK`.
+class PasswordWeak extends PasswordError {
+  const PasswordWeak();
 }
 
-/// The value is shorter than [minimumLength].
-class InstitutionTooShort extends InstitutionError {
-  const InstitutionTooShort(this.minimumLength);
+/// The confirmation does not match the password above it.
+class PasswordMismatch extends PasswordError {
+  const PasswordMismatch();
+}
 
-  final int minimumLength;
+/// Why a required choice — a category, the wilayas served — was rejected.
+sealed class SelectionError {
+  const SelectionError();
+}
+
+/// Nothing was picked.
+class SelectionRequired extends SelectionError {
+  const SelectionRequired();
 }
 
 /// Why a document was rejected.
@@ -112,9 +120,6 @@ class DocumentMissing extends DocumentError {
 }
 
 /// The file is over [maximumMegabytes].
-///
-/// The bound travels with the error so the message can state it without the
-/// view having to know the rule.
 class DocumentTooLarge extends DocumentError {
   const DocumentTooLarge(this.maximumMegabytes);
 
@@ -124,4 +129,9 @@ class DocumentTooLarge extends DocumentError {
 /// The file is not one of the accepted kinds.
 class DocumentWrongType extends DocumentError {
   const DocumentWrongType();
+}
+
+/// The upload itself failed — no connection, or the server refused it.
+class DocumentUploadFailed extends DocumentError {
+  const DocumentUploadFailed();
 }

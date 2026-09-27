@@ -61,6 +61,22 @@ dependencies:
 
   # Left unpinned so the version shipped with flutter_localizations wins.
   intl: any
+  # HTTP. Chosen over `http` for its interceptors: the bearer token, the
+  # Accept-Language header and the single-flight refresh of a rotating refresh
+  # token all live in one place instead of around every call.
+  dio: ^5.11.1
+
+  # Routing. One `redirect` decides where anyone may be from the session,
+  # onboarding and verification state, which is what bounces a user to login
+  # when a session expires mid-use.
+  go_router: ^18.0.1
+
+  # Tokens, in the OS keychain/keystore. SharedPreferences is plaintext on
+  # disk, which is no place for a 30-day refresh token.
+  flutter_secure_storage: ^11.2.0
+
+  # Opens the support mail link (10g) and the terms/privacy pages.
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:
@@ -113,9 +129,9 @@ flutter:
   # Upstream (unsubsetted) files from github.com/google/fonts. Both are
   # SIL Open Font License 1.1 — the licences sit beside them.
   fonts:
-    - family: Inter
+    - family: Figtree
       fonts:
-        - asset: assets/fonts/Inter-Variable.ttf
+        - asset: assets/fonts/Figtree-Variable.ttf
     - family: Cairo
       fonts:
         - asset: assets/fonts/Cairo-Variable.ttf

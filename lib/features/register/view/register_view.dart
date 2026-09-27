@@ -1,84 +1,68 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/config/app_config.dart';
 import '../../../core/constants/input_rules.dart';
 import '../../../core/constants/ui_helpers.dart';
+import '../../../core/errors/failure.dart';
+import '../../../core/errors/validation_error.dart';
 import '../../../core/localization/app_localizations_x.dart';
+import '../../../core/models/account.dart';
 import '../../../core/routing/app_routes.dart';
-import '../../../core/widgets/app_text_field.dart';
-import '../../../core/widgets/app_toast.dart';
-import '../../../core/widgets/content_container.dart';
-import '../../../core/widgets/document_actions_sheet.dart';
-import '../../../core/widgets/document_upload_field.dart';
-import '../../../core/widgets/main_button.dart';
-import '../../../core/widgets/prompt_row.dart';
+import '../../../core/widgets/layout/collapsing_photo_header.dart';
+import '../../../core/widgets/layout/content_container.dart';
+import '../../../core/widgets/molecules/app_select_field.dart';
+import '../../../core/widgets/molecules/app_text_field.dart';
+import '../../../core/widgets/molecules/app_toast.dart';
+import '../../../core/widgets/molecules/inline_banner.dart';
+import '../../../core/widgets/molecules/main_button.dart';
+import '../../../core/widgets/molecules/prompt_row.dart';
+import '../../../core/widgets/organisms/selection_sheet.dart';
 import '../../../l10n/app_localizations.dart';
-import '../model/account_document.dart';
 import '../view_model/register_view_model.dart';
-import 'widgets/register_header.dart';
 
-/// The sign-up form.
+/// `08 Register` and `08a Register · Provider`, with `08b` as a banner.
 ///
-/// The whole screen scrolls under a header that shrinks as it goes: the
-/// photograph and the subtitle give way, and only "Create your account" and
-/// the top bar are left pinned. That keeps the user's place in a four-field
-/// form without losing the way back or the language switch.
+/// The whole screen scrolls under a header that shrinks as it goes, keeping
+/// the way back and the language switch while the form is filled in.
 class RegisterView extends StatelessWidget {
   const RegisterView({super.key});
 
   Future<void> _submit(BuildContext context) async {
     final RegisterViewModel viewModel = context.read<RegisterViewModel>();
-    final AppLocalizations l10n = context.l10n;
-
-    // Dismiss the keyboard first: the toast appears at the bottom, which is
-    // exactly where the keyboard would otherwise be.
     FocusScope.of(context).unfocus();
 
-    final bool succeeded = await viewModel.submit();
-    if (!succeeded || !context.mounted) return;
+    final VerifyEmailArgs? args = await viewModel.submit();
+    if (!context.mounted) return;
 
-    showAppToast(context, l10n.registerSuccess);
-
-    // The design sends a new account on to confirm its number.
-    await Navigator.of(context).pushNamed(
-      AppRoutes.verifyCode,
-      arguments: viewModel.phoneController.text,
-    );
-  }
-
-  /// Decides what a tap on a document field means.
-  ///
-  /// An empty field has one obvious gesture, so it goes straight to the
-  /// browser. A field that already holds a file has two — replace it or drop
-  /// it — and one tap cannot mean both, so it asks.
-  Future<void> _onDocumentTap(
-    BuildContext context,
-    RegisterViewModel viewModel,
-    AccountDocument document,
-  ) async {
-    final String? fileName = viewModel.fileNameFor(document);
-    if (fileName == null) {
-      await viewModel.pickDocument(document);
+    if (args != null) {
+      // `go`, not `push`: the account now exists, so there is no form to come
+      // back to — Back on 10b leads to Login instead.
+      context.go(AppRoutes.verifyEmail, extra: args);
       return;
     }
-
-    final DocumentAction? action = await showDocumentActionsSheet(
-      context,
-      fileName: fileName,
-    );
-    // Dismissed without choosing, which is not an answer.
-    if (action == null || !context.mounted) return;
-
-    switch (action) {
-      case DocumentAction.replace:
-        await viewModel.pickDocument(document);
-      case DocumentAction.remove:
-        viewModel.removeDocument(document);
+    final Failure? failure = viewModel.failure;
+    if (failure != null) {
+      showAppToast(
+        context,
+        context.l10n.forFailure(failure),
+        tone: AppToastTone.error,
+      );
     }
   }
 
-  void _goToLogin(BuildContext context) =>
-      Navigator.of(context).pushReplacementNamed(AppRoutes.login);
+  void _goToLogin(BuildContext context, RegisterViewModel viewModel) {
+    // Carries the address over when the server has just said it has an
+    // account — the obvious next step is to log in with it.
+    context.pushReplacement(
+      AppRoutes.loginWith(
+        email: viewModel.emailTaken ? viewModel.emailController.text.trim() : null,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,11 +73,11 @@ class RegisterView extends StatelessWidget {
       backgroundColor: AppColors.bgSurface,
       body: CustomScrollView(
         slivers: <Widget>[
-          RegisterHeader(
-            // A role that never made it this far — a deep link, or a reload —
-            // still gets the planner's wording rather than an empty header.
-            subtitle:
-                viewModel.role?.registerSubtitle(l10n) ?? l10n.registerSubtitle,
+          CollapsingPhotoHeader(
+            title: l10n.registerTitle,
+            subtitle: viewModel.isProvider
+                ? l10n.registerSubtitleProvider
+                : l10n.registerSubtitle,
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -106,24 +90,23 @@ class RegisterView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       SizedBox(height: AppSpacing.xl.dh),
-                      _Form(viewModel: viewModel, l10n: l10n),
-                      if (viewModel.isReviewed) ...<Widget>[
-                        SizedBox(height: AppSpacing.xl.dh),
-                        _Documents(
-                          viewModel: viewModel,
-                          l10n: l10n,
-                          onTapDocument: (AccountDocument document) =>
-                              _onDocumentTap(context, viewModel, document),
+                      if (viewModel.emailTaken) ...<Widget>[
+                        InlineBanner(
+                          title: l10n.registerEmailTakenTitle,
+                          message: l10n.registerEmailTakenBody,
                         ),
+                        SizedBox(height: AppSpacing.md.dh),
+                      ],
+                      _PersonalFields(viewModel: viewModel),
+                      if (viewModel.isProvider) ...<Widget>[
+                        SizedBox(height: AppSpacing.xl.dh),
+                        _BusinessFields(viewModel: viewModel),
                       ],
                       SizedBox(height: AppSpacing.xl.dh),
                       const _Terms(),
                       SizedBox(height: AppSpacing.sm.dh),
                       MainButton(
                         label: l10n.registerCreateAccount,
-                        // Disabled until every field is fillable, and again
-                        // while the request is in flight so it cannot be
-                        // submitted twice.
                         canBeTapped: viewModel.canSubmit,
                         isLoading: viewModel.isBusy,
                         onPressed: () => _submit(context),
@@ -132,7 +115,7 @@ class RegisterView extends StatelessWidget {
                       PromptRow(
                         question: l10n.registerHasAccountPrompt,
                         actionLabel: l10n.logIn,
-                        onTap: () => _goToLogin(context),
+                        onTap: () => _goToLogin(context, viewModel),
                       ),
                       SizedBox(height: AppSpacing.xl2.dh),
                     ],
@@ -147,18 +130,17 @@ class RegisterView extends StatelessWidget {
   }
 }
 
-/// The typed fields, each with the rules its own value follows.
-///
-/// The institution field only exists for the role that acts on behalf of one,
-/// which is why the focus chain steps over it rather than through it.
-class _Form extends StatelessWidget {
-  const _Form({required this.viewModel, required this.l10n});
+/// Name, email, phone, the client's optional wilaya, password.
+class _PersonalFields extends StatelessWidget {
+  const _PersonalFields({required this.viewModel});
 
   final RegisterViewModel viewModel;
-  final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations l10n = context.l10n;
+    final String language = Localizations.localeOf(context).languageCode;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -167,36 +149,15 @@ class _Form extends StatelessWidget {
           focusNode: viewModel.nameFocusNode,
           label: l10n.nameLabel,
           keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
           autofillHints: const <String>[AutofillHints.name],
           inputFormatters: InputRules.nameFormatters,
           hintText: l10n.namePlaceholder,
-          helperText: viewModel.isNameSatisfied
-              ? null
-              : l10n.nameHint(InputRules.minNameLength),
           errorText: viewModel.nameError == null
               ? null
               : l10n.forNameError(viewModel.nameError!),
-          onSubmitted: (_) => viewModel.moveFocusAfterName(),
+          onSubmitted: (_) => viewModel.moveFocusToEmail(),
         ),
-        if (viewModel.needsInstitution) ...<Widget>[
-          SizedBox(height: AppSpacing.md.dh),
-          AppTextField(
-            controller: viewModel.institutionController,
-            focusNode: viewModel.institutionFocusNode,
-            label: l10n.institutionLabel,
-            keyboardType: TextInputType.text,
-            autofillHints: const <String>[AutofillHints.organizationName],
-            inputFormatters: InputRules.institutionFormatters,
-            hintText: l10n.institutionPlaceholder,
-            helperText: viewModel.isInstitutionSatisfied
-                ? null
-                : l10n.institutionHint(InputRules.minInstitutionLength),
-            errorText: viewModel.institutionError == null
-                ? null
-                : l10n.forInstitutionError(viewModel.institutionError!),
-            onSubmitted: (_) => viewModel.moveFocusToEmail(),
-          ),
-        ],
         SizedBox(height: AppSpacing.md.dh),
         AppTextField(
           controller: viewModel.emailController,
@@ -208,8 +169,8 @@ class _Form extends StatelessWidget {
           // An address is Latin text even in an Arabic UI.
           textDirection: TextDirection.ltr,
           hintText: l10n.emailPlaceholder,
-          helperText: viewModel.isEmailSatisfied ? null : l10n.emailHint,
-          errorText: viewModel.emailError == null
+          // The banner above already says it; the red outline is enough here.
+          errorText: viewModel.emailError == null || viewModel.emailTaken
               ? null
               : l10n.forEmailError(viewModel.emailError!),
           onSubmitted: (_) => viewModel.moveFocusToPhone(),
@@ -225,99 +186,198 @@ class _Form extends StatelessWidget {
           // A number reads left to right whatever the surrounding language.
           textDirection: TextDirection.ltr,
           hintText: l10n.phonePlaceholder,
-          helperText: viewModel.isPhoneSatisfied
-              ? null
-              : l10n.phoneHint(
-                  InputRules.phoneLength,
-                  InputRules.phoneLeadingDigit,
-                ),
+          helperText: l10n.phoneHint,
           errorText: viewModel.phoneError == null
               ? null
               : l10n.forPhoneError(viewModel.phoneError!),
           onSubmitted: (_) => viewModel.moveFocusToPassword(),
         ),
+        if (!viewModel.isProvider) ...<Widget>[
+          SizedBox(height: AppSpacing.md.dh),
+          AppSelectField(
+            label: l10n.wilayaOptionalLabel,
+            placeholder: l10n.wilayaPlaceholder,
+            value: viewModel.wilaya?.nameFor(language),
+            helperText: viewModel.referenceFailed ? l10n.referenceLoadFailed : null,
+            onTap: () => _pickWilaya(context, viewModel, language),
+          ),
+        ],
         SizedBox(height: AppSpacing.md.dh),
         AppTextField(
           controller: viewModel.passwordController,
           focusNode: viewModel.passwordFocusNode,
           label: l10n.passwordLabel,
           obscureText: true,
-          textInputAction: TextInputAction.done,
+          textInputAction:
+              viewModel.isProvider ? TextInputAction.next : TextInputAction.done,
           autofillHints: const <String>[AutofillHints.newPassword],
           inputFormatters: InputRules.passwordFormatters,
           textDirection: TextDirection.ltr,
-          helperText: viewModel.isPasswordSatisfied
-              ? null
-              : l10n.passwordHint(InputRules.minPasswordLength),
+          helperText: l10n.passwordHint(viewModel.minPasswordLength),
           errorText: viewModel.passwordError == null
               ? null
               : l10n.forPasswordError(viewModel.passwordError!),
+          onSubmitted: (_) {
+            if (viewModel.isProvider) viewModel.moveFocusToBusinessName();
+          },
         ),
       ],
     );
   }
+
+  Future<void> _pickWilaya(
+    BuildContext context,
+    RegisterViewModel viewModel,
+    String language,
+  ) async {
+    if (viewModel.wilayas.isEmpty) {
+      await viewModel.loadReference();
+      if (viewModel.wilayas.isEmpty || !context.mounted) return;
+    }
+    final Set<Wilaya>? picked = await showSelectionSheet<Wilaya>(
+      context,
+      title: context.l10n.wilayaSheetTitle,
+      searchHint: context.l10n.wilayaSearchHint,
+      options: _wilayaOptions(viewModel.wilayas, language),
+      selected: <Wilaya>{if (viewModel.wilaya != null) viewModel.wilaya!},
+    );
+    if (picked != null && picked.isNotEmpty) viewModel.selectWilaya(picked.first);
+  }
 }
 
-/// The papers a reviewed account has to attach, under a heading that says what
-/// the review is for.
-///
-/// Only built when the role supplies documents, so a planner never sees an
-/// empty heading.
-class _Documents extends StatelessWidget {
-  const _Documents({
-    required this.viewModel,
-    required this.l10n,
-    required this.onTapDocument,
-  });
+/// `08a`'s "Your business": name, category, wilayas served.
+class _BusinessFields extends StatelessWidget {
+  const _BusinessFields({required this.viewModel});
 
   final RegisterViewModel viewModel;
-  final AppLocalizations l10n;
-
-  /// What a tap on one field means is the screen's decision, not the
-  /// field's — see [RegisterView._onDocumentTap].
-  final ValueChanged<AccountDocument> onTapDocument;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final String? note = viewModel.role?.documentsNote(l10n);
+    final AppLocalizations l10n = context.l10n;
+    final String language = Localizations.localeOf(context).languageCode;
+    final List<Wilaya> served = viewModel.wilayasServed.toList()
+      ..sort((Wilaya a, Wilaya b) => a.code.compareTo(b.code));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Text(
-          l10n.registerDocumentsTitle,
+          l10n.registerBusinessTitle,
           style: theme.textTheme.titleMedium?.copyWith(
             color: AppColors.textPrimary,
           ),
         ),
-        if (note != null) ...<Widget>[
-          SizedBox(height: AppSpacing.xs2.dh),
-          Text(
-            note,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: AppColors.textSecondary,
-            ),
+        SizedBox(height: AppSpacing.xs2.dh),
+        Text(
+          l10n.registerBusinessNote,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: AppColors.textSecondary,
           ),
-        ],
-        for (final AccountDocument document in viewModel.documents) ...<Widget>[
-          SizedBox(height: AppSpacing.md.dh),
-          DocumentUploadField(
-            label: document.label(l10n),
-            fileName: viewModel.fileNameFor(document),
-            helperText: document.hint(l10n),
-            errorText: viewModel.errorFor(document) == null
-                ? null
-                : l10n.forDocumentError(viewModel.errorFor(document)!),
-            onTap: () => onTapDocument(document),
-          ),
-        ],
+        ),
+        SizedBox(height: AppSpacing.md.dh),
+        AppTextField(
+          controller: viewModel.businessNameController,
+          focusNode: viewModel.businessNameFocusNode,
+          label: l10n.businessNameLabel,
+          textInputAction: TextInputAction.done,
+          textCapitalization: TextCapitalization.words,
+          autofillHints: const <String>[AutofillHints.organizationName],
+          inputFormatters: InputRules.businessNameFormatters,
+          hintText: l10n.businessNamePlaceholder,
+          errorText: switch (viewModel.businessNameError) {
+            null => null,
+            _ when viewModel.businessNameController.text.trim().isEmpty =>
+              l10n.businessNameRequired,
+            final NameError error => l10n.forNameError(error),
+          },
+        ),
+        SizedBox(height: AppSpacing.md.dh),
+        AppSelectField(
+          label: l10n.categoryLabel,
+          placeholder: l10n.categoryPlaceholder,
+          value: viewModel.category?.nameFor(language),
+          errorText: viewModel.categoryError == null
+              ? (viewModel.referenceFailed ? l10n.referenceLoadFailed : null)
+              : l10n.categoryRequired,
+          onTap: () => _pickCategory(context, language),
+        ),
+        SizedBox(height: AppSpacing.md.dh),
+        AppSelectField(
+          label: l10n.wilayasServedLabel,
+          placeholder: l10n.wilayasServedPlaceholder,
+          value: served.isEmpty
+              ? null
+              : served.map((Wilaya w) => w.nameFor(language)).join(language == 'ar' ? '، ' : ', '),
+          errorText: viewModel.wilayasError == null ? null : l10n.wilayasRequired,
+          onTap: () => _pickWilayasServed(context, language),
+        ),
       ],
     );
   }
+
+  Future<void> _pickCategory(BuildContext context, String language) async {
+    if (viewModel.categories.isEmpty) {
+      await viewModel.loadReference();
+      if (viewModel.categories.isEmpty || !context.mounted) return;
+    }
+    final Set<ServiceCategory>? picked =
+        await showSelectionSheet<ServiceCategory>(
+      context,
+      title: context.l10n.categorySheetTitle,
+      options: viewModel.categories
+          .map(
+            (ServiceCategory c) => SelectionOption<ServiceCategory>(
+              value: c,
+              label: c.nameFor(language),
+            ),
+          )
+          .toList(),
+      selected: <ServiceCategory>{
+        if (viewModel.category != null) viewModel.category!,
+      },
+    );
+    if (picked != null && picked.isNotEmpty) {
+      viewModel.selectCategory(picked.first);
+    }
+  }
+
+  Future<void> _pickWilayasServed(BuildContext context, String language) async {
+    if (viewModel.wilayas.isEmpty) {
+      await viewModel.loadReference();
+      if (viewModel.wilayas.isEmpty || !context.mounted) return;
+    }
+    final Set<Wilaya>? picked = await showSelectionSheet<Wilaya>(
+      context,
+      title: context.l10n.wilayasServedSheetTitle,
+      searchHint: context.l10n.wilayaSearchHint,
+      multiple: true,
+      options: _wilayaOptions(viewModel.wilayas, language),
+      selected: viewModel.wilayasServed,
+    );
+    if (picked != null) viewModel.selectWilayasServed(picked);
+  }
 }
 
-/// The terms line, with its second half in the brand colour.
+List<SelectionOption<Wilaya>> _wilayaOptions(
+  List<Wilaya> wilayas,
+  String language,
+) {
+  return wilayas
+      .map(
+        (Wilaya w) => SelectionOption<Wilaya>(
+          value: w,
+          // The number is how Algerians identify a wilaya ("16 — Alger"),
+          // and it keeps the list scannable in both scripts.
+          label: '${w.code.toString().padLeft(2, '0')} — ${w.nameFor(language)}',
+        ),
+      )
+      .toList();
+}
+
+/// "By continuing you agree to our Terms and Privacy Policy." — the link opens
+/// the terms page when the server publishes one (it does not yet), otherwise
+/// it is plain text rather than a link to nowhere.
 class _Terms extends StatelessWidget {
   const _Terms();
 
@@ -325,6 +385,8 @@ class _Terms extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final AppLocalizations l10n = context.l10n;
+    final String? termsUrl =
+        context.read<AppConfigRepository>().current.termsUrl;
     final TextStyle? base = theme.textTheme.labelSmall?.copyWith(
       color: AppColors.textSecondary,
     );
@@ -337,8 +399,15 @@ class _Terms extends StatelessWidget {
           TextSpan(
             text: l10n.registerTermsLink,
             style: base?.copyWith(color: AppColors.textBrand),
+            recognizer: termsUrl == null
+                ? null
+                : (TapGestureRecognizer()
+                  ..onTap = () => launchUrl(
+                        Uri.parse(termsUrl),
+                        mode: LaunchMode.externalApplication,
+                      )),
           ),
-          const TextSpan(text: '.'),
+          TextSpan(text: l10n.registerTermsSuffix),
         ],
       ),
       textAlign: TextAlign.center,
