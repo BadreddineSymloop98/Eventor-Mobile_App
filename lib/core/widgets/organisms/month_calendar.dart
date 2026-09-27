@@ -24,6 +24,7 @@ class MonthCalendar extends StatelessWidget {
     required this.onSelect,
     required this.onMonthChanged,
     this.firstMonth,
+    this.showLegend = true,
     super.key,
   });
 
@@ -41,6 +42,10 @@ class MonthCalendar extends StatelessWidget {
 
   /// The earliest month the back arrow reaches — the current one.
   final DateTime? firstMonth;
+
+  /// The availability key under the grid. Off for a plain date picker,
+  /// where there is nothing booked to explain.
+  final bool showLegend;
 
   static const double _cellHeight = 40;
 
@@ -88,8 +93,10 @@ class MonthCalendar extends StatelessWidget {
         ),
         SizedBox(height: AppSpacing.xs.dh),
         _grid(context),
-        SizedBox(height: AppSpacing.sm.dh),
-        const _Legend(),
+        if (showLegend) ...<Widget>[
+          SizedBox(height: AppSpacing.sm.dh),
+          const _Legend(),
+        ],
       ],
     );
   }

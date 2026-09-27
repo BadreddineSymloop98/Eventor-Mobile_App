@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'budget_fakes.dart';
 import 'fakes.dart';
 
 /// The locales the suite exercises.
@@ -36,6 +37,8 @@ class TestApp {
     this.favouritesRepository,
     this.messaging,
     this.notifications,
+    this.budget,
+    this.bookings,
   );
 
   final AppServices services;
@@ -46,6 +49,8 @@ class TestApp {
   final FakeFavouritesRepository favouritesRepository;
   final FakeMessagingRepository messaging;
   final FakeNotificationsRepository notifications;
+  final FakeBudgetRepository budget;
+  final FakeBookingsRepository bookings;
 
   SessionController get session => services.session;
 
@@ -67,6 +72,8 @@ Future<TestApp> buildTestApp({
   FakeFavouritesRepository? favourites,
   FakeMessagingRepository? messaging,
   FakeNotificationsRepository? notifications,
+  FakeBudgetRepository? budget,
+  FakeBookingsRepository? bookings,
   AppConfig config = const AppConfig(),
 }) async {
   SharedPreferences.setMockInitialValues(<String, Object>{
@@ -87,6 +94,8 @@ Future<TestApp> buildTestApp({
       messaging ?? FakeMessagingRepository();
   final FakeNotificationsRepository fakeNotifications =
       notifications ?? FakeNotificationsRepository();
+  final FakeBudgetRepository fakeBudget = budget ?? FakeBudgetRepository();
+  final FakeBookingsRepository fakeBookings = bookings ?? FakeBookingsRepository();
   final SessionController session = SessionController(fakeAuth);
   final AppStartup startup = AppStartup(config: fakeConfig, session: session);
   final TokenStore tokens = TokenStore();
@@ -105,6 +114,8 @@ Future<TestApp> buildTestApp({
     favourites: FavouritesController(fakeFavourites),
     messaging: fakeMessaging,
     notifications: fakeNotifications,
+    bookings: fakeBookings,
+    budget: fakeBudget,
     badges: ShellBadges(notifications: fakeNotifications),
     session: session,
     startup: startup,
@@ -124,6 +135,8 @@ Future<TestApp> buildTestApp({
     fakeFavourites,
     fakeMessaging,
     fakeNotifications,
+    fakeBudget,
+    fakeBookings,
   );
 }
 

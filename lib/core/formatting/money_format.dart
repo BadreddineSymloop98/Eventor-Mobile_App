@@ -20,6 +20,20 @@ bool amountIsPositive(String apiAmount) {
       .any((String digit) => digit != '0');
 }
 
+/// [apiAmount] in centimes, for comparing two amounts — never through a
+/// `double`. Anything that is not an amount reads as 0.
+int amountCents(String apiAmount) {
+  final RegExpMatch? match = _amount.firstMatch(apiAmount.trim());
+  if (match == null) return 0;
+  final String fraction = (match.group(3) ?? '').padRight(2, '0');
+  final int cents =
+      int.parse(match.group(2)!) * 100 + int.parse(fraction.substring(0, 2));
+  return match.group(1) == '-' ? -cents : cents;
+}
+
+/// Whole dinars as the API writes money: `400000` → `"400000.00"`.
+String apiAmountOf(int dinars) => '$dinars.00';
+
 /// `"120000.00"` → `"120 000"`; `"2500.50"` → `"2 500.50"`.
 ///
 /// A zero fraction is dropped — dinar prices are whole in practice — but any

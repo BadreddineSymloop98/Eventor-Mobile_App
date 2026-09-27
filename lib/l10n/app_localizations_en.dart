@@ -1625,4 +1625,242 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get offlineNotificationsBody =>
       'These are your last notifications. New ones arrive when you reconnect.';
+
+  @override
+  String get budgetTitle => 'Budget';
+
+  @override
+  String get budgetEdit => 'Edit';
+
+  @override
+  String get budgetCreateIntroTitle => 'Plan your event budget';
+
+  @override
+  String get budgetEditIntroTitle => 'Edit your budget';
+
+  @override
+  String get budgetEditIntroBody =>
+      'Changing the total leaves your expense lines untouched. Only you can see this.';
+
+  @override
+  String get budgetNameLabel => 'Budget name';
+
+  @override
+  String get budgetNameHint => 'e.g. Our wedding';
+
+  @override
+  String get budgetEventDateLabel => 'Event date';
+
+  @override
+  String get budgetEventDateClear => 'Remove the date';
+
+  @override
+  String get optionalField => 'Optional';
+
+  @override
+  String get budgetTotalLabel => 'Total budget';
+
+  @override
+  String get amountFieldSuffix => 'DA';
+
+  @override
+  String get budgetCreateAction => 'Create budget';
+
+  @override
+  String get budgetSaveChanges => 'Save changes';
+
+  @override
+  String get budgetSpent => 'spent';
+
+  @override
+  String budgetAllocatedLines(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'DA allocated across $count lines',
+      one: 'DA allocated across 1 line',
+      zero: 'DA allocated across 0 lines',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get budgetRemaining => 'Remaining';
+
+  @override
+  String get budgetServicesBooked => 'Services booked';
+
+  @override
+  String budgetBookedOf(int booked, int count) {
+    return '$booked of $count';
+  }
+
+  @override
+  String get budgetExpenseLines => 'Expense lines';
+
+  @override
+  String get budgetActualVsPlanned => 'Actual vs planned';
+
+  @override
+  String get budgetNotBookedYet => 'Not booked yet';
+
+  @override
+  String get budgetLineOnPlan => 'on plan';
+
+  @override
+  String get budgetLinePlanned => 'planned';
+
+  @override
+  String get budgetNoLinesTitle => 'No expense lines yet';
+
+  @override
+  String get budgetNoLinesBody =>
+      'Add a line for each service you are paying for, and the remaining amount keeps itself up to date.';
+
+  @override
+  String get budgetAddExpense => 'Add an expense';
+
+  @override
+  String get budgetOverTitle => 'You are over your budget';
+
+  @override
+  String get budgetOverBody =>
+      'You have spent more than your total. Raise the budget, or trim a line.';
+
+  @override
+  String get expenseNewTitle => 'New expense line';
+
+  @override
+  String get expenseNewBody =>
+      'A name and a planned amount are enough to start. Everything else can wait.';
+
+  @override
+  String get expenseLineTitle => 'Expense line';
+
+  @override
+  String get expenseEditBody =>
+      'Linking a booking shows who it is with and counts it as booked. You still enter what you actually paid.';
+
+  @override
+  String get expenseDelete => 'Delete';
+
+  @override
+  String get expenseCategoryLabel => 'Category';
+
+  @override
+  String get expenseCategoryPlaceholder => 'Choose a category';
+
+  @override
+  String get expenseNoCategory => 'No category';
+
+  @override
+  String get expenseLabelLabel => 'Label';
+
+  @override
+  String get expenseLabelHint => 'e.g. Wedding cake';
+
+  @override
+  String get expensePlannedLabel => 'Planned amount';
+
+  @override
+  String get expenseSpentLabel => 'Spent so far';
+
+  @override
+  String get expenseBookingLabel => 'Linked booking';
+
+  @override
+  String get expenseNotLinked => 'Not linked';
+
+  @override
+  String get expenseAddLine => 'Add line';
+
+  @override
+  String get expenseSaveLine => 'Save line';
+
+  @override
+  String get expenseFullTitle => 'This budget is full';
+
+  @override
+  String get expenseFullBody =>
+      'You have reached the maximum number of expense lines. Delete one you no longer need, or merge two into a single line.';
+
+  @override
+  String get expenseDeleteTitle => 'Delete this line ?';
+
+  @override
+  String get expenseDeleteBody =>
+      'It disappears from your budget and the remaining amount is recalculated. The booking it is linked to is not touched.';
+
+  @override
+  String get expenseDeleteSpent => 'Spent';
+
+  @override
+  String get expenseDeletePlanned => 'Planned';
+
+  @override
+  String get expenseDeleteConfirm => 'Delete line';
+
+  @override
+  String get expenseDeleteKeep => 'Keep it';
+
+  @override
+  String get linkBookingTitle => 'Link a booking';
+
+  @override
+  String get linkBookingIntro =>
+      'Only your own bookings appear here. Linking one fills in the provider and counts this line in “services booked”.';
+
+  @override
+  String get linkBookingNoneBody => 'This line is not tied to any booking';
+
+  @override
+  String linkBookingUsedOn(String label) {
+    return 'On “$label”';
+  }
+
+  @override
+  String get linkBookingNote =>
+      'A booking already used on another line is shown greyed out, so the same amount is never counted twice.';
+
+  @override
+  String get linkBookingAction => 'Link booking';
+
+  @override
+  String get linkBookingEmptyTitle => 'No bookings yet';
+
+  @override
+  String get linkBookingEmptyBody =>
+      'Once you book a service, you can link it to this line.';
+
+  @override
+  String get discardTitle => 'Discard your changes ?';
+
+  @override
+  String get discardBody => 'What you changed here will not be saved.';
+
+  @override
+  String get discardConfirm => 'Discard';
+
+  @override
+  String get discardKeep => 'Keep editing';
+
+  @override
+  String get budgetDelete => 'Delete budget';
+
+  @override
+  String get budgetDeleteTitle => 'Delete this budget ?';
+
+  @override
+  String get budgetDeleteBody =>
+      'Your budget and all its expense lines are removed for good. The bookings they were linked to are not touched.';
+
+  @override
+  String get budgetDeleteConfirm => 'Delete budget';
+
+  @override
+  String get budgetDeleted => 'Budget deleted.';
+
+  @override
+  String get budgetDeleteUnavailable =>
+      'Deleting a budget is not available yet.';
 }

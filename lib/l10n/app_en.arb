@@ -2033,5 +2033,307 @@
   "offlineNotificationsBody": "These are your last notifications. New ones arrive when you reconnect.",
   "@offlineNotificationsBody": {
     "description": "Offline banner body on screen 16."
+  },
+  "budgetTitle": "Budget",
+  "@budgetTitle": {
+    "description": "Top bar of 18, 18a and 18f."
+  },
+  "budgetEdit": "Edit",
+  "@budgetEdit": {
+    "description": "18's top-bar action, opening 18f."
+  },
+  "budgetCreateIntroTitle": "Plan your event budget",
+  "@budgetCreateIntroTitle": {
+    "description": "Heading of 18a Create."
+  },
+  "budgetEditIntroTitle": "Edit your budget",
+  "@budgetEditIntroTitle": {
+    "description": "Heading of 18f Edit."
+  },
+  "budgetEditIntroBody": "Changing the total leaves your expense lines untouched. Only you can see this.",
+  "@budgetEditIntroBody": {
+    "description": "Under the 18f heading."
+  },
+  "budgetNameLabel": "Budget name",
+  "@budgetNameLabel": {
+    "description": "Field label on 18a/18f."
+  },
+  "budgetNameHint": "e.g. Our wedding",
+  "@budgetNameHint": {
+    "description": "Placeholder of the budget name."
+  },
+  "budgetEventDateLabel": "Event date",
+  "@budgetEventDateLabel": {
+    "description": "Field label on 18a/18f, and the date sheet title."
+  },
+  "budgetEventDateClear": "Remove the date",
+  "@budgetEventDateClear": {
+    "description": "Date sheet button that clears the optional event date."
+  },
+  "optionalField": "Optional",
+  "@optionalField": {
+    "description": "Placeholder of an optional picker field."
+  },
+  "budgetTotalLabel": "Total budget",
+  "@budgetTotalLabel": {
+    "description": "Field label on 18a/18f. Arabic carries the currency in the label, as drawn."
+  },
+  "amountFieldSuffix": "DA",
+  "@amountFieldSuffix": {
+    "description": "Unit inside an amount field. Empty in Arabic, whose labels carry (دج) instead."
+  },
+  "budgetCreateAction": "Create budget",
+  "@budgetCreateAction": {
+    "description": "Button on 18a."
+  },
+  "budgetSaveChanges": "Save changes",
+  "@budgetSaveChanges": {
+    "description": "Button on 18f."
+  },
+  "budgetSpent": "spent",
+  "@budgetSpent": {
+    "description": "After the big amount on 18's summary."
+  },
+  "budgetAllocatedLines": "{count, plural, =0{DA allocated across 0 lines} =1{DA allocated across 1 line} other{DA allocated across {count} lines}}",
+  "@budgetAllocatedLines": {
+    "description": "After the planned total on 18: \"380 000 DA allocated across 6 lines\". The amount is a separate token before it.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "budgetRemaining": "Remaining",
+  "@budgetRemaining": {
+    "description": "18's stat label."
+  },
+  "budgetServicesBooked": "Services booked",
+  "@budgetServicesBooked": {
+    "description": "18's stat label."
+  },
+  "budgetBookedOf": "{booked} of {count}",
+  "@budgetBookedOf": {
+    "description": "\"3 of 6\" under Services booked on 18.",
+    "placeholders": {
+      "booked": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "budgetExpenseLines": "Expense lines",
+  "@budgetExpenseLines": {
+    "description": "18's list heading."
+  },
+  "budgetActualVsPlanned": "Actual vs planned",
+  "@budgetActualVsPlanned": {
+    "description": "Beside 18's list heading."
+  },
+  "budgetNotBookedYet": "Not booked yet",
+  "@budgetNotBookedYet": {
+    "description": "A line with no linked booking."
+  },
+  "budgetLineOnPlan": "on plan",
+  "@budgetLineOnPlan": {
+    "description": "Under a line whose spent amount equals its plan."
+  },
+  "budgetLinePlanned": "planned",
+  "@budgetLinePlanned": {
+    "description": "Under a line with nothing spent yet, after its planned amount."
+  },
+  "budgetNoLinesTitle": "No expense lines yet",
+  "@budgetNoLinesTitle": {
+    "description": "18c empty card title."
+  },
+  "budgetNoLinesBody": "Add a line for each service you are paying for, and the remaining amount keeps itself up to date.",
+  "@budgetNoLinesBody": {
+    "description": "18c empty card body."
+  },
+  "budgetAddExpense": "Add an expense",
+  "@budgetAddExpense": {
+    "description": "18's button, and 18d's title."
+  },
+  "budgetOverTitle": "You are over your budget",
+  "@budgetOverTitle": {
+    "description": "18g banner title."
+  },
+  "budgetOverBody": "You have spent more than your total. Raise the budget, or trim a line.",
+  "@budgetOverBody": {
+    "description": "18g banner body."
+  },
+  "expenseNewTitle": "New expense line",
+  "@expenseNewTitle": {
+    "description": "18d heading."
+  },
+  "expenseNewBody": "A name and a planned amount are enough to start. Everything else can wait.",
+  "@expenseNewBody": {
+    "description": "Under the 18d heading."
+  },
+  "expenseLineTitle": "Expense line",
+  "@expenseLineTitle": {
+    "description": "18b top bar."
+  },
+  "expenseEditBody": "Linking a booking shows who it is with and counts it as booked. You still enter what you actually paid.",
+  "@expenseEditBody": {
+    "description": "Under the 18b heading."
+  },
+  "expenseDelete": "Delete",
+  "@expenseDelete": {
+    "description": "18b's top-bar action, opening 18e."
+  },
+  "expenseCategoryLabel": "Category",
+  "@expenseCategoryLabel": {
+    "description": "Field label on 18d/18b, and the category sheet title."
+  },
+  "expenseCategoryPlaceholder": "Choose a category",
+  "@expenseCategoryPlaceholder": {
+    "description": "Category field before one is chosen."
+  },
+  "expenseNoCategory": "No category",
+  "@expenseNoCategory": {
+    "description": "First row of the category sheet, to clear it."
+  },
+  "expenseLabelLabel": "Label",
+  "@expenseLabelLabel": {
+    "description": "Field label on 18d/18b."
+  },
+  "expenseLabelHint": "e.g. Wedding cake",
+  "@expenseLabelHint": {
+    "description": "Placeholder of the line label."
+  },
+  "expensePlannedLabel": "Planned amount",
+  "@expensePlannedLabel": {
+    "description": "Field label on 18d/18b."
+  },
+  "expenseSpentLabel": "Spent so far",
+  "@expenseSpentLabel": {
+    "description": "Field label on 18d/18b."
+  },
+  "expenseBookingLabel": "Linked booking",
+  "@expenseBookingLabel": {
+    "description": "Field label on 18d/18b."
+  },
+  "expenseNotLinked": "Not linked",
+  "@expenseNotLinked": {
+    "description": "Linked booking field with none, and the first row of 18h."
+  },
+  "expenseAddLine": "Add line",
+  "@expenseAddLine": {
+    "description": "Button on 18d."
+  },
+  "expenseSaveLine": "Save line",
+  "@expenseSaveLine": {
+    "description": "Button on 18b."
+  },
+  "expenseFullTitle": "This budget is full",
+  "@expenseFullTitle": {
+    "description": "18i banner title."
+  },
+  "expenseFullBody": "You have reached the maximum number of expense lines. Delete one you no longer need, or merge two into a single line.",
+  "@expenseFullBody": {
+    "description": "18i banner body."
+  },
+  "expenseDeleteTitle": "Delete this line ?",
+  "@expenseDeleteTitle": {
+    "description": "18e sheet title. Space before ? per the copy rule."
+  },
+  "expenseDeleteBody": "It disappears from your budget and the remaining amount is recalculated. The booking it is linked to is not touched.",
+  "@expenseDeleteBody": {
+    "description": "18e sheet body."
+  },
+  "expenseDeleteSpent": "Spent",
+  "@expenseDeleteSpent": {
+    "description": "18e recap row."
+  },
+  "expenseDeletePlanned": "Planned",
+  "@expenseDeletePlanned": {
+    "description": "18e recap row."
+  },
+  "expenseDeleteConfirm": "Delete line",
+  "@expenseDeleteConfirm": {
+    "description": "18e destructive button."
+  },
+  "expenseDeleteKeep": "Keep it",
+  "@expenseDeleteKeep": {
+    "description": "18e cancel button."
+  },
+  "linkBookingTitle": "Link a booking",
+  "@linkBookingTitle": {
+    "description": "18h top bar."
+  },
+  "linkBookingIntro": "Only your own bookings appear here. Linking one fills in the provider and counts this line in “services booked”.",
+  "@linkBookingIntro": {
+    "description": "18h intro."
+  },
+  "linkBookingNoneBody": "This line is not tied to any booking",
+  "@linkBookingNoneBody": {
+    "description": "Under 18h's Not linked row."
+  },
+  "linkBookingUsedOn": "On “{label}”",
+  "@linkBookingUsedOn": {
+    "description": "On a booking already linked to another line of the budget.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "linkBookingNote": "A booking already used on another line is shown greyed out, so the same amount is never counted twice.",
+  "@linkBookingNote": {
+    "description": "Under the 18h list."
+  },
+  "linkBookingAction": "Link booking",
+  "@linkBookingAction": {
+    "description": "Button on 18h."
+  },
+  "linkBookingEmptyTitle": "No bookings yet",
+  "@linkBookingEmptyTitle": {
+    "description": "18h with nothing to link."
+  },
+  "linkBookingEmptyBody": "Once you book a service, you can link it to this line.",
+  "@linkBookingEmptyBody": {
+    "description": "18h with nothing to link."
+  },
+  "discardTitle": "Discard your changes ?",
+  "@discardTitle": {
+    "description": "Sheet when leaving a form with unsaved edits."
+  },
+  "discardBody": "What you changed here will not be saved.",
+  "@discardBody": {
+    "description": "Sheet when leaving a form with unsaved edits."
+  },
+  "discardConfirm": "Discard",
+  "@discardConfirm": {
+    "description": "Destructive button of the discard sheet."
+  },
+  "discardKeep": "Keep editing",
+  "@discardKeep": {
+    "description": "Cancel button of the discard sheet."
+  },
+  "budgetDelete": "Delete budget",
+  "@budgetDelete": {
+    "description": "18f link at the end of the form."
+  },
+  "budgetDeleteTitle": "Delete this budget ?",
+  "@budgetDeleteTitle": {
+    "description": "Sheet title before deleting the budget."
+  },
+  "budgetDeleteBody": "Your budget and all its expense lines are removed for good. The bookings they were linked to are not touched.",
+  "@budgetDeleteBody": {
+    "description": "Sheet body before deleting the budget."
+  },
+  "budgetDeleteConfirm": "Delete budget",
+  "@budgetDeleteConfirm": {
+    "description": "Destructive button of the delete-budget sheet."
+  },
+  "budgetDeleted": "Budget deleted.",
+  "@budgetDeleted": {
+    "description": "Toast after deleting the budget."
+  },
+  "budgetDeleteUnavailable": "Deleting a budget is not available yet.",
+  "@budgetDeleteUnavailable": {
+    "description": "Toast when the server has no delete route yet."
   }
 }

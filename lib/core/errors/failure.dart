@@ -101,6 +101,10 @@ class FieldError {
 /// through to the server's own message.
 abstract final class ApiErrorCode {
   static const String validationFailed = 'VALIDATION_FAILED';
+
+  /// The server has no such route — how a feature the app is ahead of the
+  /// backend on (deleting a budget) answers until it ships.
+  static const String routeNotFound = 'ROUTE_NOT_FOUND';
   static const String rateLimited = 'RATE_LIMITED';
 
   // Session.
@@ -152,4 +156,10 @@ abstract final class ApiErrorCode {
   static const String recipientInvalid = 'RECIPIENT_INVALID';
   static const String userNotFound = 'USER_NOT_FOUND';
   static const String messageNotFound = 'MESSAGE_NOT_FOUND';
+
+  // Budget.
+  static const String budgetNotFound = 'BUDGET_NOT_FOUND';
+  static const String budgetItemNotFound = 'BUDGET_ITEM_NOT_FOUND';
+  static const String budgetItemLimit = 'BUDGET_ITEM_LIMIT';
+  static const String bookingNotFound = 'BOOKING_NOT_FOUND';
 }

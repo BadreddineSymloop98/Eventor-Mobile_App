@@ -5,7 +5,17 @@ import 'package:provider/provider.dart';
 
 import '../../features/auth/data/auth_repository.dart';
 import '../../features/auth/data/documents_repository.dart';
+import '../../features/budget/view/budget_form_view.dart';
+import '../../features/budget/view/budget_view.dart';
+import '../../features/budget/view/expense_form_view.dart';
+import '../../features/budget/view/link_booking_view.dart';
+import '../../features/budget/view_model/budget_form_view_model.dart';
+import '../../features/budget/view_model/budget_view_model.dart';
+import '../../features/budget/view_model/expense_form_view_model.dart';
+import '../../features/budget/view_model/link_booking_view_model.dart';
 import '../../features/documents/view/documents_view.dart';
+import '../bookings/bookings_repository.dart';
+import '../budget/budget_repository.dart';
 import '../../features/documents/view_model/documents_view_model.dart';
 import '../../features/forgot_password/view/forgot_password_view.dart';
 import '../../features/forgot_password/view_model/forgot_password_view_model.dart';
@@ -520,6 +530,53 @@ abstract final class AppRouter {
             const FavouritesView(),
           ),
         ),
+        // Section 7. Each screen after 18 opens with what it edits as
+        // `extra`; without it (a cold start on the path) it falls back to 18.
+        GoRoute(
+          path: AppRoutes.budget,
+          builder: (_, _) => _withViewModel<BudgetViewModel>(
+            (BuildContext context) =>
+                BudgetViewModel(budgets: context.read<BudgetRepository>()),
+            const BudgetView(),
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.budgetEdit,
+          redirect: (_, GoRouterState state) =>
+              state.extra is Budget ? null : AppRoutes.budget,
+          builder: (_, GoRouterState state) =>
+              _withViewModel<BudgetFormViewModel>(
+                (BuildContext context) => BudgetFormViewModel(
+                  budgets: context.read<BudgetRepository>(),
+                  initial: state.extra! as Budget,
+                ),
+                const BudgetFormView(),
+              ),
+        ),
+        // `new` first: it would otherwise match `:id`.
+        GoRoute(
+          path: AppRoutes.budgetNewLine,
+          redirect: _needsLineArgs,
+          builder: _expensePage,
+        ),
+        GoRoute(
+          path: '${AppRoutes.budgetLines}/:id',
+          redirect: _needsLineArgs,
+          builder: _expensePage,
+        ),
+        GoRoute(
+          path: AppRoutes.budgetLinkBooking,
+          redirect: (_, GoRouterState state) =>
+              state.extra is LinkBookingArgs ? null : AppRoutes.budget,
+          builder: (_, GoRouterState state) =>
+              _withViewModel<LinkBookingViewModel>(
+                (BuildContext context) => LinkBookingViewModel(
+                  bookings: context.read<BookingsRepository>(),
+                  args: state.extra! as LinkBookingArgs,
+                ),
+                const LinkBookingView(),
+              ),
+        ),
         if (kDebugMode)
           GoRoute(
             path: AppRoutes.gallery,
@@ -528,6 +585,20 @@ abstract final class AppRouter {
       ],
     );
   }
+
+  static String? _needsLineArgs(BuildContext _, GoRouterState state) =>
+      state.extra is ExpenseLineArgs ? null : AppRoutes.budget;
+
+  /// 18d / 18b — the same form, adding or editing.
+  static Widget _expensePage(BuildContext _, GoRouterState state) =>
+      _withViewModel<ExpenseFormViewModel>(
+        (BuildContext context) => ExpenseFormViewModel(
+          budgets: context.read<BudgetRepository>(),
+          catalog: context.read<CatalogRepository>(),
+          args: state.extra! as ExpenseLineArgs,
+        ),
+        const ExpenseFormView(),
+      );
 
   /// S2 / S2a / S2b, under Search or under Home. Keyed by the whole URL: a
   /// new sort or filter is a new results page with its own view model, not a

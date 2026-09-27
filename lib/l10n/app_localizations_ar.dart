@@ -975,11 +975,11 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get budgetEmptyTitle => 'خطّط ميزانيتك';
+  String get budgetEmptyTitle => 'خطّط لميزانيتك';
 
   @override
   String get budgetEmptyBody =>
-      'حدّد مبلغًا إجماليًا ثم تابع التكلفة الفعلية لكل خدمة. أنت وحدك من يراها.';
+      'حدّد مبلغًا إجماليًا، ثم تابع التكلفة الفعلية لكل خدمة. أنت فقط من يراها.';
 
   @override
   String get budgetCreate => 'إنشاء ميزانية';
@@ -1704,4 +1704,243 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get offlineNotificationsBody =>
       'هذه آخر إشعاراتك. الجديدة تصل عند عودة الاتصال.';
+
+  @override
+  String get budgetTitle => 'الميزانية';
+
+  @override
+  String get budgetEdit => 'تعديل';
+
+  @override
+  String get budgetCreateIntroTitle => 'خطّط لميزانية مناسبتك';
+
+  @override
+  String get budgetEditIntroTitle => 'تعديل الميزانية';
+
+  @override
+  String get budgetEditIntroBody =>
+      'تغيير الإجمالي لا يمسّ بنود المصاريف. أنت فقط من يراها.';
+
+  @override
+  String get budgetNameLabel => 'اسم الميزانية';
+
+  @override
+  String get budgetNameHint => 'مثال: زفافنا';
+
+  @override
+  String get budgetEventDateLabel => 'تاريخ المناسبة';
+
+  @override
+  String get budgetEventDateClear => 'إزالة التاريخ';
+
+  @override
+  String get optionalField => 'اختياري';
+
+  @override
+  String get budgetTotalLabel => 'الميزانية الإجمالية (دج)';
+
+  @override
+  String get amountFieldSuffix => '';
+
+  @override
+  String get budgetCreateAction => 'إنشاء الميزانية';
+
+  @override
+  String get budgetSaveChanges => 'حفظ التغييرات';
+
+  @override
+  String get budgetSpent => 'مصروفة';
+
+  @override
+  String budgetAllocatedLines(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'دج موزّعة على $count بند',
+      many: 'دج موزّعة على $count بندًا',
+      few: 'دج موزّعة على $count بنود',
+      two: 'دج موزّعة على بندين',
+      one: 'دج موزّعة على بند واحد',
+      zero: 'دج موزّعة حتّى الآن',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get budgetRemaining => 'المتبقّي';
+
+  @override
+  String get budgetServicesBooked => 'الخدمات المحجوزة';
+
+  @override
+  String budgetBookedOf(int booked, int count) {
+    return '$booked من $count';
+  }
+
+  @override
+  String get budgetExpenseLines => 'بنود المصاريف';
+
+  @override
+  String get budgetActualVsPlanned => 'الفعلي مقابل المخطّط';
+
+  @override
+  String get budgetNotBookedYet => 'لم يُحجز بعد';
+
+  @override
+  String get budgetLineOnPlan => 'حسب الخطة';
+
+  @override
+  String get budgetLinePlanned => 'مخطّط';
+
+  @override
+  String get budgetNoLinesTitle => 'لا توجد بنود بعد';
+
+  @override
+  String get budgetNoLinesBody =>
+      'أضف بندًا لكل خدمة تدفع مقابلها، وسيُحدّث المبلغ المتبقّي تلقائيًا.';
+
+  @override
+  String get budgetAddExpense => 'إضافة مصروف';
+
+  @override
+  String get budgetOverTitle => 'تجاوزت ميزانيتك';
+
+  @override
+  String get budgetOverBody =>
+      'أنفقت أكثر من إجماليك. ارفع الميزانية أو قلّص أحد البنود.';
+
+  @override
+  String get expenseNewTitle => 'بند مصروف جديد';
+
+  @override
+  String get expenseNewBody =>
+      'الاسم والمبلغ المخطّط يكفيان للبداية. الباقي يمكن أن ينتظر.';
+
+  @override
+  String get expenseLineTitle => 'بند مصروف';
+
+  @override
+  String get expenseEditBody =>
+      'ربط الحجز يوضّح مع من هو ويحتسبه ضمن المحجوز. أمّا المبلغ المدفوع فتُدخله أنت.';
+
+  @override
+  String get expenseDelete => 'حذف';
+
+  @override
+  String get expenseCategoryLabel => 'الفئة';
+
+  @override
+  String get expenseCategoryPlaceholder => 'اختر فئة';
+
+  @override
+  String get expenseNoCategory => 'بدون فئة';
+
+  @override
+  String get expenseLabelLabel => 'الوصف';
+
+  @override
+  String get expenseLabelHint => 'مثال: كعكة الزفاف';
+
+  @override
+  String get expensePlannedLabel => 'المبلغ المخطّط (دج)';
+
+  @override
+  String get expenseSpentLabel => 'المصروف حتى الآن (دج)';
+
+  @override
+  String get expenseBookingLabel => 'الحجز المرتبط';
+
+  @override
+  String get expenseNotLinked => 'غير مرتبط';
+
+  @override
+  String get expenseAddLine => 'إضافة بند';
+
+  @override
+  String get expenseSaveLine => 'حفظ البند';
+
+  @override
+  String get expenseFullTitle => 'الميزانية ممتلئة';
+
+  @override
+  String get expenseFullBody =>
+      'بلغت الحدّ الأقصى لعدد البنود. احذف بندًا لم تعد بحاجته، أو ادمج بندين في واحد.';
+
+  @override
+  String get expenseDeleteTitle => 'حذف هذا البند ؟';
+
+  @override
+  String get expenseDeleteBody =>
+      'سيختفي من ميزانيتك وسيُعاد حساب المبلغ المتبقّي. الحجز المرتبط به لا يتأثّر.';
+
+  @override
+  String get expenseDeleteSpent => 'المصروف (دج)';
+
+  @override
+  String get expenseDeletePlanned => 'المخطّط (دج)';
+
+  @override
+  String get expenseDeleteConfirm => 'حذف البند';
+
+  @override
+  String get expenseDeleteKeep => 'الاحتفاظ به';
+
+  @override
+  String get linkBookingTitle => 'ربط حجز';
+
+  @override
+  String get linkBookingIntro =>
+      'تظهر هنا حجوزاتك أنت فقط. ربط حجز يملأ اسم المزوّد ويحتسب هذا البند ضمن «الخدمات المحجوزة».';
+
+  @override
+  String get linkBookingNoneBody => 'هذا البند غير مرتبط بأي حجز';
+
+  @override
+  String linkBookingUsedOn(String label) {
+    return 'مستعمل في «$label»';
+  }
+
+  @override
+  String get linkBookingNote =>
+      'الحجز المستعمل في بند آخر يظهر باهتًا، حتى لا يُحتسب المبلغ نفسه مرتين.';
+
+  @override
+  String get linkBookingAction => 'ربط الحجز';
+
+  @override
+  String get linkBookingEmptyTitle => 'لا توجد حجوزات بعد';
+
+  @override
+  String get linkBookingEmptyBody => 'بعد حجز خدمة، يمكنك ربطها بهذا البند.';
+
+  @override
+  String get discardTitle => 'تجاهل التغييرات ؟';
+
+  @override
+  String get discardBody => 'لن يتم حفظ ما غيّرته هنا.';
+
+  @override
+  String get discardConfirm => 'تجاهل';
+
+  @override
+  String get discardKeep => 'متابعة التعديل';
+
+  @override
+  String get budgetDelete => 'حذف الميزانية';
+
+  @override
+  String get budgetDeleteTitle => 'حذف هذه الميزانية ؟';
+
+  @override
+  String get budgetDeleteBody =>
+      'ستُحذف ميزانيتك وكل بنودها نهائيًا. الحجوزات المرتبطة بها لا تتأثّر.';
+
+  @override
+  String get budgetDeleteConfirm => 'حذف الميزانية';
+
+  @override
+  String get budgetDeleted => 'تم حذف الميزانية.';
+
+  @override
+  String get budgetDeleteUnavailable => 'حذف الميزانية غير متاح بعد.';
 }

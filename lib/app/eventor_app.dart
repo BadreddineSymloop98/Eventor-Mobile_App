@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+import '../core/bookings/bookings_repository.dart';
+import '../core/budget/budget_repository.dart';
 import '../core/catalog/catalog_repository.dart';
 import '../core/catalog/favourites_controller.dart';
 import '../core/catalog/favourites_repository.dart';
@@ -54,6 +56,8 @@ class EventorApp extends StatelessWidget {
           value: services.favourites,
         ),
         Provider<MessagingRepository>.value(value: services.messaging),
+        Provider<BookingsRepository>.value(value: services.bookings),
+        Provider<BudgetRepository>.value(value: services.budget),
         Provider<NotificationsRepository>.value(
           value: services.notifications,
         ),

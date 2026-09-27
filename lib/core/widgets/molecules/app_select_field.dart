@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../constants/ui_helpers.dart';
 import '../atoms/app_icon.dart';
+import '../atoms/app_spinner.dart';
 
 /// A field whose value is picked from a list rather than typed — the design's
 /// `Select`.
@@ -18,6 +19,7 @@ class AppSelectField extends StatelessWidget {
     this.placeholder,
     this.helperText,
     this.errorText,
+    this.isLoading = false,
     super.key,
   });
 
@@ -33,6 +35,10 @@ class AppSelectField extends StatelessWidget {
 
   /// `null` renders the field disabled.
   final VoidCallback? onTap;
+
+  /// The options are still on their way: a spinner stands in for the
+  /// chevron and taps wait, while the field keeps its enabled look.
+  final bool isLoading;
 
   bool get _hasError => errorText != null;
   bool get _isEnabled => onTap != null;
@@ -60,7 +66,7 @@ class AppSelectField extends StatelessWidget {
           label: label,
           value: value,
           child: GestureDetector(
-            onTap: onTap,
+            onTap: isLoading ? null : onTap,
             behavior: HitTestBehavior.opaque,
             child: Container(
               height: AppSizes.controlLg.dh,
@@ -92,7 +98,10 @@ class AppSelectField extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: AppSpacing.xs.dw),
-                  const AppIcon(AppIcons.chevronDown, size: AppSizes.iconMd),
+                  if (isLoading)
+                    const AppSpinner(size: AppSizes.iconMd)
+                  else
+                    const AppIcon(AppIcons.chevronDown, size: AppSizes.iconMd),
                 ],
               ),
             ),

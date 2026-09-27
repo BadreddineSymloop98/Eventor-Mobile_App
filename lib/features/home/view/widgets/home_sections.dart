@@ -7,7 +7,7 @@ import '../../../../core/formatting/rating_format.dart';
 import '../../../../core/localization/app_localizations_x.dart';
 import '../../../../core/localization/catalog_labels.dart';
 import '../../../../core/widgets/atoms/app_icon.dart';
-import '../../../../core/widgets/atoms/icon_tile.dart';
+import '../../../../core/widgets/atoms/dashed_border_box.dart';
 import '../../../../core/widgets/atoms/status_badge.dart';
 import '../../../../core/widgets/molecules/main_button.dart';
 import '../../../../core/widgets/molecules/price_text.dart';
@@ -100,17 +100,23 @@ class BudgetCard extends StatelessWidget {
             ],
           )
         : Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              const IconTile(AppIcons.pieChart),
-              SizedBox(height: AppSpacing.sm.dh),
-              Text(
-                l10n.budgetEmptyTitle,
-                style: textTheme.titleMedium?.copyWith(color: AppColors.textPrimary),
+              Row(
+                children: <Widget>[
+                  const AppIcon(AppIcons.pieChart, color: AppColors.iconBrand),
+                  SizedBox(width: AppSpacing.xs.dw),
+                  Expanded(
+                    child: Text(
+                      l10n.budgetEmptyTitle,
+                      style: textTheme.titleMedium?.copyWith(color: AppColors.textPrimary),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: AppSpacing.xs2.dh),
+              SizedBox(height: AppSpacing.xs.dh),
               Text(
                 l10n.budgetEmptyBody,
-                textAlign: TextAlign.center,
                 style: textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
               ),
               SizedBox(height: AppSpacing.md.dh),
@@ -122,8 +128,17 @@ class BudgetCard extends StatelessWidget {
             ],
           );
 
+    // 11c: an invitation, drawn dashed like every "nothing here yet, add
+    // one" card.
+    if (!budget.exists) {
+      return DashedBorderBox(
+        padding: EdgeInsetsDirectional.all(AppSpacing.md.dw),
+        child: content,
+      );
+    }
+
     return GestureDetector(
-      onTap: budget.exists ? onOpen : null,
+      onTap: onOpen,
       behavior: HitTestBehavior.opaque,
       child: Container(
         padding: EdgeInsetsDirectional.all(AppSpacing.md.dw),

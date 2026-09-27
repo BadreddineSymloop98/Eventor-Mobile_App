@@ -6,6 +6,7 @@ import '../core/constants/input_rules.dart';
 import '../core/errors/failure.dart';
 import '../core/models/account.dart';
 import '../features/auth/data/documents_repository.dart';
+import 'mock_budget.dart';
 import 'mock_catalog_data.dart';
 import 'mock_reference_data.dart';
 
@@ -182,6 +183,11 @@ class MockBackend {
   final Map<String, List<Map<String, Object?>>> _favourites =
       <String, List<Map<String, Object?>>>{};
 
+  /// Each client's one budget, per account email, in the shape
+  /// `mock_budget.dart` reads.
+  final Map<String, Map<String, Object?>> _budgets =
+      <String, Map<String, Object?>>{};
+
   /// Loads the saved state, or seeds a fresh one.
   static Future<MockBackend> load({
     SharedPreferences? prefs,
@@ -293,6 +299,7 @@ class MockBackend {
     _lockedUntil.clear();
     _codeSentAt.clear();
     _seedFavourites();
+    _seedBudgets();
     await _save();
   }
 
@@ -303,6 +310,7 @@ class MockBackend {
         _accounts[a.email] = a;
       }
       _seedFavourites();
+      _seedBudgets();
       return;
     }
     try {
@@ -326,6 +334,15 @@ class MockBackend {
         // State saved before favourites existed.
         _seedFavourites();
       }
+      final Object? budgets = json['budgets'];
+      if (budgets is Map<String, Object?>) {
+        budgets.forEach((String email, Object? budget) {
+          _budgets[email] = Map<String, Object?>.of(budget! as Map<String, Object?>);
+        });
+      } else {
+        // State saved before budgets existed.
+        _seedBudgets();
+      }
     } catch (_) {
       // A state from an older build that no longer parses: start over.
       _accounts.clear();
@@ -333,6 +350,7 @@ class MockBackend {
         _accounts[a.email] = a;
       }
       _seedFavourites();
+      _seedBudgets();
     }
   }
 
@@ -344,6 +362,7 @@ class MockBackend {
               .toList(),
           'session': _sessionEmail,
           'favourites': _favourites,
+          'budgets': _budgets,
         }),
       );
 
@@ -642,6 +661,31 @@ class MockBackend {
     if ((rows?.length ?? 0) == before) {
       throw _failure(404, ApiErrorCode.favouriteNotFound, 'No such favourite.');
     }
+    await _save();
+  }
+
+  // --------------------------------------------------------------- budget
+
+  /// The seeded client starts with the budget drawn on 18, so every state of
+  /// section 7 is one tap away; everyone else starts on 11c.
+  void _seedBudgets() {
+    _budgets
+      ..clear()
+      ..[_seededFavouritesEmail] = mockSeedBudget(_now());
+  }
+
+  /// The signed-in client's budget, or `null` before they create one. A
+  /// provider is refused, as live.
+  Map<String, Object?>? budget() => _budgets[_requireClient().email];
+
+  /// `DELETE /app/me/budget` — as the backend is asked to build it.
+  Future<void> deleteBudget() async {
+    _budgets.remove(_requireClient().email);
+    await _save();
+  }
+
+  Future<void> putBudget(Map<String, Object?> budget) async {
+    _budgets[_requireClient().email] = budget;
     await _save();
   }
 

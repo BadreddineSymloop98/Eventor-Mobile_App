@@ -1,3 +1,4 @@
+import '../budget/budget_repository.dart';
 import '../catalog/models/pack.dart';
 import '../catalog/service_query.dart';
 import '../models/account.dart';
@@ -85,6 +86,22 @@ abstract final class AppRoutes {
   /// `16` — the bell's list.
   static const String notifications = '/notifications';
 
+  /// `18` — the budget, or `18a` in its place until there is one.
+  static const String budget = '/budget';
+
+  /// `18f`. Carries the [Budget] as `extra`.
+  static const String budgetEdit = '/budget/edit';
+
+  /// `18d`. Carries [ExpenseLineArgs] as `extra`.
+  static const String budgetNewLine = '/budget/lines/new';
+
+  /// `18b`, under `/budget/lines/<id>` — see [budgetLineFor]. Carries
+  /// [ExpenseLineArgs].
+  static const String budgetLines = '/budget/lines';
+
+  /// `18h`. Carries [LinkBookingArgs] as `extra`.
+  static const String budgetLinkBooking = '/budget/link';
+
   /// A provider's placeholder home until `21` is built.
   static const String providerHome = '/provider';
 
@@ -128,6 +145,8 @@ abstract final class AppRoutes {
   static String providerFor(String id) => '$providers/$id';
 
   static String packFor(String id) => '$packs/$id';
+
+  static String budgetLineFor(String id) => '$budgetLines/$id';
 
   /// `15`'s own thread.
   static String chatFor(String id) => '$conversations/$id';
@@ -173,6 +192,8 @@ abstract final class AppRoutes {
       path == packs ||
       path.startsWith('$packs/') ||
       path == favourites ||
+      path == budget ||
+      path.startsWith('$budget/') ||
       path.startsWith('$conversations/') ||
       path == notifications;
 
@@ -203,3 +224,45 @@ class ResetPasswordArgs {
 
 /// Why `10a` sent the user back to `10`.
 enum ResetCodeProblem { invalid, expired }
+
+/// What 18d and 18b open with: the budget as it stands — for the line limit
+/// and the bookings already in use — and, on 18b, the line.
+class ExpenseLineArgs {
+  const ExpenseLineArgs({required this.budget, this.item});
+
+  final Budget budget;
+  final BudgetItem? item;
+}
+
+/// A booking as a line shows it once linked: "EVT-2044 · Fleurs de Yasmina".
+class LinkedBooking {
+  const LinkedBooking({
+    required this.id,
+    required this.reference,
+    required this.providerName,
+  });
+
+  final String id;
+  final String reference;
+  final String providerName;
+}
+
+/// What 18h opens with.
+class LinkBookingArgs {
+  const LinkBookingArgs({required this.current, required this.usedBy});
+
+  /// The line's booking now, or `null` when it is not linked.
+  final LinkedBooking? current;
+
+  /// Bookings already on *other* lines → that line's label. Shown greyed
+  /// out, so one amount is never counted twice.
+  final Map<String, String> usedBy;
+}
+
+/// What 18h hands back when "Link booking" is tapped. A `null` [booking]
+/// unlinks the line.
+class BookingLinkChoice {
+  const BookingLinkChoice(this.booking);
+
+  final LinkedBooking? booking;
+}

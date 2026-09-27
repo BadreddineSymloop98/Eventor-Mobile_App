@@ -158,8 +158,10 @@ class ApiClient {
     return body is Map<String, Object?> ? body : <String, Object?>{'data': body};
   }
 
-  Future<void> delete(String path) async {
-    await _send(
+  /// Returns `data` for a route that answers with one — the budget sends
+  /// itself back recomputed.
+  Future<Object?> delete(String path) {
+    return _send(
       () => _dio.delete<Object?>(path, options: _options(false)),
       isPublic: false,
     );
@@ -168,6 +170,13 @@ class ApiClient {
   Future<Object?> patch(String path, {Object? body}) {
     return _send(
       () => _dio.patch<Object?>(path, data: body, options: _options(false)),
+      isPublic: false,
+    );
+  }
+
+  Future<Object?> put(String path, {Object? body}) {
+    return _send(
+      () => _dio.put<Object?>(path, data: body, options: _options(false)),
       isPublic: false,
     );
   }

@@ -2,6 +2,8 @@ import 'dart:ui' show PlatformDispatcher;
 
 import 'package:go_router/go_router.dart';
 
+import '../core/bookings/bookings_repository.dart';
+import '../core/budget/budget_repository.dart';
 import '../core/catalog/catalog_repository.dart';
 import '../core/catalog/favourites_controller.dart';
 import '../core/catalog/favourites_repository.dart';
@@ -20,6 +22,7 @@ import '../core/startup/app_startup.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/documents_repository.dart';
 import '../mock/mock_backend.dart';
+import '../mock/mock_budget.dart';
 import '../features/shell/shell_badges.dart';
 import '../mock/mock_catalog.dart';
 import '../mock/mock_messaging.dart';
@@ -46,6 +49,8 @@ class AppServices {
     required this.favourites,
     required this.messaging,
     required this.notifications,
+    required this.bookings,
+    required this.budget,
     required this.badges,
     required this.session,
     required this.startup,
@@ -112,6 +117,15 @@ class AppServices {
         mock != null && messagingStore != null
             ? MockNotificationsRepository(messagingStore, mock)
             : ApiNotificationsRepository(api);
+    final BookingsRepository bookings = mock != null
+        ? MockBookingsRepository(mock, languageCode: languageCode)
+        : ApiBookingsRepository(api);
+    final BudgetRepository budget = mock != null
+        ? MockBudgetRepository(
+            mock,
+            MockCatalogLookups(mock, languageCode: languageCode),
+          )
+        : ApiBudgetRepository(api);
     final SessionController session = SessionController(auth);
     final FavouritesController favourites =
         FavouritesController(favouritesRepository);
@@ -142,6 +156,8 @@ class AppServices {
       favourites: favourites,
       messaging: messaging,
       notifications: notifications,
+      bookings: bookings,
+      budget: budget,
       badges: badges,
       mockBackend: mock,
       session: session,
@@ -173,6 +189,12 @@ class AppServices {
 
   /// Screen 16 and the badge counts.
   final NotificationsRepository notifications;
+
+  /// The client's bookings — for now, 18h's list to link a line to.
+  final BookingsRepository bookings;
+
+  /// Section 7.
+  final BudgetRepository budget;
 
   /// The bottom nav's counts.
   final ShellBadges badges;

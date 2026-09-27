@@ -43,6 +43,7 @@ class AppTextField extends StatefulWidget {
     this.textCapitalization = TextCapitalization.none,
     this.autofillHints,
     this.inputFormatters,
+    this.suffixText,
     this.onChanged,
     this.onSubmitted,
     super.key,
@@ -99,6 +100,9 @@ class AppTextField extends StatefulWidget {
   /// Rules applied as the user types, so invalid characters never make it into
   /// the value in the first place.
   final List<TextInputFormatter>? inputFormatters;
+
+  /// A unit after the value, inside the box — "DA" on an amount.
+  final String? suffixText;
 
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
@@ -249,6 +253,15 @@ class _AppTextFieldState extends State<AppTextField> {
                   ),
                 ),
               ),
+              if (widget.suffixText case final String suffix) ...<Widget>[
+                SizedBox(width: AppSpacing.xs.dw),
+                Text(
+                  suffix,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
               if (widget.obscureText) _buildVisibilityToggle(),
             ],
           ),

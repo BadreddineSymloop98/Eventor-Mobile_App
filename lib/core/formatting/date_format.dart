@@ -9,3 +9,7 @@ import 'package:intl/intl.dart' show DateFormat;
 String shortDate(DateTime date, String locale) =>
     '${DateFormat.E(locale).format(date)} ${date.day} '
     '${DateFormat.MMM(locale).format(date)}';
+
+/// "Sat 14 Mar 2026" / "السبت 14 مارس 2026" — [shortDate] with the year.
+String longDate(DateTime date, String locale) =>
+    '${shortDate(date, locale)} ${date.year}';

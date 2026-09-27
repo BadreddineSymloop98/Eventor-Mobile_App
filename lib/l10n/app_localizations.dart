@@ -2725,6 +2725,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'These are your last notifications. New ones arrive when you reconnect.'**
   String get offlineNotificationsBody;
+
+  /// Top bar of 18, 18a and 18f.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget'**
+  String get budgetTitle;
+
+  /// 18's top-bar action, opening 18f.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get budgetEdit;
+
+  /// Heading of 18a Create.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan your event budget'**
+  String get budgetCreateIntroTitle;
+
+  /// Heading of 18f Edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit your budget'**
+  String get budgetEditIntroTitle;
+
+  /// Under the 18f heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing the total leaves your expense lines untouched. Only you can see this.'**
+  String get budgetEditIntroBody;
+
+  /// Field label on 18a/18f.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget name'**
+  String get budgetNameLabel;
+
+  /// Placeholder of the budget name.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Our wedding'**
+  String get budgetNameHint;
+
+  /// Field label on 18a/18f, and the date sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Event date'**
+  String get budgetEventDateLabel;
+
+  /// Date sheet button that clears the optional event date.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the date'**
+  String get budgetEventDateClear;
+
+  /// Placeholder of an optional picker field.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optionalField;
+
+  /// Field label on 18a/18f. Arabic carries the currency in the label, as drawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Total budget'**
+  String get budgetTotalLabel;
+
+  /// Unit inside an amount field. Empty in Arabic, whose labels carry (دج) instead.
+  ///
+  /// In en, this message translates to:
+  /// **'DA'**
+  String get amountFieldSuffix;
+
+  /// Button on 18a.
+  ///
+  /// In en, this message translates to:
+  /// **'Create budget'**
+  String get budgetCreateAction;
+
+  /// Button on 18f.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get budgetSaveChanges;
+
+  /// After the big amount on 18's summary.
+  ///
+  /// In en, this message translates to:
+  /// **'spent'**
+  String get budgetSpent;
+
+  /// After the planned total on 18: "380 000 DA allocated across 6 lines". The amount is a separate token before it.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{DA allocated across 0 lines} =1{DA allocated across 1 line} other{DA allocated across {count} lines}}'**
+  String budgetAllocatedLines(int count);
+
+  /// 18's stat label.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get budgetRemaining;
+
+  /// 18's stat label.
+  ///
+  /// In en, this message translates to:
+  /// **'Services booked'**
+  String get budgetServicesBooked;
+
+  /// "3 of 6" under Services booked on 18.
+  ///
+  /// In en, this message translates to:
+  /// **'{booked} of {count}'**
+  String budgetBookedOf(int booked, int count);
+
+  /// 18's list heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense lines'**
+  String get budgetExpenseLines;
+
+  /// Beside 18's list heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual vs planned'**
+  String get budgetActualVsPlanned;
+
+  /// A line with no linked booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Not booked yet'**
+  String get budgetNotBookedYet;
+
+  /// Under a line whose spent amount equals its plan.
+  ///
+  /// In en, this message translates to:
+  /// **'on plan'**
+  String get budgetLineOnPlan;
+
+  /// Under a line with nothing spent yet, after its planned amount.
+  ///
+  /// In en, this message translates to:
+  /// **'planned'**
+  String get budgetLinePlanned;
+
+  /// 18c empty card title.
+  ///
+  /// In en, this message translates to:
+  /// **'No expense lines yet'**
+  String get budgetNoLinesTitle;
+
+  /// 18c empty card body.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a line for each service you are paying for, and the remaining amount keeps itself up to date.'**
+  String get budgetNoLinesBody;
+
+  /// 18's button, and 18d's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an expense'**
+  String get budgetAddExpense;
+
+  /// 18g banner title.
+  ///
+  /// In en, this message translates to:
+  /// **'You are over your budget'**
+  String get budgetOverTitle;
+
+  /// 18g banner body.
+  ///
+  /// In en, this message translates to:
+  /// **'You have spent more than your total. Raise the budget, or trim a line.'**
+  String get budgetOverBody;
+
+  /// 18d heading.
+  ///
+  /// In en, this message translates to:
+  /// **'New expense line'**
+  String get expenseNewTitle;
+
+  /// Under the 18d heading.
+  ///
+  /// In en, this message translates to:
+  /// **'A name and a planned amount are enough to start. Everything else can wait.'**
+  String get expenseNewBody;
+
+  /// 18b top bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense line'**
+  String get expenseLineTitle;
+
+  /// Under the 18b heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Linking a booking shows who it is with and counts it as booked. You still enter what you actually paid.'**
+  String get expenseEditBody;
+
+  /// 18b's top-bar action, opening 18e.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get expenseDelete;
+
+  /// Field label on 18d/18b, and the category sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get expenseCategoryLabel;
+
+  /// Category field before one is chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a category'**
+  String get expenseCategoryPlaceholder;
+
+  /// First row of the category sheet, to clear it.
+  ///
+  /// In en, this message translates to:
+  /// **'No category'**
+  String get expenseNoCategory;
+
+  /// Field label on 18d/18b.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get expenseLabelLabel;
+
+  /// Placeholder of the line label.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Wedding cake'**
+  String get expenseLabelHint;
+
+  /// Field label on 18d/18b.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned amount'**
+  String get expensePlannedLabel;
+
+  /// Field label on 18d/18b.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent so far'**
+  String get expenseSpentLabel;
+
+  /// Field label on 18d/18b.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked booking'**
+  String get expenseBookingLabel;
+
+  /// Linked booking field with none, and the first row of 18h.
+  ///
+  /// In en, this message translates to:
+  /// **'Not linked'**
+  String get expenseNotLinked;
+
+  /// Button on 18d.
+  ///
+  /// In en, this message translates to:
+  /// **'Add line'**
+  String get expenseAddLine;
+
+  /// Button on 18b.
+  ///
+  /// In en, this message translates to:
+  /// **'Save line'**
+  String get expenseSaveLine;
+
+  /// 18i banner title.
+  ///
+  /// In en, this message translates to:
+  /// **'This budget is full'**
+  String get expenseFullTitle;
+
+  /// 18i banner body.
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the maximum number of expense lines. Delete one you no longer need, or merge two into a single line.'**
+  String get expenseFullBody;
+
+  /// 18e sheet title. Space before ? per the copy rule.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this line ?'**
+  String get expenseDeleteTitle;
+
+  /// 18e sheet body.
+  ///
+  /// In en, this message translates to:
+  /// **'It disappears from your budget and the remaining amount is recalculated. The booking it is linked to is not touched.'**
+  String get expenseDeleteBody;
+
+  /// 18e recap row.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent'**
+  String get expenseDeleteSpent;
+
+  /// 18e recap row.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get expenseDeletePlanned;
+
+  /// 18e destructive button.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete line'**
+  String get expenseDeleteConfirm;
+
+  /// 18e cancel button.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it'**
+  String get expenseDeleteKeep;
+
+  /// 18h top bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Link a booking'**
+  String get linkBookingTitle;
+
+  /// 18h intro.
+  ///
+  /// In en, this message translates to:
+  /// **'Only your own bookings appear here. Linking one fills in the provider and counts this line in “services booked”.'**
+  String get linkBookingIntro;
+
+  /// Under 18h's Not linked row.
+  ///
+  /// In en, this message translates to:
+  /// **'This line is not tied to any booking'**
+  String get linkBookingNoneBody;
+
+  /// On a booking already linked to another line of the budget.
+  ///
+  /// In en, this message translates to:
+  /// **'On “{label}”'**
+  String linkBookingUsedOn(String label);
+
+  /// Under the 18h list.
+  ///
+  /// In en, this message translates to:
+  /// **'A booking already used on another line is shown greyed out, so the same amount is never counted twice.'**
+  String get linkBookingNote;
+
+  /// Button on 18h.
+  ///
+  /// In en, this message translates to:
+  /// **'Link booking'**
+  String get linkBookingAction;
+
+  /// 18h with nothing to link.
+  ///
+  /// In en, this message translates to:
+  /// **'No bookings yet'**
+  String get linkBookingEmptyTitle;
+
+  /// 18h with nothing to link.
+  ///
+  /// In en, this message translates to:
+  /// **'Once you book a service, you can link it to this line.'**
+  String get linkBookingEmptyBody;
+
+  /// Sheet when leaving a form with unsaved edits.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard your changes ?'**
+  String get discardTitle;
+
+  /// Sheet when leaving a form with unsaved edits.
+  ///
+  /// In en, this message translates to:
+  /// **'What you changed here will not be saved.'**
+  String get discardBody;
+
+  /// Destructive button of the discard sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get discardConfirm;
+
+  /// Cancel button of the discard sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get discardKeep;
+
+  /// 18f link at the end of the form.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete budget'**
+  String get budgetDelete;
+
+  /// Sheet title before deleting the budget.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this budget ?'**
+  String get budgetDeleteTitle;
+
+  /// Sheet body before deleting the budget.
+  ///
+  /// In en, this message translates to:
+  /// **'Your budget and all its expense lines are removed for good. The bookings they were linked to are not touched.'**
+  String get budgetDeleteBody;
+
+  /// Destructive button of the delete-budget sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete budget'**
+  String get budgetDeleteConfirm;
+
+  /// Toast after deleting the budget.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget deleted.'**
+  String get budgetDeleted;
+
+  /// Toast when the server has no delete route yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting a budget is not available yet.'**
+  String get budgetDeleteUnavailable;
 }
 
 class _AppLocalizationsDelegate

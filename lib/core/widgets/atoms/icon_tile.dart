@@ -13,11 +13,14 @@ class IconTile extends StatelessWidget {
   const IconTile(
     this.icon, {
     this.size = containerSize,
+    this.muted = false,
     super.key,
   });
 
   /// `Service Thumb` — a service without a photo yet.
-  const IconTile.serviceThumb(this.icon, {super.key}) : size = thumbSize;
+  const IconTile.serviceThumb(this.icon, {super.key})
+      : size = thumbSize,
+        muted = false;
 
   /// `Icon Container`.
   static const double containerSize = 40;
@@ -30,6 +33,10 @@ class IconTile extends StatelessWidget {
   /// Design pixels.
   final double size;
 
+  /// Grey instead of purple — something not settled yet, like a budget line
+  /// with no booking (18).
+  final bool muted;
+
   @override
   Widget build(BuildContext context) {
     final double side = size.dw;
@@ -40,9 +47,14 @@ class IconTile extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: AppRadii.mdAll,
-        border: Border.all(color: AppColors.tileBorder),
+        color: muted ? AppColors.bgCanvas : null,
+        border: Border.all(
+          color: muted ? AppColors.borderDefault : AppColors.tileBorder,
+        ),
         // Top-start to bottom-end, following the design's diagonal.
-        gradient: const LinearGradient(
+        gradient: muted
+            ? null
+            : const LinearGradient(
           begin: AlignmentDirectional.topStart,
           end: AlignmentDirectional.bottomEnd,
           colors: <Color>[
@@ -51,7 +63,10 @@ class IconTile extends StatelessWidget {
           ],
         ),
       ),
-      child: AppIcon(icon, color: AppColors.iconBrand),
+      child: AppIcon(
+        icon,
+        color: muted ? AppColors.iconDefault : AppColors.iconBrand,
+      ),
     );
   }
 }

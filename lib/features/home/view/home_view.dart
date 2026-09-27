@@ -28,7 +28,8 @@ import 'widgets/home_skeleton.dart';
 ///
 /// Sections the API has nothing for are left out rather than drawn empty
 /// (spec D2); the budget card always shows, as an invitation when there is
-/// no budget yet (11c). Links to screens not built yet say "Coming soon".
+/// no budget yet (11c), and opens section 7. Links to screens not built yet
+/// say "Coming soon".
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -46,6 +47,13 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void _comingSoon() => showComingSoon(context, context.l10n.comingSoon);
+
+  /// 18 — or 18a, which stands in its place until there is a budget. Home's
+  /// card reflects whatever was changed there once the client is back.
+  Future<void> _openBudget(HomeViewModel viewModel) async {
+    await context.push(AppRoutes.budget);
+    if (mounted) await viewModel.refresh();
+  }
 
   Future<void> _refresh(HomeViewModel viewModel) async {
     final Failure? failure = await viewModel.refresh();
@@ -108,6 +116,7 @@ class _HomeViewState extends State<HomeView> {
       body = _HomeContent(
         feed: feed,
         onComingSoon: _comingSoon,
+        onOpenBudget: () => _openBudget(viewModel),
       );
     } else if (viewModel.isFirstLoad || !viewModel.hasError) {
       body = const HomeSkeleton();
@@ -156,10 +165,15 @@ class _HomeViewState extends State<HomeView> {
 }
 
 class _HomeContent extends StatelessWidget {
-  const _HomeContent({required this.feed, required this.onComingSoon});
+  const _HomeContent({
+    required this.feed,
+    required this.onComingSoon,
+    required this.onOpenBudget,
+  });
 
   final HomeFeed feed;
   final VoidCallback onComingSoon;
+  final VoidCallback onOpenBudget;
 
   @override
   Widget build(BuildContext context) {
@@ -224,8 +238,8 @@ class _HomeContent extends StatelessWidget {
         section(
           title: l10n.homeYourBudget,
           action: feed.budget.exists ? l10n.budgetDetails : null,
-          onAction: feed.budget.exists ? onComingSoon : null,
-          child: BudgetCard(budget: feed.budget, onOpen: onComingSoon),
+          onAction: feed.budget.exists ? onOpenBudget : null,
+          child: BudgetCard(budget: feed.budget, onOpen: onOpenBudget),
         ),
         if (feed.packs.isNotEmpty)
           section(
