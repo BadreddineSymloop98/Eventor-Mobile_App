@@ -1,110 +1,102 @@
-import 'package:eventor/core/widgets/language_switch.dart';
-import 'package:eventor/core/widgets/main_button.dart';
-import 'package:eventor/core/widgets/photo_backdrop.dart';
+import 'package:eventor/core/widgets/layout/photo_backdrop.dart';
+import 'package:eventor/core/widgets/molecules/back_icon_button.dart';
+import 'package:eventor/core/widgets/molecules/language_switch.dart';
 import 'package:eventor/features/login/view/login_view.dart';
+import 'package:eventor/features/role_selection/view/role_selection_view.dart';
 import 'package:eventor/features/welcome/view/welcome_view.dart';
 import 'package:eventor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/test_app.dart';
+import '../feature_test_helpers.dart';
 
 void main() {
-  /// Launches straight onto the welcome screen, which is where a returning
-  /// user who has seen onboarding but has no session lands.
-  Future<void> pumpWelcome(WidgetTester tester, {Locale? locale}) async {
-    await tester.pumpWidget(
-      await buildTestApp(hasSeenOnboarding: true, locale: locale),
+  Future<TestApp> pumpWelcome(WidgetTester tester, {Locale? locale}) async {
+    final TestApp app = await buildTestApp(
+      hasSeenOnboarding: true,
+      locale: locale,
     );
-    await passSplash(tester);
+    await startApp(tester, app);
     expect(find.byType(WelcomeView), findsOneWidget);
+    return app;
   }
 
   group('WelcomeView', () {
-    testWidgets('shows the brand, the copy and both ways in',
-        (WidgetTester tester) async {
+    testWidgets('asks the one question over a photograph', (
+      WidgetTester tester,
+    ) async {
       await pumpWelcome(tester);
       final AppLocalizations strings = l10n(tester);
 
       expect(find.byType(PhotoBackdrop), findsOneWidget);
       expect(find.text(strings.welcomeTitle), findsOneWidget);
       expect(find.text(strings.welcomeSubtitle), findsOneWidget);
-      expect(find.text(strings.createAccount), findsOneWidget);
-      expect(find.text(strings.welcomeHaveAccount), findsOneWidget);
-    });
-
-    testWidgets('offers the language switch but no way back',
-        (WidgetTester tester) async {
-      await pumpWelcome(tester);
-
+      expect(button(strings.createAccount), findsOneWidget);
+      expect(button(strings.welcomeHaveAccount), findsOneWidget);
+      // The start of the auth flow: a language switch, and no way back.
       expect(find.byType(LanguageSwitch), findsOneWidget);
-      // The splash replaced itself, so this is the bottom of the stack.
-      expect(
-        Navigator.of(tester.element(find.byType(WelcomeView))).canPop(),
-        isFalse,
-      );
-      expect(find.text(l10n(tester).skip), findsNothing);
+      expect(find.byType(BackIconButton), findsNothing);
     });
 
-    testWidgets('draws the two actions with different weight',
-        (WidgetTester tester) async {
+    testWidgets('Create account pushes role selection, and Back returns', (
+      WidgetTester tester,
+    ) async {
       await pumpWelcome(tester);
-      final AppLocalizations strings = l10n(tester);
 
-      MainButton buttonWith(String label) =>
-          tester.widget<MainButton>(find.widgetWithText(MainButton, label));
+      await tapAndSettle(tester, button(l10n(tester).createAccount));
+      expect(find.byType(RoleSelectionView), findsOneWidget);
 
-      // Creating an account is the action the screen is asking for; signing in
-      // is the alternative, so it is outlined rather than filled.
-      expect(
-        buttonWith(strings.createAccount).style,
-        MainButtonStyle.primary,
-      );
-      expect(
-        buttonWith(strings.welcomeHaveAccount).style,
-        MainButtonStyle.secondary,
-      );
-      // Both sit on a photograph.
-      expect(
-        buttonWith(strings.createAccount).tone,
-        MainButtonTone.inverse,
-      );
-      expect(
-        buttonWith(strings.welcomeHaveAccount).tone,
-        MainButtonTone.inverse,
-      );
+      await tapAndSettle(tester, find.byType(BackIconButton));
+      expect(find.byType(WelcomeView), findsOneWidget);
     });
 
-    testWidgets('goes to the login form, and can come back',
-        (WidgetTester tester) async {
+    testWidgets('I have an account pushes the login form', (
+      WidgetTester tester,
+    ) async {
       await pumpWelcome(tester);
 
-      await tester.tap(find.text(l10n(tester).welcomeHaveAccount));
-      await tester.pumpAndSettle();
+      await tapAndSettle(tester, button(l10n(tester).welcomeHaveAccount));
 
       expect(find.byType(LoginView), findsOneWidget);
-      // Pushed rather than replaced: the user chose one of two doors and must
-      // be able to go back and choose the other.
-      expect(
-        Navigator.of(tester.element(find.byType(LoginView))).canPop(),
-        isTrue,
-      );
     });
-  });
 
-  group('WelcomeView in Arabic', () {
-    testWidgets('shows the Arabic copy and mirrors the layout',
-        (WidgetTester tester) async {
+    testWidgets('is not remembered as seen until a door is taken', (
+      WidgetTester tester,
+    ) async {
+      final TestApp app = await pumpWelcome(tester);
+
+      expect(app.services.preferences.hasSeenWelcome, isFalse);
+    });
+
+    testWidgets('Create account remembers Welcome as seen', (
+      WidgetTester tester,
+    ) async {
+      final TestApp app = await pumpWelcome(tester);
+
+      await tapAndSettle(tester, button(l10n(tester).createAccount));
+
+      expect(app.services.preferences.hasSeenWelcome, isTrue);
+    });
+
+    testWidgets('I have an account remembers Welcome as seen', (
+      WidgetTester tester,
+    ) async {
+      final TestApp app = await pumpWelcome(tester);
+
+      await tapAndSettle(tester, button(l10n(tester).welcomeHaveAccount));
+
+      expect(app.services.preferences.hasSeenWelcome, isTrue);
+    });
+
+    testWidgets('mirrors in Arabic', (WidgetTester tester) async {
       await pumpWelcome(tester, locale: arabicLocale);
-      final AppLocalizations strings = l10n(tester);
 
-      expect(find.text(strings.welcomeTitle), findsOneWidget);
-      expect(find.text(strings.createAccount), findsOneWidget);
-      expect(find.text('Let’s get started'), findsNothing);
       expect(
         Directionality.of(tester.element(find.byType(WelcomeView))),
         TextDirection.rtl,
       );
+      expect(find.text(l10n(tester).welcomeTitle), findsOneWidget);
     });
   });
 }

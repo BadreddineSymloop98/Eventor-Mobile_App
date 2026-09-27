@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/constants/ui_helpers.dart';
 import '../../../core/localization/app_localizations_x.dart';
 import '../../../core/routing/app_routes.dart';
-import '../../../core/widgets/content_container.dart';
-import '../../../core/widgets/language_switch.dart';
-import '../../../core/widgets/main_button.dart';
-import '../../../core/widgets/photo_backdrop.dart';
+import '../../../core/widgets/layout/content_container.dart';
+import '../../../core/widgets/molecules/language_switch.dart';
+import '../../../core/widgets/molecules/main_button.dart';
+import '../../../core/widgets/layout/photo_backdrop.dart';
 import '../../../l10n/app_localizations.dart';
+import '../view_model/welcome_view_model.dart';
 
-/// Where onboarding leads, and where anyone without a session lands.
+/// Where onboarding leads, and where anyone without a session lands until
+/// they have been through it once.
 ///
-/// It asks one question — do you have an account or not — and does nothing
-/// else, which is why it has no view model: there is no state to hold.
+/// It asks one question — do you have an account or not. Its view model only
+/// remembers that the question was answered, after which a signed-out launch
+/// opens on Login instead.
 ///
 /// Every dimension is a share of the window: design measurements go through
 /// `.dw` / `.dh`, which convert them from the 375×812 frame.
@@ -33,11 +38,18 @@ class WelcomeView extends StatelessWidget {
   static EdgeInsets get _minimumInset =>
       EdgeInsets.symmetric(vertical: AppSpacing.md.dh);
 
-  Future<void> _createAccount(BuildContext context) =>
-      Navigator.of(context).pushNamed(AppRoutes.roleSelection);
+  void _createAccount(BuildContext context) =>
+      _leaveFor(context, AppRoutes.roleSelection);
 
-  Future<void> _logIn(BuildContext context) =>
-      Navigator.of(context).pushNamed(AppRoutes.login);
+  void _logIn(BuildContext context) => _leaveFor(context, AppRoutes.login);
+
+  Future<void> _leaveFor(BuildContext context, String route) async {
+    await context.read<WelcomeViewModel>().markAsSeen();
+    if (!context.mounted) return;
+    // Pushed rather than gone to, so Back returns here and the user can pick
+    // the other door — this time round, even though the next launch skips it.
+    context.push(route);
+  }
 
   @override
   Widget build(BuildContext context) {
