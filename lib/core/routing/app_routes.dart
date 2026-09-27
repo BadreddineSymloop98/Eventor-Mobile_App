@@ -75,6 +75,16 @@ abstract final class AppRoutes {
   /// `17`.
   static const String favourites = '/favourites';
 
+  /// `14` — the conversations list. See [chatFor] and [chatDraftFor].
+  static const String conversations = '/conversations';
+
+  /// `15`, before the first message has picked a conversation id — a chat
+  /// started from a profile's Message button.
+  static const String chatDraft = '/conversations/new';
+
+  /// `16` — the bell's list.
+  static const String notifications = '/notifications';
+
   /// A provider's placeholder home until `21` is built.
   static const String providerHome = '/provider';
 
@@ -119,6 +129,18 @@ abstract final class AppRoutes {
 
   static String packFor(String id) => '$packs/$id';
 
+  /// `15`'s own thread.
+  static String chatFor(String id) => '$conversations/$id';
+
+  /// `15` opened before any conversation exists, from a Message button —
+  /// carries who it is with and their name, since there is no id yet to look
+  /// either up by.
+  static String chatDraftFor({required String userId, required String name}) =>
+      Uri(
+        path: chatDraft,
+        queryParameters: <String, String>{'user': userId, 'name': name},
+      ).toString();
+
   /// 19, optionally opened on one event type.
   static String packsFor({EventType? eventType}) => eventType == null
       ? packs
@@ -150,7 +172,9 @@ abstract final class AppRoutes {
       path.startsWith('$providers/') ||
       path == packs ||
       path.startsWith('$packs/') ||
-      path == favourites;
+      path == favourites ||
+      path.startsWith('$conversations/') ||
+      path == notifications;
 
   static String resetCodeFor(String email) => Uri(
         path: resetCode,

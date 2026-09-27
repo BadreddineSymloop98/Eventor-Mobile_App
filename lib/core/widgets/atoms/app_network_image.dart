@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +25,7 @@ class AppNetworkImage extends StatelessWidget {
     this.radius,
     this.fit = BoxFit.cover,
     this.placeholderIcon = AppIcons.camera,
+    this.errorBuilder,
     super.key,
   });
 
@@ -37,7 +40,14 @@ class AppNetworkImage extends StatelessWidget {
   /// Shown on the brand tile when there is no photo — the category's glyph.
   final AppIcons placeholderIcon;
 
+  /// Replaces [_placeholder] when a load fails, rather than a missing URL —
+  /// 15's tap-to-reload tile (D15) wants a distinct affordance for the two.
+  final Widget Function()? errorBuilder;
+
   static const String _assetScheme = 'asset:';
+
+  /// The mock's sent photos come back embedded rather than hosted.
+  static const String _dataScheme = 'data:';
 
   /// [url] without the `exp` and `sig` parameters that change on every
   /// response. Everything else — the file id, the size variant — stays.
@@ -59,13 +69,15 @@ class AppNetworkImage extends StatelessWidget {
     final Widget image;
     if (source == null || source.isEmpty) {
       image = _placeholder();
+    } else if (source.startsWith(_dataScheme)) {
+      image = _memoryImage(source);
     } else if (source.startsWith(_assetScheme)) {
       image = Image.asset(
         source.substring(_assetScheme.length),
         width: width,
         height: height,
         fit: fit,
-        errorBuilder: (_, _, _) => _placeholder(),
+        errorBuilder: (_, _, _) => _onError(),
       );
     } else {
       image = CachedNetworkImage(
@@ -80,7 +92,7 @@ class AppNetworkImage extends StatelessWidget {
           height: height ?? double.infinity,
           radius: BorderRadius.zero,
         ),
-        errorWidget: (_, _, _) => _placeholder(),
+        errorWidget: (_, _, _) => _onError(),
       );
     }
 
@@ -88,6 +100,31 @@ class AppNetworkImage extends StatelessWidget {
     return corners == null
         ? image
         : ClipRRect(borderRadius: corners, child: image);
+  }
+
+  /// A `data:` URI, decoded straight to bytes — the mock's sent photos,
+  /// which never go over the network so they never earn a real URL.
+  /// Decoding can throw on a malformed payload, so a bad one fails the same
+  /// way a bad network image does.
+  Widget _memoryImage(String source) {
+    try {
+      final Uint8List bytes = UriData.parse(source).contentAsBytes();
+      return Image.memory(
+        bytes,
+        width: width,
+        height: height,
+        fit: fit,
+        errorBuilder: (_, _, _) => _onError(),
+      );
+    } on FormatException {
+      return _onError();
+    }
+  }
+
+  /// [errorBuilder] when the caller gave one, else the plain placeholder.
+  Widget _onError() {
+    final Widget Function()? builder = errorBuilder;
+    return builder == null ? _placeholder() : builder();
   }
 
   /// The design's gradient tile with the glyph centred — the same look as a

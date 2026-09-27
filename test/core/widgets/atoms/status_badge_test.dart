@@ -17,6 +17,20 @@ BoxDecoration _pillOf(WidgetTester tester, Type badge) {
 }
 
 void main() {
+  group('BookingStatusKind.fromApi', () {
+    test('maps every API value to itself', () {
+      expect(BookingStatusKind.fromApi('pending'), BookingStatusKind.pending);
+      expect(BookingStatusKind.fromApi('accepted'), BookingStatusKind.accepted);
+      expect(BookingStatusKind.fromApi('declined'), BookingStatusKind.declined);
+      expect(BookingStatusKind.fromApi('completed'), BookingStatusKind.completed);
+      expect(BookingStatusKind.fromApi('cancelled'), BookingStatusKind.cancelled);
+    });
+
+    test('defaults an unknown value to pending', () {
+      expect(BookingStatusKind.fromApi('weird'), BookingStatusKind.pending);
+    });
+  });
+
   group('StatusBadge', () {
     /// Each status with the words and colour it should carry.
     final Map<BookingStatusKind, (String Function(AppLocalizations), Color)>

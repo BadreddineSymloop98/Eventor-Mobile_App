@@ -34,6 +34,8 @@ class TestApp {
     this.documents,
     this.catalog,
     this.favouritesRepository,
+    this.messaging,
+    this.notifications,
   );
 
   final AppServices services;
@@ -42,6 +44,8 @@ class TestApp {
   final FakeDocumentsRepository documents;
   final FakeCatalogRepository catalog;
   final FakeFavouritesRepository favouritesRepository;
+  final FakeMessagingRepository messaging;
+  final FakeNotificationsRepository notifications;
 
   SessionController get session => services.session;
 
@@ -61,6 +65,8 @@ Future<TestApp> buildTestApp({
   FakeAuthRepository? auth,
   FakeCatalogRepository? catalog,
   FakeFavouritesRepository? favourites,
+  FakeMessagingRepository? messaging,
+  FakeNotificationsRepository? notifications,
   AppConfig config = const AppConfig(),
 }) async {
   SharedPreferences.setMockInitialValues(<String, Object>{
@@ -77,6 +83,10 @@ Future<TestApp> buildTestApp({
   final FakeCatalogRepository fakeCatalog = catalog ?? FakeCatalogRepository();
   final FakeFavouritesRepository fakeFavourites =
       favourites ?? FakeFavouritesRepository();
+  final FakeMessagingRepository fakeMessaging =
+      messaging ?? FakeMessagingRepository();
+  final FakeNotificationsRepository fakeNotifications =
+      notifications ?? FakeNotificationsRepository();
   final SessionController session = SessionController(fakeAuth);
   final AppStartup startup = AppStartup(config: fakeConfig, session: session);
   final TokenStore tokens = TokenStore();
@@ -93,7 +103,9 @@ Future<TestApp> buildTestApp({
     catalog: fakeCatalog,
     favouritesRepository: fakeFavourites,
     favourites: FavouritesController(fakeFavourites),
-    badges: ShellBadges(),
+    messaging: fakeMessaging,
+    notifications: fakeNotifications,
+    badges: ShellBadges(notifications: fakeNotifications),
     session: session,
     startup: startup,
     router: AppRouter.create(
@@ -110,6 +122,8 @@ Future<TestApp> buildTestApp({
     documents,
     fakeCatalog,
     fakeFavourites,
+    fakeMessaging,
+    fakeNotifications,
   );
 }
 

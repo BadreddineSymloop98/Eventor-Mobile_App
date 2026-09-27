@@ -14,14 +14,6 @@ import '../../../../core/widgets/molecules/price_text.dart';
 import '../../../../core/widgets/organisms/cards.dart';
 import '../../../../l10n/app_localizations.dart';
 
-BookingStatusKind _status(String api) => switch (api) {
-      'accepted' => BookingStatusKind.accepted,
-      'declined' => BookingStatusKind.declined,
-      'cancelled' => BookingStatusKind.cancelled,
-      'completed' => BookingStatusKind.completed,
-      _ => BookingStatusKind.pending,
-    };
-
 /// "Your bookings" — the next two.
 class UpcomingBookingsList extends StatelessWidget {
   const UpcomingBookingsList({required this.bookings, required this.onOpen, super.key});
@@ -42,7 +34,7 @@ class UpcomingBookingsList extends StatelessWidget {
               ?booking.category?.name.of(language),
               shortDate(booking.eventDate, language),
             ].join(' · '),
-            status: _status(booking.status),
+            status: BookingStatusKind.fromApi(booking.status),
             onTap: () => onOpen(booking),
           ),
         ],

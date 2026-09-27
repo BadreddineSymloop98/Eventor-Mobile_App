@@ -2311,6 +2311,420 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Press back again to exit'**
   String get pressBackAgainToExit;
+
+  /// Title of the offline banner.
+  ///
+  /// In en, this message translates to:
+  /// **'You are offline'**
+  String get offlineTitle;
+
+  /// The action on the offline banner.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get offlineRetry;
+
+  /// Screen 14 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get messagesTitle;
+
+  /// Search field hint on screen 14.
+  ///
+  /// In en, this message translates to:
+  /// **'Search a conversation'**
+  String get messagesSearchHint;
+
+  /// Screen 14 chip: every conversation.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get messagesFilterAll;
+
+  /// Screen 14 chip: conversations with unread messages.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread'**
+  String get messagesFilterUnread;
+
+  /// Screen 14 chip: conversations attached to a booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings'**
+  String get messagesFilterBookings;
+
+  /// Screen 14 empty state title.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet'**
+  String get messagesEmptyTitle;
+
+  /// Screen 14 empty state body.
+  ///
+  /// In en, this message translates to:
+  /// **'When you write to a provider, your conversations appear here.'**
+  String get messagesEmptyBody;
+
+  /// Screen 14 empty state button to the Search tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a provider'**
+  String get messagesEmptyAction;
+
+  /// Screen 14 empty state under the Unread chip.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all caught up'**
+  String get messagesUnreadEmpty;
+
+  /// Screen 14 empty state under the Bookings chip.
+  ///
+  /// In en, this message translates to:
+  /// **'No booking conversations yet'**
+  String get messagesBookingsEmpty;
+
+  /// Screen 14 empty search result.
+  ///
+  /// In en, this message translates to:
+  /// **'No conversations match \"{query}\"'**
+  String messagesNoMatch(String query);
+
+  /// Offline banner body on screen 14.
+  ///
+  /// In en, this message translates to:
+  /// **'These are your last messages. New ones arrive when you reconnect.'**
+  String get offlineMessagesBody;
+
+  /// Name of a dispute conversation; reference is a booking reference like EVT-2041.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispute · {reference}'**
+  String chatDispute(String reference);
+
+  /// Name of a dispute conversation with no booking reference.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispute'**
+  String get chatDisputeNoRef;
+
+  /// Name of the Eventor support conversation.
+  ///
+  /// In en, this message translates to:
+  /// **'Eventor support'**
+  String get chatSupport;
+
+  /// Name shown when the other person's account was deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted account'**
+  String get chatDeletedAccount;
+
+  /// Preview of a conversation whose last message is a photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get chatPhoto;
+
+  /// A message Eventor removed (bubble and preview).
+  ///
+  /// In en, this message translates to:
+  /// **'Removed by Eventor'**
+  String get chatRemoved;
+
+  /// Time ladder: a message from yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get chatYesterday;
+
+  /// Screen-reader label for a conversation's unread badge.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 unread message} other{{count} unread messages}}'**
+  String messagesUnreadCount(int count);
+
+  /// Chat composer placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a message'**
+  String get chatComposerHint;
+
+  /// Chat composer placeholder in a dispute chat.
+  ///
+  /// In en, this message translates to:
+  /// **'Write to both parties'**
+  String get chatComposerDisputeHint;
+
+  /// Shown in place of the composer when a chat is closed.
+  ///
+  /// In en, this message translates to:
+  /// **'This conversation was closed by Eventor. You can still read it.'**
+  String get chatClosed;
+
+  /// Shown in place of the composer when the other account is blocked or deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'This account is no longer active. You can still read the conversation.'**
+  String get chatOtherBlocked;
+
+  /// Caption under a message whose contact details were hidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Number hidden until the booking is accepted'**
+  String get chatMaskedNote;
+
+  /// Under a message that failed to send.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sent · Tap to retry'**
+  String get chatNotSent;
+
+  /// Pill that jumps to new messages below.
+  ///
+  /// In en, this message translates to:
+  /// **'New messages'**
+  String get chatNewMessages;
+
+  /// Empty draft chat hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Say hello to {name}'**
+  String chatSayHello(String name);
+
+  /// Date pill for today's messages.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get chatToday;
+
+  /// Subtitle of a dispute chat; name is the provider.
+  ///
+  /// In en, this message translates to:
+  /// **'You, {name} and Eventor support'**
+  String chatGroupSubtitle(String name);
+
+  /// Chat ⋯ menu: open the provider's profile.
+  ///
+  /// In en, this message translates to:
+  /// **'View profile'**
+  String get chatViewProfile;
+
+  /// Chat ⋯ menu: report the other person.
+  ///
+  /// In en, this message translates to:
+  /// **'Report {name}'**
+  String chatReportUser(String name);
+
+  /// Message long-press menu: copy the text.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get chatCopy;
+
+  /// Message long-press menu: report the message.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get chatReportMessage;
+
+  /// On a chat photo that failed to load.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to reload'**
+  String get photoReload;
+
+  /// Report sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get reportTitle;
+
+  /// Report reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Inappropriate'**
+  String get reportReasonInappropriate;
+
+  /// Report reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Spam'**
+  String get reportReasonSpam;
+
+  /// Report reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing contact details'**
+  String get reportReasonContact;
+
+  /// Report reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment'**
+  String get reportReasonHarassment;
+
+  /// Report reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Fake or scam'**
+  String get reportReasonFake;
+
+  /// Report reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get reportReasonOther;
+
+  /// Report sheet note hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note (optional)'**
+  String get reportNoteHint;
+
+  /// Report sheet button.
+  ///
+  /// In en, this message translates to:
+  /// **'Send report'**
+  String get reportSend;
+
+  /// Send button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get chatSend;
+
+  /// The composer's + button.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a photo'**
+  String get chatAttach;
+
+  /// The chat's ⋯ button.
+  ///
+  /// In en, this message translates to:
+  /// **'More options'**
+  String get chatMore;
+
+  /// The ✕ on the attached photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get chatRemoveAttachment;
+
+  /// Screen-reader label for a message still sending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending'**
+  String get chatSending;
+
+  /// Top of the thread when older messages failed to load.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load older messages'**
+  String get chatOlderFailed;
+
+  /// Photo viewer close button.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get photoViewerClose;
+
+  /// Chat that is gone or not yours.
+  ///
+  /// In en, this message translates to:
+  /// **'This conversation is no longer available'**
+  String get chatUnavailable;
+
+  /// Toast after copying a message.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get chatCopied;
+
+  /// Toast when attaching a photo in a new chat.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a message first'**
+  String get chatPhotoNeedsText;
+
+  /// Toast for a photo over the size limit.
+  ///
+  /// In en, this message translates to:
+  /// **'This photo is larger than {mb} MB'**
+  String photoTooLarge(int mb);
+
+  /// Toast for an unsupported photo type.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a JPEG, PNG, WebP or HEIC photo'**
+  String get photoWrongType;
+
+  /// Toast after a report.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks — we\'ll look into it'**
+  String get reportSent;
+
+  /// Toast when the same thing was reported before.
+  ///
+  /// In en, this message translates to:
+  /// **'You already reported this'**
+  String get reportAlready;
+
+  /// Screen 16 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// Screen 16 action.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all read'**
+  String get notificationsMarkAll;
+
+  /// Screen 16 group label.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get notificationsToday;
+
+  /// Screen 16 group label.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get notificationsThisWeek;
+
+  /// Screen 16 group label.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier'**
+  String get notificationsEarlier;
+
+  /// Screen 16 empty state title.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get notificationsEmptyTitle;
+
+  /// Screen 16 empty state body.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking updates, messages and reminders will show up here.'**
+  String get notificationsEmptyBody;
+
+  /// Screen-reader suffix for an unread notification.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread'**
+  String get notificationUnread;
+
+  /// Offline banner body on screen 16.
+  ///
+  /// In en, this message translates to:
+  /// **'These are your last notifications. New ones arrive when you reconnect.'**
+  String get offlineNotificationsBody;
 }
 
 class _AppLocalizationsDelegate

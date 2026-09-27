@@ -194,6 +194,60 @@ void main() {
     });
   });
 
+  group('AppConfig photo uploads', () {
+    test('reads maxPhotoMb and imageTypes from uploads', () {
+      final AppConfig config = AppConfig.fromJson(<String, Object?>{
+        'uploads': <String, Object?>{
+          'maxPhotoMb': 8,
+          'imageTypes': <String>['jpeg', 'png'],
+        },
+      });
+
+      expect(config.maxPhotoMb, 8);
+      expect(config.imageTypes, <String>['jpeg', 'png']);
+    });
+
+    test('lower-cases the image types', () {
+      final AppConfig config = AppConfig.fromJson(<String, Object?>{
+        'uploads': <String, Object?>{'imageTypes': <String>['JPEG', 'Png']},
+      });
+
+      expect(config.imageTypes, <String>['jpeg', 'png']);
+    });
+
+    test('falls back to the default list when imageTypes is missing', () {
+      expect(
+        AppConfig.fromJson(const <String, Object?>{}).imageTypes,
+        const AppConfig().imageTypes,
+      );
+    });
+
+    test('falls back to the default list when imageTypes is wrongly typed',
+        () {
+      final AppConfig config = AppConfig.fromJson(<String, Object?>{
+        'uploads': <String, Object?>{'imageTypes': 'jpeg'},
+      });
+
+      expect(config.imageTypes, const AppConfig().imageTypes);
+    });
+
+    test('falls back to the default list when imageTypes is empty', () {
+      final AppConfig config = AppConfig.fromJson(<String, Object?>{
+        'uploads': <String, Object?>{'imageTypes': <String>[]},
+      });
+
+      expect(config.imageTypes, const AppConfig().imageTypes);
+    });
+
+    test('falls back maxPhotoMb on the wrong type', () {
+      final AppConfig config = AppConfig.fromJson(<String, Object?>{
+        'uploads': <String, Object?>{'maxPhotoMb': 'x'},
+      });
+
+      expect(config.maxPhotoMb, 10);
+    });
+  });
+
   group('AppConfig booking', () {
     test('reads the minimum notice', () {
       final AppConfig config = AppConfig.fromJson(<String, Object?>{

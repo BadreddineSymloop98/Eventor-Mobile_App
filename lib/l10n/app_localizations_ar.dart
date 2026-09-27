@@ -1468,4 +1468,240 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pressBackAgainToExit => 'اضغط رجوع مرة أخرى للخروج';
+
+  @override
+  String get offlineTitle => 'أنت غير متّصل';
+
+  @override
+  String get offlineRetry => 'إعادة المحاولة';
+
+  @override
+  String get messagesTitle => 'الرسائل';
+
+  @override
+  String get messagesSearchHint => 'ابحث في المحادثات';
+
+  @override
+  String get messagesFilterAll => 'الكل';
+
+  @override
+  String get messagesFilterUnread => 'غير المقروءة';
+
+  @override
+  String get messagesFilterBookings => 'الحجوزات';
+
+  @override
+  String get messagesEmptyTitle => 'لا توجد رسائل بعد';
+
+  @override
+  String get messagesEmptyBody => 'عندما تراسل مقدّم خدمة، ستظهر محادثاتك هنا.';
+
+  @override
+  String get messagesEmptyAction => 'ابحث عن مقدّم خدمة';
+
+  @override
+  String get messagesUnreadEmpty => 'لا رسائل غير مقروءة';
+
+  @override
+  String get messagesBookingsEmpty => 'لا محادثات حجز بعد';
+
+  @override
+  String messagesNoMatch(String query) {
+    return 'لا محادثات تطابق \"$query\"';
+  }
+
+  @override
+  String get offlineMessagesBody =>
+      'هذه آخر رسائلك. الجديدة تصل عند عودة الاتصال.';
+
+  @override
+  String chatDispute(String reference) {
+    return 'نزاع · $reference';
+  }
+
+  @override
+  String get chatDisputeNoRef => 'نزاع';
+
+  @override
+  String get chatSupport => 'دعم Eventor';
+
+  @override
+  String get chatDeletedAccount => 'حساب محذوف';
+
+  @override
+  String get chatPhoto => 'صورة';
+
+  @override
+  String get chatRemoved => 'حذفه Eventor';
+
+  @override
+  String get chatYesterday => 'أمس';
+
+  @override
+  String messagesUnreadCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count رسالة غير مقروءة',
+      many: '$count رسالة غير مقروءة',
+      few: '$count رسائل غير مقروءة',
+      two: 'رسالتان غير مقروءتين',
+      one: 'رسالة واحدة غير مقروءة',
+      zero: 'لا رسائل غير مقروءة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatComposerHint => 'اكتب رسالة';
+
+  @override
+  String get chatComposerDisputeHint => 'اكتب إلى الطرفين';
+
+  @override
+  String get chatClosed =>
+      'أغلق Eventor هذه المحادثة. لا يزال بإمكانك قراءتها.';
+
+  @override
+  String get chatOtherBlocked =>
+      'هذا الحساب لم يعد نشطًا. لا يزال بإمكانك قراءة المحادثة.';
+
+  @override
+  String get chatMaskedNote => 'الرقم مخفي حتى قبول الحجز';
+
+  @override
+  String get chatNotSent => 'لم تُرسل · اضغط لإعادة المحاولة';
+
+  @override
+  String get chatNewMessages => 'رسائل جديدة';
+
+  @override
+  String chatSayHello(String name) {
+    return 'قل مرحبًا لـ $name';
+  }
+
+  @override
+  String get chatToday => 'اليوم';
+
+  @override
+  String chatGroupSubtitle(String name) {
+    return 'أنت و$name ودعم Eventor';
+  }
+
+  @override
+  String get chatViewProfile => 'عرض الملف';
+
+  @override
+  String chatReportUser(String name) {
+    return 'الإبلاغ عن $name';
+  }
+
+  @override
+  String get chatCopy => 'نسخ';
+
+  @override
+  String get chatReportMessage => 'إبلاغ';
+
+  @override
+  String get photoReload => 'اضغط لإعادة التحميل';
+
+  @override
+  String get reportTitle => 'إبلاغ';
+
+  @override
+  String get reportReasonInappropriate => 'غير لائق';
+
+  @override
+  String get reportReasonSpam => 'رسائل مزعجة';
+
+  @override
+  String get reportReasonContact => 'مشاركة بيانات الاتصال';
+
+  @override
+  String get reportReasonHarassment => 'تحرّش أو مضايقة';
+
+  @override
+  String get reportReasonFake => 'احتيال أو حساب مزيّف';
+
+  @override
+  String get reportReasonOther => 'سبب آخر';
+
+  @override
+  String get reportNoteHint => 'أضف ملاحظة (اختياري)';
+
+  @override
+  String get reportSend => 'إرسال البلاغ';
+
+  @override
+  String get chatSend => 'إرسال';
+
+  @override
+  String get chatAttach => 'إضافة صورة';
+
+  @override
+  String get chatMore => 'خيارات أخرى';
+
+  @override
+  String get chatRemoveAttachment => 'إزالة الصورة';
+
+  @override
+  String get chatSending => 'جارٍ الإرسال';
+
+  @override
+  String get chatOlderFailed => 'تعذّر تحميل الرسائل الأقدم';
+
+  @override
+  String get photoViewerClose => 'إغلاق';
+
+  @override
+  String get chatUnavailable => 'لم تعد هذه المحادثة متاحة';
+
+  @override
+  String get chatCopied => 'تم النسخ';
+
+  @override
+  String get chatPhotoNeedsText => 'أرسل رسالة أولًا';
+
+  @override
+  String photoTooLarge(int mb) {
+    return 'هذه الصورة أكبر من $mb ميغابايت';
+  }
+
+  @override
+  String get photoWrongType => 'استخدم صورة بصيغة JPEG أو PNG أو WebP أو HEIC';
+
+  @override
+  String get reportSent => 'شكرًا — سنراجع الأمر';
+
+  @override
+  String get reportAlready => 'سبق أن أبلغت عن هذا';
+
+  @override
+  String get notificationsTitle => 'الإشعارات';
+
+  @override
+  String get notificationsMarkAll => 'تعليم الكل كمقروء';
+
+  @override
+  String get notificationsToday => 'اليوم';
+
+  @override
+  String get notificationsThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get notificationsEarlier => 'أقدم';
+
+  @override
+  String get notificationsEmptyTitle => 'لا إشعارات بعد';
+
+  @override
+  String get notificationsEmptyBody =>
+      'ستظهر هنا تحديثات الحجوزات والرسائل والتذكيرات.';
+
+  @override
+  String get notificationUnread => 'غير مقروء';
+
+  @override
+  String get offlineNotificationsBody =>
+      'هذه آخر إشعاراتك. الجديدة تصل عند عودة الاتصال.';
 }

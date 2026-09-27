@@ -5,6 +5,7 @@ import '../../../../core/localization/app_localizations_x.dart';
 import '../../../../core/models/account.dart';
 import '../../../../core/widgets/atoms/app_avatar.dart';
 import '../../../../core/widgets/atoms/app_icon.dart';
+import '../../../../core/widgets/molecules/notification_bell.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../view_model/home_view_model.dart';
 
@@ -34,7 +35,6 @@ class HomeHeader extends StatelessWidget {
   final VoidCallback onFilters;
 
   static const double _searchHeight = 52;
-  static const double _dot = 8;
 
   @override
   Widget build(BuildContext context) {
@@ -83,39 +83,7 @@ class HomeHeader extends StatelessWidget {
                   ],
                 ),
               ),
-              Semantics(
-                button: true,
-                label: hasUnread
-                    ? l10n.homeNotificationsUnread
-                    : l10n.homeNotificationsLabel,
-                excludeSemantics: true,
-                child: GestureDetector(
-                  onTap: onBell,
-                  behavior: HitTestBehavior.opaque,
-                  child: SizedBox.square(
-                    dimension: AppSizes.touchTarget.dw,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: <Widget>[
-                        AppIcon(AppIcons.bell, color: AppColors.iconOnBrandAccent),
-                        if (hasUnread)
-                          PositionedDirectional(
-                            top: AppSpacing.sm.dw,
-                            end: AppSpacing.sm.dw,
-                            child: Container(
-                              width: _dot.dw,
-                              height: _dot.dw,
-                              decoration: const BoxDecoration(
-                                color: AppColors.statusDeclined,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              NotificationBell(hasUnread: hasUnread, onTap: onBell),
             ],
           ),
           SizedBox(height: AppSpacing.md.dh),

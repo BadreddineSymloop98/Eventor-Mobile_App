@@ -4,7 +4,24 @@ import '../../constants/ui_helpers.dart';
 import '../../localization/app_localizations_x.dart';
 
 /// Where a booking stands, as the design's `Status Badge` names it.
-enum BookingStatusKind { pending, accepted, declined, completed, cancelled }
+enum BookingStatusKind {
+  pending,
+  accepted,
+  declined,
+  completed,
+  cancelled;
+
+  /// The API's status string as this enum, defaulting an unknown value to
+  /// [pending] — a status the server adds later must not crash a screen
+  /// that was already shipped.
+  static BookingStatusKind fromApi(String api) => switch (api) {
+        'accepted' => BookingStatusKind.accepted,
+        'declined' => BookingStatusKind.declined,
+        'cancelled' => BookingStatusKind.cancelled,
+        'completed' => BookingStatusKind.completed,
+        _ => BookingStatusKind.pending,
+      };
+}
 
 /// A small outlined pill carrying a coloured dot and the status name.
 ///

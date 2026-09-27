@@ -6,8 +6,17 @@ import 'package:eventor/core/catalog/models/catalog_models.dart';
 import 'package:eventor/core/catalog/service_query.dart';
 import 'package:eventor/core/config/app_config.dart';
 import 'package:eventor/core/errors/failure.dart';
+import 'package:eventor/core/messaging/chat_poller.dart';
+import 'package:eventor/core/messaging/conversation_filter.dart';
+import 'package:eventor/core/messaging/messaging_repository.dart';
+import 'package:eventor/core/messaging/models/chat_message.dart';
+import 'package:eventor/core/messaging/models/conversation.dart';
+import 'package:eventor/core/messaging/models/report_reason.dart';
+import 'package:eventor/core/messaging/picked_image.dart';
 import 'package:eventor/core/models/account.dart';
 import 'package:eventor/core/network/api_client.dart';
+import 'package:eventor/core/notifications/models/app_notification.dart';
+import 'package:eventor/core/notifications/notifications_repository.dart';
 import 'package:eventor/core/reference/reference_repository.dart';
 import 'package:eventor/core/session/token_store.dart';
 import 'package:eventor/features/auth/data/auth_repository.dart';
@@ -43,7 +52,8 @@ AppUser testUser({
     id: 'user-1',
     role: role,
     isBlocked: false,
-    verificationStatus: verificationStatus ??
+    verificationStatus:
+        verificationStatus ??
         (role == UserRole.provider
             ? VerificationStatus.pending
             : VerificationStatus.notRequired),
@@ -103,7 +113,10 @@ class FakeAuthRepository implements AuthRepository {
     registrations.add(request);
     await _wait();
     if (registerError != null) throw registerError!;
-    return CodeSent(email: request.email, resendAfterSeconds: resendAfterSeconds);
+    return CodeSent(
+      email: request.email,
+      resendAfterSeconds: resendAfterSeconds,
+    );
   }
 
   @override
@@ -181,7 +194,11 @@ class FakeAuthRepository implements AuthRepository {
       role: user.role,
       fullName: user.fullName,
       email: user.email,
-      wilaya: Wilaya(code: wilayaCode, nameEn: 'Wilaya $wilayaCode', nameAr: 'ولاية $wilayaCode'),
+      wilaya: Wilaya(
+        code: wilayaCode,
+        nameEn: 'Wilaya $wilayaCode',
+        nameAr: 'ولاية $wilayaCode',
+      ),
     );
   }
 
@@ -221,24 +238,24 @@ class FakeReferenceRepository implements ReferenceRepository {
 class FakeDocumentsRepository implements DocumentsRepository {
   final Map<ProviderDocumentType, ProviderDocumentStatus> statuses =
       <ProviderDocumentType, ProviderDocumentStatus>{
-    for (final ProviderDocumentType type in ProviderDocumentType.values)
-      type: ProviderDocumentStatus.missing,
-  };
+        for (final ProviderDocumentType type in ProviderDocumentType.values)
+          type: ProviderDocumentStatus.missing,
+      };
 
   final List<ProviderDocumentType> uploads = <ProviderDocumentType>[];
   Failure? uploadError;
   Failure? fetchError;
 
   ProviderDocuments _snapshot() => ProviderDocuments(
-        verificationStatus: VerificationStatus.pending,
-        maxFileSizeMb: 5,
-        acceptedTypes: const <String>['pdf', 'jpeg', 'png'],
-        documents: <ProviderDocument>[
-          for (final MapEntry<ProviderDocumentType, ProviderDocumentStatus> e
-              in statuses.entries)
-            ProviderDocument(type: e.key, status: e.value),
-        ],
-      );
+    verificationStatus: VerificationStatus.pending,
+    maxFileSizeMb: 5,
+    acceptedTypes: const <String>['pdf', 'jpeg', 'png'],
+    documents: <ProviderDocument>[
+      for (final MapEntry<ProviderDocumentType, ProviderDocumentStatus> e
+          in statuses.entries)
+        ProviderDocument(type: e.key, status: e.value),
+    ],
+  );
 
   @override
   Future<ProviderDocuments> fetch() async {
@@ -263,7 +280,7 @@ class FakeDocumentsRepository implements DocumentsRepository {
 /// [AppConfigRepository] that never touches the network.
 class FakeConfigRepository extends AppConfigRepository {
   FakeConfigRepository([this.config = const AppConfig()])
-      : super(ApiClient(tokens: TokenStore(), languageCode: () => 'en'));
+    : super(ApiClient(tokens: TokenStore(), languageCode: () => 'en'));
 
   AppConfig config;
 
@@ -315,7 +332,9 @@ class FakeFavouritesRepository implements FavouritesRepository {
     await _enter('list:${kind?.apiValue}:$categoryId:$page');
     final List<Favourite> found = items
         .where((Favourite f) => kind == null || f.kind == kind)
-        .where((Favourite f) => categoryId == null || f.category?.id == categoryId)
+        .where(
+          (Favourite f) => categoryId == null || f.category?.id == categoryId,
+        )
         .toList();
     return ApiPage<Favourite>(
       items: page == 1 ? found : <Favourite>[],
@@ -345,18 +364,23 @@ class FakeFavouritesRepository implements FavouritesRepository {
 /// answer replaceable and every failure injectable.
 class FakeCatalogRepository implements CatalogRepository {
   HomeFeed homeFeed = HomeFeed.fromJson(fixtureData('home.json'));
-  List<CategoryWithCount> categoryList =
-      fixtureList('categories.json').map(CategoryWithCount.fromJson).toList();
+  List<CategoryWithCount> categoryList = fixtureList('categories.json')
+      .map(CategoryWithCount.fromJson)
+      .toList();
 
   /// Paged 20 at a time by [services].
-  List<ServiceCard> serviceItems =
-      fixtureList('services_page.json').map(ServiceCard.fromJson).toList();
-  ServiceDetail serviceDetail =
-      ServiceDetail.fromJson(fixtureData('service_detail.json'));
-  ProviderDetail providerDetail =
-      ProviderDetail.fromJson(fixtureData('provider_detail.json'));
-  List<PackCard> packItems =
-      fixtureList('packs_page.json').map(PackCard.fromJson).toList();
+  List<ServiceCard> serviceItems = fixtureList('services_page.json')
+      .map(ServiceCard.fromJson)
+      .toList();
+  ServiceDetail serviceDetail = ServiceDetail.fromJson(
+    fixtureData('service_detail.json'),
+  );
+  ProviderDetail providerDetail = ProviderDetail.fromJson(
+    fixtureData('provider_detail.json'),
+  );
+  List<PackCard> packItems = fixtureList('packs_page.json')
+      .map(PackCard.fromJson)
+      .toList();
   PackDetail packDetail = PackDetail.fromJson(fixtureData('pack_detail.json'));
 
   /// Every day from here on is available, except the 10th of each month
@@ -504,4 +528,398 @@ class FakeCatalogRepository implements CatalogRepository {
     if (availabilityError != null) throw availabilityError!;
     return _month(month);
   }
+}
+
+/// [MessagingRepository] answering from the saved messaging fixtures, with
+/// every answer replaceable and every failure injectable.
+class FakeMessagingRepository implements MessagingRepository {
+  /// What the calls were given — `conversations:all:null:1`,
+  /// `conversation:c-lumiere`, `messages:c-lumiere:null`,
+  /// `sendText:c-lumiere:hi`, `sendPhoto:c-lumiere:a.jpg:cap`,
+  /// `sendDisputeText:d-2041:hi`, `start:p-lumiere:hi`,
+  /// `markRead:c-lumiere`, `reportMessage:m-4:spam:null`,
+  /// `reportUser:p-lumiere:spam:note`, `findWith:p-lumiere:Studio`.
+  final List<String> calls = <String>[];
+
+  /// What [conversations] filters and pages, 20 at a time.
+  List<ConversationRow> rows = fixtureList(
+    'conversations_page.json',
+    dir: 'messaging',
+  ).map(ConversationRow.fromJson).toList();
+
+  /// What [conversation] answers, by id.
+  Map<String, ConversationDetail> details = <String, ConversationDetail>{
+    'c-lumiere': ConversationDetail.fromJson(
+      fixtureData('conversation_detail.json', dir: 'messaging'),
+    ),
+    'c-dispute': ConversationDetail.fromJson(
+      fixtureData('conversation_dispute.json', dir: 'messaging'),
+    ),
+  };
+
+  /// Each conversation's messages, oldest first. [messages] pages 30 back
+  /// from the newest, with a `before` cursor, and the sends append here.
+  Map<String, List<ChatMessage>> threads = <String, List<ChatMessage>>{
+    'c-lumiere': MessagePage.fromEnvelope(
+      fixture('messages_page.json', dir: 'messaging'),
+    ).items,
+  };
+
+  /// What both report calls answer.
+  bool reportCreated = true;
+
+  /// Thrown by the next call only, whichever it is.
+  Failure? failNext;
+
+  /// Thrown by [conversations], [conversation] and [messages] while set.
+  Failure? loadError;
+
+  /// Thrown by [sendText], [sendPhoto] and [sendDisputeText] while set.
+  Failure? sendError;
+  Failure? startError;
+  Failure? markReadError;
+  Failure? findError;
+
+  /// When set, every call waits on it — for asserting loading states.
+  Completer<void>? gate;
+
+  /// When set, only the sends wait on it — for asserting the D8 sending
+  /// state while loads and polls still answer.
+  Completer<void>? sendGate;
+
+  int _sent = 0;
+
+  static const int _pageSize = 20;
+  static const int _messagePageSize = 30;
+
+  Future<void> _enter(
+    String call, {
+    Failure? Function()? error,
+    bool isSend = false,
+  }) async {
+    calls.add(call);
+    final Completer<void>? pending = gate;
+    if (pending != null) await pending.future;
+    if (isSend) {
+      final Completer<void>? sending = sendGate;
+      if (sending != null) await sending.future;
+    }
+    final Failure? once = failNext;
+    if (once != null) {
+      failNext = null;
+      throw once;
+    }
+    // Read only now, after the gates, so a test can script the failure
+    // while the call is still waiting.
+    final Failure? always = error?.call();
+    if (always != null) throw always;
+  }
+
+  ChatMessage _append(
+    String conversationId, {
+    required String body,
+    MessageKind kind = MessageKind.text,
+    String? imageUrl,
+  }) {
+    final int n = ++_sent;
+    final ChatMessage message = ChatMessage(
+      id: 'sent-$n',
+      conversationId: conversationId,
+      kind: kind,
+      senderId: 'u-me',
+      mine: true,
+      body: body,
+      masked: false,
+      imageUrl: imageUrl,
+      imageLargeUrl: imageUrl,
+      // After every fixture message, in any time zone.
+      createdAt: DateTime.utc(2026, 3, 12, 15, n).toLocal(),
+    );
+    threads.putIfAbsent(conversationId, () => <ChatMessage>[]).add(message);
+    return message;
+  }
+
+  @override
+  Future<ApiPage<ConversationRow>> conversations({
+    ConversationFilter filter = ConversationFilter.all,
+    String? q,
+    int page = 1,
+  }) async {
+    await _enter(
+      'conversations:${filter.apiValue}:$q:$page',
+      error: () => loadError,
+    );
+    final String query = (q ?? '').trim().toLowerCase();
+    final List<ConversationRow> found = rows
+        .where(
+          (ConversationRow row) => switch (filter) {
+            ConversationFilter.all => true,
+            ConversationFilter.unread => row.unreadCount > 0,
+            ConversationFilter.booking => row.booking != null,
+          },
+        )
+        .where((ConversationRow row) {
+          if (query.isEmpty) return true;
+          final String name = row.isGroup
+              ? 'Eventor support'
+              : row.other?.name ?? '';
+          return name.toLowerCase().contains(query);
+        })
+        .toList();
+    final int start = (page - 1) * _pageSize;
+    return ApiPage<ConversationRow>(
+      items: start >= found.length
+          ? <ConversationRow>[]
+          : found.sublist(start, (start + _pageSize).clamp(0, found.length)),
+      page: page,
+      totalPages: (found.length / _pageSize).ceil(),
+      total: found.length,
+    );
+  }
+
+  @override
+  Future<ConversationDetail> conversation(String id) async {
+    await _enter('conversation:$id', error: () => loadError);
+    final ConversationDetail? detail = details[id];
+    if (detail == null) {
+      throw apiFailure(ApiErrorCode.conversationNotFound, statusCode: 404);
+    }
+    return detail;
+  }
+
+  @override
+  Future<MessagePage> messages(String conversationId, {String? before}) async {
+    await _enter('messages:$conversationId:$before', error: () => loadError);
+    final List<ChatMessage> thread = threads[conversationId] ?? <ChatMessage>[];
+    int end = thread.length;
+    if (before != null) {
+      end = thread.indexWhere((ChatMessage m) => m.id == before);
+      if (end == -1) {
+        throw apiFailure(ApiErrorCode.messageNotFound, statusCode: 404);
+      }
+    }
+    final int start = (end - _messagePageSize).clamp(0, end);
+    final List<ChatMessage> items = thread.sublist(start, end);
+    final bool hasMore = start > 0;
+    return MessagePage(
+      items: items,
+      hasMore: hasMore,
+      nextBefore: hasMore ? items.first.id : null,
+    );
+  }
+
+  @override
+  Future<ChatMessage> sendText(String conversationId, String body) async {
+    await _enter(
+      'sendText:$conversationId:$body',
+      error: () => sendError,
+      isSend: true,
+    );
+    return _append(conversationId, body: body);
+  }
+
+  @override
+  Future<ChatMessage> sendPhoto(
+    String conversationId,
+    PickedImage image, {
+    String? caption,
+  }) async {
+    await _enter(
+      'sendPhoto:$conversationId:${image.name}:$caption',
+      error: () => sendError,
+      isSend: true,
+    );
+    return _append(
+      conversationId,
+      body: caption ?? '',
+      kind: MessageKind.attachment,
+      imageUrl: 'https://files.example/${image.name}',
+    );
+  }
+
+  @override
+  Future<ChatMessage> sendDisputeText(String disputeId, String body) async {
+    await _enter(
+      'sendDisputeText:$disputeId:$body',
+      error: () => sendError,
+      isSend: true,
+    );
+    String conversationId = disputeId;
+    for (final ConversationDetail detail in details.values) {
+      if (detail.disputeId == disputeId) conversationId = detail.id;
+    }
+    return _append(conversationId, body: body);
+  }
+
+  @override
+  Future<ConversationDetail> start(String userId, String body) async {
+    await _enter('start:$userId:$body', error: () => startError);
+    final ConversationDetail base = details['c-lumiere']!;
+    final ConversationDetail created = ConversationDetail(
+      id: 'c-new',
+      kind: base.kind,
+      isClosed: base.isClosed,
+      other: base.other,
+      lastMessage: body,
+      lastMessageAt: DateTime(2026, 3, 12, 15),
+      unreadCount: 0,
+      booking: base.booking,
+      canWrite: base.canWrite,
+      participants: base.participants,
+      contactUnmasked: base.contactUnmasked,
+      disputeId: base.disputeId,
+      closedReason: base.closedReason,
+      createdAt: DateTime(2026, 3, 12, 15),
+    );
+    details['c-new'] = created;
+    threads['c-new'] = <ChatMessage>[];
+    _append('c-new', body: body);
+    return created;
+  }
+
+  @override
+  Future<void> markRead(String conversationId) =>
+      _enter('markRead:$conversationId', error: () => markReadError);
+
+  @override
+  Future<bool> reportMessage(
+    String messageId,
+    ReportReason reason,
+    String? note,
+  ) async {
+    await _enter('reportMessage:$messageId:${reason.apiValue}:$note');
+    return reportCreated;
+  }
+
+  @override
+  Future<bool> reportUser(
+    String userId,
+    ReportReason reason,
+    String? note,
+  ) async {
+    await _enter('reportUser:$userId:${reason.apiValue}:$note');
+    return reportCreated;
+  }
+
+  @override
+  Future<ConversationRow?> findWith(String userId, String name) async {
+    await _enter('findWith:$userId:$name', error: () => findError);
+    for (final ConversationRow row in rows) {
+      if (row.kind == ConversationKind.direct && row.other?.id == userId) {
+        return row;
+      }
+    }
+    return null;
+  }
+}
+
+/// [NotificationsRepository] answering from `notifications_page.json`.
+class FakeNotificationsRepository implements NotificationsRepository {
+  /// `list:1`, `markRead:n-1,n-2`, `markAllRead`, `counts`.
+  final List<String> calls = <String>[];
+
+  /// What [list] pages, 20 at a time; the reads flip `read` here.
+  List<AppNotification> items = fixtureList(
+    'notifications_page.json',
+    dir: 'messaging',
+  ).map(AppNotification.fromJson).toList();
+
+  /// What [counts] answers. The reads keep its `notifications` in step with
+  /// [items], so a badge refreshed after a read agrees with the list.
+  ({int notifications, int conversations}) countsResult = (
+    notifications: 2,
+    conversations: 1,
+  );
+
+  /// Thrown by the next call only.
+  Failure? failNext;
+
+  /// When set, calls wait on it — for asserting loading states.
+  Completer<void>? gate;
+
+  static const int _pageSize = 20;
+
+  Future<void> _enter(String call) async {
+    calls.add(call);
+    final Completer<void>? pending = gate;
+    if (pending != null) await pending.future;
+    final Failure? failure = failNext;
+    if (failure != null) {
+      failNext = null;
+      throw failure;
+    }
+  }
+
+  int _markRead(bool Function(AppNotification n) which) {
+    items = <AppNotification>[
+      for (final AppNotification n in items)
+        which(n) ? n.copyWith(read: true) : n,
+    ];
+    final int unread = items.where((AppNotification n) => !n.read).length;
+    countsResult = (
+      notifications: unread,
+      conversations: countsResult.conversations,
+    );
+    return unread;
+  }
+
+  @override
+  Future<ApiPage<AppNotification>> list({int page = 1}) async {
+    await _enter('list:$page');
+    final int start = (page - 1) * _pageSize;
+    return ApiPage<AppNotification>(
+      items: start >= items.length
+          ? <AppNotification>[]
+          : items.sublist(start, (start + _pageSize).clamp(0, items.length)),
+      page: page,
+      totalPages: (items.length / _pageSize).ceil(),
+      total: items.length,
+    );
+  }
+
+  @override
+  Future<int> markRead(List<String> ids) async {
+    await _enter('markRead:${ids.join(',')}');
+    return _markRead((AppNotification n) => ids.contains(n.id));
+  }
+
+  @override
+  Future<int> markAllRead() async {
+    await _enter('markAllRead');
+    return _markRead((AppNotification _) => true);
+  }
+
+  @override
+  Future<({int notifications, int conversations})> counts() async {
+    await _enter('counts');
+    return countsResult;
+  }
+}
+
+/// [ChatUpdates] that only ticks when a test calls [tick] — no timers, no
+/// app lifecycle.
+class ManualChatUpdates implements ChatUpdates {
+  Future<void> Function()? onTick;
+  bool started = false;
+  bool stopped = false;
+  int pauses = 0;
+  int resumes = 0;
+
+  /// Runs the view model's tick once, as the poller would.
+  Future<void> tick() => onTick?.call() ?? Future<void>.value();
+
+  @override
+  void start(Future<void> Function() onTick) {
+    this.onTick = onTick;
+    started = true;
+  }
+
+  @override
+  void pause() => pauses++;
+
+  @override
+  void resume() => resumes++;
+
+  @override
+  void stop() => stopped = true;
 }

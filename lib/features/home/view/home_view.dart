@@ -17,6 +17,7 @@ import '../../../core/widgets/organisms/pack_cards.dart';
 import '../../../core/widgets/organisms/selection_sheet.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../filters/view/filters_drawer.dart';
+import '../../shell/shell_badges.dart';
 import '../../shell/view/client_shell.dart';
 import '../view_model/home_view_model.dart';
 import 'widgets/home_header.dart';
@@ -100,6 +101,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final HomeViewModel viewModel = context.watch<HomeViewModel>();
     final HomeFeed? feed = viewModel.feed;
+    final bool hasUnread = context.watch<ShellBadges>().unreadNotifications > 0;
 
     final Widget body;
     if (feed != null) {
@@ -136,9 +138,9 @@ class _HomeViewState extends State<HomeView> {
                   greeting: viewModel.greeting,
                   fullName: viewModel.fullName,
                   city: viewModel.city,
-                  hasUnread: (feed?.unreadNotifications ?? 0) > 0,
+                  hasUnread: hasUnread,
                   isChangingCity: viewModel.isChangingCity,
-                  onBell: _comingSoon,
+                  onBell: () => context.push(AppRoutes.notifications),
                   onCity: () => _chooseCity(viewModel),
                   onSearch: () => context.go(AppRoutes.search),
                   onFilters: () => _openFilters(viewModel),

@@ -8,7 +8,9 @@ import '../core/catalog/favourites_repository.dart';
 import '../core/config/app_config.dart';
 import '../core/config/data_source.dart';
 import '../core/localization/locale_controller.dart';
+import '../core/messaging/messaging_repository.dart';
 import '../core/network/api_client.dart';
+import '../core/notifications/notifications_repository.dart';
 import '../core/reference/reference_repository.dart';
 import '../core/routing/app_router.dart';
 import '../core/services/preferences_service.dart';
@@ -20,6 +22,7 @@ import '../features/auth/data/documents_repository.dart';
 import '../mock/mock_backend.dart';
 import '../features/shell/shell_badges.dart';
 import '../mock/mock_catalog.dart';
+import '../mock/mock_messaging.dart';
 import '../mock/mock_repositories.dart';
 
 /// Everything that lives for the whole run of the app, built once.
@@ -41,6 +44,8 @@ class AppServices {
     required this.catalog,
     required this.favouritesRepository,
     required this.favourites,
+    required this.messaging,
+    required this.notifications,
     required this.badges,
     required this.session,
     required this.startup,
@@ -80,16 +85,37 @@ class AppServices {
     final DocumentsRepository documents = mock != null
         ? MockDocumentsRepository(mock)
         : ApiDocumentsRepository(api);
+    // One store behind both mock repositories and the mock home feed, so a
+    // chat read on 15 clears the badge Home reports.
+    final MockMessagingStore? messagingStore = mock != null
+        ? MockMessagingStore(
+            mock,
+            languageCode: languageCode,
+            config: config.current,
+          )
+        : null;
     final CatalogRepository catalog = mock != null
-        ? MockCatalogRepository(mock, languageCode: languageCode)
+        ? MockCatalogRepository(
+            mock,
+            languageCode: languageCode,
+            messaging: messagingStore,
+          )
         : ApiCatalogRepository(api);
     final FavouritesRepository favouritesRepository = mock != null
         ? MockFavouritesRepository(mock, languageCode: languageCode)
         : ApiFavouritesRepository(api);
+    final MessagingRepository messaging =
+        mock != null && messagingStore != null
+            ? MockMessagingRepository(messagingStore, mock)
+            : ApiMessagingRepository(api);
+    final NotificationsRepository notifications =
+        mock != null && messagingStore != null
+            ? MockNotificationsRepository(messagingStore, mock)
+            : ApiNotificationsRepository(api);
     final SessionController session = SessionController(auth);
     final FavouritesController favourites =
         FavouritesController(favouritesRepository);
-    final ShellBadges badges = ShellBadges();
+    final ShellBadges badges = ShellBadges(notifications: notifications);
     // Hearts and unread counts belong to the account that set them.
     session.addListener(() {
       if (session.isSignedIn) return;
@@ -114,6 +140,8 @@ class AppServices {
       catalog: catalog,
       favouritesRepository: favouritesRepository,
       favourites: favourites,
+      messaging: messaging,
+      notifications: notifications,
       badges: badges,
       mockBackend: mock,
       session: session,
@@ -139,6 +167,12 @@ class AppServices {
 
   /// Which hearts are filled, across every screen.
   final FavouritesController favourites;
+
+  /// Screens 14 and 15, and the Message buttons that open them.
+  final MessagingRepository messaging;
+
+  /// Screen 16 and the badge counts.
+  final NotificationsRepository notifications;
 
   /// The bottom nav's counts.
   final ShellBadges badges;

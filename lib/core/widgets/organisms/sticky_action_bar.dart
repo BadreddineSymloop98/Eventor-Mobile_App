@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../constants/ui_helpers.dart';
 import '../../localization/app_localizations_x.dart';
 import '../atoms/app_icon.dart';
+import '../atoms/app_spinner.dart';
 import '../molecules/main_button.dart';
 
 /// The bar pinned to the bottom of 12, 13 and 20: the price (or the reply
@@ -18,6 +19,7 @@ class StickyActionBar extends StatelessWidget {
   /// Messaging still works.
   factory StickyActionBar.notAccepting({
     required VoidCallback onMessage,
+    bool isMessageLoading = false,
     Key? key,
   }) =>
       StickyActionBar(
@@ -27,6 +29,7 @@ class StickyActionBar extends StatelessWidget {
           Builder(
             builder: (BuildContext context) => MainButton(
               label: context.l10n.sendMessage,
+              isLoading: isMessageLoading,
               onPressed: onMessage,
             ),
           ),
@@ -88,9 +91,16 @@ class _NotAcceptingNote extends StatelessWidget {
 
 /// The square outlined message button beside the primary action.
 class MessageIconButton extends StatelessWidget {
-  const MessageIconButton({required this.onPressed, super.key});
+  const MessageIconButton({
+    required this.onPressed,
+    this.isLoading = false,
+    super.key,
+  });
 
   final VoidCallback onPressed;
+
+  /// Looking up the chat — a spinner, and taps are ignored.
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +110,7 @@ class MessageIconButton extends StatelessWidget {
       label: context.l10n.messageProvider,
       excludeSemantics: true,
       child: GestureDetector(
-        onTap: onPressed,
+        onTap: isLoading ? null : onPressed,
         behavior: HitTestBehavior.opaque,
         child: Container(
           width: side,
@@ -111,7 +121,9 @@ class MessageIconButton extends StatelessWidget {
             borderRadius: AppRadii.mdAll,
             border: Border.all(color: AppColors.borderBrand),
           ),
-          child: AppIcon(AppIcons.message, size: AppSizes.iconMd, color: AppColors.iconBrand),
+          child: isLoading
+              ? const AppSpinner(size: AppSizes.iconMd)
+              : AppIcon(AppIcons.message, size: AppSizes.iconMd, color: AppColors.iconBrand),
         ),
       ),
     );

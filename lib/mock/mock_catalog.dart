@@ -6,6 +6,7 @@ import '../core/errors/failure.dart';
 import '../core/network/api_page.dart';
 import 'mock_backend.dart';
 import 'mock_catalog_data.dart';
+import 'mock_messaging.dart';
 import 'mock_reference_data.dart';
 
 /// Where a mock photo lives. `AppNetworkImage` loads `asset:` URLs from the
@@ -736,16 +737,30 @@ ApiPage<T> _page<T>(List<T> items, int page, int limit) {
 /// with one kindness: search matches Arabic titles too, which live does not
 /// index yet (a backend ask).
 class MockCatalogRepository implements CatalogRepository {
-  MockCatalogRepository(this._backend, {required String Function() languageCode})
-      : _catalog = _MockCatalog(_backend, languageCode);
+  MockCatalogRepository(
+    this._backend, {
+    required String Function() languageCode,
+    this._messaging,
+  }) : _catalog = _MockCatalog(_backend, languageCode);
 
   final MockBackend _backend;
   final _MockCatalog _catalog;
 
+  /// Where the home feed's two unread counts come from, when given — so the
+  /// bell dot and the Messages badge agree with screens 14 and 16. Without
+  /// it the feed keeps its fixed seeded counts.
+  final MockMessagingStore? _messaging;
+
   @override
   Future<HomeFeed> home() async {
     await _backend.delay();
-    return HomeFeed.fromJson(_catalog.home());
+    final Map<String, Object?> json = _catalog.home();
+    final MockMessagingStore? messaging = _messaging;
+    if (messaging != null) {
+      json['unreadNotifications'] = messaging.unreadNotifications();
+      json['unreadConversations'] = messaging.unreadConversations();
+    }
+    return HomeFeed.fromJson(json);
   }
 
   @override

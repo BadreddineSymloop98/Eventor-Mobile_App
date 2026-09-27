@@ -289,6 +289,8 @@ void main() {
         AppRoutes.packs,
         AppRoutes.packFor('k-1'),
         AppRoutes.favourites,
+        AppRoutes.chatFor('x'),
+        AppRoutes.notifications,
       ]) {
         expect(world.go(path), AppRoutes.providerHome, reason: path);
       }

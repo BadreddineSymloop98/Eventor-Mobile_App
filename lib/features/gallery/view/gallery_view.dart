@@ -5,6 +5,8 @@ import '../../../core/constants/ui_helpers.dart';
 import '../../../core/localization/locale_controller.dart';
 import '../../../core/session/session_controller.dart';
 import '../../../core/catalog/models/catalog_models.dart';
+import '../../../core/messaging/models/chat_person.dart';
+import '../../../core/messaging/models/conversation.dart';
 import '../../../core/widgets/atoms/app_avatar.dart';
 import '../../../core/widgets/atoms/app_chip.dart';
 import '../../../core/widgets/atoms/app_icon.dart';
@@ -20,11 +22,13 @@ import '../../../core/widgets/atoms/verified_badge.dart';
 import '../../../core/widgets/molecules/app_select_field.dart';
 import '../../../core/widgets/molecules/app_text_field.dart';
 import '../../../core/widgets/molecules/code_input.dart';
+import '../../../core/widgets/molecules/conversation_avatar.dart';
 import '../../../core/widgets/molecules/document_upload_field.dart';
 import '../../../core/widgets/molecules/inline_banner.dart';
 import '../../../core/widgets/molecules/language_switch.dart';
 import '../../../core/widgets/molecules/main_button.dart';
 import '../../../core/widgets/molecules/nav_item.dart';
+import '../../../core/widgets/molecules/offline_banner.dart';
 import '../../../core/widgets/molecules/price_text.dart';
 import '../../../core/widgets/molecules/prompt_row.dart';
 import '../../../core/widgets/molecules/role_card.dart';
@@ -337,6 +341,45 @@ class _GalleryViewState extends State<GalleryView> {
             onSelect: (DateTime day) => setState(() => _calendarDay = day),
             onMonthChanged: (_) {},
             firstMonth: DateTime.now(),
+          ),
+          _section('Messaging'),
+          Row(
+            children: <Widget>[
+              const ConversationAvatar(
+                kind: ConversationKind.direct,
+                other: ChatPerson(
+                  id: 'p1',
+                  name: 'Studio Lumière',
+                  role: ChatRole.provider,
+                  blocked: false,
+                ),
+                size: AppAvatarSize.list,
+              ),
+              SizedBox(width: AppSpacing.xs.dw),
+              const ConversationAvatar(
+                kind: ConversationKind.direct,
+                other: null,
+                size: AppAvatarSize.list,
+              ),
+              SizedBox(width: AppSpacing.xs.dw),
+              const ConversationAvatar(
+                kind: ConversationKind.support,
+                other: null,
+                size: AppAvatarSize.chatHeader,
+              ),
+              SizedBox(width: AppSpacing.xs.dw),
+              const ConversationAvatar(
+                kind: ConversationKind.dispute,
+                other: null,
+                size: AppAvatarSize.chatHeader,
+              ),
+            ],
+          ),
+          _gap(),
+          OfflineBanner(
+            body: 'These are your last messages. New ones arrive when you '
+                'reconnect.',
+            onRetry: () {},
           ),
           SizedBox(height: AppSpacing.xl3.dh),
         ],

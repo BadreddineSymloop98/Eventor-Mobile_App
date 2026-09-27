@@ -66,6 +66,12 @@ abstract class BaseViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// For a view model that guards against a stale response itself — a poll
+  /// tick whose answer arrived after a newer one already landed, say — and
+  /// so reports the failure directly instead of through [runGuarded].
+  @protected
+  void setFailure(Failure failure) => _setFailure(failure);
+
   void _setState(ViewState state) {
     if (_state == state && _failure == null) return;
     _state = state;

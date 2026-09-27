@@ -44,13 +44,17 @@ class ServiceDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ServiceDetailViewModel viewModel = context.watch<ServiceDetailViewModel>();
+    final ServiceDetailViewModel viewModel = context
+        .watch<ServiceDetailViewModel>();
     final ServiceDetail? service = viewModel.service;
 
     if (viewModel.isGone) return DetailGoneView(onBack: () => _back(context));
     if (service == null) {
       if (viewModel.hasError) {
-        return DetailErrorView(onRetry: viewModel.load, onBack: () => _back(context));
+        return DetailErrorView(
+          onRetry: viewModel.load,
+          onBack: () => _back(context),
+        );
       }
       return DetailSkeleton(photoHeight: _photoHeight.dh);
     }
@@ -64,6 +68,14 @@ class _ServiceDetailContent extends StatelessWidget {
   final ServiceDetailViewModel viewModel;
   final ServiceDetail service;
 
+  Future<void> _message(BuildContext context) async {
+    final String? route = await viewModel.chatRouteWith(
+      userId: service.provider.id,
+      name: service.provider.businessName,
+    );
+    if (route != null && context.mounted) context.push(route);
+  }
+
   void _comingSoon(BuildContext context) =>
       showComingSoon(context, context.l10n.comingSoon);
 
@@ -76,18 +88,22 @@ class _ServiceDetailContent extends StatelessWidget {
     final int? guests = service.maxGuests;
     final int minNotice = viewModel.availability?.minNoticeDays ?? 1;
 
-    Widget section(String title, Widget child, {String? action, VoidCallback? onAction}) =>
-        Padding(
-          padding: EdgeInsets.only(top: AppSpacing.xl.dh),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              SectionHeader(title: title, actionLabel: action, onAction: onAction),
-              SizedBox(height: AppSpacing.xs.dh),
-              child,
-            ],
-          ),
-        );
+    Widget section(
+      String title,
+      Widget child, {
+      String? action,
+      VoidCallback? onAction,
+    }) => Padding(
+      padding: EdgeInsets.only(top: AppSpacing.xl.dh),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          SectionHeader(title: title, actionLabel: action, onAction: onAction),
+          SizedBox(height: AppSpacing.xs.dh),
+          child,
+        ],
+      ),
+    );
 
     final List<InfoRow> facts = <InfoRow>[
       for (final ServiceFact fact in service.facts)
@@ -95,11 +111,14 @@ class _ServiceDetailContent extends StatelessWidget {
           icon: AppIcons.check,
           text: '${fact.label.of(language)} · ${fact.value.of(language)}',
         ),
-      if (guests != null) InfoRow(icon: AppIcons.user, text: l10n.upToGuests(guests)),
+      if (guests != null)
+        InfoRow(icon: AppIcons.user, text: l10n.upToGuests(guests)),
       if (service.wilayas.isNotEmpty)
         InfoRow(
           icon: AppIcons.mapPin,
-          text: service.wilayas.map((Wilaya w) => w.nameFor(language)).join(' · '),
+          text: service.wilayas
+              .map((Wilaya w) => w.nameFor(language))
+              .join(' · '),
         ),
     ];
 
@@ -118,7 +137,9 @@ class _ServiceDetailContent extends StatelessWidget {
                   overlay: SafeArea(
                     bottom: false,
                     child: Padding(
-                      padding: EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.xs.dw),
+                      padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: AppSpacing.xs.dw,
+                      ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -153,7 +174,9 @@ class _ServiceDetailContent extends StatelessWidget {
                       SizedBox(height: AppSpacing.xs.dh),
                       Text(
                         service.title.of(language),
-                        style: textTheme.headlineMedium?.copyWith(color: AppColors.textPrimary),
+                        style: textTheme.headlineMedium?.copyWith(
+                          color: AppColors.textPrimary,
+                        ),
                       ),
                       SizedBox(height: AppSpacing.xs.dh),
                       Align(
@@ -166,13 +189,18 @@ class _ServiceDetailContent extends StatelessWidget {
                       SizedBox(height: AppSpacing.md.dh),
                       ProviderMiniCard(
                         provider: service.provider,
-                        onTap: () => context.push(AppRoutes.providerFor(service.provider.id)),
+                        onTap: () => context.push(
+                          AppRoutes.providerFor(service.provider.id),
+                        ),
                       ),
                       if (facts.isNotEmpty) ...<Widget>[
                         SizedBox(height: AppSpacing.md.dh),
                         InfoCard(rows: facts),
                       ],
-                      section(l10n.serviceAbout, ReadMoreText(service.description.of(language))),
+                      section(
+                        l10n.serviceAbout,
+                        ReadMoreText(service.description.of(language)),
+                      ),
                       if (policy != null) ...<Widget>[
                         SizedBox(height: AppSpacing.md.dh),
                         InfoCard(
@@ -180,7 +208,9 @@ class _ServiceDetailContent extends StatelessWidget {
                           rows: <InfoRow>[
                             InfoRow(
                               icon: AppIcons.fileText,
-                              text: l10n.serviceCancellation(policy.of(language)),
+                              text: l10n.serviceCancellation(
+                                policy.of(language),
+                              ),
                             ),
                           ],
                         ),
@@ -192,18 +222,29 @@ class _ServiceDetailContent extends StatelessWidget {
                             children: <Widget>[
                               for (final ServiceExtra extra in service.extras)
                                 Padding(
-                                  padding: EdgeInsets.symmetric(vertical: AppSpacing.xs.dh),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: AppSpacing.xs.dh,
+                                  ),
                                   child: Row(
                                     children: <Widget>[
-                                      AppIcon(AppIcons.plus, size: AppSizes.iconMd, color: AppColors.iconBrand),
+                                      AppIcon(
+                                        AppIcons.plus,
+                                        size: AppSizes.iconMd,
+                                        color: AppColors.iconBrand,
+                                      ),
                                       SizedBox(width: AppSpacing.xs.dw),
                                       Expanded(
                                         child: Text(
                                           extra.name.of(language),
-                                          style: textTheme.bodyMedium?.copyWith(color: AppColors.textPrimary),
+                                          style: textTheme.bodyMedium?.copyWith(
+                                            color: AppColors.textPrimary,
+                                          ),
                                         ),
                                       ),
-                                      PriceText(amount: extra.price, prefix: '+'),
+                                      PriceText(
+                                        amount: extra.price,
+                                        prefix: '+',
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -218,7 +259,9 @@ class _ServiceDetailContent extends StatelessWidget {
                           availability: viewModel.availability,
                           monthFailed: viewModel.monthFailed,
                           selected: viewModel.selectedDate,
-                          onSelect: viewModel.canBook ? viewModel.selectDate : null,
+                          onSelect: viewModel.canBook
+                              ? viewModel.selectDate
+                              : null,
                           onMonthChanged: viewModel.showMonth,
                           onRetry: viewModel.retryMonth,
                           notes: <String>[
@@ -232,7 +275,9 @@ class _ServiceDetailContent extends StatelessWidget {
                         service.ratingCount == 0
                             ? Text(
                                 l10n.serviceNoReviews,
-                                style: textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: AppColors.textSecondary,
+                                ),
                               )
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -242,13 +287,15 @@ class _ServiceDetailContent extends StatelessWidget {
                                     ratingCount: service.ratingCount,
                                     breakdown: service.ratingBreakdown,
                                   ),
-                                  for (final Review review in service.recentReviews) ...<Widget>[
+                                  for (final Review review
+                                      in service.recentReviews) ...<Widget>[
                                     SizedBox(height: AppSpacing.sm.dh),
                                     ReviewCard(review),
                                   ],
                                 ],
                               ),
-                        action: service.ratingCount > service.recentReviews.length
+                        action:
+                            service.ratingCount > service.recentReviews.length
                             ? l10n.seeAllCount(service.ratingCount)
                             : null,
                         onAction: () => _comingSoon(context),
@@ -259,7 +306,9 @@ class _ServiceDetailContent extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
-                              SectionHeader(title: l10n.servicePacksFromProvider),
+                              SectionHeader(
+                                title: l10n.servicePacksFromProvider,
+                              ),
                               SizedBox(height: AppSpacing.xs.dh),
                             ],
                           ),
@@ -270,7 +319,8 @@ class _ServiceDetailContent extends StatelessWidget {
                 if (service.providerPacks.isNotEmpty)
                   PacksRail(
                     packs: service.providerPacks,
-                    onOpen: (PackCard pack) => context.push(AppRoutes.packFor(pack.id)),
+                    onOpen: (PackCard pack) =>
+                        context.push(AppRoutes.packFor(pack.id)),
                   ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -297,10 +347,15 @@ class _ServiceDetailContent extends StatelessWidget {
                 amount: service.basePrice,
                 type: service.priceType,
                 fromOnOwnLine: true,
-                amountStyle: textTheme.titleMedium?.copyWith(color: AppColors.textPrimary),
+                amountStyle: textTheme.titleMedium?.copyWith(
+                  color: AppColors.textPrimary,
+                ),
               ),
               actions: <Widget>[
-                MessageIconButton(onPressed: () => _comingSoon(context)),
+                MessageIconButton(
+                  isLoading: viewModel.isOpeningChat,
+                  onPressed: () => _message(context),
+                ),
                 MainButton(
                   label: l10n.requestBooking,
                   // B1 is not built; the chosen date is kept for when it is.
@@ -309,7 +364,10 @@ class _ServiceDetailContent extends StatelessWidget {
               ],
             )
           else
-            StickyActionBar.notAccepting(onMessage: () => _comingSoon(context)),
+            StickyActionBar.notAccepting(
+              isMessageLoading: viewModel.isOpeningChat,
+              onMessage: () => _message(context),
+            ),
         ],
       ),
     );

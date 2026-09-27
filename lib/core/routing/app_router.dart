@@ -11,6 +11,15 @@ import '../../features/forgot_password/view/forgot_password_view.dart';
 import '../../features/forgot_password/view_model/forgot_password_view_model.dart';
 import '../../features/gallery/view/gallery_view.dart';
 import '../../features/home/view/home_view.dart';
+import '../../features/messages/view/messages_view.dart';
+import '../../features/messages/view_model/messages_view_model.dart';
+import '../messaging/chat_poller.dart';
+import '../notifications/notifications_repository.dart';
+import '../../features/notifications/view/notifications_view.dart';
+import '../../features/notifications/view_model/notifications_view_model.dart';
+import '../messaging/messaging_repository.dart';
+import '../../features/chat/view/chat_view.dart';
+import '../../features/chat/view_model/chat_view_model.dart';
 import '../../features/home/view_model/home_view_model.dart';
 import '../../features/favourites/view/favourites_view.dart';
 import '../../features/favourites/view_model/favourites_view_model.dart';
@@ -195,10 +204,7 @@ abstract final class AppRouter {
       errorBuilder: (BuildContext context, GoRouterState state) =>
           UnknownRouteView(routeName: state.uri.toString()),
       routes: <RouteBase>[
-        GoRoute(
-          path: AppRoutes.splash,
-          builder: (_, _) => const SplashView(),
-        ),
+        GoRoute(path: AppRoutes.splash, builder: (_, _) => const SplashView()),
         GoRoute(
           path: AppRoutes.onboarding,
           builder: (_, _) => _withViewModel<OnboardingViewModel>(
@@ -227,9 +233,8 @@ abstract final class AppRouter {
           builder: (_, GoRouterState state) {
             // A register link without a role — typed, or from an old build —
             // is treated as a client's, the one that needs no documents.
-            final UserRole role = UserRole.fromApi(
-                  state.uri.queryParameters['role'],
-                ) ??
+            final UserRole role =
+                UserRole.fromApi(state.uri.queryParameters['role']) ??
                 UserRole.client;
             return _withViewModel<RegisterViewModel>(
               (BuildContext context) => RegisterViewModel(
@@ -249,13 +254,13 @@ abstract final class AppRouter {
               state.extra is VerifyEmailArgs ? null : AppRoutes.login,
           builder: (_, GoRouterState state) =>
               _withViewModel<VerifyEmailViewModel>(
-            (BuildContext context) => VerifyEmailViewModel(
-              auth: context.read<AuthRepository>(),
-              session: context.read<SessionController>(),
-              args: state.extra! as VerifyEmailArgs,
-            ),
-            const VerifyEmailView(),
-          ),
+                (BuildContext context) => VerifyEmailViewModel(
+                  auth: context.read<AuthRepository>(),
+                  session: context.read<SessionController>(),
+                  args: state.extra! as VerifyEmailArgs,
+                ),
+                const VerifyEmailView(),
+              ),
         ),
         GoRoute(
           path: AppRoutes.documents,
@@ -285,9 +290,8 @@ abstract final class AppRouter {
         GoRoute(
           path: AppRoutes.forgotPassword,
           builder: (_, _) => _withViewModel<ForgotPasswordViewModel>(
-            (BuildContext context) => ForgotPasswordViewModel(
-              auth: context.read<AuthRepository>(),
-            ),
+            (BuildContext context) =>
+                ForgotPasswordViewModel(auth: context.read<AuthRepository>()),
             const ForgotPasswordView(),
           ),
         ),
@@ -295,41 +299,44 @@ abstract final class AppRouter {
           path: AppRoutes.resetCode,
           redirect: (_, GoRouterState state) =>
               (state.uri.queryParameters['email'] ?? '').isEmpty
-                  ? AppRoutes.forgotPassword
-                  : null,
-          builder: (_, GoRouterState state) => _withViewModel<ResetCodeViewModel>(
-            (BuildContext context) => ResetCodeViewModel(
-              auth: context.read<AuthRepository>(),
-              email: state.uri.queryParameters['email']!,
-            ),
-            const ResetCodeView(),
-          ),
+              ? AppRoutes.forgotPassword
+              : null,
+          builder: (_, GoRouterState state) =>
+              _withViewModel<ResetCodeViewModel>(
+                (BuildContext context) => ResetCodeViewModel(
+                  auth: context.read<AuthRepository>(),
+                  email: state.uri.queryParameters['email']!,
+                ),
+                const ResetCodeView(),
+              ),
         ),
         GoRoute(
           path: AppRoutes.resetPassword,
-          redirect: (_, GoRouterState state) =>
-              state.extra is ResetPasswordArgs ? null : AppRoutes.forgotPassword,
+          redirect: (_, GoRouterState state) => state.extra is ResetPasswordArgs
+              ? null
+              : AppRoutes.forgotPassword,
           builder: (_, GoRouterState state) =>
               _withViewModel<ResetPasswordViewModel>(
-            (BuildContext context) => ResetPasswordViewModel(
-              auth: context.read<AuthRepository>(),
-              config: context.read<AppConfigRepository>().current,
-              args: state.extra! as ResetPasswordArgs,
-            ),
-            const ResetPasswordView(),
-          ),
+                (BuildContext context) => ResetPasswordViewModel(
+                  auth: context.read<AuthRepository>(),
+                  config: context.read<AppConfigRepository>().current,
+                  args: state.extra! as ResetPasswordArgs,
+                ),
+                const ResetPasswordView(),
+              ),
         ),
         GoRoute(
           path: AppRoutes.setPassword,
-          builder: (_, GoRouterState state) => _withViewModel<SetPasswordViewModel>(
-            (BuildContext context) => SetPasswordViewModel(
-              auth: context.read<AuthRepository>(),
-              session: context.read<SessionController>(),
-              config: context.read<AppConfigRepository>().current,
-              token: state.uri.queryParameters['token'],
-            ),
-            const SetPasswordView(),
-          ),
+          builder: (_, GoRouterState state) =>
+              _withViewModel<SetPasswordViewModel>(
+                (BuildContext context) => SetPasswordViewModel(
+                  auth: context.read<AuthRepository>(),
+                  session: context.read<SessionController>(),
+                  config: context.read<AppConfigRepository>().current,
+                  token: state.uri.queryParameters['token'],
+                ),
+                const SetPasswordView(),
+              ),
         ),
         // The client's five tabs. Each branch keeps its own stack; the
         // catalog's detail screens below are top-level routes, so they open
@@ -367,7 +374,9 @@ abstract final class AppRouter {
                   builder: (_, _) => _withViewModel<SearchViewModel>(
                     (BuildContext context) => SearchViewModel(
                       catalog: context.read<CatalogRepository>(),
-                      recents: RecentSearches(context.read<PreferencesService>()),
+                      recents: RecentSearches(
+                        context.read<PreferencesService>(),
+                      ),
                     ),
                     const SearchView(),
                   ),
@@ -392,9 +401,12 @@ abstract final class AppRouter {
               routes: <RouteBase>[
                 GoRoute(
                   path: AppRoutes.messages,
-                  builder: (BuildContext context, _) => PlaceholderTabView(
-                    title: context.l10n.navMessages,
-                    icon: AppIcons.message,
+                  builder: (_, _) => _withViewModel<MessagesViewModel>(
+                    (BuildContext context) => MessagesViewModel(
+                      messaging: context.read<MessagingRepository>(),
+                      badges: context.read<ShellBadges>(),
+                    ),
+                    const MessagesView(),
                   ),
                 ),
               ],
@@ -413,29 +425,65 @@ abstract final class AppRouter {
           path: AppRoutes.providerHome,
           builder: (_, _) => const ProviderHomeView(),
         ),
+        GoRoute(
+          path: AppRoutes.notifications,
+          builder: (_, _) => _withViewModel<NotificationsViewModel>(
+            (BuildContext context) => NotificationsViewModel(
+              notifications: context.read<NotificationsRepository>(),
+              badges: context.read<ShellBadges>(),
+            ),
+            const NotificationsView(),
+          ),
+        ),
+        // 15. The draft route comes first: `new` would otherwise match `:id`.
+        GoRoute(
+          path: AppRoutes.chatDraft,
+          redirect: (_, GoRouterState state) =>
+              (state.uri.queryParameters['user'] ?? '').isEmpty
+              ? AppRoutes.messages
+              : null,
+          builder: (_, GoRouterState state) => _chatPage(
+            draft: ChatDraftPeer(
+              userId: state.uri.queryParameters['user']!,
+              name: state.uri.queryParameters['name'] ?? '',
+            ),
+          ),
+        ),
+        GoRoute(
+          path: '${AppRoutes.conversations}/:id',
+          builder: (_, GoRouterState state) {
+            final Object? extra = state.extra;
+            return _chatPage(
+              conversationId: state.pathParameters['id'],
+              opening: extra is ChatOpening ? extra : null,
+            );
+          },
+        ),
         // The catalog's detail screens: top-level, so they open over the tab
         // bar, full screen, as drawn.
         GoRoute(
           path: '${AppRoutes.services}/:id',
           builder: (_, GoRouterState state) =>
               _withViewModel<ServiceDetailViewModel>(
-            (BuildContext context) => ServiceDetailViewModel(
-              id: state.pathParameters['id']!,
-              catalog: context.read<CatalogRepository>(),
-            ),
-            const ServiceDetailView(),
-          ),
+                (BuildContext context) => ServiceDetailViewModel(
+                  id: state.pathParameters['id']!,
+                  catalog: context.read<CatalogRepository>(),
+                  messaging: context.read<MessagingRepository>(),
+                ),
+                const ServiceDetailView(),
+              ),
         ),
         GoRoute(
           path: '${AppRoutes.providers}/:id',
           builder: (_, GoRouterState state) =>
               _withViewModel<ProviderProfileViewModel>(
-            (BuildContext context) => ProviderProfileViewModel(
-              id: state.pathParameters['id']!,
-              catalog: context.read<CatalogRepository>(),
-            ),
-            const ProviderProfileView(),
-          ),
+                (BuildContext context) => ProviderProfileViewModel(
+                  id: state.pathParameters['id']!,
+                  catalog: context.read<CatalogRepository>(),
+                  messaging: context.read<MessagingRepository>(),
+                ),
+                const ProviderProfileView(),
+              ),
         ),
         GoRoute(
           path: AppRoutes.packs,
@@ -454,12 +502,12 @@ abstract final class AppRouter {
           path: '${AppRoutes.packs}/:id',
           builder: (_, GoRouterState state) =>
               _withViewModel<PackDetailViewModel>(
-            (BuildContext context) => PackDetailViewModel(
-              id: state.pathParameters['id']!,
-              catalog: context.read<CatalogRepository>(),
-            ),
-            const PackDetailView(),
-          ),
+                (BuildContext context) => PackDetailViewModel(
+                  id: state.pathParameters['id']!,
+                  catalog: context.read<CatalogRepository>(),
+                ),
+                const PackDetailView(),
+              ),
         ),
         GoRoute(
           path: AppRoutes.favourites,
@@ -493,6 +541,26 @@ abstract final class AppRouter {
         const ResultsView(),
         key: ValueKey<String>(state.uri.toString()),
       );
+
+  /// 15, for a conversation or a draft. Each chat polls on its own timer,
+  /// released with its view model when the route goes.
+  static Widget _chatPage({
+    String? conversationId,
+    ChatDraftPeer? draft,
+    ChatOpening? opening,
+  }) => _withViewModel<ChatViewModel>(
+    (BuildContext context) => ChatViewModel(
+      messaging: context.read<MessagingRepository>(),
+      catalog: context.read<CatalogRepository>(),
+      badges: context.read<ShellBadges>(),
+      config: context.read<AppConfigRepository>().current,
+      updates: TimerChatUpdates(),
+      conversationId: draft == null ? conversationId : null,
+      draft: draft,
+      opening: opening,
+    ),
+    const ChatView(),
+  );
 
   /// Wraps [child] in a [ChangeNotifierProvider] holding its view model,
   /// created from the route's own context so it can read the app's services.

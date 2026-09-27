@@ -537,6 +537,68 @@ void main() {
     });
   });
 
+  group('ApiClient.getEnvelope', () {
+    setUp(start);
+
+    test('returns the envelope whole, with a meta getPage cannot read',
+        () async {
+      adapter.respond = (RequestOptions request) async =>
+          jsonResponse(<String, Object?>{
+            'data': <Object?>[
+              <String, Object?>{'id': 'm-1'},
+            ],
+            'meta': <String, Object?>{
+              'limit': 30,
+              'hasMore': true,
+              'nextBefore': 'm-1',
+            },
+          });
+
+      final Map<String, Object?> envelope = await client.getEnvelope(
+        '/app/conversations/c-1/messages',
+        query: <String, Object?>{'before': 'm-9'},
+      );
+
+      expect(envelope, <String, Object?>{
+        'data': <Object?>[
+          <String, Object?>{'id': 'm-1'},
+        ],
+        'meta': <String, Object?>{
+          'limit': 30,
+          'hasMore': true,
+          'nextBefore': 'm-1',
+        },
+      });
+      expect(adapter.requests.single.uri.query, 'before=m-9');
+      expect(adapter.requests.single.headers['Authorization'], 'Bearer access-1');
+    });
+
+    test('turns a 403 into its ApiFailure', () async {
+      adapter.respond = (RequestOptions request) async =>
+          errorResponse(403, ApiErrorCode.notAParticipant);
+
+      await expectLater(
+        client.getEnvelope('/app/conversations/c-1/messages'),
+        throwsA(
+          isA<ApiFailure>()
+              .having((ApiFailure f) => f.code, 'code',
+                  ApiErrorCode.notAParticipant)
+              .having((ApiFailure f) => f.statusCode, 'statusCode', 403),
+        ),
+      );
+    });
+
+    test('wraps a bare body as data', () async {
+      adapter.respond = (RequestOptions request) async =>
+          jsonResponse(<Object?>[1, 2]);
+
+      expect(
+        await client.getEnvelope('/app/health'),
+        <String, Object?>{'data': <Object?>[1, 2]},
+      );
+    });
+  });
+
   group('ApiClient deletes', () {
     setUp(start);
 

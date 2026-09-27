@@ -26,9 +26,21 @@ class ClientShell extends StatefulWidget {
 
 class _ClientShellState extends State<ClientShell> {
   final TabReselect _reselect = TabReselect();
+  late final AppLifecycleListener _lifecycleListener;
+
+  @override
+  void initState() {
+    super.initState();
+    // Home's own load already refreshes the badges when it is mounted; this
+    // covers the tabs that aren't Home, and a resume with nothing reloading.
+    _lifecycleListener = AppLifecycleListener(
+      onResume: () => context.read<ShellBadges>().refresh(),
+    );
+  }
 
   @override
   void dispose() {
+    _lifecycleListener.dispose();
     _reselect.dispose();
     super.dispose();
   }

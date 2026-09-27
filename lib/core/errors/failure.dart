@@ -143,4 +143,13 @@ abstract final class ApiErrorCode {
   static const String favouriteNotFound = 'FAVOURITE_NOT_FOUND';
   static const String favouriteTargetInvalid = 'FAVOURITE_TARGET_INVALID';
   static const String forbiddenRole = 'FORBIDDEN_ROLE';
+
+  // Messaging.
+  static const String notAParticipant = 'NOT_A_PARTICIPANT';
+  static const String conversationNotFound = 'CONVERSATION_NOT_FOUND';
+  static const String conversationClosed = 'CONVERSATION_CLOSED';
+  static const String conversationReadOnly = 'CONVERSATION_READ_ONLY';
+  static const String recipientInvalid = 'RECIPIENT_INVALID';
+  static const String userNotFound = 'USER_NOT_FOUND';
+  static const String messageNotFound = 'MESSAGE_NOT_FOUND';
 }

@@ -106,6 +106,26 @@ void main() {
       });
     });
 
+    group('chatDraftFor', () {
+      test('round-trips who it is with and their name', () {
+        final Uri uri = Uri.parse(
+          AppRoutes.chatDraftFor(userId: 'p 1', name: 'Salle & Co'),
+        );
+
+        expect(uri.path, AppRoutes.chatDraft);
+        expect(uri.queryParameters['user'], 'p 1');
+        expect(uri.queryParameters['name'], 'Salle & Co');
+      });
+    });
+
+    group('isClientOnly, messaging and notifications', () {
+      test('covers a conversation, a chat draft and the bell', () {
+        expect(AppRoutes.isClientOnly(AppRoutes.chatFor('x')), isTrue);
+        expect(AppRoutes.isClientOnly(AppRoutes.chatDraft), isTrue);
+        expect(AppRoutes.isClientOnly(AppRoutes.notifications), isTrue);
+      });
+    });
+
     group('resetCodeFor', () {
       test('carries the email the code went to', () {
         final Uri uri = Uri.parse(AppRoutes.resetCodeFor('amina@example.com'));

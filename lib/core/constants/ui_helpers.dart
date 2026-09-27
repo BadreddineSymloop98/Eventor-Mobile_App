@@ -387,9 +387,16 @@ abstract final class AppSizes {
 
   // Avatars.
   static const double avatarSm = 32;
+
+  /// The conversation list row's avatar (14).
+  static const double avatarList = 48;
+
   static const double avatarMd = 40;
   static const double avatarLg = 56;
   static const double avatarXl = 80;
+
+  /// The chat thread's header avatar (15).
+  static const double avatarChatHeader = 36;
 
   /// Widest the main content column is allowed to get.
   ///

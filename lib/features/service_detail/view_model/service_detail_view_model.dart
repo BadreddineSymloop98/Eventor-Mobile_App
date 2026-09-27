@@ -3,15 +3,19 @@ import '../../../core/catalog/catalog_repository.dart';
 import '../../../core/catalog/models/catalog_models.dart';
 import '../../../core/catalog/month_availability.dart';
 import '../../../core/errors/failure.dart';
+import '../../../core/messaging/chat_launcher.dart';
+import '../../../core/messaging/messaging_repository.dart';
 
 /// Screen 12 — one service: its detail, then its calendar.
 ///
 /// A service that is no longer listed answers `SERVICE_NOT_FOUND`; that is
 /// [isGone], a state of its own, not an error to retry.
-class ServiceDetailViewModel extends BaseViewModel with MonthAvailability {
+class ServiceDetailViewModel extends BaseViewModel
+    with MonthAvailability, ChatLauncher {
   ServiceDetailViewModel({
     required this.id,
     required this._catalog,
+    required this._messaging,
     this._today = DateTime.now,
   }) {
     load();
@@ -19,6 +23,10 @@ class ServiceDetailViewModel extends BaseViewModel with MonthAvailability {
 
   final String id;
   final CatalogRepository _catalog;
+  final MessagingRepository _messaging;
+
+  @override
+  MessagingRepository get chatMessaging => _messaging;
   final DateTime Function() _today;
 
   ServiceDetail? _service;

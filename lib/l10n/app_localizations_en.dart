@@ -1392,4 +1392,237 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pressBackAgainToExit => 'Press back again to exit';
+
+  @override
+  String get offlineTitle => 'You are offline';
+
+  @override
+  String get offlineRetry => 'Retry';
+
+  @override
+  String get messagesTitle => 'Messages';
+
+  @override
+  String get messagesSearchHint => 'Search a conversation';
+
+  @override
+  String get messagesFilterAll => 'All';
+
+  @override
+  String get messagesFilterUnread => 'Unread';
+
+  @override
+  String get messagesFilterBookings => 'Bookings';
+
+  @override
+  String get messagesEmptyTitle => 'No messages yet';
+
+  @override
+  String get messagesEmptyBody =>
+      'When you write to a provider, your conversations appear here.';
+
+  @override
+  String get messagesEmptyAction => 'Find a provider';
+
+  @override
+  String get messagesUnreadEmpty => 'You\'re all caught up';
+
+  @override
+  String get messagesBookingsEmpty => 'No booking conversations yet';
+
+  @override
+  String messagesNoMatch(String query) {
+    return 'No conversations match \"$query\"';
+  }
+
+  @override
+  String get offlineMessagesBody =>
+      'These are your last messages. New ones arrive when you reconnect.';
+
+  @override
+  String chatDispute(String reference) {
+    return 'Dispute · $reference';
+  }
+
+  @override
+  String get chatDisputeNoRef => 'Dispute';
+
+  @override
+  String get chatSupport => 'Eventor support';
+
+  @override
+  String get chatDeletedAccount => 'Deleted account';
+
+  @override
+  String get chatPhoto => 'Photo';
+
+  @override
+  String get chatRemoved => 'Removed by Eventor';
+
+  @override
+  String get chatYesterday => 'Yesterday';
+
+  @override
+  String messagesUnreadCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count unread messages',
+      one: '1 unread message',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get chatComposerHint => 'Write a message';
+
+  @override
+  String get chatComposerDisputeHint => 'Write to both parties';
+
+  @override
+  String get chatClosed =>
+      'This conversation was closed by Eventor. You can still read it.';
+
+  @override
+  String get chatOtherBlocked =>
+      'This account is no longer active. You can still read the conversation.';
+
+  @override
+  String get chatMaskedNote => 'Number hidden until the booking is accepted';
+
+  @override
+  String get chatNotSent => 'Not sent · Tap to retry';
+
+  @override
+  String get chatNewMessages => 'New messages';
+
+  @override
+  String chatSayHello(String name) {
+    return 'Say hello to $name';
+  }
+
+  @override
+  String get chatToday => 'Today';
+
+  @override
+  String chatGroupSubtitle(String name) {
+    return 'You, $name and Eventor support';
+  }
+
+  @override
+  String get chatViewProfile => 'View profile';
+
+  @override
+  String chatReportUser(String name) {
+    return 'Report $name';
+  }
+
+  @override
+  String get chatCopy => 'Copy';
+
+  @override
+  String get chatReportMessage => 'Report';
+
+  @override
+  String get photoReload => 'Tap to reload';
+
+  @override
+  String get reportTitle => 'Report';
+
+  @override
+  String get reportReasonInappropriate => 'Inappropriate';
+
+  @override
+  String get reportReasonSpam => 'Spam';
+
+  @override
+  String get reportReasonContact => 'Sharing contact details';
+
+  @override
+  String get reportReasonHarassment => 'Harassment';
+
+  @override
+  String get reportReasonFake => 'Fake or scam';
+
+  @override
+  String get reportReasonOther => 'Other';
+
+  @override
+  String get reportNoteHint => 'Add a note (optional)';
+
+  @override
+  String get reportSend => 'Send report';
+
+  @override
+  String get chatSend => 'Send';
+
+  @override
+  String get chatAttach => 'Add a photo';
+
+  @override
+  String get chatMore => 'More options';
+
+  @override
+  String get chatRemoveAttachment => 'Remove photo';
+
+  @override
+  String get chatSending => 'Sending';
+
+  @override
+  String get chatOlderFailed => 'Could not load older messages';
+
+  @override
+  String get photoViewerClose => 'Close';
+
+  @override
+  String get chatUnavailable => 'This conversation is no longer available';
+
+  @override
+  String get chatCopied => 'Copied';
+
+  @override
+  String get chatPhotoNeedsText => 'Send a message first';
+
+  @override
+  String photoTooLarge(int mb) {
+    return 'This photo is larger than $mb MB';
+  }
+
+  @override
+  String get photoWrongType => 'Use a JPEG, PNG, WebP or HEIC photo';
+
+  @override
+  String get reportSent => 'Thanks — we\'ll look into it';
+
+  @override
+  String get reportAlready => 'You already reported this';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get notificationsMarkAll => 'Mark all read';
+
+  @override
+  String get notificationsToday => 'Today';
+
+  @override
+  String get notificationsThisWeek => 'This week';
+
+  @override
+  String get notificationsEarlier => 'Earlier';
+
+  @override
+  String get notificationsEmptyTitle => 'No notifications yet';
+
+  @override
+  String get notificationsEmptyBody =>
+      'Booking updates, messages and reminders will show up here.';
+
+  @override
+  String get notificationUnread => 'Unread';
+
+  @override
+  String get offlineNotificationsBody =>
+      'These are your last notifications. New ones arrive when you reconnect.';
 }

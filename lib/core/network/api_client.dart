@@ -137,6 +137,27 @@ class ApiClient {
     return _toPage(body);
   }
 
+  /// A list envelope kept whole, `meta` included — the message list's meta
+  /// is `{limit, hasMore, nextBefore}`, a shape [getPage] cannot read.
+  ///
+  /// A body that is not a map (should not happen on this route, but keeps
+  /// the contract total) comes back as `{'data': body}`.
+  Future<Map<String, Object?>> getEnvelope(
+    String path, {
+    Map<String, Object?>? query,
+  }) async {
+    final Object? body = await _send(
+      () => _dio.get<Object?>(
+        path,
+        queryParameters: query,
+        options: _options(false),
+      ),
+      isPublic: false,
+      unwrap: false,
+    );
+    return body is Map<String, Object?> ? body : <String, Object?>{'data': body};
+  }
+
   Future<void> delete(String path) async {
     await _send(
       () => _dio.delete<Object?>(path, options: _options(false)),

@@ -5,6 +5,7 @@ import 'package:eventor/features/shell/view/placeholder_tab_view.dart';
 import 'package:eventor/features/shell/view/profile_tab_view.dart';
 import 'package:eventor/features/welcome/view/welcome_view.dart';
 import 'package:eventor/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/fakes.dart';
@@ -88,6 +89,23 @@ void main() {
       await tapAndSettle(tester, button(l10n(tester).logOut));
 
       expect(app.services.badges.unreadConversations, 0);
+    });
+
+    testWidgets('refreshes the badges on resume', (WidgetTester tester) async {
+      final TestApp app = await startClient(tester);
+      final int callsBefore = app.notifications.calls.length;
+
+      // Only inactive → resumed fires AppLifecycleListener.onResume; step
+      // through every legal transition a real backgrounding goes through.
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.hidden);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.hidden);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pump();
+
+      expect(app.notifications.calls.sublist(callsBefore), <String>['counts']);
     });
   });
 

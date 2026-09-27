@@ -21,8 +21,11 @@ ProviderDetail providerWith(Map<String, Object?> changes) =>
 void main() {
   group('ProviderProfileViewModel', () {
     test('loads the provider', () async {
-      final ProviderProfileViewModel viewModel =
-          ProviderProfileViewModel(id: 'p-1', catalog: FakeCatalogRepository());
+      final ProviderProfileViewModel viewModel = ProviderProfileViewModel(
+        id: 'p-1',
+        catalog: FakeCatalogRepository(),
+        messaging: FakeMessagingRepository(),
+      );
       addTearDown(viewModel.dispose);
       await flushAsync();
 
@@ -32,8 +35,12 @@ void main() {
     test('knows a removed provider apart from an error', () async {
       final ProviderProfileViewModel viewModel = ProviderProfileViewModel(
         id: 'gone',
+        messaging: FakeMessagingRepository(),
         catalog: FakeCatalogRepository()
-          ..providerError = apiFailure(ApiErrorCode.providerNotFound, statusCode: 404),
+          ..providerError = apiFailure(
+            ApiErrorCode.providerNotFound,
+            statusCode: 404,
+          ),
       );
       addTearDown(viewModel.dispose);
       await flushAsync();
@@ -45,23 +52,39 @@ void main() {
     test('shows only the checks that passed', () async {
       final ProviderProfileViewModel viewModel = ProviderProfileViewModel(
         id: 'p-1',
+        messaging: FakeMessagingRepository(),
         catalog: FakeCatalogRepository()
           ..providerDetail = providerWith(<String, Object?>{
             'checks': <Object?>[
-              <String, Object?>{'code': 'identity', 'title': 'Identity', 'detail': '', 'passed': true},
-              <String, Object?>{'code': 'reply_time', 'title': 'Reply', 'detail': '', 'passed': false},
+              <String, Object?>{
+                'code': 'identity',
+                'title': 'Identity',
+                'detail': '',
+                'passed': true,
+              },
+              <String, Object?>{
+                'code': 'reply_time',
+                'title': 'Reply',
+                'detail': '',
+                'passed': false,
+              },
             ],
           }),
       );
       addTearDown(viewModel.dispose);
       await flushAsync();
 
-      expect(viewModel.passedChecks.map((ProviderCheck c) => c.code), <String>['identity']);
+      expect(viewModel.passedChecks.map((ProviderCheck c) => c.code), <String>[
+        'identity',
+      ]);
     });
   });
 
   group('ProviderProfileView', () {
-    Future<TestApp> openProfile(WidgetTester tester, FakeCatalogRepository catalog) async {
+    Future<TestApp> openProfile(
+      WidgetTester tester,
+      FakeCatalogRepository catalog,
+    ) async {
       final TestApp app = await buildTestApp(
         hasSeenOnboarding: true,
         auth: FakeAuthRepository()..restoredUser = testUser(),
@@ -77,7 +100,9 @@ void main() {
     String location(TestApp app) =>
         app.services.router.routerDelegate.currentConfiguration.uri.toString();
 
-    testWidgets('offers a message, never a booking button', (WidgetTester tester) async {
+    testWidgets('offers a message, never a booking button', (
+      WidgetTester tester,
+    ) async {
       await openProfile(tester, FakeCatalogRepository());
       final AppLocalizations strings = l10n(tester);
 
@@ -85,11 +110,15 @@ void main() {
       expect(button(strings.requestBooking), findsNothing);
     });
 
-    testWidgets('shows the "not taking new bookings" state (13)', (WidgetTester tester) async {
+    testWidgets('shows the "not taking new bookings" state (13)', (
+      WidgetTester tester,
+    ) async {
       await openProfile(
         tester,
         FakeCatalogRepository()
-          ..providerDetail = providerWith(<String, Object?>{'acceptingBookings': false}),
+          ..providerDetail = providerWith(<String, Object?>{
+            'acceptingBookings': false,
+          }),
       );
       final AppLocalizations strings = l10n(tester);
 
@@ -98,27 +127,37 @@ void main() {
       expect(button(strings.sendMessage), findsOneWidget);
     });
 
-    testWidgets('says how fast they reply only when the API knows', (WidgetTester tester) async {
+    testWidgets('says how fast they reply only when the API knows', (
+      WidgetTester tester,
+    ) async {
       await openProfile(
         tester,
         FakeCatalogRepository()
-          ..providerDetail = providerWith(<String, Object?>{'replyTime': '2 h'}),
+          ..providerDetail = providerWith(<String, Object?>{
+            'replyTime': '2 h',
+          }),
       );
 
       expect(find.text(l10n(tester).repliesIn('2 h')), findsOneWidget);
     });
 
-    testWidgets('hides the years when there are none', (WidgetTester tester) async {
+    testWidgets('hides the years when there are none', (
+      WidgetTester tester,
+    ) async {
       await openProfile(
         tester,
-        FakeCatalogRepository()..providerDetail = providerWith(<String, Object?>{'yearsActive': null}),
+        FakeCatalogRepository()
+          ..providerDetail = providerWith(<String, Object?>{
+            'yearsActive': null,
+          }),
       );
 
       expect(find.textContaining('in business'), findsNothing);
     });
 
-    testWidgets('offers "See all" only when some services are not listed',
-        (WidgetTester tester) async {
+    testWidgets('offers "See all" only when some services are not listed', (
+      WidgetTester tester,
+    ) async {
       final ProviderDetail base = FakeCatalogRepository().providerDetail;
       await openProfile(
         tester,
@@ -128,7 +167,10 @@ void main() {
           }),
       );
 
-      expect(find.text(l10n(tester).seeAllCount(base.services.length + 2)), findsOneWidget);
+      expect(
+        find.text(l10n(tester).seeAllCount(base.services.length + 2)),
+        findsOneWidget,
+      );
     });
 
     testWidgets('opens one of their services', (WidgetTester tester) async {
@@ -146,7 +188,10 @@ void main() {
       await openProfile(
         tester,
         FakeCatalogRepository()
-          ..providerError = apiFailure(ApiErrorCode.providerNotFound, statusCode: 404),
+          ..providerError = apiFailure(
+            ApiErrorCode.providerNotFound,
+            statusCode: 404,
+          ),
       );
 
       expect(find.byType(DetailGoneView), findsOneWidget);

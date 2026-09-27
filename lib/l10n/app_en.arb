@@ -1722,5 +1722,316 @@
   "pressBackAgainToExit": "Press back again to exit",
   "@pressBackAgainToExit": {
     "description": "Toast on Home after the first Back press; a second press within two seconds closes the app."
+  },
+  "offlineTitle": "You are offline",
+  "@offlineTitle": {
+    "description": "Title of the offline banner."
+  },
+  "offlineRetry": "Retry",
+  "@offlineRetry": {
+    "description": "The action on the offline banner."
+  },
+  "messagesTitle": "Messages",
+  "@messagesTitle": {
+    "description": "Screen 14 title."
+  },
+  "messagesSearchHint": "Search a conversation",
+  "@messagesSearchHint": {
+    "description": "Search field hint on screen 14."
+  },
+  "messagesFilterAll": "All",
+  "@messagesFilterAll": {
+    "description": "Screen 14 chip: every conversation."
+  },
+  "messagesFilterUnread": "Unread",
+  "@messagesFilterUnread": {
+    "description": "Screen 14 chip: conversations with unread messages."
+  },
+  "messagesFilterBookings": "Bookings",
+  "@messagesFilterBookings": {
+    "description": "Screen 14 chip: conversations attached to a booking."
+  },
+  "messagesEmptyTitle": "No messages yet",
+  "@messagesEmptyTitle": {
+    "description": "Screen 14 empty state title."
+  },
+  "messagesEmptyBody": "When you write to a provider, your conversations appear here.",
+  "@messagesEmptyBody": {
+    "description": "Screen 14 empty state body."
+  },
+  "messagesEmptyAction": "Find a provider",
+  "@messagesEmptyAction": {
+    "description": "Screen 14 empty state button to the Search tab."
+  },
+  "messagesUnreadEmpty": "You're all caught up",
+  "@messagesUnreadEmpty": {
+    "description": "Screen 14 empty state under the Unread chip."
+  },
+  "messagesBookingsEmpty": "No booking conversations yet",
+  "@messagesBookingsEmpty": {
+    "description": "Screen 14 empty state under the Bookings chip."
+  },
+  "messagesNoMatch": "No conversations match \"{query}\"",
+  "@messagesNoMatch": {
+    "description": "Screen 14 empty search result.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineMessagesBody": "These are your last messages. New ones arrive when you reconnect.",
+  "@offlineMessagesBody": {
+    "description": "Offline banner body on screen 14."
+  },
+  "chatDispute": "Dispute · {reference}",
+  "@chatDispute": {
+    "description": "Name of a dispute conversation; reference is a booking reference like EVT-2041.",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "chatDisputeNoRef": "Dispute",
+  "@chatDisputeNoRef": {
+    "description": "Name of a dispute conversation with no booking reference."
+  },
+  "chatSupport": "Eventor support",
+  "@chatSupport": {
+    "description": "Name of the Eventor support conversation."
+  },
+  "chatDeletedAccount": "Deleted account",
+  "@chatDeletedAccount": {
+    "description": "Name shown when the other person's account was deleted."
+  },
+  "chatPhoto": "Photo",
+  "@chatPhoto": {
+    "description": "Preview of a conversation whose last message is a photo."
+  },
+  "chatRemoved": "Removed by Eventor",
+  "@chatRemoved": {
+    "description": "A message Eventor removed (bubble and preview)."
+  },
+  "chatYesterday": "Yesterday",
+  "@chatYesterday": {
+    "description": "Time ladder: a message from yesterday."
+  },
+  "messagesUnreadCount": "{count, plural, =1{1 unread message} other{{count} unread messages}}",
+  "@messagesUnreadCount": {
+    "description": "Screen-reader label for a conversation's unread badge.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatComposerHint": "Write a message",
+  "@chatComposerHint": {
+    "description": "Chat composer placeholder."
+  },
+  "chatComposerDisputeHint": "Write to both parties",
+  "@chatComposerDisputeHint": {
+    "description": "Chat composer placeholder in a dispute chat."
+  },
+  "chatClosed": "This conversation was closed by Eventor. You can still read it.",
+  "@chatClosed": {
+    "description": "Shown in place of the composer when a chat is closed."
+  },
+  "chatOtherBlocked": "This account is no longer active. You can still read the conversation.",
+  "@chatOtherBlocked": {
+    "description": "Shown in place of the composer when the other account is blocked or deleted."
+  },
+  "chatMaskedNote": "Number hidden until the booking is accepted",
+  "@chatMaskedNote": {
+    "description": "Caption under a message whose contact details were hidden."
+  },
+  "chatNotSent": "Not sent · Tap to retry",
+  "@chatNotSent": {
+    "description": "Under a message that failed to send."
+  },
+  "chatNewMessages": "New messages",
+  "@chatNewMessages": {
+    "description": "Pill that jumps to new messages below."
+  },
+  "chatSayHello": "Say hello to {name}",
+  "@chatSayHello": {
+    "description": "Empty draft chat hint.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToday": "Today",
+  "@chatToday": {
+    "description": "Date pill for today's messages."
+  },
+  "chatGroupSubtitle": "You, {name} and Eventor support",
+  "@chatGroupSubtitle": {
+    "description": "Subtitle of a dispute chat; name is the provider.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatViewProfile": "View profile",
+  "@chatViewProfile": {
+    "description": "Chat ⋯ menu: open the provider's profile."
+  },
+  "chatReportUser": "Report {name}",
+  "@chatReportUser": {
+    "description": "Chat ⋯ menu: report the other person.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatCopy": "Copy",
+  "@chatCopy": {
+    "description": "Message long-press menu: copy the text."
+  },
+  "chatReportMessage": "Report",
+  "@chatReportMessage": {
+    "description": "Message long-press menu: report the message."
+  },
+  "photoReload": "Tap to reload",
+  "@photoReload": {
+    "description": "On a chat photo that failed to load."
+  },
+  "reportTitle": "Report",
+  "@reportTitle": {
+    "description": "Report sheet title."
+  },
+  "reportReasonInappropriate": "Inappropriate",
+  "@reportReasonInappropriate": {
+    "description": "Report reason."
+  },
+  "reportReasonSpam": "Spam",
+  "@reportReasonSpam": {
+    "description": "Report reason."
+  },
+  "reportReasonContact": "Sharing contact details",
+  "@reportReasonContact": {
+    "description": "Report reason."
+  },
+  "reportReasonHarassment": "Harassment",
+  "@reportReasonHarassment": {
+    "description": "Report reason."
+  },
+  "reportReasonFake": "Fake or scam",
+  "@reportReasonFake": {
+    "description": "Report reason."
+  },
+  "reportReasonOther": "Other",
+  "@reportReasonOther": {
+    "description": "Report reason."
+  },
+  "reportNoteHint": "Add a note (optional)",
+  "@reportNoteHint": {
+    "description": "Report sheet note hint."
+  },
+  "reportSend": "Send report",
+  "@reportSend": {
+    "description": "Report sheet button."
+  },
+  "chatSend": "Send",
+  "@chatSend": {
+    "description": "Send button label."
+  },
+  "chatAttach": "Add a photo",
+  "@chatAttach": {
+    "description": "The composer's + button."
+  },
+  "chatMore": "More options",
+  "@chatMore": {
+    "description": "The chat's ⋯ button."
+  },
+  "chatRemoveAttachment": "Remove photo",
+  "@chatRemoveAttachment": {
+    "description": "The ✕ on the attached photo."
+  },
+  "chatSending": "Sending",
+  "@chatSending": {
+    "description": "Screen-reader label for a message still sending."
+  },
+  "chatOlderFailed": "Could not load older messages",
+  "@chatOlderFailed": {
+    "description": "Top of the thread when older messages failed to load."
+  },
+  "photoViewerClose": "Close",
+  "@photoViewerClose": {
+    "description": "Photo viewer close button."
+  },
+  "chatUnavailable": "This conversation is no longer available",
+  "@chatUnavailable": {
+    "description": "Chat that is gone or not yours."
+  },
+  "chatCopied": "Copied",
+  "@chatCopied": {
+    "description": "Toast after copying a message."
+  },
+  "chatPhotoNeedsText": "Send a message first",
+  "@chatPhotoNeedsText": {
+    "description": "Toast when attaching a photo in a new chat."
+  },
+  "photoTooLarge": "This photo is larger than {mb} MB",
+  "@photoTooLarge": {
+    "description": "Toast for a photo over the size limit.",
+    "placeholders": {
+      "mb": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWrongType": "Use a JPEG, PNG, WebP or HEIC photo",
+  "@photoWrongType": {
+    "description": "Toast for an unsupported photo type."
+  },
+  "reportSent": "Thanks — we'll look into it",
+  "@reportSent": {
+    "description": "Toast after a report."
+  },
+  "reportAlready": "You already reported this",
+  "@reportAlready": {
+    "description": "Toast when the same thing was reported before."
+  },
+  "notificationsTitle": "Notifications",
+  "@notificationsTitle": {
+    "description": "Screen 16 title."
+  },
+  "notificationsMarkAll": "Mark all read",
+  "@notificationsMarkAll": {
+    "description": "Screen 16 action."
+  },
+  "notificationsToday": "Today",
+  "@notificationsToday": {
+    "description": "Screen 16 group label."
+  },
+  "notificationsThisWeek": "This week",
+  "@notificationsThisWeek": {
+    "description": "Screen 16 group label."
+  },
+  "notificationsEarlier": "Earlier",
+  "@notificationsEarlier": {
+    "description": "Screen 16 group label."
+  },
+  "notificationsEmptyTitle": "No notifications yet",
+  "@notificationsEmptyTitle": {
+    "description": "Screen 16 empty state title."
+  },
+  "notificationsEmptyBody": "Booking updates, messages and reminders will show up here.",
+  "@notificationsEmptyBody": {
+    "description": "Screen 16 empty state body."
+  },
+  "notificationUnread": "Unread",
+  "@notificationUnread": {
+    "description": "Screen-reader suffix for an unread notification."
+  },
+  "offlineNotificationsBody": "These are your last notifications. New ones arrive when you reconnect.",
+  "@offlineNotificationsBody": {
+    "description": "Offline banner body on screen 16."
   }
 }

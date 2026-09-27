@@ -166,13 +166,42 @@ void main() {
       expect(location(app), AppRoutes.search);
     });
 
-    testWidgets('says the bell is coming soon', (WidgetTester tester) async {
-      await startHome(tester);
+    testWidgets('shows the dot only while something is unread',
+        (WidgetTester tester) async {
+      final TestApp app = await startHome(tester);
 
-      await tester.tap(find.bySemanticsLabel(l10n(tester).homeNotificationsUnread));
+      expect(
+        find.bySemanticsLabel(l10n(tester).homeNotificationsUnread),
+        findsOneWidget,
+      );
+
+      app.services.badges.update(unreadNotifications: 0);
       await tester.pump();
 
-      expect(find.text(l10n(tester).comingSoon), findsOneWidget);
+      expect(
+        find.bySemanticsLabel(l10n(tester).homeNotificationsUnread),
+        findsNothing,
+      );
+      expect(
+        find.bySemanticsLabel(l10n(tester).homeNotificationsLabel),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('the bell opens Notifications', (WidgetTester tester) async {
+      // The screen itself arrives in a later task; until then the router
+      // shows UnknownRouteView, so the location is what this asserts.
+      final TestApp app = await startHome(tester);
+
+      await tapAndSettle(
+        tester,
+        find.bySemanticsLabel(l10n(tester).homeNotificationsUnread),
+      );
+
+      expect(
+        app.services.router.routerDelegate.currentConfiguration.uri.path,
+        AppRoutes.notifications,
+      );
     });
 
     testWidgets('saves a new city and reloads', (WidgetTester tester) async {

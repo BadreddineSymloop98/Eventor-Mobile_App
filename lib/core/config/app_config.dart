@@ -16,6 +16,8 @@ class AppConfig {
     this.passwordMinLength = 10,
     this.passwordNeedsLetterAndDigit = true,
     this.maxDocumentMb = 5,
+    this.maxPhotoMb = 10,
+    this.imageTypes = const <String>['jpeg', 'png', 'webp', 'heic'],
     this.bookingMinNoticeDays = 1,
   });
 
@@ -42,6 +44,8 @@ class AppConfig {
       passwordNeedsLetterAndDigit: _bool(password['needsLetterAndDigit']) ??
           fallback.passwordNeedsLetterAndDigit,
       maxDocumentMb: _int(uploads['maxDocumentMb']) ?? fallback.maxDocumentMb,
+      maxPhotoMb: _int(uploads['maxPhotoMb']) ?? fallback.maxPhotoMb,
+      imageTypes: _stringList(uploads['imageTypes']) ?? fallback.imageTypes,
       bookingMinNoticeDays:
           _int(booking['minNoticeDays']) ?? fallback.bookingMinNoticeDays,
     );
@@ -50,6 +54,16 @@ class AppConfig {
   static String? _string(Object? value) => value is String ? value : null;
   static bool? _bool(Object? value) => value is bool ? value : null;
   static int? _int(Object? value) => value is num ? value.toInt() : null;
+
+  /// A `List` of lower-cased `String`s, or `null` for anything else — the
+  /// wrong type, or a list with nothing usable in it — so the caller falls
+  /// back to the default extensions.
+  static List<String>? _stringList(Object? value) {
+    if (value is! List<Object?>) return null;
+    final List<String> strings =
+        value.whereType<String>().map((String s) => s.toLowerCase()).toList();
+    return strings.isEmpty ? null : strings;
+  }
 
   final String minAppVersion;
   final bool maintenanceMode;
@@ -68,6 +82,13 @@ class AppConfig {
   final bool passwordNeedsLetterAndDigit;
 
   final int maxDocumentMb;
+
+  /// A photo attached to a chat message or a gallery upload — separate from
+  /// [maxDocumentMb], which governs verification documents.
+  final int maxPhotoMb;
+
+  /// The extensions the gallery and camera pickers filter to, lower-cased.
+  final List<String> imageTypes;
 
   /// How many days ahead a booking must be requested — "Dates need at least
   /// 1 day's notice". Stated by the server; the design's "3 days" was a

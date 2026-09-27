@@ -99,10 +99,11 @@ void main() {
       expect(viewModel.hasError, isFalse);
     });
 
-    test('puts the unread conversations on the nav', () async {
+    test('puts both badge counts on the shell', () async {
       await build();
 
       expect(badges.unreadConversations, 3);
+      expect(badges.unreadNotifications, 2);
     });
   });
 

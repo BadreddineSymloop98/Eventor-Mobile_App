@@ -42,13 +42,17 @@ class ProviderProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProviderProfileViewModel viewModel = context.watch<ProviderProfileViewModel>();
+    final ProviderProfileViewModel viewModel = context
+        .watch<ProviderProfileViewModel>();
     final ProviderDetail? provider = viewModel.provider;
 
     if (viewModel.isGone) return DetailGoneView(onBack: () => _back(context));
     if (provider == null) {
       if (viewModel.hasError) {
-        return DetailErrorView(onRetry: viewModel.load, onBack: () => _back(context));
+        return DetailErrorView(
+          onRetry: viewModel.load,
+          onBack: () => _back(context),
+        );
       }
       return DetailSkeleton(photoHeight: 180.dh);
     }
@@ -65,10 +69,19 @@ class _ProfileContent extends StatelessWidget {
   static const double _coverHeight = 180;
   static const double _avatarRing = 88;
 
+  Future<void> _message(BuildContext context) async {
+    final String? route = await viewModel.chatRouteWith(
+      userId: provider.id,
+      name: provider.businessName,
+    );
+    if (route != null && context.mounted) context.push(route);
+  }
+
   void _comingSoon(BuildContext context) =>
       showComingSoon(context, context.l10n.comingSoon);
 
-  String _checkTitle(AppLocalizations l10n, ProviderCheck check) => switch (check.code) {
+  String _checkTitle(AppLocalizations l10n, ProviderCheck check) =>
+      switch (check.code) {
         'identity' => l10n.checkIdentity,
         'registration' => l10n.checkRegistration,
         'reply_time' => l10n.checkReplyTime,
@@ -76,11 +89,11 @@ class _ProfileContent extends StatelessWidget {
       };
 
   String _language(AppLocalizations l10n, String code) => switch (code) {
-        'ar' => l10n.langAr,
-        'fr' => l10n.langFr,
-        'en' => l10n.langEn,
-        _ => code,
-      };
+    'ar' => l10n.langAr,
+    'fr' => l10n.langFr,
+    'en' => l10n.langEn,
+    _ => code,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -92,18 +105,22 @@ class _ProfileContent extends StatelessWidget {
     final String? replyTime = provider.replyTime;
     final List<ProviderCheck> checks = viewModel.passedChecks;
 
-    Widget section(String title, Widget child, {String? action, VoidCallback? onAction}) =>
-        Padding(
-          padding: EdgeInsets.only(top: AppSpacing.xl.dh),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              SectionHeader(title: title, actionLabel: action, onAction: onAction),
-              SizedBox(height: AppSpacing.xs.dh),
-              child,
-            ],
-          ),
-        );
+    Widget section(
+      String title,
+      Widget child, {
+      String? action,
+      VoidCallback? onAction,
+    }) => Padding(
+      padding: EdgeInsets.only(top: AppSpacing.xl.dh),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          SectionHeader(title: title, actionLabel: action, onAction: onAction),
+          SizedBox(height: AppSpacing.xs.dh),
+          child,
+        ],
+      ),
+    );
 
     return Scaffold(
       backgroundColor: AppColors.bgCanvas,
@@ -125,14 +142,19 @@ class _ProfileContent extends StatelessWidget {
                           gradient: LinearGradient(
                             begin: AlignmentDirectional.topStart,
                             end: AlignmentDirectional.bottomEnd,
-                            colors: <Color>[AppColors.bgBrand, AppColors.bgBrandPressed],
+                            colors: <Color>[
+                              AppColors.bgBrand,
+                              AppColors.bgBrandPressed,
+                            ],
                           ),
                         ),
                       ),
                       SafeArea(
                         bottom: false,
                         child: Padding(
-                          padding: EdgeInsetsDirectional.only(start: AppSpacing.xs.dw),
+                          padding: EdgeInsetsDirectional.only(
+                            start: AppSpacing.xs.dw,
+                          ),
                           child: PhotoBackButton(
                             onPressed: () => ProviderProfileView._back(context),
                           ),
@@ -175,18 +197,26 @@ class _ProfileContent extends StatelessWidget {
                       SizedBox(height: AppSpacing.xs.dh),
                       Text(
                         provider.businessName,
-                        style: textTheme.headlineMedium?.copyWith(color: AppColors.textPrimary),
+                        style: textTheme.headlineMedium?.copyWith(
+                          color: AppColors.textPrimary,
+                        ),
                       ),
                       Text(
                         <String>[
                           ?provider.category?.name.of(language),
-                          ...provider.wilayas.take(2).map((Wilaya w) => w.nameFor(language)),
+                          ...provider.wilayas
+                              .take(2)
+                              .map((Wilaya w) => w.nameFor(language)),
                         ].join(' · '),
-                        style: textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
+                        style: textTheme.bodySmall?.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                       SizedBox(height: AppSpacing.md.dh),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: AppSpacing.sm.dh),
+                        padding: EdgeInsets.symmetric(
+                          vertical: AppSpacing.sm.dh,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.bgSurface,
                           borderRadius: AppRadii.mdAll,
@@ -202,10 +232,15 @@ class _ProfileContent extends StatelessWidget {
                           ),
                           StatItem(
                             value: '${provider.completedBookingsCount}',
-                            label: l10n.statCompletedLabel(provider.completedBookingsCount),
+                            label: l10n.statCompletedLabel(
+                              provider.completedBookingsCount,
+                            ),
                           ),
                           if (years != null)
-                            StatItem(value: '$years', label: l10n.statYearsLabel(years)),
+                            StatItem(
+                              value: '$years',
+                              label: l10n.statYearsLabel(years),
+                            ),
                         ]),
                       ),
                       if (checks.isNotEmpty)
@@ -223,16 +258,23 @@ class _ProfileContent extends StatelessWidget {
                             ],
                           ),
                         ),
-                      if (bio != null) section(l10n.profileAbout, ReadMoreText(bio.of(language))),
+                      if (bio != null)
+                        section(
+                          l10n.profileAbout,
+                          ReadMoreText(bio.of(language)),
+                        ),
                       if (provider.services.isNotEmpty)
                         section(
                           l10n.profileServices,
                           Column(
                             children: <Widget>[
-                              for (final ServiceCard service in provider.services)
+                              for (final ServiceCard service
+                                  in provider.services)
                                 _ServiceRow(
                                   service: service,
-                                  onTap: () => context.push(AppRoutes.serviceFor(service.id)),
+                                  onTap: () => context.push(
+                                    AppRoutes.serviceFor(service.id),
+                                  ),
                                 ),
                             ],
                           ),
@@ -258,11 +300,14 @@ class _ProfileContent extends StatelessWidget {
                   ),
                   PacksRail(
                     packs: provider.packs,
-                    onOpen: (PackCard pack) => context.push(AppRoutes.packFor(pack.id)),
+                    onOpen: (PackCard pack) =>
+                        context.push(AppRoutes.packFor(pack.id)),
                   ),
                 ],
                 Padding(
-                  padding: EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md.dw),
+                  padding: EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.md.dw,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
@@ -282,7 +327,9 @@ class _ProfileContent extends StatelessWidget {
                                 icon: AppIcons.message,
                                 text: l10n.profileLanguages(
                                   provider.languagesSpoken
-                                      .map((String code) => _language(l10n, code))
+                                      .map(
+                                        (String code) => _language(l10n, code),
+                                      )
                                       .join(' · '),
                                 ),
                               ),
@@ -290,7 +337,8 @@ class _ProfileContent extends StatelessWidget {
                               icon: AppIcons.calendar,
                               // Month name and year apart: the year keeps
                               // Western digits in Arabic.
-                              text: '${l10n.profileMemberSince} '
+                              text:
+                                  '${l10n.profileMemberSince} '
                                   '${DateFormat.MMMM(language).format(provider.memberSince)} '
                                   '${provider.memberSince.year}',
                             ),
@@ -302,7 +350,9 @@ class _ProfileContent extends StatelessWidget {
                         provider.ratingCount == 0
                             ? Text(
                                 l10n.serviceNoReviews,
-                                style: textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: AppColors.textSecondary,
+                                ),
                               )
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -312,13 +362,15 @@ class _ProfileContent extends StatelessWidget {
                                     ratingCount: provider.ratingCount,
                                     breakdown: provider.ratingBreakdown,
                                   ),
-                                  for (final Review review in provider.recentReviews) ...<Widget>[
+                                  for (final Review review
+                                      in provider.recentReviews) ...<Widget>[
                                     SizedBox(height: AppSpacing.sm.dh),
                                     ReviewCard(review),
                                   ],
                                 ],
                               ),
-                        action: provider.ratingCount > provider.recentReviews.length
+                        action:
+                            provider.ratingCount > provider.recentReviews.length
                             ? l10n.seeAllCount(provider.ratingCount)
                             : null,
                         onAction: () => _comingSoon(context),
@@ -346,14 +398,23 @@ class _ProfileContent extends StatelessWidget {
                   ? const SizedBox.shrink()
                   : Text(
                       l10n.repliesIn(replyTime),
-                      style: textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
+                      style: textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
                     ),
               actions: <Widget>[
-                MainButton(label: l10n.sendMessage, onPressed: () => _comingSoon(context)),
+                MainButton(
+                  label: l10n.sendMessage,
+                  isLoading: viewModel.isOpeningChat,
+                  onPressed: () => _message(context),
+                ),
               ],
             )
           else
-            StickyActionBar.notAccepting(onMessage: () => _comingSoon(context)),
+            StickyActionBar.notAccepting(
+              isMessageLoading: viewModel.isOpeningChat,
+              onMessage: () => _message(context),
+            ),
         ],
       ),
     );
@@ -399,14 +460,23 @@ class _ServiceRow extends StatelessWidget {
                       service.title.of(language),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: textTheme.titleSmall?.copyWith(color: AppColors.textPrimary),
+                      style: textTheme.titleSmall?.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                     SizedBox(height: AppSpacing.xs2.dh),
-                    ServicePrice(amount: service.basePrice, type: service.priceType),
+                    ServicePrice(
+                      amount: service.basePrice,
+                      type: service.priceType,
+                    ),
                   ],
                 ),
               ),
-              AppIcon(AppIcons.chevronRight, size: AppSizes.iconMd, color: AppColors.iconDefault),
+              AppIcon(
+                AppIcons.chevronRight,
+                size: AppSizes.iconMd,
+                color: AppColors.iconDefault,
+              ),
             ],
           ),
         ),

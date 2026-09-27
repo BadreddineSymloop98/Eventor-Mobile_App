@@ -106,6 +106,9 @@ class HomeViewModel extends BaseViewModel {
 
   void _apply(HomeFeed feed) {
     _feed = feed;
-    _badges.update(unreadConversations: feed.unreadConversations);
+    _badges.update(
+      unreadConversations: feed.unreadConversations,
+      unreadNotifications: feed.unreadNotifications,
+    );
   }
 }

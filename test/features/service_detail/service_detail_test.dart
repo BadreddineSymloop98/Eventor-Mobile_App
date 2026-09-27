@@ -38,12 +38,17 @@ void main() {
   group('ServiceDetailViewModel', () {
     late FakeCatalogRepository catalog;
 
-    setUp(() => catalog = FakeCatalogRepository()..firstBookable = DateTime(2026, 3, 5));
+    setUp(
+      () =>
+          catalog = FakeCatalogRepository()
+            ..firstBookable = DateTime(2026, 3, 5),
+    );
 
     Future<ServiceDetailViewModel> build() async {
       final ServiceDetailViewModel viewModel = ServiceDetailViewModel(
         id: 's-1',
         catalog: catalog,
+        messaging: FakeMessagingRepository(),
         today: () => today,
       );
       addTearDown(viewModel.dispose);
@@ -61,7 +66,10 @@ void main() {
     });
 
     test('knows a removed service apart from an error', () async {
-      catalog.serviceError = apiFailure(ApiErrorCode.serviceNotFound, statusCode: 404);
+      catalog.serviceError = apiFailure(
+        ApiErrorCode.serviceNotFound,
+        statusCode: 404,
+      );
 
       final ServiceDetailViewModel viewModel = await build();
 
@@ -85,7 +93,10 @@ void main() {
       await viewModel.showMonth(DateTime(2026, 3));
       await viewModel.showMonth(DateTime(2026, 4));
 
-      expect(catalog.availabilityMonths, <DateTime>[DateTime(2026, 3), DateTime(2026, 4)]);
+      expect(catalog.availabilityMonths, <DateTime>[
+        DateTime(2026, 3),
+        DateTime(2026, 4),
+      ]);
     });
 
     test('cannot page before this month', () async {
@@ -133,7 +144,10 @@ void main() {
   });
 
   group('ServiceDetailView', () {
-    Future<TestApp> openService(WidgetTester tester, FakeCatalogRepository catalog) async {
+    Future<TestApp> openService(
+      WidgetTester tester,
+      FakeCatalogRepository catalog,
+    ) async {
       final TestApp app = await buildTestApp(
         hasSeenOnboarding: true,
         auth: FakeAuthRepository()..restoredUser = testUser(),
@@ -149,7 +163,9 @@ void main() {
     String location(TestApp app) =>
         app.services.router.routerDelegate.currentConfiguration.uri.toString();
 
-    testWidgets('shows the service with the booking bar', (WidgetTester tester) async {
+    testWidgets('shows the service with the booking bar', (
+      WidgetTester tester,
+    ) async {
       await openService(tester, FakeCatalogRepository());
       final AppLocalizations strings = l10n(tester);
 
@@ -158,8 +174,9 @@ void main() {
       expect(find.text(strings.notAcceptingTitle), findsNothing);
     });
 
-    testWidgets('quotes the provider\'s own policy, and none when unset',
-        (WidgetTester tester) async {
+    testWidgets('quotes the provider\'s own policy, and none when unset', (
+      WidgetTester tester,
+    ) async {
       final FakeCatalogRepository catalog = FakeCatalogRepository()
         ..serviceDetail = serviceWith(<String, Object?>{
           'cancellationPolicy': null,
@@ -171,29 +188,43 @@ void main() {
       expect(find.text(l10n(tester).serviceGoodToKnow), findsNothing);
     });
 
-    testWidgets('says "On quote" for a quote-only service', (WidgetTester tester) async {
+    testWidgets('says "On quote" for a quote-only service', (
+      WidgetTester tester,
+    ) async {
       await openService(
         tester,
-        FakeCatalogRepository()..serviceDetail = serviceWith(<String, Object?>{'priceType': 'on_quote'}),
+        FakeCatalogRepository()
+          ..serviceDetail = serviceWith(<String, Object?>{
+            'priceType': 'on_quote',
+          }),
       );
 
       expect(find.text(l10n(tester).priceOnQuote), findsOneWidget);
     });
 
-    testWidgets('says "New" for an unrated service', (WidgetTester tester) async {
+    testWidgets('says "New" for an unrated service', (
+      WidgetTester tester,
+    ) async {
       await openService(
         tester,
         FakeCatalogRepository()
-          ..serviceDetail = serviceWith(<String, Object?>{'avgRating': '0.00', 'ratingCount': 0}),
+          ..serviceDetail = serviceWith(<String, Object?>{
+            'avgRating': '0.00',
+            'ratingCount': 0,
+          }),
       );
 
       expect(find.text(l10n(tester).ratingNew), findsOneWidget);
       expect(find.text(l10n(tester).serviceNoReviews), findsOneWidget);
     });
 
-    testWidgets('swaps the booking bar when bookings are paused',
-        (WidgetTester tester) async {
-      await openService(tester, FakeCatalogRepository()..serviceDetail = pausedService());
+    testWidgets('swaps the booking bar when bookings are paused', (
+      WidgetTester tester,
+    ) async {
+      await openService(
+        tester,
+        FakeCatalogRepository()..serviceDetail = pausedService(),
+      );
       final AppLocalizations strings = l10n(tester);
 
       expect(find.text(strings.notAcceptingTitle), findsOneWidget);
@@ -202,7 +233,9 @@ void main() {
       expect(button(strings.sendMessage), findsOneWidget);
     });
 
-    testWidgets('requesting a booking is coming soon', (WidgetTester tester) async {
+    testWidgets('requesting a booking is coming soon', (
+      WidgetTester tester,
+    ) async {
       await openService(tester, FakeCatalogRepository());
 
       await tester.tap(button(l10n(tester).requestBooking));
@@ -224,7 +257,10 @@ void main() {
 
     testWidgets('says a removed service is gone', (WidgetTester tester) async {
       final FakeCatalogRepository catalog = FakeCatalogRepository()
-        ..serviceError = apiFailure(ApiErrorCode.serviceNotFound, statusCode: 404);
+        ..serviceError = apiFailure(
+          ApiErrorCode.serviceNotFound,
+          statusCode: 404,
+        );
       final TestApp app = await buildTestApp(
         hasSeenOnboarding: true,
         auth: FakeAuthRepository()..restoredUser = testUser(),
@@ -238,7 +274,9 @@ void main() {
       expect(find.text(l10n(tester).detailGoneTitle), findsOneWidget);
     });
 
-    testWidgets('keeps the sticky bar in both languages', (WidgetTester tester) async {
+    testWidgets('keeps the sticky bar in both languages', (
+      WidgetTester tester,
+    ) async {
       await openService(tester, FakeCatalogRepository());
 
       expect(find.byType(StickyActionBar), findsOneWidget);

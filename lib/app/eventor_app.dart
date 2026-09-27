@@ -9,6 +9,8 @@ import '../core/config/app_config.dart';
 import '../core/constants/ui_helpers.dart';
 import '../core/localization/app_localizations_x.dart';
 import '../core/localization/locale_controller.dart';
+import '../core/messaging/messaging_repository.dart';
+import '../core/notifications/notifications_repository.dart';
 import '../core/reference/reference_repository.dart';
 import '../core/services/preferences_service.dart';
 import '../core/session/session_controller.dart';
@@ -50,6 +52,10 @@ class EventorApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<FavouritesController>.value(
           value: services.favourites,
+        ),
+        Provider<MessagingRepository>.value(value: services.messaging),
+        Provider<NotificationsRepository>.value(
+          value: services.notifications,
         ),
         ChangeNotifierProvider<ShellBadges>.value(value: services.badges),
         // Null in a live build; only the debug gallery reads it.
