@@ -2,6 +2,9 @@ import 'dart:ui' show PlatformDispatcher;
 
 import 'package:go_router/go_router.dart';
 
+import '../core/catalog/catalog_repository.dart';
+import '../core/catalog/favourites_controller.dart';
+import '../core/catalog/favourites_repository.dart';
 import '../core/config/app_config.dart';
 import '../core/config/data_source.dart';
 import '../core/localization/locale_controller.dart';
@@ -15,6 +18,8 @@ import '../core/startup/app_startup.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/documents_repository.dart';
 import '../mock/mock_backend.dart';
+import '../features/shell/shell_badges.dart';
+import '../mock/mock_catalog.dart';
 import '../mock/mock_repositories.dart';
 
 /// Everything that lives for the whole run of the app, built once.
@@ -33,6 +38,10 @@ class AppServices {
     required this.auth,
     required this.reference,
     required this.documents,
+    required this.catalog,
+    required this.favouritesRepository,
+    required this.favourites,
+    required this.badges,
     required this.session,
     required this.startup,
     required this.router,
@@ -47,7 +56,7 @@ class AppServices {
     await tokens.load();
 
     // The language on screen — the chosen one, or the device's. The server
-    // translates its messages by it.
+    // translates its messages by it; the mock catalog does the same.
     String languageCode() {
       final String code =
           (locale.locale ?? PlatformDispatcher.instance.locale).languageCode;
@@ -71,7 +80,22 @@ class AppServices {
     final DocumentsRepository documents = mock != null
         ? MockDocumentsRepository(mock)
         : ApiDocumentsRepository(api);
+    final CatalogRepository catalog = mock != null
+        ? MockCatalogRepository(mock, languageCode: languageCode)
+        : ApiCatalogRepository(api);
+    final FavouritesRepository favouritesRepository = mock != null
+        ? MockFavouritesRepository(mock, languageCode: languageCode)
+        : ApiFavouritesRepository(api);
     final SessionController session = SessionController(auth);
+    final FavouritesController favourites =
+        FavouritesController(favouritesRepository);
+    final ShellBadges badges = ShellBadges();
+    // Hearts and unread counts belong to the account that set them.
+    session.addListener(() {
+      if (session.isSignedIn) return;
+      favourites.clear();
+      badges.clear();
+    });
     // A refresh refused mid-use ends the session; the router's redirect then
     // takes the user to Login with the "session ended" banner.
     api.onSessionExpired = session.expire;
@@ -87,6 +111,10 @@ class AppServices {
       auth: auth,
       reference: reference,
       documents: documents,
+      catalog: catalog,
+      favouritesRepository: favouritesRepository,
+      favourites: favourites,
+      badges: badges,
       mockBackend: mock,
       session: session,
       startup: startup,
@@ -106,8 +134,14 @@ class AppServices {
   final AuthRepository auth;
   final ReferenceRepository reference;
   final DocumentsRepository documents;
+  final CatalogRepository catalog;
+  final FavouritesRepository favouritesRepository;
 
+  /// Which hearts are filled, across every screen.
+  final FavouritesController favourites;
 
+  /// The bottom nav's counts.
+  final ShellBadges badges;
   final SessionController session;
   final AppStartup startup;
   final GoRouter router;

@@ -194,4 +194,17 @@ void main() {
     });
   });
 
+  group('AppConfig booking', () {
+    test('reads the minimum notice', () {
+      final AppConfig config = AppConfig.fromJson(<String, Object?>{
+        'booking': <String, Object?>{'minNoticeDays': 3},
+      });
+
+      expect(config.bookingMinNoticeDays, 3);
+    });
+
+    test('falls back to one day', () {
+      expect(AppConfig.fromJson(const <String, Object?>{}).bookingMinNoticeDays, 1);
+    });
+  });
 }

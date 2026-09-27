@@ -1214,17 +1214,1103 @@ abstract class AppLocalizations {
   /// **'DA'**
   String get currencyDzd;
 
+  /// Shown instead of a price for a service priced on quote.
+  ///
+  /// In en, this message translates to:
+  /// **'On quote'**
+  String get priceOnQuote;
+
   /// Shown instead of a star score for something nobody has reviewed yet.
   ///
   /// In en, this message translates to:
   /// **'New'**
   String get ratingNew;
 
+  /// Toast for a link to a screen that is not built yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get comingSoon;
+
+  /// Title of the error card shown when a list or detail fails to load.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not load this'**
+  String get stateErrorTitle;
+
+  /// Button on the error card that reloads.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get stateRetry;
+
+  /// Badge on a provider whose documents Eventor checked.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified provider'**
+  String get verifiedProvider;
+
+  /// Expands a long description.
+  ///
+  /// In en, this message translates to:
+  /// **'Read more'**
+  String get readMore;
+
+  /// Collapses an expanded description.
+  ///
+  /// In en, this message translates to:
+  /// **'Read less'**
+  String get readLess;
+
+  /// Link beside a section title that opens the full list.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get seeAll;
+
+  /// Link that opens a full list, with its size.
+  ///
+  /// In en, this message translates to:
+  /// **'See all {count}'**
+  String seeAllCount(int count);
+
+  /// On a saved item whose service or pack is no longer listed.
+  ///
+  /// In en, this message translates to:
+  /// **'No longer available'**
+  String get noLongerAvailable;
+
+  /// Toast action that reverses the last change.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// Screen-reader label of an empty heart: saves the item to favourites.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get favouriteSave;
+
+  /// Screen-reader label of a filled heart: the item is in favourites.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get favouriteSaved;
+
+  /// Toast when saving or un-saving a favourite fails.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not update your favourites. Try again.'**
+  String get favouriteFailed;
+
+  /// Toast after removing an item on the Favorites screen, with Undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from favourites'**
+  String get favouriteRemoved;
+
+  /// Price unit: the price covers one event.
+  ///
+  /// In en, this message translates to:
+  /// **'per event'**
+  String get priceUnitPerEvent;
+
+  /// Price unit: charged by the hour.
+  ///
+  /// In en, this message translates to:
+  /// **'per hour'**
+  String get priceUnitPerHour;
+
+  /// Price unit: charged per guest.
+  ///
+  /// In en, this message translates to:
+  /// **'per person'**
+  String get priceUnitPerPerson;
+
+  /// Price unit: charged by the day.
+  ///
+  /// In en, this message translates to:
+  /// **'per day'**
+  String get priceUnitPerDay;
+
+  /// Event type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Wedding'**
+  String get eventTypeWedding;
+
+  /// Event type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Engagement'**
+  String get eventTypeEngagement;
+
+  /// Event type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Henna'**
+  String get eventTypeHenna;
+
+  /// Event type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get eventTypeBirthday;
+
+  /// Event type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Circumcision'**
+  String get eventTypeCircumcision;
+
+  /// Event type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Graduation'**
+  String get eventTypeGraduation;
+
+  /// Event type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Corporate'**
+  String get eventTypeCorporate;
+
+  /// Event type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Conference'**
+  String get eventTypeConference;
+
+  /// Event type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get eventTypeOther;
+
+  /// Calendar legend: the chosen day.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected'**
+  String get calendarSelected;
+
+  /// Calendar legend: a day that can be requested.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get calendarAvailable;
+
+  /// Calendar legend: a day with no capacity left.
+  ///
+  /// In en, this message translates to:
+  /// **'Fully booked'**
+  String get calendarBooked;
+
+  /// Calendar legend: a day the provider does not offer, or too soon.
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable'**
+  String get calendarUnavailable;
+
+  /// Screen-reader label of the calendar's back arrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get calendarPreviousMonth;
+
+  /// Screen-reader label of the calendar's forward arrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get calendarNextMonth;
+
+  /// Under a calendar: the minimum notice, from the app config.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Dates need at least {count} day\'s notice.} other{Dates need at least {count} days\' notice.}}'**
+  String calendarMinNotice(int count);
+
+  /// Action bar when the provider paused bookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Not taking new bookings'**
+  String get notAcceptingTitle;
+
+  /// Under 'Not taking new bookings': messaging still works.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages are still open'**
+  String get notAcceptingBody;
+
+  /// Button that opens a chat with the provider.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a message'**
+  String get sendMessage;
+
+  /// Screen-reader label of the message icon button.
+  ///
+  /// In en, this message translates to:
+  /// **'Message the provider'**
+  String get messageProvider;
+
+  /// Primary button on a service.
+  ///
+  /// In en, this message translates to:
+  /// **'Request booking'**
+  String get requestBooking;
+
+  /// Primary button on a pack.
+  ///
+  /// In en, this message translates to:
+  /// **'Request pack'**
+  String get requestPack;
+
+  /// Before a pack's saving amount: 'Save 45 000 DA'.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get packSave;
+
+  /// Under the big rating on a detail screen.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Based on {count} review} other{Based on {count} reviews}}'**
+  String basedOnReviews(int count);
+
+  /// How often a service was booked, on a result card.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Not booked yet} one{Booked once} other{Booked {count} times}}'**
+  String bookedTimes(int count);
+
+  /// A count of services.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} service} other{{count} services}}'**
+  String servicesCount(int count);
+
+  /// The provider behind a pack.
+  ///
+  /// In en, this message translates to:
+  /// **'by {name}'**
+  String packBy(String name);
+
+  /// Screen-reader label of a photo carousel's position.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo {index} of {count}'**
+  String photoCounterLabel(int index, int count);
+
+  /// Screen-reader label of the round Back button over a photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get backLabelOnPhoto;
+
+  /// Bottom navigation tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// Bottom navigation tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get navSearch;
+
+  /// Bottom navigation tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings'**
+  String get navBookings;
+
+  /// Bottom navigation tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get navMessages;
+
   /// Bottom navigation tab.
   ///
   /// In en, this message translates to:
   /// **'Profile'**
   String get navProfile;
+
+  /// Title on a tab whose screens are not built yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get tabComingSoonTitle;
+
+  /// Body on a tab whose screens are not built yet.
+  ///
+  /// In en, this message translates to:
+  /// **'This part of Eventor is on its way.'**
+  String get tabComingSoonBody;
+
+  /// Row on the Profile tab that opens the saved services and packs.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get profileFavourites;
+
+  /// Note under the Profile tab's rows while the full profile is not built.
+  ///
+  /// In en, this message translates to:
+  /// **'More settings are coming soon.'**
+  String get profileMoreSoon;
+
+  /// Home greeting, 05:00–11:59.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get greetingMorning;
+
+  /// Home greeting, 12:00–17:59.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon'**
+  String get greetingAfternoon;
+
+  /// Home greeting, 18:00–04:59.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get greetingEvening;
+
+  /// Home's city pill when the client has none, and the title of the city sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your city'**
+  String get chooseCity;
+
+  /// Under the city sheet's title.
+  ///
+  /// In en, this message translates to:
+  /// **'We show services that cover it. Only wilayas open on Eventor are listed.'**
+  String get chooseCitySubtitle;
+
+  /// Toast when saving the chosen city fails.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not change your city. Try again.'**
+  String get cityChangeFailed;
+
+  /// Placeholder of Home's search field.
+  ///
+  /// In en, this message translates to:
+  /// **'Search a service or a provider'**
+  String get homeSearchHint;
+
+  /// Screen-reader label of Home's filter button.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get homeFiltersLabel;
+
+  /// Screen-reader label of Home's bell.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get homeNotificationsLabel;
+
+  /// Screen-reader label of Home's bell when something is unread.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications, unread'**
+  String get homeNotificationsUnread;
+
+  /// Home section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings'**
+  String get homeYourBookings;
+
+  /// Home section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your budget'**
+  String get homeYourBudget;
+
+  /// Link beside 'Your budget'.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get budgetDetails;
+
+  /// Between the spent and the planned amounts: '180 000 DA of 400 000 DA planned'.
+  ///
+  /// In en, this message translates to:
+  /// **'of'**
+  String get budgetOf;
+
+  /// After the planned amount on Home's budget card.
+  ///
+  /// In en, this message translates to:
+  /// **'planned'**
+  String get budgetPlanned;
+
+  /// Under the budget bar.
+  ///
+  /// In en, this message translates to:
+  /// **'{booked} of {count, plural, one{{count} service} other{{count} services}} booked'**
+  String budgetBooked(int booked, int count);
+
+  /// Home's budget card when there is none (11c).
+  ///
+  /// In en, this message translates to:
+  /// **'Plan your budget'**
+  String get budgetEmptyTitle;
+
+  /// Body of the 11c budget card.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a total, then track what each service really costs. Only you can see it.'**
+  String get budgetEmptyBody;
+
+  /// Button on the 11c budget card.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a budget'**
+  String get budgetCreate;
+
+  /// Home section title, and the title of screen 19.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready Packs'**
+  String get homeReadyPacks;
+
+  /// Home's last section: the best-rated services in the client's city.
+  ///
+  /// In en, this message translates to:
+  /// **'Services near you'**
+  String get homeServicesNearYou;
+
+  /// Title of the filters drawer (11a).
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filtersTitle;
+
+  /// Screen-reader label of the drawer's close button.
+  ///
+  /// In en, this message translates to:
+  /// **'Close filters'**
+  String get filtersClose;
+
+  /// Filters group label.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by'**
+  String get filtersSortBy;
+
+  /// Sort order.
+  ///
+  /// In en, this message translates to:
+  /// **'Relevance'**
+  String get sortRelevance;
+
+  /// Sort order.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest price'**
+  String get sortPriceLow;
+
+  /// Sort order.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest price'**
+  String get sortPriceHigh;
+
+  /// Sort order.
+  ///
+  /// In en, this message translates to:
+  /// **'Top rated'**
+  String get sortRating;
+
+  /// Sort order.
+  ///
+  /// In en, this message translates to:
+  /// **'Most popular'**
+  String get sortPopular;
+
+  /// Sort order.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest'**
+  String get sortNewest;
+
+  /// Filters group label.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get filtersCategory;
+
+  /// Filters group label, and the drill-in's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Wilaya'**
+  String get filtersWilaya;
+
+  /// Chip that opens the full wilaya list.
+  ///
+  /// In en, this message translates to:
+  /// **'All wilayas'**
+  String get filtersAllWilayas;
+
+  /// Filters group label.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget'**
+  String get filtersBudget;
+
+  /// Filters group label.
+  ///
+  /// In en, this message translates to:
+  /// **'Event date'**
+  String get filtersEventDate;
+
+  /// The event date field when no date is set.
+  ///
+  /// In en, this message translates to:
+  /// **'Any date'**
+  String get filtersEventDateAny;
+
+  /// Under the event date field.
+  ///
+  /// In en, this message translates to:
+  /// **'Only providers free on that day.'**
+  String get filtersEventDateHint;
+
+  /// Screen-reader label of the button that clears the event date.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the date'**
+  String get filtersEventDateClear;
+
+  /// Filters group label.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get filtersRating;
+
+  /// Rating chip: no minimum.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get filtersRatingAny;
+
+  /// Filters group label.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get filtersSaved;
+
+  /// Switch that keeps only saved services.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites only'**
+  String get filtersFavouritesOnly;
+
+  /// Resets every filter.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all'**
+  String get filtersClearAll;
+
+  /// The drawer's primary button, with the live result count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No services} one{Show {count} service} other{Show {count} services}}'**
+  String filtersShowCount(int count);
+
+  /// The drawer's primary button while the count is loading or unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Show services'**
+  String get filtersShow;
+
+  /// The wilaya drill-in's primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Done} one{Done · {count} selected} other{Done · {count} selected}}'**
+  String wilayaDoneCount(int count);
+
+  /// The wilaya drill-in's secondary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get wilayaClear;
+
+  /// Title of the sheet that picks the filters' event date.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick your event date'**
+  String get eventDateSheetTitle;
+
+  /// S1 section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent searches'**
+  String get searchRecent;
+
+  /// Link that empties the recent searches.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get searchClear;
+
+  /// Screen-reader label of a recent search's remove button.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {query}'**
+  String searchRemoveRecent(String query);
+
+  /// S1 section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse categories'**
+  String get searchBrowseCategories;
+
+  /// How many results S2 found.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No services} one{{count} service} other{{count} services}}'**
+  String resultsCount(int count);
+
+  /// S2 chip that opens the sort choices.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort · {order}'**
+  String resultsSortChip(String order);
+
+  /// S2 chip that opens the filters drawer, with how many are on.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Filters} other{Filters · {count}}}'**
+  String resultsFiltersChip(int count);
+
+  /// S2 title when there is neither a search nor a category.
+  ///
+  /// In en, this message translates to:
+  /// **'All services'**
+  String get resultsAllServices;
+
+  /// S2b title.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches those filters'**
+  String get resultsEmptyTitle;
+
+  /// S2b body.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a wider budget, another wilaya or fewer filters.'**
+  String get resultsEmptyBody;
+
+  /// S2b line naming the search that found nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No services for “{query}”.'**
+  String resultsEmptySearch(String query);
+
+  /// S2b button.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all filters'**
+  String get resultsClearFilters;
+
+  /// Under the list when the next page fails.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not load more results.'**
+  String get resultsLoadMoreFailed;
+
+  /// Screen-reader label of a removable filter chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove filter {label}'**
+  String resultsRemoveFilter(String label);
+
+  /// Removable chip for the favourites-only filter.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get filterChipFavourites;
+
+  /// Section title on 12.
+  ///
+  /// In en, this message translates to:
+  /// **'About this service'**
+  String get serviceAbout;
+
+  /// Card title on 12 and 20.
+  ///
+  /// In en, this message translates to:
+  /// **'Good to know'**
+  String get serviceGoodToKnow;
+
+  /// The provider's own cancellation policy, quoted.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider\'s policy: {policy}'**
+  String serviceCancellation(String policy);
+
+  /// Section title on 12: paid add-ons.
+  ///
+  /// In en, this message translates to:
+  /// **'Extras'**
+  String get serviceExtras;
+
+  /// Section title above the calendar on 12 and 20.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a date'**
+  String get servicePickDate;
+
+  /// Before the chosen day under the calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Your date'**
+  String get selectedDateLabel;
+
+  /// Under the calendar on 12.
+  ///
+  /// In en, this message translates to:
+  /// **'The provider confirms the exact time after your request.'**
+  String get calendarConfirmNote;
+
+  /// In place of the calendar when a month fails to load.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not load this month.'**
+  String get monthLoadFailed;
+
+  /// Section title on 12, 13 and 20.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get serviceReviews;
+
+  /// In the reviews section when there are none.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews yet'**
+  String get serviceNoReviews;
+
+  /// Section title on 12.
+  ///
+  /// In en, this message translates to:
+  /// **'Packs from this provider'**
+  String get servicePacksFromProvider;
+
+  /// Link at the foot of 12.
+  ///
+  /// In en, this message translates to:
+  /// **'Report this service'**
+  String get serviceReport;
+
+  /// A capacity line.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Up to {count} guest} other{Up to {count} guests}}'**
+  String upToGuests(int count);
+
+  /// On the provider mini-card.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} year in business} other{{count} years in business}}'**
+  String yearsInBusiness(int count);
+
+  /// Reply time, from the API ('2 h').
+  ///
+  /// In en, this message translates to:
+  /// **'Usually replies in {time}'**
+  String repliesIn(String time);
+
+  /// When a service, provider or pack was removed.
+  ///
+  /// In en, this message translates to:
+  /// **'This is no longer available'**
+  String get detailGoneTitle;
+
+  /// Under 'This is no longer available'.
+  ///
+  /// In en, this message translates to:
+  /// **'It may have been removed by the provider.'**
+  String get detailGoneBody;
+
+  /// Button on the no-longer-available card.
+  ///
+  /// In en, this message translates to:
+  /// **'Go back'**
+  String get detailGoneBack;
+
+  /// Section title on 13.
+  ///
+  /// In en, this message translates to:
+  /// **'What we checked'**
+  String get profileChecked;
+
+  /// A check on 13: national ID checked by Eventor.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity verified'**
+  String get checkIdentity;
+
+  /// A check on 13: commercial register or artisan card verified.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered activity'**
+  String get checkRegistration;
+
+  /// A check on 13: measured over the last 30 days.
+  ///
+  /// In en, this message translates to:
+  /// **'Replies quickly'**
+  String get checkReplyTime;
+
+  /// Section title on 13.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get profileAbout;
+
+  /// Section title on 13.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get profileServices;
+
+  /// Section title on 13.
+  ///
+  /// In en, this message translates to:
+  /// **'Where they work'**
+  String get profileWhereTheyWork;
+
+  /// Languages the provider speaks.
+  ///
+  /// In en, this message translates to:
+  /// **'Speaks {languages}'**
+  String profileLanguages(String languages);
+
+  /// Before the month and year the provider joined.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since'**
+  String get profileMemberSince;
+
+  /// Link at the foot of 13.
+  ///
+  /// In en, this message translates to:
+  /// **'Report this provider'**
+  String get profileReport;
+
+  /// A language name.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get langAr;
+
+  /// A language name.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get langFr;
+
+  /// A language name.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get langEn;
+
+  /// Under the rating in 13's stat strip (the number is shown above it).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{review} other{reviews}}'**
+  String statReviewsLabel(int count);
+
+  /// Under the completed count in 13's stat strip.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{booking completed} other{bookings completed}}'**
+  String statCompletedLabel(int count);
+
+  /// Under the years count in 13's stat strip.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{year in business} other{years in business}}'**
+  String statYearsLabel(int count);
+
+  /// Under the title of 19.
+  ///
+  /// In en, this message translates to:
+  /// **'Bundles put together by one provider — a single price, everything included.'**
+  String get packsSubtitle;
+
+  /// Event type chip on 19: no filter.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get packsAll;
+
+  /// The sort row on 19.
+  ///
+  /// In en, this message translates to:
+  /// **'Sorted by {order}'**
+  String packsSortedBy(String order);
+
+  /// Pack sort order, inside 'Sorted by …'.
+  ///
+  /// In en, this message translates to:
+  /// **'best savings'**
+  String get packOrderSavings;
+
+  /// Pack sort order, inside 'Sorted by …'.
+  ///
+  /// In en, this message translates to:
+  /// **'lowest price'**
+  String get packOrderPriceAsc;
+
+  /// Pack sort order, inside 'Sorted by …'.
+  ///
+  /// In en, this message translates to:
+  /// **'highest price'**
+  String get packOrderPriceDesc;
+
+  /// Pack sort order, inside 'Sorted by …'.
+  ///
+  /// In en, this message translates to:
+  /// **'top rated'**
+  String get packOrderRating;
+
+  /// Pack sort order, inside 'Sorted by …'.
+  ///
+  /// In en, this message translates to:
+  /// **'most popular'**
+  String get packOrderPopular;
+
+  /// 19 when an event type has no packs.
+  ///
+  /// In en, this message translates to:
+  /// **'No packs here yet'**
+  String get packsEmptyTitle;
+
+  /// Under 'No packs here yet'.
+  ///
+  /// In en, this message translates to:
+  /// **'Try another event type.'**
+  String get packsEmptyBody;
+
+  /// Badge above a pack's name on 20.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Ready Pack · {count} service} other{Ready Pack · {count} services}}'**
+  String packBadge(int count);
+
+  /// How often a pack was booked, on 20.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Not booked yet} one{Booked once} other{Booked {count} times}}'**
+  String packBookings(int count);
+
+  /// Beside the saving on 20's price card.
+  ///
+  /// In en, this message translates to:
+  /// **'versus booking separately'**
+  String get packVersus;
+
+  /// Section title on 20.
+  ///
+  /// In en, this message translates to:
+  /// **'What is inside'**
+  String get packInside;
+
+  /// The total row under a pack's items.
+  ///
+  /// In en, this message translates to:
+  /// **'Booked separately'**
+  String get packBookedSeparately;
+
+  /// Under the calendar on 20.
+  ///
+  /// In en, this message translates to:
+  /// **'Only days when every service in the pack is free.'**
+  String get packCalendarHint;
+
+  /// Section title on 20.
+  ///
+  /// In en, this message translates to:
+  /// **'About this pack'**
+  String get packAbout;
+
+  /// Where every service in the pack works.
+  ///
+  /// In en, this message translates to:
+  /// **'Available in {wilayas}'**
+  String packAvailableIn(String wilayas);
+
+  /// Under the price in 20's sticky bar.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} service included} other{all {count} services}}'**
+  String packAllServices(int count);
+
+  /// Title of screen 17.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favouritesTitle;
+
+  /// Tab on 17.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get favouritesServices;
+
+  /// Tab on 17.
+  ///
+  /// In en, this message translates to:
+  /// **'Packs'**
+  String get favouritesPacks;
+
+  /// Category chip on 17: every category.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get favouritesAll;
+
+  /// 17's Services tab when empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved services yet'**
+  String get favouritesEmptyServices;
+
+  /// 17's Packs tab when empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved packs yet'**
+  String get favouritesEmptyPacks;
+
+  /// Under 17's empty title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the heart on a service or a pack to keep it here.'**
+  String get favouritesEmptyBody;
+
+  /// 17's empty-state button: opens Search.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore'**
+  String get favouritesExplore;
+
+  /// Toast on Home after the first Back press; a second press within two seconds closes the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Press back again to exit'**
+  String get pressBackAgainToExit;
 }
 
 class _AppLocalizationsDelegate

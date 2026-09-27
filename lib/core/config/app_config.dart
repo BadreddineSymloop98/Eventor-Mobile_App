@@ -16,6 +16,7 @@ class AppConfig {
     this.passwordMinLength = 10,
     this.passwordNeedsLetterAndDigit = true,
     this.maxDocumentMb = 5,
+    this.bookingMinNoticeDays = 1,
   });
 
   factory AppConfig.fromJson(Map<String, Object?> json) {
@@ -23,6 +24,8 @@ class AppConfig {
         _object(json['passwordPolicy']) ?? const <String, Object?>{};
     final Map<String, Object?> uploads =
         _object(json['uploads']) ?? const <String, Object?>{};
+    final Map<String, Object?> booking =
+        _object(json['booking']) ?? const <String, Object?>{};
     const AppConfig fallback = AppConfig();
 
     // Each field is read on its own terms: one of the wrong type falls back
@@ -39,6 +42,8 @@ class AppConfig {
       passwordNeedsLetterAndDigit: _bool(password['needsLetterAndDigit']) ??
           fallback.passwordNeedsLetterAndDigit,
       maxDocumentMb: _int(uploads['maxDocumentMb']) ?? fallback.maxDocumentMb,
+      bookingMinNoticeDays:
+          _int(booking['minNoticeDays']) ?? fallback.bookingMinNoticeDays,
     );
   }
 
@@ -64,6 +69,10 @@ class AppConfig {
 
   final int maxDocumentMb;
 
+  /// How many days ahead a booking must be requested — "Dates need at least
+  /// 1 day's notice". Stated by the server; the design's "3 days" was a
+  /// placeholder.
+  final int bookingMinNoticeDays;
 
   static Map<String, Object?>? _object(Object? value) =>
       value is Map<String, Object?> ? value : null;

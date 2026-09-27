@@ -111,6 +111,8 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    # Mock builds only: the mock catalog's photos (see assets/mock/photos/CREDITS.md).
+    - assets/mock/photos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -5,6 +5,8 @@ import 'package:eventor/core/widgets/molecules/code_input.dart';
 import 'package:eventor/core/widgets/molecules/inline_banner.dart';
 import 'package:eventor/features/documents/view/documents_view.dart';
 import 'package:eventor/features/home/view/home_view.dart';
+import 'package:eventor/features/provider_home/view/provider_home_view.dart';
+import 'package:eventor/features/shell/view/client_shell.dart';
 import 'package:eventor/features/login/view/login_view.dart';
 import 'package:eventor/features/onboarding/view/onboarding_view.dart';
 import 'package:eventor/features/register/view/register_view.dart';
@@ -211,7 +213,9 @@ void main() {
       // "I'll do it later" — home then says the review is waiting.
       await tapAndSettle(tester, button(l10n(tester).documentsLater));
       final AppLocalizations strings = l10n(tester);
-      expect(find.byType(HomeView), findsOneWidget);
+      // The provider's own home — the client shell is not theirs.
+      expect(find.byType(ProviderHomeView), findsOneWidget);
+      expect(find.byType(ClientShell), findsNothing);
       expect(find.text(strings.homeProviderPendingTitle), findsOneWidget);
       expect(button(strings.homeUploadDocuments), findsOneWidget);
     });

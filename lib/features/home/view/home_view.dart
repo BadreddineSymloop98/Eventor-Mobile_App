@@ -2,66 +2,148 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/catalog/models/catalog_models.dart';
+import '../../../core/catalog/service_query.dart';
 import '../../../core/constants/ui_helpers.dart';
+import '../../../core/errors/failure.dart';
 import '../../../core/localization/app_localizations_x.dart';
-import '../../../core/models/account.dart';
 import '../../../core/routing/app_routes.dart';
-import '../../../core/session/session_controller.dart';
-import '../../../core/widgets/layout/content_container.dart';
-import '../../../core/widgets/molecules/inline_banner.dart';
-import '../../../core/widgets/molecules/main_button.dart';
-import '../../../core/widgets/organisms/app_top_bar.dart';
+import '../../../core/widgets/molecules/app_toast.dart';
+import '../../../core/widgets/molecules/back_to_exit.dart';
+import '../../../core/widgets/molecules/section_header.dart';
+import '../../../core/widgets/molecules/state_card.dart';
+import '../../../core/widgets/organisms/category_rail.dart';
+import '../../../core/widgets/organisms/pack_cards.dart';
+import '../../../core/widgets/organisms/selection_sheet.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../filters/view/filters_drawer.dart';
+import '../../shell/view/client_shell.dart';
+import '../view_model/home_view_model.dart';
+import 'widgets/home_header.dart';
+import 'widgets/home_sections.dart';
+import 'widgets/home_skeleton.dart';
 
-/// Where a signed-in user lands.
+/// Screen 11 — the client's Home, the first tab.
 ///
-/// Still a placeholder — the screens after sign-in are not built yet — but
-/// it lets the flows be followed to their end: a provider sees where their
-/// review stands and can reach their documents, and anyone can log out.
-class HomeView extends StatelessWidget {
+/// Sections the API has nothing for are left out rather than drawn empty
+/// (spec D2); the budget card always shows, as an invitation when there is
+/// no budget yet (11c). Links to screens not built yet say "Coming soon".
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final SessionController session = context.watch<SessionController>();
-    final AppUser? user = session.user;
-    final ThemeData theme = Theme.of(context);
-    final AppLocalizations l10n = context.l10n;
+  State<HomeView> createState() => _HomeViewState();
+}
 
-    return Scaffold(
-      backgroundColor: AppColors.bgCanvas,
-      appBar: AppTopBar(title: l10n.homeTitle, showBack: false),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: AppSpacing.screenPaddingAll,
-          child: ContentContainer(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+class _HomeViewState extends State<HomeView> {
+  final ScrollController _scroll = ScrollController();
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  void _comingSoon() => showComingSoon(context, context.l10n.comingSoon);
+
+  Future<void> _refresh(HomeViewModel viewModel) async {
+    final Failure? failure = await viewModel.refresh();
+    if (failure != null && mounted) {
+      showAppToast(context, context.l10n.forFailure(failure), tone: AppToastTone.error);
+    }
+  }
+
+  Future<void> _chooseCity(HomeViewModel viewModel) async {
+    final AppLocalizations l10n = context.l10n;
+    final String language = Localizations.localeOf(context).languageCode;
+    final List<Wilaya> wilayas;
+    try {
+      wilayas = await viewModel.wilayas();
+    } on Failure catch (failure) {
+      if (mounted) showAppToast(context, l10n.forFailure(failure), tone: AppToastTone.error);
+      return;
+    }
+    if (!mounted) return;
+
+    final Set<int>? picked = await showSelectionSheet<int>(
+      context,
+      title: l10n.chooseCity,
+      subtitle: l10n.chooseCitySubtitle,
+      searchHint: l10n.wilayaSearchHint,
+      selected: <int>{?viewModel.city?.code},
+      options: <SelectionOption<int>>[
+        for (final Wilaya wilaya in wilayas)
+          SelectionOption<int>(value: wilaya.code, label: wilaya.nameFor(language)),
+      ],
+    );
+    if (picked == null || picked.isEmpty || picked.first == viewModel.city?.code) return;
+
+    final Failure? failure = await viewModel.changeCity(picked.first);
+    if (failure != null && mounted) {
+      showAppToast(context, l10n.cityChangeFailed, tone: AppToastTone.error);
+    }
+  }
+
+  Future<void> _openFilters(HomeViewModel viewModel) async {
+    final int? city = viewModel.city?.code;
+    final ServiceQuery? query = await showFiltersDrawer(
+      context,
+      initial: const ServiceQuery(),
+      homeWilaya: city,
+    );
+    if (query != null && mounted) {
+      context.go(AppRoutes.resultsFor(query, base: AppRoutes.homeResults));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final HomeViewModel viewModel = context.watch<HomeViewModel>();
+    final HomeFeed? feed = viewModel.feed;
+
+    final Widget body;
+    if (feed != null) {
+      body = _HomeContent(
+        feed: feed,
+        onComingSoon: _comingSoon,
+      );
+    } else if (viewModel.isFirstLoad || !viewModel.hasError) {
+      body = const HomeSkeleton();
+    } else {
+      body = Padding(
+        padding: AppSpacing.screenPaddingAll,
+        child: StateCard.error(onRetry: viewModel.load),
+      );
+    }
+
+    // Home is the bottom of the client's stack: Back here would close the app.
+    return BackToExit(
+      child: Scaffold(
+        backgroundColor: AppColors.bgCanvas,
+        body: ScrollToTopOnReselect(
+          branch: 0,
+          controller: _scroll,
+          child: RefreshIndicator(
+            color: AppColors.brand,
+            onRefresh: () => _refresh(viewModel),
+            child: ListView(
+              controller: _scroll,
+              // Pull to refresh works even when the content is short.
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.only(bottom: AppSpacing.xl.dh),
               children: <Widget>[
-                Text(
-                  l10n.homeGreeting(user?.fullName ?? ''),
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    color: AppColors.textPrimary,
-                  ),
+                HomeHeader(
+                  greeting: viewModel.greeting,
+                  fullName: viewModel.fullName,
+                  city: viewModel.city,
+                  hasUnread: (feed?.unreadNotifications ?? 0) > 0,
+                  isChangingCity: viewModel.isChangingCity,
+                  onBell: _comingSoon,
+                  onCity: () => _chooseCity(viewModel),
+                  onSearch: () => context.go(AppRoutes.search),
+                  onFilters: () => _openFilters(viewModel),
                 ),
-                SizedBox(height: AppSpacing.xs.dh),
-                Text(
-                  l10n.homeComingSoon,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-                if (user != null && user.isProvider) ...<Widget>[
-                  SizedBox(height: AppSpacing.xl.dh),
-                  _ProviderStatus(user: user),
-                ],
-                SizedBox(height: AppSpacing.xl2.dh),
-                MainButton(
-                  label: l10n.logOut,
-                  style: MainButtonStyle.secondary,
-                  tone: MainButtonTone.danger,
-                  onPressed: session.signOut,
-                ),
+                body,
               ],
             ),
           ),
@@ -71,37 +153,105 @@ class HomeView extends StatelessWidget {
   }
 }
 
-/// The provider's verification, until `21a` / `21b` replace it.
-class _ProviderStatus extends StatelessWidget {
-  const _ProviderStatus({required this.user});
+class _HomeContent extends StatelessWidget {
+  const _HomeContent({required this.feed, required this.onComingSoon});
 
-  final AppUser user;
+  final HomeFeed feed;
+  final VoidCallback onComingSoon;
 
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = context.l10n;
-    if (user.verificationStatus == VerificationStatus.verified) {
-      return const SizedBox.shrink();
-    }
-    final bool rejected =
-        user.verificationStatus == VerificationStatus.rejected;
+    final Wilaya? city = feed.wilaya;
+
+    Widget section({
+      required String title,
+      required Widget child,
+      String? action,
+      VoidCallback? onAction,
+      bool bleed = false,
+    }) =>
+        Padding(
+          padding: EdgeInsets.only(top: AppSpacing.xl.dh),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md.dw),
+                child: SectionHeader(title: title, actionLabel: action, onAction: onAction),
+              ),
+              SizedBox(height: AppSpacing.xs.dh),
+              // A rail runs to the screen edges; everything else sits in the gutter.
+              if (bleed)
+                child
+              else
+                Padding(
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md.dw),
+                  child: child,
+                ),
+            ],
+          ),
+        );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        InlineBanner(
-          title: rejected
-              ? l10n.homeProviderRejectedTitle
-              : l10n.homeProviderPendingTitle,
-          message: l10n.homeProviderPendingBody,
-          tone: rejected ? InlineBannerTone.danger : InlineBannerTone.info,
+        if (feed.categories.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.only(top: AppSpacing.md.dh),
+            child: CategoryRail(
+              categories: feed.categories,
+              onTap: (CategoryRef category) => context.go(
+                AppRoutes.resultsFor(
+                  ServiceQuery(categoryIds: <String>{category.id}),
+                  base: AppRoutes.homeResults,
+                ),
+              ),
+            ),
+          ),
+        if (feed.upcomingBookings.isNotEmpty)
+          section(
+            title: l10n.homeYourBookings,
+            action: l10n.seeAll,
+            onAction: () => context.go(AppRoutes.bookings),
+            child: UpcomingBookingsList(
+              bookings: feed.upcomingBookings,
+              onOpen: (_) => onComingSoon(),
+            ),
+          ),
+        section(
+          title: l10n.homeYourBudget,
+          action: feed.budget.exists ? l10n.budgetDetails : null,
+          onAction: feed.budget.exists ? onComingSoon : null,
+          child: BudgetCard(budget: feed.budget, onOpen: onComingSoon),
         ),
-        SizedBox(height: AppSpacing.sm.dh),
-        MainButton(
-          label: l10n.homeUploadDocuments,
-          style: MainButtonStyle.secondary,
-          onPressed: () => context.push(AppRoutes.documents),
-        ),
+        if (feed.packs.isNotEmpty)
+          section(
+            title: l10n.homeReadyPacks,
+            action: l10n.seeAll,
+            onAction: () => context.push(AppRoutes.packs),
+            bleed: true,
+            child: PacksRail(
+              packs: feed.packs,
+              onOpen: (PackCard pack) => context.push(AppRoutes.packFor(pack.id)),
+            ),
+          ),
+        if (feed.nearbyServices.isNotEmpty)
+          section(
+            title: l10n.homeServicesNearYou,
+            action: l10n.seeAll,
+            onAction: () => context.go(
+              AppRoutes.resultsFor(
+                ServiceQuery(wilayaCodes: <int>{?city?.code}),
+                base: AppRoutes.homeResults,
+              ),
+            ),
+            child: NearbyServicesList(
+              services: feed.nearbyServices,
+              onOpen: (ServiceCard service) =>
+                  context.push(AppRoutes.serviceFor(service.id)),
+            ),
+          ),
       ],
     );
   }

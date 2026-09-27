@@ -400,5 +400,34 @@ void main() {
       expect(user.wilaya?.code, 16);
       expect(user.wilaya?.nameEn, 'Alger');
     });
+
+    test('can be changed, and the change is kept', () async {
+      await auth.login(
+        email: 'client@eventor.test',
+        password: MockBackend.seedPassword,
+      );
+
+      final AppUser user = await auth.updateWilaya(31);
+      expect(user.wilaya?.code, 31);
+
+      await start(); // Same stored state, as after a restart.
+      expect((await auth.currentUser()).wilaya?.code, 31);
+    });
+
+    test('refuses a wilaya that does not exist', () async {
+      await auth.login(
+        email: 'client@eventor.test',
+        password: MockBackend.seedPassword,
+      );
+
+      await expectApiFailure(auth.updateWilaya(99), ApiErrorCode.wilayaNotFound);
+    });
+
+    test('needs a session', () async {
+      await expectLater(
+        auth.updateWilaya(16),
+        throwsA(isA<SessionExpiredFailure>()),
+      );
+    });
   });
 }

@@ -1,5 +1,9 @@
 import 'dart:async';
 
+import 'package:eventor/core/catalog/catalog_repository.dart';
+import 'package:eventor/core/catalog/favourites_repository.dart';
+import 'package:eventor/core/catalog/models/catalog_models.dart';
+import 'package:eventor/core/catalog/service_query.dart';
 import 'package:eventor/core/config/app_config.dart';
 import 'package:eventor/core/errors/failure.dart';
 import 'package:eventor/core/models/account.dart';
@@ -10,6 +14,7 @@ import 'package:eventor/features/auth/data/auth_repository.dart';
 import 'package:eventor/features/auth/data/documents_repository.dart';
 import 'package:flutter/foundation.dart';
 
+import 'fixtures.dart';
 
 /// An [ApiFailure] as the server would send it, for scripting fakes.
 ApiFailure apiFailure(
@@ -69,6 +74,7 @@ class FakeAuthRepository implements AuthRepository {
   final List<({String token, String password})> setPasswords =
       <({String token, String password})>[];
   int logoutCalls = 0;
+  final List<int> wilayaUpdates = <int>[];
 
   // What they answer.
   Failure? registerError;
@@ -78,6 +84,7 @@ class FakeAuthRepository implements AuthRepository {
   Failure? forgotError;
   Failure? resetError;
   Failure? setPasswordError;
+  Failure? updateWilayaError;
 
   AppUser user = testUser();
   AppUser? restoredUser;
@@ -163,6 +170,20 @@ class FakeAuthRepository implements AuthRepository {
 
   @override
   Future<AppUser> currentUser() async => user;
+
+  @override
+  Future<AppUser> updateWilaya(int wilayaCode) async {
+    wilayaUpdates.add(wilayaCode);
+    await _wait();
+    final Failure? error = updateWilayaError;
+    if (error != null) throw error;
+    return user = testUser(
+      role: user.role,
+      fullName: user.fullName,
+      email: user.email,
+      wilaya: Wilaya(code: wilayaCode, nameEn: 'Wilaya $wilayaCode', nameAr: 'ولاية $wilayaCode'),
+    );
+  }
 
   @override
   Future<void> logout() async => logoutCalls++;
@@ -253,3 +274,234 @@ class FakeConfigRepository extends AppConfigRepository {
   Future<AppConfig> load() async => config;
 }
 
+/// [FavouritesRepository] that records every call.
+class FakeFavouritesRepository implements FavouritesRepository {
+  /// `add:service:s-1`, `remove:pack:k-1`, `removeById:fav-1`, `list:…`.
+  final List<String> calls = <String>[];
+
+  /// What [list] returns, newest first.
+  List<Favourite> items = fixtureList('favourites_page.json')
+      .map(Favourite.fromJson)
+      .toList();
+
+  /// Thrown by the next call only.
+  Failure? failNext;
+
+  /// Thrown by every call while set — a network that is down.
+  Failure? failAll;
+
+  /// When set, calls wait on it — for asserting the in-flight state.
+  Completer<void>? gate;
+
+  Future<void> _enter(String call) async {
+    calls.add(call);
+    final Completer<void>? pending = gate;
+    if (pending != null) await pending.future;
+    final Failure? always = failAll;
+    if (always != null) throw always;
+    final Failure? failure = failNext;
+    if (failure != null) {
+      failNext = null;
+      throw failure;
+    }
+  }
+
+  @override
+  Future<ApiPage<Favourite>> list({
+    FavouriteKind? kind,
+    String? categoryId,
+    int page = 1,
+  }) async {
+    await _enter('list:${kind?.apiValue}:$categoryId:$page');
+    final List<Favourite> found = items
+        .where((Favourite f) => kind == null || f.kind == kind)
+        .where((Favourite f) => categoryId == null || f.category?.id == categoryId)
+        .toList();
+    return ApiPage<Favourite>(
+      items: page == 1 ? found : <Favourite>[],
+      page: page,
+      totalPages: found.isEmpty ? 0 : 1,
+      total: found.length,
+    );
+  }
+
+  @override
+  Future<Favourite> add(FavouriteTarget target) async {
+    await _enter('add:$target');
+    return items.first;
+  }
+
+  @override
+  Future<void> remove(FavouriteTarget target) => _enter('remove:$target');
+
+  @override
+  Future<void> removeById(String favouriteId) async {
+    await _enter('removeById:$favouriteId');
+    items = items.where((Favourite f) => f.id != favouriteId).toList();
+  }
+}
+
+/// [CatalogRepository] answering from the saved live fixtures, with every
+/// answer replaceable and every failure injectable.
+class FakeCatalogRepository implements CatalogRepository {
+  HomeFeed homeFeed = HomeFeed.fromJson(fixtureData('home.json'));
+  List<CategoryWithCount> categoryList =
+      fixtureList('categories.json').map(CategoryWithCount.fromJson).toList();
+
+  /// Paged 20 at a time by [services].
+  List<ServiceCard> serviceItems =
+      fixtureList('services_page.json').map(ServiceCard.fromJson).toList();
+  ServiceDetail serviceDetail =
+      ServiceDetail.fromJson(fixtureData('service_detail.json'));
+  ProviderDetail providerDetail =
+      ProviderDetail.fromJson(fixtureData('provider_detail.json'));
+  List<PackCard> packItems =
+      fixtureList('packs_page.json').map(PackCard.fromJson).toList();
+  PackDetail packDetail = PackDetail.fromJson(fixtureData('pack_detail.json'));
+
+  /// Every day from here on is available, except the 10th of each month
+  /// (busy) and the 20th (blocked).
+  DateTime firstBookable = DateTime(2026, 1, 1);
+
+  // Failures, per call.
+  Failure? homeError;
+  Failure? servicesError;
+  Failure? serviceError;
+  Failure? providerError;
+  Failure? packsError;
+  Failure? packError;
+  Failure? availabilityError;
+
+  // What the calls were given.
+  final List<({ServiceQuery query, int page, int limit})> servicePages =
+      <({ServiceQuery query, int page, int limit})>[];
+  final List<({EventType? eventType, PackOrder order, int page})> packQueries =
+      <({EventType? eventType, PackOrder order, int page})>[];
+  final List<DateTime> availabilityMonths = <DateTime>[];
+  int homeCalls = 0;
+
+  /// When set, calls wait on it — for asserting loading states.
+  Completer<void>? gate;
+
+  Future<void> _wait() async {
+    final Completer<void>? pending = gate;
+    if (pending != null) await pending.future;
+  }
+
+  static ApiPage<T> _page<T>(List<T> items, int page, int limit) {
+    final int start = (page - 1) * limit;
+    return ApiPage<T>(
+      items: start >= items.length
+          ? <T>[]
+          : items.sublist(start, (start + limit).clamp(0, items.length)),
+      page: page,
+      totalPages: (items.length / limit).ceil(),
+      total: items.length,
+    );
+  }
+
+  Availability _month(DateTime month) {
+    final int days = DateTime(month.year, month.month + 1, 0).day;
+    DayState stateOf(int d) {
+      final DateTime date = DateTime(month.year, month.month, d);
+      if (date.isBefore(firstBookable)) return DayState.blocked;
+      if (d == 10) return DayState.busy;
+      if (d == 20) return DayState.blocked;
+      return DayState.available;
+    }
+
+    return Availability(
+      month: monthParam(month),
+      minNoticeDays: 1,
+      firstBookableDate: firstBookable,
+      days: <AvailabilityDay>[
+        for (int d = 1; d <= days; d++)
+          AvailabilityDay(
+            date: DateTime(month.year, month.month, d),
+            state: stateOf(d),
+          ),
+      ],
+    );
+  }
+
+  @override
+  Future<HomeFeed> home() async {
+    homeCalls++;
+    await _wait();
+    if (homeError != null) throw homeError!;
+    return homeFeed;
+  }
+
+  @override
+  Future<List<CategoryWithCount>> categories() async {
+    await _wait();
+    return categoryList;
+  }
+
+  @override
+  Future<ApiPage<ServiceCard>> services(
+    ServiceQuery query, {
+    int page = 1,
+    int limit = 20,
+  }) async {
+    servicePages.add((query: query, page: page, limit: limit));
+    await _wait();
+    if (servicesError != null) throw servicesError!;
+    return _page(serviceItems, page, limit);
+  }
+
+  @override
+  Future<ServiceDetail> service(String id) async {
+    await _wait();
+    if (serviceError != null) throw serviceError!;
+    return serviceDetail;
+  }
+
+  @override
+  Future<Availability> serviceAvailability(String id, DateTime month) async {
+    availabilityMonths.add(month);
+    await _wait();
+    if (availabilityError != null) throw availabilityError!;
+    return _month(month);
+  }
+
+  @override
+  Future<ProviderDetail> provider(String id) async {
+    await _wait();
+    if (providerError != null) throw providerError!;
+    return providerDetail;
+  }
+
+  @override
+  Future<ApiPage<PackCard>> packs({
+    EventType? eventType,
+    PackOrder order = PackOrder.savings,
+    int page = 1,
+  }) async {
+    packQueries.add((eventType: eventType, order: order, page: page));
+    await _wait();
+    if (packsError != null) throw packsError!;
+    return _page(
+      packItems
+          .where((PackCard p) => eventType == null || p.eventType == eventType)
+          .toList(),
+      page,
+      20,
+    );
+  }
+
+  @override
+  Future<PackDetail> pack(String id) async {
+    await _wait();
+    if (packError != null) throw packError!;
+    return packDetail;
+  }
+
+  @override
+  Future<Availability> packAvailability(String id, DateTime month) async {
+    availabilityMonths.add(month);
+    await _wait();
+    if (availabilityError != null) throw availabilityError!;
+    return _month(month);
+  }
+}

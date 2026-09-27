@@ -6,6 +6,7 @@ import '../core/constants/input_rules.dart';
 import '../core/errors/failure.dart';
 import '../core/models/account.dart';
 import '../features/auth/data/documents_repository.dart';
+import 'mock_catalog_data.dart';
 import 'mock_reference_data.dart';
 
 /// One account in the mock backend.
@@ -176,6 +177,11 @@ class MockBackend {
   final Map<String, int> _lockedUntil = <String, int>{};
   final Map<String, int> _codeSentAt = <String, int>{};
 
+  /// Saved services and packs, per account email — `{id, kind, targetId,
+  /// createdAt}` rows, as the favourites table stores them.
+  final Map<String, List<Map<String, Object?>>> _favourites =
+      <String, List<Map<String, Object?>>>{};
+
   /// Loads the saved state, or seeds a fresh one.
   static Future<MockBackend> load({
     SharedPreferences? prefs,
@@ -286,6 +292,7 @@ class MockBackend {
     _failedLogins.clear();
     _lockedUntil.clear();
     _codeSentAt.clear();
+    _seedFavourites();
     await _save();
   }
 
@@ -295,7 +302,8 @@ class MockBackend {
       for (final MockAccount a in seedAccounts()) {
         _accounts[a.email] = a;
       }
-        return;
+      _seedFavourites();
+      return;
     }
     try {
       final Map<String, Object?> json =
@@ -306,13 +314,26 @@ class MockBackend {
         _accounts[account.email] = account;
       }
       _sessionEmail = json['session'] as String?;
+      final Object? favourites = json['favourites'];
+      if (favourites is Map<String, Object?>) {
+        favourites.forEach((String email, Object? rows) {
+          _favourites[email] = <Map<String, Object?>>[
+            for (final Object? row in rows as List<Object?>)
+              Map<String, Object?>.of(row! as Map<String, Object?>),
+          ];
+        });
+      } else {
+        // State saved before favourites existed.
+        _seedFavourites();
+      }
     } catch (_) {
       // A state from an older build that no longer parses: start over.
       _accounts.clear();
       for (final MockAccount a in seedAccounts()) {
         _accounts[a.email] = a;
       }
-      }
+      _seedFavourites();
+    }
   }
 
   Future<void> _save() => _prefs.setString(
@@ -322,6 +343,7 @@ class MockBackend {
               .map((MockAccount a) => a.toJson())
               .toList(),
           'session': _sessionEmail,
+          'favourites': _favourites,
         }),
       );
 
@@ -556,6 +578,97 @@ class MockBackend {
   Future<void> signOut() async {
     _sessionEmail = null;
     await _save();
+  }
+
+  // ----------------------------------------------------------- favourites
+
+  static const String _seededFavouritesEmail = 'client@eventor.test';
+
+  /// The seeded client starts with a few saved items, one of them no longer
+  /// listed, so screen 17 has something to show.
+  void _seedFavourites() {
+    _favourites.clear();
+    final int now = _nowMs;
+    _favourites[_seededFavouritesEmail] = <Map<String, Object?>>[
+      for (final (int i, Map<String, Object?> seed)
+          in mockFavouriteSeeds.indexed)
+        <String, Object?>{
+          'id': 'mock-fav-${i + 1}',
+          'kind': seed['kind'],
+          'targetId': seed['targetId'],
+          'createdAt': now -
+              Duration(days: (seed['daysAgo']! as num).toInt()).inMilliseconds,
+        },
+    ];
+  }
+
+  /// A client's saved rows, newest first. A provider is refused, as live.
+  List<Map<String, Object?>> favouriteRows() {
+    final MockAccount account = _requireClient();
+    final List<Map<String, Object?>> rows =
+        _favourites[account.email] ?? <Map<String, Object?>>[];
+    return List<Map<String, Object?>>.of(rows)
+      ..sort(
+        (Map<String, Object?> a, Map<String, Object?> b) =>
+            (b['createdAt']! as num).compareTo(a['createdAt']! as num),
+      );
+  }
+
+  /// Saves [targetId]; saving it again returns the same row.
+  Future<Map<String, Object?>> addFavourite(String kind, String targetId) async {
+    final MockAccount account = _requireClient();
+    final List<Map<String, Object?>> rows =
+        _favourites.putIfAbsent(account.email, () => <Map<String, Object?>>[]);
+    for (final Map<String, Object?> row in rows) {
+      if (row['kind'] == kind && row['targetId'] == targetId) return row;
+    }
+    final Map<String, Object?> row = <String, Object?>{
+      'id': 'mock-fav-$_nowMs-${rows.length}',
+      'kind': kind,
+      'targetId': targetId,
+      'createdAt': _nowMs,
+    };
+    rows.add(row);
+    await _save();
+    return row;
+  }
+
+  /// `DELETE /app/me/favourites/{id}`.
+  Future<void> removeFavourite(String id) async {
+    final MockAccount account = _requireClient();
+    final List<Map<String, Object?>>? rows = _favourites[account.email];
+    final int before = rows?.length ?? 0;
+    rows?.removeWhere((Map<String, Object?> row) => row['id'] == id);
+    if ((rows?.length ?? 0) == before) {
+      throw _failure(404, ApiErrorCode.favouriteNotFound, 'No such favourite.');
+    }
+    await _save();
+  }
+
+  MockAccount _requireClient() {
+    final MockAccount account = requireSession();
+    if (account.role != UserRole.client) {
+      throw _failure(
+        403,
+        ApiErrorCode.forbiddenRole,
+        'Your account role cannot access this.',
+      );
+    }
+    return account;
+  }
+
+  /// Now, as the backend's clock sees it — for relative dates in mock data.
+  DateTime get now => _now();
+
+  /// `PATCH /app/me {wilayaCode}`.
+  Future<MockAccount> setWilaya(int code) async {
+    final MockAccount account = requireSession();
+    if (!mockWilayas.any((Wilaya w) => w.code == code)) {
+      throw _failure(404, ApiErrorCode.wilayaNotFound, 'Unknown wilaya.');
+    }
+    account.wilayaCode = code;
+    await _save();
+    return account;
   }
 
   Future<void> setDocument(ProviderDocumentType type, String status) async {

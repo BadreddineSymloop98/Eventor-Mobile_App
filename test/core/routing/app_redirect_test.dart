@@ -184,7 +184,8 @@ void main() {
       expect(world.go(AppRoutes.documents), isNull);
 
       expect(world.session.landing, isNull);
-      expect(world.go(AppRoutes.login), AppRoutes.home);
+      // A provider's home, not the client's.
+      expect(world.go(AppRoutes.login), AppRoutes.providerHome);
     });
 
     test('keeps the landing while the user is elsewhere', () async {
@@ -194,7 +195,7 @@ void main() {
         landing: AppRoutes.documents,
       );
 
-      expect(world.go(AppRoutes.home), isNull);
+      expect(world.go(AppRoutes.providerHome), isNull);
 
       expect(world.session.landing, AppRoutes.documents);
     });
@@ -208,7 +209,7 @@ void main() {
       await world.session.signOut();
       world.session.signedIn(testUser(role: UserRole.provider));
 
-      expect(world.go(AppRoutes.login), AppRoutes.home);
+      expect(world.go(AppRoutes.login), AppRoutes.providerHome);
     });
 
     test('keeps a signed-in user off the pre-auth screens', () async {
@@ -256,6 +257,60 @@ void main() {
 
       expect(resumed, '/set-password?token=abc');
       expect(world.go(resumed), AppRoutes.home);
+    });
+  });
+
+  group('AppRedirect with two homes', () {
+    test('lands a client on the client shell', () async {
+      final _World world = await _world(user: testUser());
+
+      expect(world.go(AppRoutes.splash), AppRoutes.home);
+    });
+
+    test('lands a provider on their placeholder home', () async {
+      final _World world = await _world(user: testUser(role: UserRole.provider));
+
+      expect(world.go(AppRoutes.splash), AppRoutes.providerHome);
+    });
+
+    test('keeps a provider out of every client screen', () async {
+      final _World world = await _world(user: testUser(role: UserRole.provider));
+
+      for (final String path in <String>[
+        AppRoutes.home,
+        AppRoutes.search,
+        AppRoutes.results,
+        AppRoutes.homeResults,
+        AppRoutes.bookings,
+        AppRoutes.messages,
+        AppRoutes.profile,
+        AppRoutes.serviceFor('s-1'),
+        AppRoutes.providerFor('p-1'),
+        AppRoutes.packs,
+        AppRoutes.packFor('k-1'),
+        AppRoutes.favourites,
+      ]) {
+        expect(world.go(path), AppRoutes.providerHome, reason: path);
+      }
+    });
+
+    test('keeps a client out of the provider home', () async {
+      final _World world = await _world(user: testUser());
+
+      expect(world.go(AppRoutes.providerHome), AppRoutes.home);
+    });
+
+    test('lets a client open the catalog', () async {
+      final _World world = await _world(user: testUser());
+
+      expect(world.go(AppRoutes.serviceFor('s-1')), isNull);
+      expect(world.go(AppRoutes.packs), isNull);
+      expect(world.go('${AppRoutes.results}?q=photo'), isNull);
+    });
+
+    test('does not mistake the providers catalog for the provider home', () {
+      expect(AppRoutes.isClientOnly(AppRoutes.providerFor('p-1')), isTrue);
+      expect(AppRoutes.isClientOnly(AppRoutes.providerHome), isFalse);
     });
   });
 

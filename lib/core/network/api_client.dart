@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 import '../errors/failure.dart';
 import '../session/token_store.dart';
+import 'api_page.dart';
 
+export 'api_page.dart';
 
 /// Where the API lives.
 abstract final class ApiConfig {
@@ -113,6 +116,34 @@ class ApiClient {
     );
   }
 
+  /// A list endpoint, keeping the paging `meta` that [get] discards.
+  ///
+  /// A `List` value in [query] goes out as the key repeated —
+  /// `wilaya=16&wilaya=31` — the only form the API accepts.
+  Future<ApiPage<Map<String, Object?>>> getPage(
+    String path, {
+    Map<String, Object?>? query,
+    bool isPublic = false,
+  }) async {
+    final Object? body = await _send(
+      () => _dio.get<Object?>(
+        path,
+        queryParameters: query,
+        options: _options(isPublic).copyWith(listFormat: ListFormat.multi),
+      ),
+      isPublic: isPublic,
+      unwrap: false,
+    );
+    return _toPage(body);
+  }
+
+  Future<void> delete(String path) async {
+    await _send(
+      () => _dio.delete<Object?>(path, options: _options(false)),
+      isPublic: false,
+    );
+  }
+
   Future<Object?> patch(String path, {Object? body}) {
     return _send(
       () => _dio.patch<Object?>(path, data: body, options: _options(false)),
@@ -157,6 +188,8 @@ class ApiClient {
     Object? handle(Response<Object?> response) =>
         unwrap ? _unwrap(response.data) : response.data;
 
+    if (!isPublic) await _renewIfExpiring();
+
     try {
       return handle(await request());
     } on DioException catch (error) {
@@ -189,6 +222,71 @@ class ApiClient {
       return body['data'];
     }
     return body;
+  }
+
+  /// How close to expiry a token is renewed ahead of a call.
+  static const Duration _expiryMargin = Duration(seconds: 30);
+
+  /// Renews the session before a signed-in call if the access token has
+  /// expired or is about to.
+  ///
+  /// The 401-then-refresh path in [_send] is not enough on its own: the
+  /// catalog routes are public, and the server treats an expired token there
+  /// as no token at all — it answers 200 with every `isFavourite` false, so
+  /// no 401 ever comes back to trigger a refresh.
+  Future<void> _renewIfExpiring() async {
+    final String? token = _tokens.accessToken;
+    if (token == null || _tokens.refreshToken == null) return;
+    final DateTime? expiry = _expiryOf(token);
+    if (expiry == null) return;
+    if (DateTime.now().add(_expiryMargin).isBefore(expiry)) return;
+    // A failed renewal is reported by the call itself, which then goes out
+    // with the old token as before.
+    await _renewSession();
+  }
+
+  /// The `exp` claim of a JWT, or `null` for anything that is not one.
+  static DateTime? _expiryOf(String token) {
+    final List<String> parts = token.split('.');
+    if (parts.length != 3) return null;
+    try {
+      final Object? payload = jsonDecode(
+        utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
+      );
+      final Object? exp = payload is Map<String, Object?> ? payload['exp'] : null;
+      return exp is num
+          ? DateTime.fromMillisecondsSinceEpoch(exp.toInt() * 1000)
+          : null;
+    } on FormatException {
+      return null;
+    }
+  }
+
+  /// `{data: [...], meta: {page, totalPages, total}}` as an [ApiPage]. A
+  /// missing `meta` reads as a single complete page, so a list endpoint that
+  /// stops paging does not break the screens on top of it.
+  ApiPage<Map<String, Object?>> _toPage(Object? body) {
+    final Object? data =
+        body is Map<String, Object?> ? body['data'] : body;
+    final List<Map<String, Object?>> items = data is List<Object?>
+        ? data.whereType<Map<String, Object?>>().toList()
+        : <Map<String, Object?>>[];
+    final Object? meta = body is Map<String, Object?> ? body['meta'] : null;
+    if (meta is! Map<String, Object?>) {
+      return ApiPage<Map<String, Object?>>(
+        items: items,
+        page: 1,
+        totalPages: 1,
+        total: items.length,
+      );
+    }
+    int read(String key) => (meta[key] as num?)?.toInt() ?? 0;
+    return ApiPage<Map<String, Object?>>(
+      items: items,
+      page: read('page'),
+      totalPages: read('totalPages'),
+      total: read('total'),
+    );
   }
 
   /// Renews the access token with the stored refresh token. `true` when a new

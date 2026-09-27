@@ -11,6 +11,7 @@ class PreferencesService {
   static const String _hasSeenOnboardingKey = 'has_seen_onboarding';
   static const String _hasSeenWelcomeKey = 'has_seen_welcome';
   static const String _localeKey = 'locale';
+  static const String _recentSearchesKey = 'recent_searches';
 
   final SharedPreferences _preferences;
 
@@ -34,6 +35,13 @@ class PreferencesService {
   Future<void> markWelcomeAsSeen() {
     return _preferences.setBool(_hasSeenWelcomeKey, true);
   }
+
+  /// What the client searched for lately, newest first — S1's list.
+  List<String> get recentSearches =>
+      _preferences.getStringList(_recentSearchesKey) ?? const <String>[];
+
+  Future<void> setRecentSearches(List<String> searches) =>
+      _preferences.setStringList(_recentSearchesKey, searches);
 
   /// The language the user picked, or `null` when they have not picked one and
   /// the device's own language should be followed.

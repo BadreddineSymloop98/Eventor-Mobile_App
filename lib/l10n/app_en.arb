@@ -840,12 +840,887 @@
   "@currencyDzd": {
     "description": "The Algerian dinar, after an amount: 45 000 DA."
   },
+  "priceOnQuote": "On quote",
+  "@priceOnQuote": {
+    "description": "Shown instead of a price for a service priced on quote."
+  },
   "ratingNew": "New",
   "@ratingNew": {
     "description": "Shown instead of a star score for something nobody has reviewed yet."
   },
+  "comingSoon": "Coming soon",
+  "@comingSoon": {
+    "description": "Toast for a link to a screen that is not built yet."
+  },
+  "stateErrorTitle": "We could not load this",
+  "@stateErrorTitle": {
+    "description": "Title of the error card shown when a list or detail fails to load."
+  },
+  "stateRetry": "Try again",
+  "@stateRetry": {
+    "description": "Button on the error card that reloads."
+  },
+  "verifiedProvider": "Verified provider",
+  "@verifiedProvider": {
+    "description": "Badge on a provider whose documents Eventor checked."
+  },
+  "readMore": "Read more",
+  "@readMore": {
+    "description": "Expands a long description."
+  },
+  "readLess": "Read less",
+  "@readLess": {
+    "description": "Collapses an expanded description."
+  },
+  "seeAll": "See all",
+  "@seeAll": {
+    "description": "Link beside a section title that opens the full list."
+  },
+  "seeAllCount": "See all {count}",
+  "@seeAllCount": {
+    "description": "Link that opens a full list, with its size.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noLongerAvailable": "No longer available",
+  "@noLongerAvailable": {
+    "description": "On a saved item whose service or pack is no longer listed."
+  },
+  "undo": "Undo",
+  "@undo": {
+    "description": "Toast action that reverses the last change."
+  },
+  "favouriteSave": "Save",
+  "@favouriteSave": {
+    "description": "Screen-reader label of an empty heart: saves the item to favourites."
+  },
+  "favouriteSaved": "Saved",
+  "@favouriteSaved": {
+    "description": "Screen-reader label of a filled heart: the item is in favourites."
+  },
+  "favouriteFailed": "We could not update your favourites. Try again.",
+  "@favouriteFailed": {
+    "description": "Toast when saving or un-saving a favourite fails."
+  },
+  "favouriteRemoved": "Removed from favourites",
+  "@favouriteRemoved": {
+    "description": "Toast after removing an item on the Favorites screen, with Undo."
+  },
+  "priceUnitPerEvent": "per event",
+  "@priceUnitPerEvent": {
+    "description": "Price unit: the price covers one event."
+  },
+  "priceUnitPerHour": "per hour",
+  "@priceUnitPerHour": {
+    "description": "Price unit: charged by the hour."
+  },
+  "priceUnitPerPerson": "per person",
+  "@priceUnitPerPerson": {
+    "description": "Price unit: charged per guest."
+  },
+  "priceUnitPerDay": "per day",
+  "@priceUnitPerDay": {
+    "description": "Price unit: charged by the day."
+  },
+  "eventTypeWedding": "Wedding",
+  "@eventTypeWedding": {
+    "description": "Event type chip."
+  },
+  "eventTypeEngagement": "Engagement",
+  "@eventTypeEngagement": {
+    "description": "Event type chip."
+  },
+  "eventTypeHenna": "Henna",
+  "@eventTypeHenna": {
+    "description": "Event type chip."
+  },
+  "eventTypeBirthday": "Birthday",
+  "@eventTypeBirthday": {
+    "description": "Event type chip."
+  },
+  "eventTypeCircumcision": "Circumcision",
+  "@eventTypeCircumcision": {
+    "description": "Event type chip."
+  },
+  "eventTypeGraduation": "Graduation",
+  "@eventTypeGraduation": {
+    "description": "Event type chip."
+  },
+  "eventTypeCorporate": "Corporate",
+  "@eventTypeCorporate": {
+    "description": "Event type chip."
+  },
+  "eventTypeConference": "Conference",
+  "@eventTypeConference": {
+    "description": "Event type chip."
+  },
+  "eventTypeOther": "Other",
+  "@eventTypeOther": {
+    "description": "Event type chip."
+  },
+  "calendarSelected": "Selected",
+  "@calendarSelected": {
+    "description": "Calendar legend: the chosen day."
+  },
+  "calendarAvailable": "Available",
+  "@calendarAvailable": {
+    "description": "Calendar legend: a day that can be requested."
+  },
+  "calendarBooked": "Fully booked",
+  "@calendarBooked": {
+    "description": "Calendar legend: a day with no capacity left."
+  },
+  "calendarUnavailable": "Unavailable",
+  "@calendarUnavailable": {
+    "description": "Calendar legend: a day the provider does not offer, or too soon."
+  },
+  "calendarPreviousMonth": "Previous month",
+  "@calendarPreviousMonth": {
+    "description": "Screen-reader label of the calendar's back arrow."
+  },
+  "calendarNextMonth": "Next month",
+  "@calendarNextMonth": {
+    "description": "Screen-reader label of the calendar's forward arrow."
+  },
+  "calendarMinNotice": "{count, plural, one{Dates need at least {count} day's notice.} other{Dates need at least {count} days' notice.}}",
+  "@calendarMinNotice": {
+    "description": "Under a calendar: the minimum notice, from the app config.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notAcceptingTitle": "Not taking new bookings",
+  "@notAcceptingTitle": {
+    "description": "Action bar when the provider paused bookings."
+  },
+  "notAcceptingBody": "Messages are still open",
+  "@notAcceptingBody": {
+    "description": "Under 'Not taking new bookings': messaging still works."
+  },
+  "sendMessage": "Send a message",
+  "@sendMessage": {
+    "description": "Button that opens a chat with the provider."
+  },
+  "messageProvider": "Message the provider",
+  "@messageProvider": {
+    "description": "Screen-reader label of the message icon button."
+  },
+  "requestBooking": "Request booking",
+  "@requestBooking": {
+    "description": "Primary button on a service."
+  },
+  "requestPack": "Request pack",
+  "@requestPack": {
+    "description": "Primary button on a pack."
+  },
+  "packSave": "Save",
+  "@packSave": {
+    "description": "Before a pack's saving amount: 'Save 45 000 DA'."
+  },
+  "basedOnReviews": "{count, plural, one{Based on {count} review} other{Based on {count} reviews}}",
+  "@basedOnReviews": {
+    "description": "Under the big rating on a detail screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bookedTimes": "{count, plural, =0{Not booked yet} one{Booked once} other{Booked {count} times}}",
+  "@bookedTimes": {
+    "description": "How often a service was booked, on a result card.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "servicesCount": "{count, plural, one{{count} service} other{{count} services}}",
+  "@servicesCount": {
+    "description": "A count of services.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packBy": "by {name}",
+  "@packBy": {
+    "description": "The provider behind a pack.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "photoCounterLabel": "Photo {index} of {count}",
+  "@photoCounterLabel": {
+    "description": "Screen-reader label of a photo carousel's position.",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "backLabelOnPhoto": "Back",
+  "@backLabelOnPhoto": {
+    "description": "Screen-reader label of the round Back button over a photo."
+  },
+  "navHome": "Home",
+  "@navHome": {
+    "description": "Bottom navigation tab."
+  },
+  "navSearch": "Search",
+  "@navSearch": {
+    "description": "Bottom navigation tab."
+  },
+  "navBookings": "Bookings",
+  "@navBookings": {
+    "description": "Bottom navigation tab."
+  },
+  "navMessages": "Messages",
+  "@navMessages": {
+    "description": "Bottom navigation tab."
+  },
   "navProfile": "Profile",
   "@navProfile": {
     "description": "Bottom navigation tab."
+  },
+  "tabComingSoonTitle": "Coming soon",
+  "@tabComingSoonTitle": {
+    "description": "Title on a tab whose screens are not built yet."
+  },
+  "tabComingSoonBody": "This part of Eventor is on its way.",
+  "@tabComingSoonBody": {
+    "description": "Body on a tab whose screens are not built yet."
+  },
+  "profileFavourites": "Favorites",
+  "@profileFavourites": {
+    "description": "Row on the Profile tab that opens the saved services and packs."
+  },
+  "profileMoreSoon": "More settings are coming soon.",
+  "@profileMoreSoon": {
+    "description": "Note under the Profile tab's rows while the full profile is not built."
+  },
+  "greetingMorning": "Good morning",
+  "@greetingMorning": {
+    "description": "Home greeting, 05:00–11:59."
+  },
+  "greetingAfternoon": "Good afternoon",
+  "@greetingAfternoon": {
+    "description": "Home greeting, 12:00–17:59."
+  },
+  "greetingEvening": "Good evening",
+  "@greetingEvening": {
+    "description": "Home greeting, 18:00–04:59."
+  },
+  "chooseCity": "Choose your city",
+  "@chooseCity": {
+    "description": "Home's city pill when the client has none, and the title of the city sheet."
+  },
+  "chooseCitySubtitle": "We show services that cover it. Only wilayas open on Eventor are listed.",
+  "@chooseCitySubtitle": {
+    "description": "Under the city sheet's title."
+  },
+  "cityChangeFailed": "We could not change your city. Try again.",
+  "@cityChangeFailed": {
+    "description": "Toast when saving the chosen city fails."
+  },
+  "homeSearchHint": "Search a service or a provider",
+  "@homeSearchHint": {
+    "description": "Placeholder of Home's search field."
+  },
+  "homeFiltersLabel": "Filters",
+  "@homeFiltersLabel": {
+    "description": "Screen-reader label of Home's filter button."
+  },
+  "homeNotificationsLabel": "Notifications",
+  "@homeNotificationsLabel": {
+    "description": "Screen-reader label of Home's bell."
+  },
+  "homeNotificationsUnread": "Notifications, unread",
+  "@homeNotificationsUnread": {
+    "description": "Screen-reader label of Home's bell when something is unread."
+  },
+  "homeYourBookings": "Your bookings",
+  "@homeYourBookings": {
+    "description": "Home section title."
+  },
+  "homeYourBudget": "Your budget",
+  "@homeYourBudget": {
+    "description": "Home section title."
+  },
+  "budgetDetails": "Details",
+  "@budgetDetails": {
+    "description": "Link beside 'Your budget'."
+  },
+  "budgetOf": "of",
+  "@budgetOf": {
+    "description": "Between the spent and the planned amounts: '180 000 DA of 400 000 DA planned'."
+  },
+  "budgetPlanned": "planned",
+  "@budgetPlanned": {
+    "description": "After the planned amount on Home's budget card."
+  },
+  "budgetBooked": "{booked} of {count, plural, one{{count} service} other{{count} services}} booked",
+  "@budgetBooked": {
+    "description": "Under the budget bar.",
+    "placeholders": {
+      "booked": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "budgetEmptyTitle": "Plan your budget",
+  "@budgetEmptyTitle": {
+    "description": "Home's budget card when there is none (11c)."
+  },
+  "budgetEmptyBody": "Set a total, then track what each service really costs. Only you can see it.",
+  "@budgetEmptyBody": {
+    "description": "Body of the 11c budget card."
+  },
+  "budgetCreate": "Create a budget",
+  "@budgetCreate": {
+    "description": "Button on the 11c budget card."
+  },
+  "homeReadyPacks": "Ready Packs",
+  "@homeReadyPacks": {
+    "description": "Home section title, and the title of screen 19."
+  },
+  "homeServicesNearYou": "Services near you",
+  "@homeServicesNearYou": {
+    "description": "Home's last section: the best-rated services in the client's city."
+  },
+  "filtersTitle": "Filters",
+  "@filtersTitle": {
+    "description": "Title of the filters drawer (11a)."
+  },
+  "filtersClose": "Close filters",
+  "@filtersClose": {
+    "description": "Screen-reader label of the drawer's close button."
+  },
+  "filtersSortBy": "Sort by",
+  "@filtersSortBy": {
+    "description": "Filters group label."
+  },
+  "sortRelevance": "Relevance",
+  "@sortRelevance": {
+    "description": "Sort order."
+  },
+  "sortPriceLow": "Lowest price",
+  "@sortPriceLow": {
+    "description": "Sort order."
+  },
+  "sortPriceHigh": "Highest price",
+  "@sortPriceHigh": {
+    "description": "Sort order."
+  },
+  "sortRating": "Top rated",
+  "@sortRating": {
+    "description": "Sort order."
+  },
+  "sortPopular": "Most popular",
+  "@sortPopular": {
+    "description": "Sort order."
+  },
+  "sortNewest": "Newest",
+  "@sortNewest": {
+    "description": "Sort order."
+  },
+  "filtersCategory": "Category",
+  "@filtersCategory": {
+    "description": "Filters group label."
+  },
+  "filtersWilaya": "Wilaya",
+  "@filtersWilaya": {
+    "description": "Filters group label, and the drill-in's title."
+  },
+  "filtersAllWilayas": "All wilayas",
+  "@filtersAllWilayas": {
+    "description": "Chip that opens the full wilaya list."
+  },
+  "filtersBudget": "Budget",
+  "@filtersBudget": {
+    "description": "Filters group label."
+  },
+  "filtersEventDate": "Event date",
+  "@filtersEventDate": {
+    "description": "Filters group label."
+  },
+  "filtersEventDateAny": "Any date",
+  "@filtersEventDateAny": {
+    "description": "The event date field when no date is set."
+  },
+  "filtersEventDateHint": "Only providers free on that day.",
+  "@filtersEventDateHint": {
+    "description": "Under the event date field."
+  },
+  "filtersEventDateClear": "Clear the date",
+  "@filtersEventDateClear": {
+    "description": "Screen-reader label of the button that clears the event date."
+  },
+  "filtersRating": "Rating",
+  "@filtersRating": {
+    "description": "Filters group label."
+  },
+  "filtersRatingAny": "Any",
+  "@filtersRatingAny": {
+    "description": "Rating chip: no minimum."
+  },
+  "filtersSaved": "Saved",
+  "@filtersSaved": {
+    "description": "Filters group label."
+  },
+  "filtersFavouritesOnly": "Favorites only",
+  "@filtersFavouritesOnly": {
+    "description": "Switch that keeps only saved services."
+  },
+  "filtersClearAll": "Clear all",
+  "@filtersClearAll": {
+    "description": "Resets every filter."
+  },
+  "filtersShowCount": "{count, plural, =0{No services} one{Show {count} service} other{Show {count} services}}",
+  "@filtersShowCount": {
+    "description": "The drawer's primary button, with the live result count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filtersShow": "Show services",
+  "@filtersShow": {
+    "description": "The drawer's primary button while the count is loading or unknown."
+  },
+  "wilayaDoneCount": "{count, plural, =0{Done} one{Done · {count} selected} other{Done · {count} selected}}",
+  "@wilayaDoneCount": {
+    "description": "The wilaya drill-in's primary button.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wilayaClear": "Clear",
+  "@wilayaClear": {
+    "description": "The wilaya drill-in's secondary button."
+  },
+  "eventDateSheetTitle": "Pick your event date",
+  "@eventDateSheetTitle": {
+    "description": "Title of the sheet that picks the filters' event date."
+  },
+  "searchRecent": "Recent searches",
+  "@searchRecent": {
+    "description": "S1 section title."
+  },
+  "searchClear": "Clear",
+  "@searchClear": {
+    "description": "Link that empties the recent searches."
+  },
+  "searchRemoveRecent": "Remove {query}",
+  "@searchRemoveRecent": {
+    "description": "Screen-reader label of a recent search's remove button.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchBrowseCategories": "Browse categories",
+  "@searchBrowseCategories": {
+    "description": "S1 section title."
+  },
+  "resultsCount": "{count, plural, =0{No services} one{{count} service} other{{count} services}}",
+  "@resultsCount": {
+    "description": "How many results S2 found.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "resultsSortChip": "Sort · {order}",
+  "@resultsSortChip": {
+    "description": "S2 chip that opens the sort choices.",
+    "placeholders": {
+      "order": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsFiltersChip": "{count, plural, =0{Filters} other{Filters · {count}}}",
+  "@resultsFiltersChip": {
+    "description": "S2 chip that opens the filters drawer, with how many are on.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "resultsAllServices": "All services",
+  "@resultsAllServices": {
+    "description": "S2 title when there is neither a search nor a category."
+  },
+  "resultsEmptyTitle": "Nothing matches those filters",
+  "@resultsEmptyTitle": {
+    "description": "S2b title."
+  },
+  "resultsEmptyBody": "Try a wider budget, another wilaya or fewer filters.",
+  "@resultsEmptyBody": {
+    "description": "S2b body."
+  },
+  "resultsEmptySearch": "No services for “{query}”.",
+  "@resultsEmptySearch": {
+    "description": "S2b line naming the search that found nothing.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsClearFilters": "Clear all filters",
+  "@resultsClearFilters": {
+    "description": "S2b button."
+  },
+  "resultsLoadMoreFailed": "We could not load more results.",
+  "@resultsLoadMoreFailed": {
+    "description": "Under the list when the next page fails."
+  },
+  "resultsRemoveFilter": "Remove filter {label}",
+  "@resultsRemoveFilter": {
+    "description": "Screen-reader label of a removable filter chip.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "filterChipFavourites": "Favorites",
+  "@filterChipFavourites": {
+    "description": "Removable chip for the favourites-only filter."
+  },
+  "serviceAbout": "About this service",
+  "@serviceAbout": {
+    "description": "Section title on 12."
+  },
+  "serviceGoodToKnow": "Good to know",
+  "@serviceGoodToKnow": {
+    "description": "Card title on 12 and 20."
+  },
+  "serviceCancellation": "Provider's policy: {policy}",
+  "@serviceCancellation": {
+    "description": "The provider's own cancellation policy, quoted.",
+    "placeholders": {
+      "policy": {
+        "type": "String"
+      }
+    }
+  },
+  "serviceExtras": "Extras",
+  "@serviceExtras": {
+    "description": "Section title on 12: paid add-ons."
+  },
+  "servicePickDate": "Pick a date",
+  "@servicePickDate": {
+    "description": "Section title above the calendar on 12 and 20."
+  },
+  "selectedDateLabel": "Your date",
+  "@selectedDateLabel": {
+    "description": "Before the chosen day under the calendar."
+  },
+  "calendarConfirmNote": "The provider confirms the exact time after your request.",
+  "@calendarConfirmNote": {
+    "description": "Under the calendar on 12."
+  },
+  "monthLoadFailed": "We could not load this month.",
+  "@monthLoadFailed": {
+    "description": "In place of the calendar when a month fails to load."
+  },
+  "serviceReviews": "Reviews",
+  "@serviceReviews": {
+    "description": "Section title on 12, 13 and 20."
+  },
+  "serviceNoReviews": "No reviews yet",
+  "@serviceNoReviews": {
+    "description": "In the reviews section when there are none."
+  },
+  "servicePacksFromProvider": "Packs from this provider",
+  "@servicePacksFromProvider": {
+    "description": "Section title on 12."
+  },
+  "serviceReport": "Report this service",
+  "@serviceReport": {
+    "description": "Link at the foot of 12."
+  },
+  "upToGuests": "{count, plural, one{Up to {count} guest} other{Up to {count} guests}}",
+  "@upToGuests": {
+    "description": "A capacity line.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "yearsInBusiness": "{count, plural, one{{count} year in business} other{{count} years in business}}",
+  "@yearsInBusiness": {
+    "description": "On the provider mini-card.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "repliesIn": "Usually replies in {time}",
+  "@repliesIn": {
+    "description": "Reply time, from the API ('2 h').",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "detailGoneTitle": "This is no longer available",
+  "@detailGoneTitle": {
+    "description": "When a service, provider or pack was removed."
+  },
+  "detailGoneBody": "It may have been removed by the provider.",
+  "@detailGoneBody": {
+    "description": "Under 'This is no longer available'."
+  },
+  "detailGoneBack": "Go back",
+  "@detailGoneBack": {
+    "description": "Button on the no-longer-available card."
+  },
+  "profileChecked": "What we checked",
+  "@profileChecked": {
+    "description": "Section title on 13."
+  },
+  "checkIdentity": "Identity verified",
+  "@checkIdentity": {
+    "description": "A check on 13: national ID checked by Eventor."
+  },
+  "checkRegistration": "Registered activity",
+  "@checkRegistration": {
+    "description": "A check on 13: commercial register or artisan card verified."
+  },
+  "checkReplyTime": "Replies quickly",
+  "@checkReplyTime": {
+    "description": "A check on 13: measured over the last 30 days."
+  },
+  "profileAbout": "About",
+  "@profileAbout": {
+    "description": "Section title on 13."
+  },
+  "profileServices": "Services",
+  "@profileServices": {
+    "description": "Section title on 13."
+  },
+  "profileWhereTheyWork": "Where they work",
+  "@profileWhereTheyWork": {
+    "description": "Section title on 13."
+  },
+  "profileLanguages": "Speaks {languages}",
+  "@profileLanguages": {
+    "description": "Languages the provider speaks.",
+    "placeholders": {
+      "languages": {
+        "type": "String"
+      }
+    }
+  },
+  "profileMemberSince": "Member since",
+  "@profileMemberSince": {
+    "description": "Before the month and year the provider joined."
+  },
+  "profileReport": "Report this provider",
+  "@profileReport": {
+    "description": "Link at the foot of 13."
+  },
+  "langAr": "Arabic",
+  "@langAr": {
+    "description": "A language name."
+  },
+  "langFr": "French",
+  "@langFr": {
+    "description": "A language name."
+  },
+  "langEn": "English",
+  "@langEn": {
+    "description": "A language name."
+  },
+  "statReviewsLabel": "{count, plural, one{review} other{reviews}}",
+  "@statReviewsLabel": {
+    "description": "Under the rating in 13's stat strip (the number is shown above it).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statCompletedLabel": "{count, plural, one{booking completed} other{bookings completed}}",
+  "@statCompletedLabel": {
+    "description": "Under the completed count in 13's stat strip.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statYearsLabel": "{count, plural, one{year in business} other{years in business}}",
+  "@statYearsLabel": {
+    "description": "Under the years count in 13's stat strip.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packsSubtitle": "Bundles put together by one provider — a single price, everything included.",
+  "@packsSubtitle": {
+    "description": "Under the title of 19."
+  },
+  "packsAll": "All",
+  "@packsAll": {
+    "description": "Event type chip on 19: no filter."
+  },
+  "packsSortedBy": "Sorted by {order}",
+  "@packsSortedBy": {
+    "description": "The sort row on 19.",
+    "placeholders": {
+      "order": {
+        "type": "String"
+      }
+    }
+  },
+  "packOrderSavings": "best savings",
+  "@packOrderSavings": {
+    "description": "Pack sort order, inside 'Sorted by …'."
+  },
+  "packOrderPriceAsc": "lowest price",
+  "@packOrderPriceAsc": {
+    "description": "Pack sort order, inside 'Sorted by …'."
+  },
+  "packOrderPriceDesc": "highest price",
+  "@packOrderPriceDesc": {
+    "description": "Pack sort order, inside 'Sorted by …'."
+  },
+  "packOrderRating": "top rated",
+  "@packOrderRating": {
+    "description": "Pack sort order, inside 'Sorted by …'."
+  },
+  "packOrderPopular": "most popular",
+  "@packOrderPopular": {
+    "description": "Pack sort order, inside 'Sorted by …'."
+  },
+  "packsEmptyTitle": "No packs here yet",
+  "@packsEmptyTitle": {
+    "description": "19 when an event type has no packs."
+  },
+  "packsEmptyBody": "Try another event type.",
+  "@packsEmptyBody": {
+    "description": "Under 'No packs here yet'."
+  },
+  "packBadge": "{count, plural, one{Ready Pack · {count} service} other{Ready Pack · {count} services}}",
+  "@packBadge": {
+    "description": "Badge above a pack's name on 20.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packBookings": "{count, plural, =0{Not booked yet} one{Booked once} other{Booked {count} times}}",
+  "@packBookings": {
+    "description": "How often a pack was booked, on 20.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packVersus": "versus booking separately",
+  "@packVersus": {
+    "description": "Beside the saving on 20's price card."
+  },
+  "packInside": "What is inside",
+  "@packInside": {
+    "description": "Section title on 20."
+  },
+  "packBookedSeparately": "Booked separately",
+  "@packBookedSeparately": {
+    "description": "The total row under a pack's items."
+  },
+  "packCalendarHint": "Only days when every service in the pack is free.",
+  "@packCalendarHint": {
+    "description": "Under the calendar on 20."
+  },
+  "packAbout": "About this pack",
+  "@packAbout": {
+    "description": "Section title on 20."
+  },
+  "packAvailableIn": "Available in {wilayas}",
+  "@packAvailableIn": {
+    "description": "Where every service in the pack works.",
+    "placeholders": {
+      "wilayas": {
+        "type": "String"
+      }
+    }
+  },
+  "packAllServices": "{count, plural, one{{count} service included} other{all {count} services}}",
+  "@packAllServices": {
+    "description": "Under the price in 20's sticky bar.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "favouritesTitle": "Favorites",
+  "@favouritesTitle": {
+    "description": "Title of screen 17."
+  },
+  "favouritesServices": "Services",
+  "@favouritesServices": {
+    "description": "Tab on 17."
+  },
+  "favouritesPacks": "Packs",
+  "@favouritesPacks": {
+    "description": "Tab on 17."
+  },
+  "favouritesAll": "All",
+  "@favouritesAll": {
+    "description": "Category chip on 17: every category."
+  },
+  "favouritesEmptyServices": "No saved services yet",
+  "@favouritesEmptyServices": {
+    "description": "17's Services tab when empty."
+  },
+  "favouritesEmptyPacks": "No saved packs yet",
+  "@favouritesEmptyPacks": {
+    "description": "17's Packs tab when empty."
+  },
+  "favouritesEmptyBody": "Tap the heart on a service or a pack to keep it here.",
+  "@favouritesEmptyBody": {
+    "description": "Under 17's empty title."
+  },
+  "favouritesExplore": "Explore",
+  "@favouritesExplore": {
+    "description": "17's empty-state button: opens Search."
+  },
+  "pressBackAgainToExit": "Press back again to exit",
+  "@pressBackAgainToExit": {
+    "description": "Toast on Home after the first Back press; a second press within two seconds closes the app."
   }
 }

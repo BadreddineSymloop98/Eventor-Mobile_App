@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+import '../core/catalog/catalog_repository.dart';
+import '../core/catalog/favourites_controller.dart';
+import '../core/catalog/favourites_repository.dart';
 import '../core/config/app_config.dart';
 import '../core/constants/ui_helpers.dart';
 import '../core/localization/app_localizations_x.dart';
@@ -10,6 +13,7 @@ import '../core/reference/reference_repository.dart';
 import '../core/services/preferences_service.dart';
 import '../core/session/session_controller.dart';
 import '../core/theme/app_theme.dart';
+import '../features/shell/shell_badges.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/documents_repository.dart';
 import '../l10n/app_localizations.dart';
@@ -40,6 +44,14 @@ class EventorApp extends StatelessWidget {
         Provider<AuthRepository>.value(value: services.auth),
         Provider<ReferenceRepository>.value(value: services.reference),
         Provider<DocumentsRepository>.value(value: services.documents),
+        Provider<CatalogRepository>.value(value: services.catalog),
+        Provider<FavouritesRepository>.value(
+          value: services.favouritesRepository,
+        ),
+        ChangeNotifierProvider<FavouritesController>.value(
+          value: services.favourites,
+        ),
+        ChangeNotifierProvider<ShellBadges>.value(value: services.badges),
         // Null in a live build; only the debug gallery reads it.
         Provider<MockBackend?>.value(value: services.mockBackend),
       ],

@@ -113,6 +113,10 @@ abstract interface class AuthRepository {
 
   Future<AppUser> currentUser();
 
+  /// Saves the client's city — Home's wilaya pill. A permanent profile
+  /// change: the API has no per-session override.
+  Future<AppUser> updateWilaya(int wilayaCode);
+
   /// Ends the session on the server as well as on the device. Never throws —
   /// signing out must work offline.
   Future<void> logout();
@@ -227,6 +231,19 @@ class ApiAuthRepository implements AuthRepository {
   Future<AppUser> currentUser() async {
     final Object? data = await _api.get('/app/me');
     return AppUser.fromJson(_map(data));
+  }
+
+  @override
+  Future<AppUser> updateWilaya(int wilayaCode) async {
+    final Object? data = await _api.patch(
+      '/app/me',
+      body: <String, Object?>{'wilayaCode': wilayaCode},
+    );
+    // The update answers with the account; if it ever stops doing so, read
+    // it back rather than guess.
+    return data is Map<String, Object?> && data['id'] is String
+        ? AppUser.fromJson(data)
+        : currentUser();
   }
 
   @override

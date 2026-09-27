@@ -1,5 +1,6 @@
 import 'package:eventor/app/app_services.dart';
 import 'package:eventor/app/eventor_app.dart';
+import 'package:eventor/core/catalog/favourites_controller.dart';
 import 'package:eventor/core/config/app_config.dart';
 import 'package:eventor/core/constants/ui_helpers.dart';
 import 'package:eventor/core/localization/app_localizations_x.dart';
@@ -11,6 +12,7 @@ import 'package:eventor/core/session/session_controller.dart';
 import 'package:eventor/core/session/token_store.dart';
 import 'package:eventor/core/startup/app_startup.dart';
 import 'package:eventor/core/theme/app_theme.dart';
+import 'package:eventor/features/shell/shell_badges.dart';
 import 'package:eventor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,12 +32,16 @@ class TestApp {
     this.auth,
     this.reference,
     this.documents,
+    this.catalog,
+    this.favouritesRepository,
   );
 
   final AppServices services;
   final FakeAuthRepository auth;
   final FakeReferenceRepository reference;
   final FakeDocumentsRepository documents;
+  final FakeCatalogRepository catalog;
+  final FakeFavouritesRepository favouritesRepository;
 
   SessionController get session => services.session;
 
@@ -53,6 +59,8 @@ Future<TestApp> buildTestApp({
   bool hasSeenWelcome = false,
   Locale? locale,
   FakeAuthRepository? auth,
+  FakeCatalogRepository? catalog,
+  FakeFavouritesRepository? favourites,
   AppConfig config = const AppConfig(),
 }) async {
   SharedPreferences.setMockInitialValues(<String, Object>{
@@ -66,6 +74,9 @@ Future<TestApp> buildTestApp({
   final FakeReferenceRepository reference = FakeReferenceRepository();
   final FakeDocumentsRepository documents = FakeDocumentsRepository();
   final FakeConfigRepository fakeConfig = FakeConfigRepository(config);
+  final FakeCatalogRepository fakeCatalog = catalog ?? FakeCatalogRepository();
+  final FakeFavouritesRepository fakeFavourites =
+      favourites ?? FakeFavouritesRepository();
   final SessionController session = SessionController(fakeAuth);
   final AppStartup startup = AppStartup(config: fakeConfig, session: session);
   final TokenStore tokens = TokenStore();
@@ -79,6 +90,10 @@ Future<TestApp> buildTestApp({
     auth: fakeAuth,
     reference: reference,
     documents: documents,
+    catalog: fakeCatalog,
+    favouritesRepository: fakeFavourites,
+    favourites: FavouritesController(fakeFavourites),
+    badges: ShellBadges(),
     session: session,
     startup: startup,
     router: AppRouter.create(
@@ -93,6 +108,8 @@ Future<TestApp> buildTestApp({
     fakeAuth,
     reference,
     documents,
+    fakeCatalog,
+    fakeFavourites,
   );
 }
 

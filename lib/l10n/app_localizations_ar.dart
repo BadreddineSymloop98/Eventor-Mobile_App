@@ -686,8 +686,786 @@ class AppLocalizationsAr extends AppLocalizations {
   String get currencyDzd => 'دج';
 
   @override
+  String get priceOnQuote => 'حسب الطلب';
+
+  @override
   String get ratingNew => 'جديد';
 
   @override
+  String get comingSoon => 'قريبًا';
+
+  @override
+  String get stateErrorTitle => 'تعذّر تحميل هذا المحتوى';
+
+  @override
+  String get stateRetry => 'إعادة المحاولة';
+
+  @override
+  String get verifiedProvider => 'مقدّم خدمة موثّق';
+
+  @override
+  String get readMore => 'اقرأ المزيد';
+
+  @override
+  String get readLess => 'عرض أقل';
+
+  @override
+  String get seeAll => 'عرض الكل';
+
+  @override
+  String seeAllCount(int count) {
+    return 'عرض الكل ($count)';
+  }
+
+  @override
+  String get noLongerAvailable => 'لم يعد متاحًا';
+
+  @override
+  String get undo => 'تراجع';
+
+  @override
+  String get favouriteSave => 'حفظ';
+
+  @override
+  String get favouriteSaved => 'محفوظ';
+
+  @override
+  String get favouriteFailed => 'تعذّر تحديث المفضلة. حاول مرة أخرى.';
+
+  @override
+  String get favouriteRemoved => 'أُزيل من المفضلة';
+
+  @override
+  String get priceUnitPerEvent => 'للمناسبة';
+
+  @override
+  String get priceUnitPerHour => 'للساعة';
+
+  @override
+  String get priceUnitPerPerson => 'للشخص';
+
+  @override
+  String get priceUnitPerDay => 'لليوم';
+
+  @override
+  String get eventTypeWedding => 'زفاف';
+
+  @override
+  String get eventTypeEngagement => 'خطوبة';
+
+  @override
+  String get eventTypeHenna => 'حنّاء';
+
+  @override
+  String get eventTypeBirthday => 'عيد ميلاد';
+
+  @override
+  String get eventTypeCircumcision => 'ختان';
+
+  @override
+  String get eventTypeGraduation => 'تخرّج';
+
+  @override
+  String get eventTypeCorporate => 'مؤسسي';
+
+  @override
+  String get eventTypeConference => 'مؤتمر';
+
+  @override
+  String get eventTypeOther => 'أخرى';
+
+  @override
+  String get calendarSelected => 'المحدد';
+
+  @override
+  String get calendarAvailable => 'متاح';
+
+  @override
+  String get calendarBooked => 'محجوز بالكامل';
+
+  @override
+  String get calendarUnavailable => 'غير متاح';
+
+  @override
+  String get calendarPreviousMonth => 'الشهر السابق';
+
+  @override
+  String get calendarNextMonth => 'الشهر التالي';
+
+  @override
+  String calendarMinNotice(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'يجب الحجز قبل $count يوم على الأقل.',
+      many: 'يجب الحجز قبل $count يومًا على الأقل.',
+      few: 'يجب الحجز قبل $count أيام على الأقل.',
+      two: 'يجب الحجز قبل يومين على الأقل.',
+      one: 'يجب الحجز قبل يوم واحد على الأقل.',
+      zero: 'يمكن الحجز ابتداءً من اليوم.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notAcceptingTitle => 'لا يقبل حجوزات جديدة حاليًا';
+
+  @override
+  String get notAcceptingBody => 'يمكنك مراسلته';
+
+  @override
+  String get sendMessage => 'إرسال رسالة';
+
+  @override
+  String get messageProvider => 'مراسلة مقدّم الخدمة';
+
+  @override
+  String get requestBooking => 'طلب حجز';
+
+  @override
+  String get requestPack => 'طلب الباقة';
+
+  @override
+  String get packSave => 'وفّر';
+
+  @override
+  String basedOnReviews(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'بناءً على $count مراجعة',
+      many: 'بناءً على $count مراجعة',
+      few: 'بناءً على $count مراجعات',
+      two: 'بناءً على مراجعتين',
+      one: 'بناءً على مراجعة واحدة',
+      zero: 'لا توجد مراجعات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookedTimes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'حُجز $count مرة',
+      many: 'حُجز $count مرة',
+      few: 'حُجز $count مرات',
+      two: 'حُجز مرتين',
+      one: 'حُجز مرة واحدة',
+      zero: 'لم يُحجز بعد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String servicesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count خدمة',
+      many: '$count خدمة',
+      few: '$count خدمات',
+      two: 'خدمتان',
+      one: 'خدمة واحدة',
+      zero: 'لا خدمات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String packBy(String name) {
+    return 'من $name';
+  }
+
+  @override
+  String photoCounterLabel(int index, int count) {
+    return 'الصورة $index من $count';
+  }
+
+  @override
+  String get backLabelOnPhoto => 'رجوع';
+
+  @override
+  String get navHome => 'الرئيسية';
+
+  @override
+  String get navSearch => 'البحث';
+
+  @override
+  String get navBookings => 'الحجوزات';
+
+  @override
+  String get navMessages => 'الرسائل';
+
+  @override
   String get navProfile => 'الملف الشخصي';
+
+  @override
+  String get tabComingSoonTitle => 'قريبًا';
+
+  @override
+  String get tabComingSoonBody => 'هذا القسم من Eventor قيد التحضير.';
+
+  @override
+  String get profileFavourites => 'المفضلة';
+
+  @override
+  String get profileMoreSoon => 'المزيد من الإعدادات قريبًا.';
+
+  @override
+  String get greetingMorning => 'صباح الخير';
+
+  @override
+  String get greetingAfternoon => 'طاب يومك';
+
+  @override
+  String get greetingEvening => 'مساء الخير';
+
+  @override
+  String get chooseCity => 'اختر مدينتك';
+
+  @override
+  String get chooseCitySubtitle =>
+      'نعرض الخدمات التي تغطيها. تظهر فقط الولايات المفتوحة على Eventor.';
+
+  @override
+  String get cityChangeFailed => 'تعذّر تغيير مدينتك. حاول مرة أخرى.';
+
+  @override
+  String get homeSearchHint => 'ابحث عن خدمة أو مقدّم خدمة';
+
+  @override
+  String get homeFiltersLabel => 'الفلاتر';
+
+  @override
+  String get homeNotificationsLabel => 'الإشعارات';
+
+  @override
+  String get homeNotificationsUnread => 'الإشعارات، غير مقروءة';
+
+  @override
+  String get homeYourBookings => 'حجوزاتك';
+
+  @override
+  String get homeYourBudget => 'ميزانيتك';
+
+  @override
+  String get budgetDetails => 'التفاصيل';
+
+  @override
+  String get budgetOf => 'من أصل';
+
+  @override
+  String get budgetPlanned => 'مخطّطة';
+
+  @override
+  String budgetBooked(int booked, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count خدمة',
+      many: '$count خدمة',
+      few: '$count خدمات',
+      two: 'خدمتين',
+      one: 'خدمة واحدة',
+      zero: '0 خدمات',
+    );
+    return '$booked من $_temp0 محجوزة';
+  }
+
+  @override
+  String get budgetEmptyTitle => 'خطّط ميزانيتك';
+
+  @override
+  String get budgetEmptyBody =>
+      'حدّد مبلغًا إجماليًا ثم تابع التكلفة الفعلية لكل خدمة. أنت وحدك من يراها.';
+
+  @override
+  String get budgetCreate => 'إنشاء ميزانية';
+
+  @override
+  String get homeReadyPacks => 'باقات جاهزة';
+
+  @override
+  String get homeServicesNearYou => 'خدمات بالقرب منك';
+
+  @override
+  String get filtersTitle => 'الفلاتر';
+
+  @override
+  String get filtersClose => 'إغلاق الفلاتر';
+
+  @override
+  String get filtersSortBy => 'الترتيب حسب';
+
+  @override
+  String get sortRelevance => 'الأكثر صلة';
+
+  @override
+  String get sortPriceLow => 'الأقل سعرًا';
+
+  @override
+  String get sortPriceHigh => 'الأعلى سعرًا';
+
+  @override
+  String get sortRating => 'الأعلى تقييمًا';
+
+  @override
+  String get sortPopular => 'الأكثر طلبًا';
+
+  @override
+  String get sortNewest => 'الأحدث';
+
+  @override
+  String get filtersCategory => 'الفئة';
+
+  @override
+  String get filtersWilaya => 'الولاية';
+
+  @override
+  String get filtersAllWilayas => 'كل الولايات';
+
+  @override
+  String get filtersBudget => 'الميزانية';
+
+  @override
+  String get filtersEventDate => 'تاريخ المناسبة';
+
+  @override
+  String get filtersEventDateAny => 'أي تاريخ';
+
+  @override
+  String get filtersEventDateHint =>
+      'فقط مقدّمو الخدمات المتاحون في ذلك اليوم.';
+
+  @override
+  String get filtersEventDateClear => 'مسح التاريخ';
+
+  @override
+  String get filtersRating => 'التقييم';
+
+  @override
+  String get filtersRatingAny => 'الكل';
+
+  @override
+  String get filtersSaved => 'المحفوظات';
+
+  @override
+  String get filtersFavouritesOnly => 'المفضلة فقط';
+
+  @override
+  String get filtersClearAll => 'مسح الكل';
+
+  @override
+  String filtersShowCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'عرض $count خدمة',
+      many: 'عرض $count خدمة',
+      few: 'عرض $count خدمات',
+      two: 'عرض خدمتين',
+      one: 'عرض خدمة واحدة',
+      zero: 'لا توجد خدمات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get filtersShow => 'عرض الخدمات';
+
+  @override
+  String wilayaDoneCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم · $count ولاية',
+      many: 'تم · $count ولاية',
+      few: 'تم · $count ولايات',
+      two: 'تم · ولايتان',
+      one: 'تم · ولاية واحدة',
+      zero: 'تم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get wilayaClear => 'مسح';
+
+  @override
+  String get eventDateSheetTitle => 'اختر تاريخ مناسبتك';
+
+  @override
+  String get searchRecent => 'عمليات البحث الأخيرة';
+
+  @override
+  String get searchClear => 'مسح';
+
+  @override
+  String searchRemoveRecent(String query) {
+    return 'إزالة $query';
+  }
+
+  @override
+  String get searchBrowseCategories => 'تصفّح الفئات';
+
+  @override
+  String resultsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count خدمة',
+      many: '$count خدمة',
+      few: '$count خدمات',
+      two: 'خدمتان',
+      one: 'خدمة واحدة',
+      zero: 'لا توجد خدمات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String resultsSortChip(String order) {
+    return 'الترتيب · $order';
+  }
+
+  @override
+  String resultsFiltersChip(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'الفلاتر · $count',
+      many: 'الفلاتر · $count',
+      few: 'الفلاتر · $count',
+      two: 'الفلاتر · 2',
+      one: 'الفلاتر · 1',
+      zero: 'الفلاتر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get resultsAllServices => 'كل الخدمات';
+
+  @override
+  String get resultsEmptyTitle => 'لا شيء يطابق هذه الفلاتر';
+
+  @override
+  String get resultsEmptyBody =>
+      'جرّب ميزانية أوسع أو ولاية أخرى أو فلاتر أقل.';
+
+  @override
+  String resultsEmptySearch(String query) {
+    return 'لا توجد خدمات لـ «$query».';
+  }
+
+  @override
+  String get resultsClearFilters => 'مسح كل الفلاتر';
+
+  @override
+  String get resultsLoadMoreFailed => 'تعذّر تحميل المزيد من النتائج.';
+
+  @override
+  String resultsRemoveFilter(String label) {
+    return 'إزالة الفلتر $label';
+  }
+
+  @override
+  String get filterChipFavourites => 'المفضلة';
+
+  @override
+  String get serviceAbout => 'عن هذه الخدمة';
+
+  @override
+  String get serviceGoodToKnow => 'معلومات مفيدة';
+
+  @override
+  String serviceCancellation(String policy) {
+    return 'سياسة مقدّم الخدمة: $policy';
+  }
+
+  @override
+  String get serviceExtras => 'إضافات';
+
+  @override
+  String get servicePickDate => 'اختر تاريخًا';
+
+  @override
+  String get selectedDateLabel => 'تاريخك';
+
+  @override
+  String get calendarConfirmNote => 'يؤكد مقدّم الخدمة الوقت بالضبط بعد طلبك.';
+
+  @override
+  String get monthLoadFailed => 'تعذّر تحميل هذا الشهر.';
+
+  @override
+  String get serviceReviews => 'المراجعات';
+
+  @override
+  String get serviceNoReviews => 'لا توجد مراجعات بعد';
+
+  @override
+  String get servicePacksFromProvider => 'باقات من مقدّم الخدمة هذا';
+
+  @override
+  String get serviceReport => 'الإبلاغ عن هذه الخدمة';
+
+  @override
+  String upToGuests(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'حتى $count ضيف',
+      many: 'حتى $count ضيفًا',
+      few: 'حتى $count ضيوف',
+      two: 'حتى ضيفين',
+      one: 'حتى ضيف واحد',
+      zero: 'بدون ضيوف',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String yearsInBusiness(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count سنة في المجال',
+      many: '$count سنة في المجال',
+      few: '$count سنوات في المجال',
+      two: 'سنتان في المجال',
+      one: 'سنة واحدة في المجال',
+      zero: 'أقل من سنة في المجال',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String repliesIn(String time) {
+    return 'يرد عادةً خلال $time';
+  }
+
+  @override
+  String get detailGoneTitle => 'لم يعد هذا متاحًا';
+
+  @override
+  String get detailGoneBody => 'ربما أزاله مقدّم الخدمة.';
+
+  @override
+  String get detailGoneBack => 'رجوع';
+
+  @override
+  String get profileChecked => 'ما تحقّقنا منه';
+
+  @override
+  String get checkIdentity => 'الهوية موثّقة';
+
+  @override
+  String get checkRegistration => 'نشاط مسجّل';
+
+  @override
+  String get checkReplyTime => 'يرد بسرعة';
+
+  @override
+  String get profileAbout => 'نبذة';
+
+  @override
+  String get profileServices => 'الخدمات';
+
+  @override
+  String get profileWhereTheyWork => 'أين يعمل';
+
+  @override
+  String profileLanguages(String languages) {
+    return 'يتحدث $languages';
+  }
+
+  @override
+  String get profileMemberSince => 'عضو منذ';
+
+  @override
+  String get profileReport => 'الإبلاغ عن مقدّم الخدمة';
+
+  @override
+  String get langAr => 'العربية';
+
+  @override
+  String get langFr => 'الفرنسية';
+
+  @override
+  String get langEn => 'الإنجليزية';
+
+  @override
+  String statReviewsLabel(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'مراجعة',
+      many: 'مراجعة',
+      few: 'مراجعات',
+      two: 'مراجعتان',
+      one: 'مراجعة',
+      zero: 'مراجعات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String statCompletedLabel(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'حجز مكتمل',
+      many: 'حجزًا مكتملًا',
+      few: 'حجوزات مكتملة',
+      two: 'حجزان مكتملان',
+      one: 'حجز مكتمل',
+      zero: 'حجوزات مكتملة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String statYearsLabel(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'سنة في المجال',
+      many: 'سنة في المجال',
+      few: 'سنوات في المجال',
+      two: 'سنتان في المجال',
+      one: 'سنة في المجال',
+      zero: 'سنوات في المجال',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get packsSubtitle =>
+      'باقات يجمعها مقدّم خدمة واحد — سعر واحد، كل شيء مشمول.';
+
+  @override
+  String get packsAll => 'الكل';
+
+  @override
+  String packsSortedBy(String order) {
+    return 'مرتبة حسب $order';
+  }
+
+  @override
+  String get packOrderSavings => 'أفضل توفير';
+
+  @override
+  String get packOrderPriceAsc => 'الأقل سعرًا';
+
+  @override
+  String get packOrderPriceDesc => 'الأعلى سعرًا';
+
+  @override
+  String get packOrderRating => 'الأعلى تقييمًا';
+
+  @override
+  String get packOrderPopular => 'الأكثر طلبًا';
+
+  @override
+  String get packsEmptyTitle => 'لا توجد باقات هنا بعد';
+
+  @override
+  String get packsEmptyBody => 'جرّب نوع مناسبة آخر.';
+
+  @override
+  String packBadge(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'باقة جاهزة · $count خدمة',
+      many: 'باقة جاهزة · $count خدمة',
+      few: 'باقة جاهزة · $count خدمات',
+      two: 'باقة جاهزة · خدمتان',
+      one: 'باقة جاهزة · خدمة واحدة',
+      zero: 'باقة جاهزة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String packBookings(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'حُجزت $count مرة',
+      many: 'حُجزت $count مرة',
+      few: 'حُجزت $count مرات',
+      two: 'حُجزت مرتين',
+      one: 'حُجزت مرة واحدة',
+      zero: 'لم تُحجز بعد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get packVersus => 'مقارنة بالحجز المنفصل';
+
+  @override
+  String get packInside => 'ما تتضمنه الباقة';
+
+  @override
+  String get packBookedSeparately => 'عند الحجز المنفصل';
+
+  @override
+  String get packCalendarHint =>
+      'فقط الأيام التي تكون فيها كل خدمات الباقة متاحة.';
+
+  @override
+  String get packAbout => 'عن هذه الباقة';
+
+  @override
+  String packAvailableIn(String wilayas) {
+    return 'متاحة في $wilayas';
+  }
+
+  @override
+  String packAllServices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count خدمة مشمولة',
+      many: '$count خدمة مشمولة',
+      few: '$count خدمات مشمولة',
+      two: 'خدمتان مشمولتان',
+      one: 'خدمة واحدة مشمولة',
+      zero: 'بدون خدمات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get favouritesTitle => 'المفضلة';
+
+  @override
+  String get favouritesServices => 'الخدمات';
+
+  @override
+  String get favouritesPacks => 'الباقات';
+
+  @override
+  String get favouritesAll => 'الكل';
+
+  @override
+  String get favouritesEmptyServices => 'لا توجد خدمات محفوظة بعد';
+
+  @override
+  String get favouritesEmptyPacks => 'لا توجد باقات محفوظة بعد';
+
+  @override
+  String get favouritesEmptyBody =>
+      'اضغط على القلب في أي خدمة أو باقة للاحتفاظ بها هنا.';
+
+  @override
+  String get favouritesExplore => 'استكشف';
+
+  @override
+  String get pressBackAgainToExit => 'اضغط رجوع مرة أخرى للخروج';
 }

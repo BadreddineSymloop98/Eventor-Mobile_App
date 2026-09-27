@@ -232,5 +232,28 @@ void main() {
         expect(broken.isSignedIn, isTrue);
       });
     });
+
+    group('updateUser', () {
+      test('replaces the signed-in account and says so', () async {
+        session.signedIn(testUser());
+        notifications = 0;
+        const Wilaya oran = Wilaya(code: 31, nameEn: 'Oran', nameAr: 'وهران');
+
+        session.updateUser(testUser(wilaya: oran));
+
+        expect(session.user?.wilaya, oran);
+        expect(notifications, 1);
+      });
+
+      test('does nothing once signed out', () async {
+        await session.restore();
+        notifications = 0;
+
+        session.updateUser(testUser());
+
+        expect(session.isSignedIn, isFalse);
+        expect(notifications, 0);
+      });
+    });
   });
 }

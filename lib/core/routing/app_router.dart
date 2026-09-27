@@ -12,6 +12,33 @@ import '../../features/forgot_password/view_model/forgot_password_view_model.dar
 import '../../features/gallery/view/gallery_view.dart';
 import '../../features/home/view/home_view.dart';
 import '../../features/home/view_model/home_view_model.dart';
+import '../../features/favourites/view/favourites_view.dart';
+import '../../features/favourites/view_model/favourites_view_model.dart';
+import '../../features/pack_detail/view/pack_detail_view.dart';
+import '../../features/pack_detail/view_model/pack_detail_view_model.dart';
+import '../../features/packs/view/packs_view.dart';
+import '../../features/packs/view_model/packs_view_model.dart';
+import '../../features/provider_profile/view/provider_profile_view.dart';
+import '../../features/provider_profile/view_model/provider_profile_view_model.dart';
+import '../../features/search/view/results_view.dart';
+import '../../features/service_detail/view/service_detail_view.dart';
+import '../../features/service_detail/view_model/service_detail_view_model.dart';
+import '../../features/search/view/search_view.dart';
+import '../../features/search/view_model/results_view_model.dart';
+import '../../features/search/view_model/search_view_model.dart';
+import '../../features/shell/shell_badges.dart';
+import '../catalog/favourites_controller.dart';
+import '../catalog/favourites_repository.dart';
+import '../catalog/models/pack.dart';
+import '../catalog/recent_searches.dart';
+import '../catalog/service_query.dart';
+import '../catalog/catalog_repository.dart';
+import '../../features/provider_home/view/provider_home_view.dart';
+import '../../features/shell/view/client_shell.dart';
+import '../../features/shell/view/placeholder_tab_view.dart';
+import '../../features/shell/view/profile_tab_view.dart';
+import '../localization/app_localizations_x.dart';
+import '../widgets/atoms/app_icon.dart';
 import '../../features/login/view/login_view.dart';
 import '../../features/login/view_model/login_view_model.dart';
 import '../../features/onboarding/view/onboarding_view.dart';
@@ -100,6 +127,14 @@ class AppRedirect {
       if (path == AppRoutes.documents && !user.isProvider) {
         return AppRoutes.home;
       }
+      // Two homes: the client shell and, until 21 is built, the provider's
+      // placeholder. A deep link or a stale stack never crosses over.
+      if (user.isProvider && AppRoutes.isClientOnly(path)) {
+        return AppRoutes.providerHome;
+      }
+      if (!user.isProvider && path == AppRoutes.providerHome) {
+        return AppRoutes.home;
+      }
       // Reached the one-off landing (a new provider's documents): retire it.
       session.arrivedAt(path);
       return null;
@@ -118,7 +153,8 @@ class AppRedirect {
 
   String _landing() {
     if (session.isSignedIn) {
-      return session.landing ?? AppRoutes.home;
+      return session.landing ??
+          (session.user!.isProvider ? AppRoutes.providerHome : AppRoutes.home);
     }
     return _signedOutLanding();
   }
@@ -295,11 +331,145 @@ abstract final class AppRouter {
             const SetPasswordView(),
           ),
         ),
+        // The client's five tabs. Each branch keeps its own stack; the
+        // catalog's detail screens below are top-level routes, so they open
+        // over the tab bar, full screen, as drawn.
+        StatefulShellRoute.indexedStack(
+          builder: (_, _, StatefulNavigationShell shell) =>
+              ClientShell(navigationShell: shell),
+          branches: <StatefulShellBranch>[
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: AppRoutes.home,
+                  builder: (_, _) => _withViewModel<HomeViewModel>(
+                    (BuildContext context) => HomeViewModel(
+                      catalog: context.read<CatalogRepository>(),
+                      auth: context.read<AuthRepository>(),
+                      session: context.read<SessionController>(),
+                      badges: context.read<ShellBadges>(),
+                      reference: context.read<ReferenceRepository>(),
+                    ),
+                    const HomeView(),
+                  ),
+                  // Results opened from Home stay in the Home tab, so Back
+                  // returns to Home.
+                  routes: <RouteBase>[
+                    GoRoute(path: 'results', builder: _resultsPage),
+                  ],
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: AppRoutes.search,
+                  builder: (_, _) => _withViewModel<SearchViewModel>(
+                    (BuildContext context) => SearchViewModel(
+                      catalog: context.read<CatalogRepository>(),
+                      recents: RecentSearches(context.read<PreferencesService>()),
+                    ),
+                    const SearchView(),
+                  ),
+                  routes: <RouteBase>[
+                    GoRoute(path: 'results', builder: _resultsPage),
+                  ],
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: AppRoutes.bookings,
+                  builder: (BuildContext context, _) => PlaceholderTabView(
+                    title: context.l10n.navBookings,
+                    icon: AppIcons.calendar,
+                  ),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: AppRoutes.messages,
+                  builder: (BuildContext context, _) => PlaceholderTabView(
+                    title: context.l10n.navMessages,
+                    icon: AppIcons.message,
+                  ),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: <RouteBase>[
+                GoRoute(
+                  path: AppRoutes.profile,
+                  builder: (_, _) => const ProfileTabView(),
+                ),
+              ],
+            ),
+          ],
+        ),
         GoRoute(
-          path: AppRoutes.home,
-          builder: (_, _) => _withViewModel<HomeViewModel>(
-            (_) => HomeViewModel(),
-            const HomeView(),
+          path: AppRoutes.providerHome,
+          builder: (_, _) => const ProviderHomeView(),
+        ),
+        // The catalog's detail screens: top-level, so they open over the tab
+        // bar, full screen, as drawn.
+        GoRoute(
+          path: '${AppRoutes.services}/:id',
+          builder: (_, GoRouterState state) =>
+              _withViewModel<ServiceDetailViewModel>(
+            (BuildContext context) => ServiceDetailViewModel(
+              id: state.pathParameters['id']!,
+              catalog: context.read<CatalogRepository>(),
+            ),
+            const ServiceDetailView(),
+          ),
+        ),
+        GoRoute(
+          path: '${AppRoutes.providers}/:id',
+          builder: (_, GoRouterState state) =>
+              _withViewModel<ProviderProfileViewModel>(
+            (BuildContext context) => ProviderProfileViewModel(
+              id: state.pathParameters['id']!,
+              catalog: context.read<CatalogRepository>(),
+            ),
+            const ProviderProfileView(),
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.packs,
+          builder: (_, GoRouterState state) {
+            final String? type = state.uri.queryParameters['eventType'];
+            return _withViewModel<PacksViewModel>(
+              (BuildContext context) => PacksViewModel(
+                catalog: context.read<CatalogRepository>(),
+                eventType: type == null ? null : EventType.fromApi(type),
+              ),
+              const PacksView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '${AppRoutes.packs}/:id',
+          builder: (_, GoRouterState state) =>
+              _withViewModel<PackDetailViewModel>(
+            (BuildContext context) => PackDetailViewModel(
+              id: state.pathParameters['id']!,
+              catalog: context.read<CatalogRepository>(),
+            ),
+            const PackDetailView(),
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.favourites,
+          builder: (_, _) => _withViewModel<FavouritesViewModel>(
+            (BuildContext context) => FavouritesViewModel(
+              favourites: context.read<FavouritesRepository>(),
+              catalog: context.read<CatalogRepository>(),
+              controller: context.read<FavouritesController>(),
+            ),
+            const FavouritesView(),
           ),
         ),
         if (kDebugMode)
@@ -310,6 +480,19 @@ abstract final class AppRouter {
       ],
     );
   }
+
+  /// S2 / S2a / S2b, under Search or under Home. Keyed by the whole URL: a
+  /// new sort or filter is a new results page with its own view model, not a
+  /// reload of the old one.
+  static Widget _resultsPage(BuildContext _, GoRouterState state) =>
+      _withViewModel<ResultsViewModel>(
+        (BuildContext context) => ResultsViewModel(
+          query: ServiceQuery.fromRouteParams(state.uri.queryParametersAll),
+          catalog: context.read<CatalogRepository>(),
+        ),
+        const ResultsView(),
+        key: ValueKey<String>(state.uri.toString()),
+      );
 
   /// Wraps [child] in a [ChangeNotifierProvider] holding its view model,
   /// created from the route's own context so it can read the app's services.

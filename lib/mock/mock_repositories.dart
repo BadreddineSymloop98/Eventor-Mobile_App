@@ -100,6 +100,12 @@ class MockAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<AppUser> updateWilaya(int wilayaCode) async {
+    await _backend.delay();
+    return (await _backend.setWilaya(wilayaCode)).toUser();
+  }
+
+  @override
   Future<void> logout() => _backend.signOut();
 }
 

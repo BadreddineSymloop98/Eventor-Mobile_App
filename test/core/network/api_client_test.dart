@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:eventor/core/errors/failure.dart';
 import 'package:eventor/core/network/api_client.dart';
@@ -384,6 +386,184 @@ void main() {
 
       expect(await client.restoreSession(), isFalse);
       expect(tokens.refreshToken, isNull);
+    });
+  });
+
+  group('ApiClient with an access token about to expire', () {
+    /// A JWT whose `exp` is [secondsFromNow] away. Only the payload matters.
+    String jwt(int secondsFromNow) {
+      final int exp = DateTime.now().millisecondsSinceEpoch ~/ 1000 + secondsFromNow;
+      String part(Map<String, Object?> json) =>
+          base64Url.encode(utf8.encode(jsonEncode(json))).replaceAll('=', '');
+      return '${part(<String, Object?>{'alg': 'HS256'})}.'
+          '${part(<String, Object?>{'sub': 'u', 'exp': exp})}.sig';
+    }
+
+    Future<void> startWith(String accessToken) async {
+      FlutterSecureStorage.setMockInitialValues(<String, String>{
+        _accessKey: accessToken,
+        _refreshKey: 'refresh-1',
+      });
+      tokens = TokenStore();
+      await tokens.load();
+      adapter = ScriptedAdapter((RequestOptions request) async {
+        if (request.path == _refreshPath) {
+          return jsonResponse(<String, Object?>{
+            'data': <String, Object?>{
+              'accessToken': 'access-2',
+              'refreshToken': 'refresh-2',
+            },
+          });
+        }
+        return jsonResponse(<String, Object?>{
+          'data': <String, Object?>{'auth': request.headers['Authorization']},
+        });
+      });
+      client = scriptedClient(adapter, tokens);
+    }
+
+    test('renews it before a signed-in call', () async {
+      // Public catalog routes treat an expired token as no token at all —
+      // no 401 would ever trigger the refresh, and every heart would read
+      // empty. So it is renewed before it is sent.
+      await startWith(jwt(-60));
+
+      final Object? data = await client.get('/app/services');
+
+      expect(adapter.requests.first.path, _refreshPath);
+      expect(data, <String, Object?>{'auth': 'Bearer access-2'});
+    });
+
+    test('renews it when it has seconds left', () async {
+      await startWith(jwt(10));
+
+      await client.get('/app/services');
+
+      expect(adapter.requestsTo(_refreshPath), hasLength(1));
+    });
+
+    test('leaves a fresh one alone', () async {
+      await startWith(jwt(600));
+
+      await client.get('/app/services');
+
+      expect(adapter.requestsTo(_refreshPath), isEmpty);
+    });
+
+    test('never renews for a public call', () async {
+      await startWith(jwt(-60));
+
+      await client.get('/app/wilayas', isPublic: true);
+
+      expect(adapter.requestsTo(_refreshPath), isEmpty);
+    });
+  });
+
+  group('ApiClient pages', () {
+    setUp(start);
+
+    Responder pageOf(List<Object?> items, {int page = 1, int totalPages = 3}) =>
+        (RequestOptions request) async => jsonResponse(<String, Object?>{
+              'data': items,
+              'meta': <String, Object?>{
+                'page': page,
+                'limit': 20,
+                'total': 41,
+                'totalPages': totalPages,
+              },
+            });
+
+    test('keep the items and the paging meta', () async {
+      adapter.respond = pageOf(<Object?>[
+        <String, Object?>{'id': 'a'},
+        <String, Object?>{'id': 'b'},
+      ]);
+
+      final ApiPage<Map<String, Object?>> page =
+          await client.getPage('/app/services');
+
+      expect(page.items.map((Map<String, Object?> item) => item['id']),
+          <Object?>['a', 'b']);
+      expect(page.page, 1);
+      expect(page.totalPages, 3);
+      expect(page.total, 41);
+      expect(page.hasMore, isTrue);
+    });
+
+    test('have no more on the last page', () async {
+      adapter.respond = pageOf(<Object?>[], page: 3);
+
+      expect((await client.getPage('/app/services')).hasMore, isFalse);
+    });
+
+    test('have no more when the result is empty', () async {
+      // An empty result comes back with totalPages 0.
+      adapter.respond = pageOf(<Object?>[], totalPages: 0);
+
+      final ApiPage<Map<String, Object?>> page =
+          await client.getPage('/app/services');
+
+      expect(page.items, isEmpty);
+      expect(page.hasMore, isFalse);
+    });
+
+    test('send a list parameter as the key repeated', () async {
+      // The API rejects `wilaya=16,31` and `wilaya[]=16`.
+      adapter.respond = pageOf(<Object?>[]);
+
+      await client.getPage(
+        '/app/services',
+        query: <String, Object?>{
+          'wilaya': <int>[16, 31],
+        },
+      );
+
+      expect(
+        adapter.requests.single.uri.query,
+        'wilaya=16&wilaya=31',
+      );
+    });
+
+    test('map their items', () async {
+      adapter.respond = pageOf(<Object?>[
+        <String, Object?>{'id': 'a'},
+      ]);
+
+      final ApiPage<String> page = (await client.getPage('/app/services'))
+          .map((Map<String, Object?> item) => item['id']! as String);
+
+      expect(page.items, <String>['a']);
+      expect(page.total, 41);
+    });
+  });
+
+  group('ApiClient deletes', () {
+    setUp(start);
+
+    test('go out as DELETE with the token, and accept a 204', () async {
+      adapter.respond = (RequestOptions request) async =>
+          ResponseBody.fromString('', 204);
+
+      await client.delete('/app/me/favourites/f-1');
+
+      final RequestOptions request = adapter.requests.single;
+      expect(request.method, 'DELETE');
+      expect(request.path, '/app/me/favourites/f-1');
+      expect(request.headers['Authorization'], 'Bearer access-1');
+    });
+
+    test('turn a 404 into its code', () async {
+      adapter.respond = (RequestOptions request) async =>
+          errorResponse(404, ApiErrorCode.favouriteNotFound);
+
+      await expectLater(
+        client.delete('/app/me/favourites/gone'),
+        throwsA(
+          isA<ApiFailure>()
+              .having((ApiFailure f) => f.code, 'code',
+                  ApiErrorCode.favouriteNotFound),
+        ),
+      );
     });
   });
 }

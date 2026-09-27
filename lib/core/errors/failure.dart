@@ -136,4 +136,11 @@ abstract final class ApiErrorCode {
   static const String fileTooLarge = 'FILE_TOO_LARGE';
   static const String fileTypeNotAllowed = 'FILE_TYPE_NOT_ALLOWED';
 
+  // Catalog and favourites.
+  static const String serviceNotFound = 'SERVICE_NOT_FOUND';
+  static const String packNotFound = 'PACK_NOT_FOUND';
+  static const String providerNotFound = 'PROVIDER_NOT_FOUND';
+  static const String favouriteNotFound = 'FAVOURITE_NOT_FOUND';
+  static const String favouriteTargetInvalid = 'FAVOURITE_TARGET_INVALID';
+  static const String forbiddenRole = 'FORBIDDEN_ROLE';
 }

@@ -1,3 +1,5 @@
+import '../catalog/models/pack.dart';
+import '../catalog/service_query.dart';
 import '../models/account.dart';
 
 /// Every place the app can be, as a path.
@@ -44,8 +46,37 @@ abstract final class AppRoutes {
   /// `10f` / `10g` — an admin's invite link. `?token=`.
   static const String setPassword = '/set-password';
 
-  /// Where a signed-in user lands.
+  /// `11` — the client's first tab.
   static const String home = '/home';
+
+  // The client shell's other tabs.
+  static const String search = '/search';
+  static const String bookings = '/bookings';
+  static const String messages = '/messages';
+  static const String profile = '/profile';
+
+  /// `S2` / `S2a` / `S2b`, inside the Search tab. Filters travel as query
+  /// parameters — see [resultsFor].
+  static const String results = '/search/results';
+
+  /// The same results, opened from Home — inside the Home tab, so Back
+  /// returns to Home rather than to Search.
+  static const String homeResults = '/home/results';
+
+  /// `12`. See [serviceFor].
+  static const String services = '/services';
+
+  /// `13`. See [providerFor].
+  static const String providers = '/providers';
+
+  /// `19`, and `20` below it. See [packsFor] and [packFor].
+  static const String packs = '/packs';
+
+  /// `17`.
+  static const String favourites = '/favourites';
+
+  /// A provider's placeholder home until `21` is built.
+  static const String providerHome = '/provider';
 
   /// The component gallery. Only registered in debug builds.
   static const String gallery = '/gallery';
@@ -81,6 +112,45 @@ abstract final class AppRoutes {
         ? login
         : Uri(path: login, queryParameters: query).toString();
   }
+
+  static String serviceFor(String id) => '$services/$id';
+
+  static String providerFor(String id) => '$providers/$id';
+
+  static String packFor(String id) => '$packs/$id';
+
+  /// 19, optionally opened on one event type.
+  static String packsFor({EventType? eventType}) => eventType == null
+      ? packs
+      : Uri(path: packs, queryParameters: <String, String>{
+          'eventType': eventType.apiValue,
+        }).toString();
+
+  /// Results for [query] — the search text, a category, the filters — at
+  /// [base]: [results] from Search, [homeResults] from Home.
+  static String resultsFor(ServiceQuery query, {String base = results}) {
+    final Map<String, Object> params = query.toRouteParams();
+    return Uri(
+      path: base,
+      queryParameters: params.isEmpty ? null : params,
+    ).toString();
+  }
+
+  /// The screens only a client may see: the shell's tabs and the catalog.
+  /// A provider is sent to [providerHome] instead.
+  static bool isClientOnly(String path) =>
+      path == home ||
+      path.startsWith('$home/') ||
+      path == search ||
+      path.startsWith('$search/') ||
+      path == bookings ||
+      path == messages ||
+      path == profile ||
+      path.startsWith('$services/') ||
+      path.startsWith('$providers/') ||
+      path == packs ||
+      path.startsWith('$packs/') ||
+      path == favourites;
 
   static String resetCodeFor(String email) => Uri(
         path: resetCode,

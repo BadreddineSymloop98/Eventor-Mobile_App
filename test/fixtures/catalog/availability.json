@@ -1,0 +1,134 @@
+{
+  "data": {
+    "month": "2026-10",
+    "maxEventsPerDay": 1,
+    "minNoticeDays": 1,
+    "firstBookableDate": "2026-09-25",
+    "days": [
+      {
+        "date": "2026-10-01",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-02",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-03",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-04",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-05",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-06",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-07",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-08",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-09",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-10",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-11",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-12",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-13",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-14",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-15",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-16",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-17",
+        "state": "busy"
+      },
+      {
+        "date": "2026-10-18",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-19",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-20",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-21",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-22",
+        "state": "busy"
+      },
+      {
+        "date": "2026-10-23",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-24",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-25",
+        "state": "busy"
+      },
+      {
+        "date": "2026-10-26",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-27",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-28",
+        "state": "available"
+      },
+      {
+        "date": "2026-10-29",
+        "state": "blocked"
+      },
+      {
+        "date": "2026-10-30",
+        "state": "busy"
+      },
+      {
+        "date": "2026-10-31",
+        "state": "available"
+      }
+    ]
+  }
+}

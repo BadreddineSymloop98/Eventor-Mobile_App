@@ -65,6 +65,9 @@ enum AppIcons {
   messageFilled('message-filled'),
   userFilled('user-filled'),
 
+  /// A saved favourite — `heart`'s outer silhouette, made solid the same way.
+  heartFilled('heart-filled'),
+
   // `eye` / `eye-off` are Feather's own, drawn in the same 2pt stroke as the
   // rest, for the password visibility toggle. `document`, `upload` and `trash`
   // predate the design's set and are only used by the document upload field

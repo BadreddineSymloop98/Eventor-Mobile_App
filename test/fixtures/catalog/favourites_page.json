@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "id": "fav-1",
+      "kind": "service",
+      "targetId": "892e3d17-0f2e-4348-a5f0-5a0df2b285ef",
+      "title": "Wedding photo & video coverage",
+      "titleEn": "Wedding photo & video coverage",
+      "titleAr": "تغطية زفاف بالصورة والفيديو",
+      "providerName": "Studio Lumière",
+      "category": {
+        "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+        "slug": "photographie",
+        "name": "Photography",
+        "nameEn": "Photography",
+        "nameAr": "التصوير",
+        "icon": "camera"
+      },
+      "fromPrice": "120000.00",
+      "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/944630eb-2dad-47f4-a9e1-280fd69bee3b?variant=medium&exp=1790240162&sig=7RezEfgShv6vboib-1XNTV3aWDbm45yhmfNXLopG5Fw",
+      "avgRating": "5.00",
+      "ratingCount": 2,
+      "available": true,
+      "createdAt": "2026-09-20T10:00:00.000Z"
+    },
+    {
+      "id": "fav-2",
+      "kind": "pack",
+      "targetId": "e03b28ba-30dd-4eb0-ada3-4d74d878ffee",
+      "title": "Mariage Vue sur Mer",
+      "titleEn": "Mariage Vue sur Mer",
+      "titleAr": "زفاف بإطلالة على البحر",
+      "providerName": "Salle El Bahia",
+      "category": null,
+      "fromPrice": "399000.00",
+      "coverUrl": null,
+      "avgRating": "0.00",
+      "ratingCount": 0,
+      "available": false,
+      "createdAt": "2026-09-19T10:00:00.000Z"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 2,
+    "totalPages": 1
+  }
+}

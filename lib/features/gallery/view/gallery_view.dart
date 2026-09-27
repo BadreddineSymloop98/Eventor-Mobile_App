@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/ui_helpers.dart';
 import '../../../core/localization/locale_controller.dart';
 import '../../../core/session/session_controller.dart';
+import '../../../core/catalog/models/catalog_models.dart';
 import '../../../core/widgets/atoms/app_avatar.dart';
 import '../../../core/widgets/atoms/app_chip.dart';
 import '../../../core/widgets/atoms/app_icon.dart';
@@ -13,7 +14,9 @@ import '../../../core/widgets/atoms/icon_tile.dart';
 import '../../../core/widgets/atoms/page_dots.dart';
 import '../../../core/widgets/atoms/rating_line.dart';
 import '../../../core/widgets/atoms/rating_view.dart';
+import '../../../core/widgets/atoms/skeleton.dart';
 import '../../../core/widgets/atoms/status_badge.dart';
+import '../../../core/widgets/atoms/verified_badge.dart';
 import '../../../core/widgets/molecules/app_select_field.dart';
 import '../../../core/widgets/molecules/app_text_field.dart';
 import '../../../core/widgets/molecules/code_input.dart';
@@ -25,10 +28,17 @@ import '../../../core/widgets/molecules/nav_item.dart';
 import '../../../core/widgets/molecules/price_text.dart';
 import '../../../core/widgets/molecules/prompt_row.dart';
 import '../../../core/widgets/molecules/role_card.dart';
+import '../../../core/widgets/molecules/section_header.dart';
+import '../../../core/widgets/molecules/stat_strip.dart';
+import '../../../core/widgets/molecules/state_card.dart';
 import '../../../core/widgets/organisms/app_bottom_nav.dart';
 import '../../../core/widgets/organisms/app_top_bar.dart';
 import '../../../core/widgets/organisms/cards.dart';
+import '../../../core/widgets/organisms/info_card.dart';
+import '../../../core/widgets/organisms/month_calendar.dart';
+import '../../../core/widgets/organisms/pack_cards.dart';
 import '../../../core/widgets/organisms/selection_sheet.dart';
+import '../../../core/widgets/organisms/sticky_action_bar.dart';
 import '../../../mock/mock_backend.dart';
 
 /// Every component in the library, in every state — a debug-only screen for
@@ -52,6 +62,7 @@ class _GalleryViewState extends State<GalleryView> {
   int _chip = 0;
   int _tab = 0;
   bool _role = true;
+  DateTime? _calendarDay;
 
   @override
   void dispose() {
@@ -279,7 +290,54 @@ class _GalleryViewState extends State<GalleryView> {
           _section('Prices & ratings'),
           const PriceText(amount: '45000.00', prefix: 'From', unit: 'per day'),
           _gap(),
+          const ServicePrice(amount: '120000.00', type: PriceType.onQuote),
+          _gap(),
+          const SavingsPill(savings: '45000.00', percent: 12),
+          _gap(),
           const Row(children: <Widget>[RatingLine(avgRating: '4.80', ratingCount: 32), SizedBox(width: 16), RatingLine(avgRating: '0.00', ratingCount: 0)]),
+          _gap(),
+          const Align(alignment: AlignmentDirectional.centerStart, child: VerifiedBadge()),
+          _gap(),
+          const StatStrip(<StatItem>[
+            StatItem(value: '4.8', label: 'reviews', icon: AppIcons.starFilled),
+            StatItem(value: '48', label: 'bookings completed'),
+            StatItem(value: '6', label: 'years in business'),
+          ]),
+          _section('States (G1 / G2)'),
+          const SectionHeader(title: 'Ready Packs', actionLabel: 'See all', onAction: _noop),
+          _gap(),
+          Skeleton(height: 76.dh),
+          _gap(),
+          StateCard.empty(icon: AppIcons.heart, title: 'No saved services yet', body: 'Tap the heart to keep it here.', actionLabel: 'Explore', onAction: () {}),
+          _gap(),
+          StateCard.error(onRetry: () {}),
+          _section('Info card & sticky bar'),
+          InfoCard(
+            title: 'Good to know',
+            rows: <InfoRow>[
+              const InfoRow(icon: AppIcons.user, text: 'Up to 300 guests'),
+              InfoRow(icon: AppIcons.mapPin, text: 'Alger · Blida · Boumerdès', onTap: () {}),
+            ],
+          ),
+          _gap(),
+          StickyActionBar(
+            leading: const ServicePrice(amount: '45000.00', type: PriceType.perDay),
+            actions: <Widget>[
+              MessageIconButton(onPressed: () {}),
+              MainButton(label: 'Request booking', onPressed: () {}),
+            ],
+          ),
+          _gap(),
+          StickyActionBar.notAccepting(onMessage: () {}),
+          _section('Calendar'),
+          MonthCalendar(
+            month: DateTime.now(),
+            availability: _galleryMonth(),
+            selected: _calendarDay,
+            onSelect: (DateTime day) => setState(() => _calendarDay = day),
+            onMonthChanged: (_) {},
+            firstMonth: DateTime.now(),
+          ),
           SizedBox(height: AppSpacing.xl3.dh),
         ],
       ),
@@ -312,7 +370,31 @@ class _GalleryViewState extends State<GalleryView> {
 
   Widget _gap() => SizedBox(height: AppSpacing.sm.dh);
 
+  static void _noop() {}
 
+  /// This month with every state on show: the 10th fully booked, the 20th
+  /// blocked, days before today too soon.
+  Availability _galleryMonth() {
+    final DateTime now = DateTime.now();
+    final DateTime today = DateTime(now.year, now.month, now.day);
+    final int days = DateTime(now.year, now.month + 1, 0).day;
+    return Availability(
+      month: '${now.year}-${now.month}',
+      minNoticeDays: 1,
+      firstBookableDate: today,
+      days: <AvailabilityDay>[
+        for (int d = 1; d <= days; d++)
+          AvailabilityDay(
+            date: DateTime(now.year, now.month, d),
+            state: DateTime(now.year, now.month, d).isBefore(today) || d == 20
+                ? DayState.blocked
+                : d == 10
+                    ? DayState.busy
+                    : DayState.available,
+          ),
+      ],
+    );
+  }
 
   Widget _section(String title) => Padding(
         padding: EdgeInsets.only(top: AppSpacing.xl.dh, bottom: AppSpacing.xs.dh),

@@ -89,6 +89,14 @@ class SessionController extends ChangeNotifier {
     }
   }
 
+  /// Takes an account the server just returned — after the city changed, for
+  /// instance — without another round trip.
+  void updateUser(AppUser user) {
+    if (!isSignedIn) return;
+    _user = user;
+    notifyListeners();
+  }
+
   Future<void> signOut() async {
     await _auth.logout();
     _set(null);
