@@ -1,0 +1,84 @@
+{
+  "data": [
+    {
+      "id": "bb28c638-c0ea-4140-b9d9-fd5535a6c4b6",
+      "slug": "salles-des-fetes",
+      "name": "Venues",
+      "nameEn": "Venues",
+      "nameAr": "قاعات الحفلات",
+      "icon": "building",
+      "position": 0,
+      "servicesCount": 5
+    },
+    {
+      "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+      "slug": "photographie",
+      "name": "Photography",
+      "nameEn": "Photography",
+      "nameAr": "التصوير",
+      "icon": "camera",
+      "position": 1,
+      "servicesCount": 7
+    },
+    {
+      "id": "d892155b-2c9b-4e0f-8fb5-db15b54af350",
+      "slug": "traiteur",
+      "name": "Catering",
+      "nameEn": "Catering",
+      "nameAr": "الإطعام",
+      "icon": "utensils",
+      "position": 2,
+      "servicesCount": 7
+    },
+    {
+      "id": "601c07e5-d2c8-4619-bbb4-bbb546803413",
+      "slug": "musique-dj",
+      "name": "Music & DJ",
+      "nameEn": "Music & DJ",
+      "nameAr": "الموسيقى",
+      "icon": "music",
+      "position": 3,
+      "servicesCount": 3
+    },
+    {
+      "id": "9ec8cbe5-ead7-42b4-99d1-fccc49fdad50",
+      "slug": "decoration",
+      "name": "Decoration",
+      "nameEn": "Decoration",
+      "nameAr": "الديكور",
+      "icon": "sparkles",
+      "position": 4,
+      "servicesCount": 6
+    },
+    {
+      "id": "0b52682c-4d00-49df-b18a-2c30c363a331",
+      "slug": "fleurs",
+      "name": "Flowers",
+      "nameEn": "Flowers",
+      "nameAr": "الزهور",
+      "icon": "flower",
+      "position": 5,
+      "servicesCount": 4
+    },
+    {
+      "id": "137d6aeb-8aa1-4c3e-a9cd-ca5a67c4e1d1",
+      "slug": "gateaux-patisserie",
+      "name": "Cakes & pastry",
+      "nameEn": "Cakes & pastry",
+      "nameAr": "الحلويات",
+      "icon": "cake",
+      "position": 6,
+      "servicesCount": 7
+    },
+    {
+      "id": "76e7dc65-d132-4e1b-8ec0-1b09437997f2",
+      "slug": "beaute",
+      "name": "Beauty",
+      "nameEn": "Beauty",
+      "nameAr": "",
+      "icon": "brush",
+      "position": 7,
+      "servicesCount": 0
+    }
+  ]
+}

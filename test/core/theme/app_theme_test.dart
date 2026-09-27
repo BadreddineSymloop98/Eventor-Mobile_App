@@ -51,7 +51,7 @@ void main() {
   setUpAll(() async {
     await _loadFont(
       AppFontFamilies.latin,
-      'assets/fonts/Inter-Variable.ttf',
+      'assets/fonts/Figtree-Variable.ttf',
     );
     await _loadFont(
       AppFontFamilies.arabic,
@@ -60,7 +60,7 @@ void main() {
   });
 
   group('AppFonts', () {
-    test('sets Arabic in Cairo and everything else in Inter', () {
+    test('sets Arabic in Cairo and everything else in Figtree', () {
       expect(AppFonts.forLocale(arabicLocale), AppFontFamilies.arabic);
       expect(AppFonts.forLocale(englishLocale), AppFontFamilies.latin);
     });
@@ -140,6 +140,46 @@ void main() {
       expect(light.brightness, Brightness.light);
       expect(dark.brightness, Brightness.dark);
       expect(light.primary, isNot(dark.primary));
+    });
+
+    test('pins the light scheme to the published tokens', () {
+      // Material's tonal palette would shift the purple the design states
+      // its contrast ratios against, so light is pinned rather than derived.
+      final ColorScheme light = AppTheme.light(englishLocale).colorScheme;
+
+      expect(light.primary, AppColors.brand);
+      expect(light.onPrimary, AppColors.textOnBrand);
+      expect(light.surface, AppColors.bgCanvas);
+      expect(light.onSurface, AppColors.textPrimary);
+      expect(light.error, AppColors.bgDanger);
+    });
+
+    test('draws no ripple anywhere', () {
+      // Pressed states are colours each widget draws; a stock ripple on top
+      // would be something the design never drew.
+      expect(AppTheme.light(englishLocale).splashFactory,
+          same(NoSplash.splashFactory));
+      expect(AppTheme.dark(englishLocale).splashFactory,
+          same(NoSplash.splashFactory));
+    });
+
+    test('gives every sheet the P3 treatment', () {
+      final BottomSheetThemeData sheet =
+          AppTheme.light(englishLocale).bottomSheetTheme;
+
+      expect(
+        sheet.modalBarrierColor,
+        AppColors.bgScrim.withValues(alpha: AppColors.scrimOpacity),
+      );
+      expect(
+        sheet.shape,
+        const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(AppRadii.xl),
+          ),
+        ),
+      );
+      expect(sheet.showDragHandle, isFalse);
     });
 
     test('keeps the true brand colour reachable', () {

@@ -77,4 +77,94 @@ void main() {
       expect(AppSizes.touchTarget, greaterThanOrEqualTo(48));
     });
   });
+
+  group('AppColors', () {
+    /// Whether [color] is a true grey — no channel pulling towards a hue by
+    /// more than the few steps Figma's neutral ramp allows.
+    bool isNeutral(Color color) {
+      final List<double> channels = <double>[color.r, color.g, color.b];
+      final double spread = channels.reduce((double a, double b) => a > b ? a : b) -
+          channels.reduce((double a, double b) => a < b ? a : b);
+      // 0x6B6B75 is the widest of the ramp: 10 steps out of 255.
+      return spread <= 12 / 255;
+    }
+
+    test('keep the brand purple exact', () {
+      expect(AppColors.brand, const Color(0xFF2B075D));
+      expect(AppColors.bgBrand, AppColors.brand);
+      expect(AppColors.textBrand, AppColors.brand);
+    });
+
+    test('draw text, borders and canvas from the grey neutrals', () {
+      // The ramp moved from purple-tinted to Figma's true greys; a purple
+      // cast creeping back into the chrome is what this guards against.
+      final List<Color> neutrals = <Color>[
+        AppColors.bgCanvas,
+        AppColors.bgSurface,
+        AppColors.bgSurfacePressed,
+        AppColors.bgDisabled,
+        AppColors.textPrimary,
+        AppColors.textSecondary,
+        AppColors.borderDefault,
+        AppColors.iconDefault,
+        AppColors.bgScrim,
+      ];
+
+      for (final Color color in neutrals) {
+        expect(isNeutral(color), isTrue, reason: '$color is not a grey');
+      }
+    });
+
+    test('give every pressable fill its own pressed colour', () {
+      expect(AppColors.bgBrandPressed, isNot(AppColors.bgBrand));
+      expect(AppColors.bgDangerPressed, isNot(AppColors.bgDanger));
+      expect(AppColors.bgSurfacePressed, isNot(AppColors.bgSurface));
+    });
+
+    test('use one red for every danger role', () {
+      // A destructive action reads as one colour whether it is a fill, a
+      // label, an outline or a glyph.
+      expect(AppColors.textDanger, AppColors.bgDanger);
+      expect(AppColors.borderDanger, AppColors.bgDanger);
+      expect(AppColors.iconDanger, AppColors.bgDanger);
+      expect(AppColors.bgDangerSubtle, isNot(AppColors.bgDanger));
+    });
+
+    test('paint the scrim neutral and at half strength', () {
+      expect(AppColors.scrimOpacity, 0.5);
+      expect(isNeutral(AppColors.bgScrim), isTrue);
+    });
+  });
+
+  group('AppElevation', () {
+    test('builds each level from two neutral layers', () {
+      for (final List<BoxShadow> level in <List<BoxShadow>>[
+        AppElevation.sm,
+        AppElevation.md,
+        AppElevation.lg,
+      ]) {
+        expect(level, hasLength(2));
+        for (final BoxShadow shadow in level) {
+          // #101014 at a few percent — never brand-tinted.
+          expect(shadow.color.withAlpha(0xFF), const Color(0xFF101014));
+          expect(shadow.color.a, lessThan(0.1));
+        }
+      }
+    });
+
+    test('grows with the level', () {
+      expect(AppElevation.md.last.blurRadius,
+          greaterThan(AppElevation.sm.last.blurRadius));
+      expect(AppElevation.lg.last.blurRadius,
+          greaterThan(AppElevation.md.last.blurRadius));
+    });
+
+    test('draws the focus ring as an outline, not a shadow', () {
+      final BoxShadow ring = AppElevation.focusRing.single;
+
+      expect(ring.blurRadius, 0);
+      expect(ring.offset, Offset.zero);
+      expect(ring.spreadRadius, greaterThan(0));
+    });
+  });
 }
