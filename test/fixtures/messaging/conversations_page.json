@@ -1,0 +1,20 @@
+{"data": [
+  {"id": "c-lumiere", "kind": "direct", "status": "open",
+   "other": {"id": "p-lumiere", "name": "Studio Lumière", "avatarUrl": "https://files.example/a.jpg?exp=1&sig=x", "role": "provider", "blocked": false},
+   "lastMessage": "Perfect — I'll hold Sat 14 Mar for you.", "lastMessageAt": "2026-03-12T09:24:00.000Z", "unreadCount": 2,
+   "booking": {"id": "b-1", "reference": "EVT-000123", "status": "pending", "eventDate": "2026-03-14", "title": "Wedding photo & video coverage", "total": "57000.00"},
+   "canWrite": true},
+  {"id": "c-dispute", "kind": "dispute", "status": "open",
+   "other": {"id": "u-support", "name": "Eventor support", "avatarUrl": null, "role": "support", "blocked": false},
+   "lastMessage": "Support: we have both sides' evidence.", "lastMessageAt": "2026-03-02T10:00:00.000Z", "unreadCount": 0,
+   "booking": {"id": "b-2", "reference": "EVT-2041", "status": "completed", "eventDate": "2026-02-20", "title": "Engagement photos", "total": "30000.00"},
+   "canWrite": true},
+  {"id": "c-support", "kind": "support", "status": "open",
+   "other": {"id": "u-support", "name": "Eventor support", "avatarUrl": null, "role": "support", "blocked": false},
+   "lastMessage": "Hi Amina, how can we help ?", "lastMessageAt": "2026-02-28T08:00:00.000Z", "unreadCount": 0, "booking": null, "canWrite": true},
+  {"id": "c-deleted", "kind": "direct", "status": "open", "other": null,
+   "lastMessage": "", "lastMessageAt": "2026-01-10T08:00:00.000Z", "unreadCount": 0, "booking": null, "canWrite": false},
+  {"id": "c-weird", "kind": "broadcast", "status": "closed",
+   "other": {"id": "p-yasmine", "name": "Salle Yasmine", "avatarUrl": null, "role": "robot", "blocked": true},
+   "lastMessage": "[removed by Eventor]", "lastMessageAt": null, "unreadCount": 0, "booking": null, "canWrite": false}
+], "meta": {"page": 1, "limit": 20, "total": 5, "totalPages": 1}}

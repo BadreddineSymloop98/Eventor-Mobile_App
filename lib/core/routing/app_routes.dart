@@ -1,43 +1,285 @@
-/// Names of every route the app can navigate to.
+import '../budget/budget_repository.dart';
+import '../catalog/models/pack.dart';
+import '../catalog/service_query.dart';
+import '../models/account.dart';
+
+/// Every place the app can be, as a path.
+///
+/// Paths rather than names because go_router matches on them — and one of
+/// them, [setPassword], has to match a web link an admin's invite email sends
+/// (`${APP_PUBLIC_URL}/set-password?token=…`) so the app can open it.
 abstract final class AppRoutes {
-  /// The screen the app opens on, matching "01 Splash" in the design.
+  /// The splash — `01`. Also where every route waits while the app is still
+  /// starting up.
   static const String splash = '/';
 
   static const String onboarding = '/onboarding';
 
-  /// Where an unauthenticated user lands: the choice between creating an
-  /// account and signing in.
+  /// `05` — where anyone without a session lands, until they have taken one
+  /// of its two doors once. After that, [login] is the landing.
   static const String welcome = '/welcome';
 
-  /// Where "Create an account" leads: the fork that decides what the rest of
-  /// the app looks like for this person.
-  static const String roleSelection = '/role-selection';
+  /// `06` — the fork between client and provider.
+  static const String roleSelection = '/role';
 
-  /// The sign-up form. Role selection leads here, carrying the chosen role as
-  /// its route argument.
+  /// `08` / `08a`. Carries the chosen role as `?role=`.
   static const String register = '/register';
 
-  /// Asks where to send a reset link. Reached from the login form.
+  /// `10b`–`10d` — confirming the email after sign-up. Carries
+  /// [VerifyEmailArgs] as `extra`.
+  static const String verifyEmail = '/verify-email';
+
+  /// `08e` — a new provider's documents. Signed in.
+  static const String documents = '/documents';
+
+  /// `07`–`07d`. Takes an optional `?email=` to prefill.
+  static const String login = '/login';
+
+  /// `09`.
   static const String forgotPassword = '/forgot-password';
 
-  /// Where a one-time code is entered. Reached from sign-up and from a
-  /// password reset, carrying where the code was sent as its argument.
-  static const String verifyCode = '/verify-code';
+  /// `10` — the code for a password reset. Carries the email as `?email=`.
+  static const String resetCode = '/reset/code';
 
-  static const String login = '/login';
+  /// `10a` — the new password. Carries [ResetPasswordArgs] as `extra`.
+  static const String resetPassword = '/reset/password';
+
+  /// `10f` / `10g` — an admin's invite link. `?token=`.
+  static const String setPassword = '/set-password';
+
+  /// `11` — the client's first tab.
   static const String home = '/home';
 
-  /// The app always opens on the splash — it is what covers the moment the
-  /// app is working out where to send the user, so it cannot itself depend on
-  /// that answer.
-  static const String initial = splash;
+  // The client shell's other tabs.
+  static const String search = '/search';
+  static const String bookings = '/bookings';
+  static const String messages = '/messages';
+  static const String profile = '/profile';
 
-  /// Where the splash hands over to once it knows.
-  ///
-  /// Onboarding is a one-time flow: once it has been completed, later launches
-  /// go straight to [welcome], which is the design's landing point for anyone
-  /// without a session. [login] is reached from there rather than directly —
-  /// it is one of two choices, not the default one.
-  static String afterSplash({required bool hasSeenOnboarding}) =>
-      hasSeenOnboarding ? welcome : onboarding;
+  /// `S2` / `S2a` / `S2b`, inside the Search tab. Filters travel as query
+  /// parameters — see [resultsFor].
+  static const String results = '/search/results';
+
+  /// The same results, opened from Home — inside the Home tab, so Back
+  /// returns to Home rather than to Search.
+  static const String homeResults = '/home/results';
+
+  /// `12`. See [serviceFor].
+  static const String services = '/services';
+
+  /// `13`. See [providerFor].
+  static const String providers = '/providers';
+
+  /// `19`, and `20` below it. See [packsFor] and [packFor].
+  static const String packs = '/packs';
+
+  /// `17`.
+  static const String favourites = '/favourites';
+
+  /// `14` — the conversations list. See [chatFor] and [chatDraftFor].
+  static const String conversations = '/conversations';
+
+  /// `15`, before the first message has picked a conversation id — a chat
+  /// started from a profile's Message button.
+  static const String chatDraft = '/conversations/new';
+
+  /// `16` — the bell's list.
+  static const String notifications = '/notifications';
+
+  /// `18` — the budget, or `18a` in its place until there is one.
+  static const String budget = '/budget';
+
+  /// `18f`. Carries the [Budget] as `extra`.
+  static const String budgetEdit = '/budget/edit';
+
+  /// `18d`. Carries [ExpenseLineArgs] as `extra`.
+  static const String budgetNewLine = '/budget/lines/new';
+
+  /// `18b`, under `/budget/lines/<id>` — see [budgetLineFor]. Carries
+  /// [ExpenseLineArgs].
+  static const String budgetLines = '/budget/lines';
+
+  /// `18h`. Carries [LinkBookingArgs] as `extra`.
+  static const String budgetLinkBooking = '/budget/link';
+
+  /// `21` / `21a` / `21b` — the provider's first tab.
+  static const String providerHome = '/provider';
+
+  // The provider shell's other tabs.
+  static const String providerRequests = '/provider/requests';
+  static const String providerServices = '/provider/services';
+  static const String providerMessages = '/provider/messages';
+  static const String providerProfile = '/provider/profile';
+
+  /// `08d` — sending again the documents a reviewer refused. Full screen,
+  /// over the provider's tabs.
+  static const String resubmitDocuments = '/documents/resubmit';
+
+  /// The component gallery. Only registered in debug builds.
+  static const String gallery = '/gallery';
+
+  /// The routes someone without a session may visit.
+  static const Set<String> public = <String>{
+    onboarding,
+    welcome,
+    roleSelection,
+    register,
+    verifyEmail,
+    login,
+    forgotPassword,
+    resetCode,
+    resetPassword,
+    setPassword,
+    gallery,
+  };
+
+  static String registerFor(UserRole role) =>
+      Uri(path: register, queryParameters: <String, String>{
+        'role': role.apiValue,
+      }).toString();
+
+  /// Login, optionally prefilled, optionally announcing a finished reset.
+  static String loginWith({String? email, bool afterReset = false}) {
+    final Map<String, String> query = <String, String>{
+      if (email != null && email.isNotEmpty) 'email': email,
+      if (afterReset) 'reset': '1',
+    };
+    // An empty map would still add a bare "?".
+    return query.isEmpty
+        ? login
+        : Uri(path: login, queryParameters: query).toString();
+  }
+
+  static String serviceFor(String id) => '$services/$id';
+
+  static String providerFor(String id) => '$providers/$id';
+
+  static String packFor(String id) => '$packs/$id';
+
+  static String budgetLineFor(String id) => '$budgetLines/$id';
+
+  /// `15`'s own thread.
+  static String chatFor(String id) => '$conversations/$id';
+
+  /// `15` opened before any conversation exists, from a Message button —
+  /// carries who it is with and their name, since there is no id yet to look
+  /// either up by.
+  static String chatDraftFor({required String userId, required String name}) =>
+      Uri(
+        path: chatDraft,
+        queryParameters: <String, String>{'user': userId, 'name': name},
+      ).toString();
+
+  /// 19, optionally opened on one event type.
+  static String packsFor({EventType? eventType}) => eventType == null
+      ? packs
+      : Uri(path: packs, queryParameters: <String, String>{
+          'eventType': eventType.apiValue,
+        }).toString();
+
+  /// Results for [query] — the search text, a category, the filters — at
+  /// [base]: [results] from Search, [homeResults] from Home.
+  static String resultsFor(ServiceQuery query, {String base = results}) {
+    final Map<String, Object> params = query.toRouteParams();
+    return Uri(
+      path: base,
+      queryParameters: params.isEmpty ? null : params,
+    ).toString();
+  }
+
+  /// The screens only a client may see: the shell's tabs and the catalog.
+  /// A provider is sent to [providerHome] instead.
+  static bool isClientOnly(String path) =>
+      path == home ||
+      path.startsWith('$home/') ||
+      path == search ||
+      path.startsWith('$search/') ||
+      path == bookings ||
+      path == messages ||
+      path == profile ||
+      path.startsWith('$services/') ||
+      path.startsWith('$providers/') ||
+      path == packs ||
+      path.startsWith('$packs/') ||
+      path == favourites ||
+      path == budget ||
+      path.startsWith('$budget/');
+
+  /// The screens only a provider may see: their shell and their documents.
+  /// A client is sent to [home] instead. Chat (`15`) and the bell (`16`) are
+  /// shared, so they are in neither list.
+  static bool isProviderOnly(String path) =>
+      path == providerHome ||
+      path.startsWith('$providerHome/') ||
+      path == documents ||
+      path.startsWith('$documents/');
+
+  static String resetCodeFor(String email) => Uri(
+        path: resetCode,
+        queryParameters: <String, String>{'email': email},
+      ).toString();
+}
+
+/// What `10b` needs to know about the code that was just sent.
+class VerifyEmailArgs {
+  const VerifyEmailArgs({
+    required this.email,
+    required this.resendAfterSeconds,
+  });
+
+  final String email;
+  final int resendAfterSeconds;
+}
+
+/// What `10a` carries forward from `10`.
+class ResetPasswordArgs {
+  const ResetPasswordArgs({required this.email, required this.code});
+
+  final String email;
+  final String code;
+}
+
+/// Why `10a` sent the user back to `10`.
+enum ResetCodeProblem { invalid, expired }
+
+/// What 18d and 18b open with: the budget as it stands — for the line limit
+/// and the bookings already in use — and, on 18b, the line.
+class ExpenseLineArgs {
+  const ExpenseLineArgs({required this.budget, this.item});
+
+  final Budget budget;
+  final BudgetItem? item;
+}
+
+/// A booking as a line shows it once linked: "EVT-2044 · Fleurs de Yasmina".
+class LinkedBooking {
+  const LinkedBooking({
+    required this.id,
+    required this.reference,
+    required this.providerName,
+  });
+
+  final String id;
+  final String reference;
+  final String providerName;
+}
+
+/// What 18h opens with.
+class LinkBookingArgs {
+  const LinkBookingArgs({required this.current, required this.usedBy});
+
+  /// The line's booking now, or `null` when it is not linked.
+  final LinkedBooking? current;
+
+  /// Bookings already on *other* lines → that line's label. Shown greyed
+  /// out, so one amount is never counted twice.
+  final Map<String, String> usedBy;
+}
+
+/// What 18h hands back when "Link booking" is tapped. A `null` [booking]
+/// unlinks the line.
+class BookingLinkChoice {
+  const BookingLinkChoice(this.booking);
+
+  final LinkedBooking? booking;
 }

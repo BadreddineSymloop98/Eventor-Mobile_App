@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../core/constants/ui_helpers.dart';
 import '../../../core/localization/app_localizations_x.dart';
-import '../../../core/widgets/photo_backdrop.dart';
+import '../../../core/widgets/layout/photo_backdrop.dart';
 import '../../../l10n/app_localizations.dart';
-import '../view_model/splash_view_model.dart';
 
 /// The splash screen: the logo over a photograph of a venue.
 ///
-/// The first screen the app shows. It holds the brand while the app works out
-/// where the user belongs, then replaces itself — there is no way back to it,
-/// which is why it uses `pushReplacement`.
+/// The first screen the app shows. It holds the brand while `AppStartup`
+/// loads the config and restores the session; the router's redirect then
+/// replaces it with wherever the user belongs. It navigates nowhere itself.
 ///
 /// Every dimension is a share of the window: the design measurements go
 /// through `.dw` / `.dh`, which convert them from its 375×812 frame. Type is
 /// the exception and stays in fixed points, so that a percentage-sized font
 /// cannot override the reader's accessibility text-scale setting.
-class SplashView extends StatefulWidget {
+class SplashView extends StatelessWidget {
   const SplashView({super.key});
 
   /// Breathing room where the device reports no system inset.
@@ -39,32 +37,6 @@ class SplashView extends StatefulWidget {
 
   static const String _backgroundImage =
       'assets/images/splash_background.jpg';
-
-  @override
-  State<SplashView> createState() => _SplashViewState();
-}
-
-class _SplashViewState extends State<SplashView> {
-  @override
-  void initState() {
-    super.initState();
-
-    // Deferred to after the first frame: the splash has to actually be on
-    // screen before it starts counting down to replacing itself.
-    WidgetsBinding.instance.addPostFrameCallback((_) => _handOver());
-  }
-
-  Future<void> _handOver() async {
-    // Both are resolved before the await — the element may be gone by the
-    // time it completes, and reading them from a stale context would throw.
-    final SplashViewModel viewModel = context.read<SplashViewModel>();
-    final NavigatorState navigator = Navigator.of(context);
-
-    final String nextRoute = await viewModel.resolveNextRoute();
-    if (!mounted) return;
-
-    await navigator.pushReplacementNamed(nextRoute);
-  }
 
   @override
   Widget build(BuildContext context) {

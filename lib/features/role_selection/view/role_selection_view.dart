@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/ui_helpers.dart';
 import '../../../core/localization/app_localizations_x.dart';
 import '../../../core/routing/app_routes.dart';
-import '../../../core/widgets/back_icon_button.dart';
-import '../../../core/widgets/content_container.dart';
-import '../../../core/widgets/language_switch.dart';
-import '../../../core/widgets/main_button.dart';
+import '../../../core/models/account.dart';
+import '../../../core/widgets/atoms/app_icon.dart';
+import '../../../core/widgets/layout/content_container.dart';
+import '../../../core/widgets/molecules/back_icon_button.dart';
+import '../../../core/widgets/molecules/language_switch.dart';
+import '../../../core/widgets/molecules/main_button.dart';
+import '../../../core/widgets/molecules/role_card.dart';
 import '../../../l10n/app_localizations.dart';
-import '../model/user_role.dart';
 import '../view_model/role_selection_view_model.dart';
-import 'widgets/role_card.dart';
 
 /// The fork in the sign-up: who is this person, and therefore what does the
 /// rest of the app look like for them.
@@ -33,14 +35,30 @@ class RoleSelectionView extends StatelessWidget {
   static EdgeInsets get _minimumInset =>
       EdgeInsets.symmetric(vertical: AppSpacing.md.dh);
 
-  Future<void> _continue(BuildContext context) {
+  void _continue(BuildContext context) {
+    final UserRole? role = context.read<RoleSelectionViewModel>().selectedRole;
+    if (role == null) return;
     // The chosen role travels with the user to the register form, where it is
     // saved as part of the account rather than on its own.
-    return Navigator.of(context).pushNamed(
-      AppRoutes.register,
-      arguments: context.read<RoleSelectionViewModel>().selectedRole,
-    );
+    context.push(AppRoutes.registerFor(role));
   }
+
+  static AppIcons _iconFor(UserRole role) => switch (role) {
+        UserRole.client => AppIcons.user,
+        UserRole.provider => AppIcons.briefcase,
+      };
+
+  static String _titleFor(UserRole role, AppLocalizations l10n) =>
+      switch (role) {
+        UserRole.client => l10n.roleClientTitle,
+        UserRole.provider => l10n.roleProviderTitle,
+      };
+
+  static String _descriptionFor(UserRole role, AppLocalizations l10n) =>
+      switch (role) {
+        UserRole.client => l10n.roleClientDescription,
+        UserRole.provider => l10n.roleProviderDescription,
+      };
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +123,9 @@ class RoleSelectionView extends StatelessWidget {
                               for (final UserRole role
                                   in RoleSelectionViewModel.roles) ...<Widget>[
                                 RoleCard(
-                                  role: role,
+                                  icon: _iconFor(role),
+                                  title: _titleFor(role, l10n),
+                                  description: _descriptionFor(role, l10n),
                                   isSelected: viewModel.isSelected(role),
                                   onTap: () => viewModel.selectRole(role),
                                 ),
@@ -120,12 +140,20 @@ class RoleSelectionView extends StatelessWidget {
                   ),
                   SizedBox(height: AppSpacing.xl2.dh),
                   ContentContainer(
-                    child: MainButton(
-                      label: l10n.continueAction,
-                      // Disabled until a role is picked. The screen warns the
-                      // choice is permanent, so it must be a deliberate one.
-                      canBeTapped: viewModel.canContinue,
-                      onPressed: () => _continue(context),
+                    // Full width between the gutters, like the cards above.
+                    // ContentContainer centres its child with loose
+                    // constraints, and MainButton hugs its label unless it is
+                    // stretched — so without this it shrinks to the text.
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: MainButton(
+                        label: l10n.continueAction,
+                        // Disabled until a role is picked. The screen warns
+                        // the choice is permanent, so it must be a deliberate
+                        // one.
+                        canBeTapped: viewModel.canContinue,
+                        onPressed: () => _continue(context),
+                      ),
                     ),
                   ),
                 ],

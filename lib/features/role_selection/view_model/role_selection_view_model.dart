@@ -1,5 +1,5 @@
 import '../../../core/base/base_view_model.dart';
-import '../model/user_role.dart';
+import '../../../core/models/account.dart';
 
 /// Drives the role selection screen.
 ///

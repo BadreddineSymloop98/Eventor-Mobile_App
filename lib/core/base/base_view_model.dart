@@ -28,9 +28,10 @@ abstract class BaseViewModel extends ChangeNotifier {
   /// Runs [action] while keeping [state] in sync, and converts anything thrown
   /// into [ViewState.error] plus a [failure].
   ///
-  /// Pass [onError] to classify the thrown object; without it everything
-  /// becomes an [UnexpectedFailure]. Returns the value produced by [action],
-  /// or `null` when it failed.
+  /// A thrown [Failure] — what repositories throw — is kept as it is. Pass
+  /// [onError] to classify anything else; without it the rest becomes an
+  /// [UnexpectedFailure]. Returns the value produced by [action], or `null`
+  /// when it failed.
   @protected
   Future<T?> runGuarded<T>(
     Future<T> Function() action, {
@@ -45,10 +46,31 @@ abstract class BaseViewModel extends ChangeNotifier {
       // The original error never reaches the user, so it is logged here or it
       // is lost.
       debugPrint('$runtimeType failed: $error\n$stackTrace');
-      _setFailure(onError?.call(error) ?? UnexpectedFailure(cause: error));
+      _setFailure(
+        error is Failure
+            ? error
+            : onError?.call(error) ?? UnexpectedFailure(cause: error),
+      );
       return null;
     }
   }
+
+  /// Drops the last failure once the view model has turned it into state of
+  /// its own — an inline banner, a field error — so the view does not also
+  /// report it generically.
+  @protected
+  void clearFailure() {
+    if (_failure == null && _state != ViewState.error) return;
+    _failure = null;
+    _state = ViewState.idle;
+    notifyListeners();
+  }
+
+  /// For a view model that guards against a stale response itself — a poll
+  /// tick whose answer arrived after a newer one already landed, say — and
+  /// so reports the failure directly instead of through [runGuarded].
+  @protected
+  void setFailure(Failure failure) => _setFailure(failure);
 
   void _setState(ViewState state) {
     if (_state == state && _failure == null) return;

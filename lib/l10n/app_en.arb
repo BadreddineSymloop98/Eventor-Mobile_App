@@ -1,580 +1,2711 @@
 {
   "@@locale": "en",
-
   "appName": "Eventor",
   "@appName": {
     "description": "The name of the app, shown in the task switcher and in app bars."
   },
-
-  "loginTitle": "Welcome back",
-  "@loginTitle": {
-    "description": "Heading over the photograph on the login screen."
-  },
-
-  "loginSubtitle": "Log in to pick up where you left off.",
-  "@loginSubtitle": {
-    "description": "Line under the login heading."
-  },
-
-  "forgotPassword": "Forgot password ?",
-  "@forgotPassword": {
-    "description": "Link under the login form, for a user who cannot remember their password."
-  },
-
-  "loginNewPrompt": "New to Eventor ?",
-  "@loginNewPrompt": {
-    "description": "Question beside the create-account link at the bottom of the login screen."
-  },
-
-  "homeTitle": "Home",
-  "@homeTitle": {
-    "description": "Heading shown on the home screen."
-  },
-
-  "splashTagline": "Everything your event needs, in one place",
-  "@splashTagline": {
-    "description": "Line under the logo on the splash screen, describing what the app is for."
-  },
-
-  "splashByline": "by SYMLOOP",
-  "@splashByline": {
-    "description": "Attribution at the very bottom of the splash screen. SYMLOOP is the studio name and is not translated, but the word before it is."
-  },
-
-  "onboardingServicesTitle": "Every service your event needs",
-  "@onboardingServicesTitle": {
-    "description": "Title of the first onboarding section."
-  },
-
-  "onboardingServicesDescription": "Photographers, venues, caterers, DJs, florists and decorators, all in one place.",
-  "@onboardingServicesDescription": {
-    "description": "Body of the first onboarding section."
-  },
-
-  "onboardingCompareTitle": "Compare, then book with confidence",
-  "@onboardingCompareTitle": {
-    "description": "Title of the second onboarding section."
-  },
-
-  "onboardingCompareDescription": "Real reviews, clear prices and open dates. Message a provider before you commit.",
-  "@onboardingCompareDescription": {
-    "description": "Body of the second onboarding section."
-  },
-
-  "onboardingTrackTitle": "Keep the whole event on track",
-  "@onboardingTrackTitle": {
-    "description": "Title of the third onboarding section."
-  },
-
-  "onboardingTrackDescription": "Follow every booking and watch your budget as the day comes together.",
-  "@onboardingTrackDescription": {
-    "description": "Body of the third onboarding section."
-  },
-
-  "welcomeTitle": "Let’s get started",
-  "@welcomeTitle": {
-    "description": "Heading on the welcome screen, shown after onboarding."
-  },
-
-  "welcomeSubtitle": "Create an account to start booking or log in if you have been here before.",
-  "@welcomeSubtitle": {
-    "description": "Body under the welcome heading, explaining the two choices below it."
-  },
-
-  "createAccount": "Create an account",
-  "@createAccount": {
-    "description": "Offers account creation. The primary button on the welcome screen, and the link at the foot of the login form."
-  },
-
-  "welcomeHaveAccount": "I already have an account",
-  "@welcomeHaveAccount": {
-    "description": "Secondary button on the welcome screen, which goes to the login form."
-  },
-
-  "roleSelectionTitle": "How will you use Eventor ?",
-  "@roleSelectionTitle": {
-    "description": "Heading on the role selection screen. The space before the question mark is the design's own."
-  },
-
-  "roleSelectionSubtitle": "This shapes your whole experience in the app. It cannot be changed later.",
-  "@roleSelectionSubtitle": {
-    "description": "Warning under the role selection heading that the choice is permanent."
-  },
-
-  "rolePlannerTitle": "I'm planning an event",
-  "@rolePlannerTitle": {
-    "description": "Title of the role for someone booking services for their own event."
-  },
-
-  "rolePlannerDescription": "Find and book my event team",
-  "@rolePlannerDescription": {
-    "description": "One-line description of the event planner role."
-  },
-
-  "roleProviderTitle": "I offer a service",
-  "@roleProviderTitle": {
-    "description": "Title of the role for someone selling a service on the marketplace."
-  },
-
-  "roleProviderDescription": "List my services and manage bookings",
-  "@roleProviderDescription": {
-    "description": "One-line description of the service provider role."
-  },
-
-  "roleInstitutionTitle": "I represent an institution",
-  "@roleInstitutionTitle": {
-    "description": "Title of the role for someone requesting events for an organisation."
-  },
-
-  "roleInstitutionDescription": "Submit and track event requests",
-  "@roleInstitutionDescription": {
-    "description": "One-line description of the institution role."
-  },
-
-  "continueAction": "Continue",
-  "@continueAction": {
-    "description": "Button that confirms a choice and moves to the next step. Named with a suffix because `continue` is a Dart keyword."
-  },
-
   "backLabel": "Back",
   "@backLabel": {
-    "description": "Screen-reader label for the back control in a screen's top bar."
+    "description": "Screen-reader label for the back chevron."
   },
-
-  "registerTitle": "Create your account",
-  "@registerTitle": {
-    "description": "Heading in the register screen's header. Stays visible as the header collapses."
-  },
-
-  "registerSubtitle": "Just a few details, then you can start booking your event team.",
-  "@registerSubtitle": {
-    "description": "Body under the register heading. Hidden once the header collapses."
-  },
-
-  "registerSubtitleProvider": "A few details and your documents, then you can list your services.",
-  "@registerSubtitleProvider": {
-    "description": "Subtitle of the register screen when the chosen role is a service provider."
-  },
-
-  "registerSubtitleInstitution": "A few details and your documents, then you can submit event requests.",
-  "@registerSubtitleInstitution": {
-    "description": "Subtitle of the register screen when the chosen role is an institution."
-  },
-
-  "registerDocumentsTitle": "Verification documents",
-  "@registerDocumentsTitle": {
-    "description": "Heading above the documents a reviewed account has to attach."
-  },
-
-  "registerDocumentsProviderNote": "We review these before your services go live.",
-  "@registerDocumentsProviderNote": {
-    "description": "Line under the documents heading, telling a provider what the review gates."
-  },
-
-  "registerDocumentsInstitutionNote": "We review these before your first request is approved.",
-  "@registerDocumentsInstitutionNote": {
-    "description": "Line under the documents heading, telling an institution what the review gates."
-  },
-
-  "registerCreateAccount": "Create account",
-  "@registerCreateAccount": {
-    "description": "Button that submits the register form."
-  },
-
-  "registerSuccess": "Account creation successful",
-  "@registerSuccess": {
-    "description": "Toast shown after the account has been created."
-  },
-
-  "registerTermsPrefix": "By continuing you agree to our ",
-  "@registerTermsPrefix": {
-    "description": "First half of the terms line under the register form, before the linked text. The trailing space is deliberate."
-  },
-
-  "registerTermsLink": "Terms and Privacy Policy",
-  "@registerTermsLink": {
-    "description": "The linked portion of the terms line, shown in the brand colour."
-  },
-
-  "registerHasAccountPrompt": "Already have an account ?",
-  "@registerHasAccountPrompt": {
-    "description": "Question beside the log in link at the bottom of the register screen."
-  },
-
-  "logIn": "Log in",
-  "@logIn": {
-    "description": "Link that leaves the register form for the login form."
-  },
-
-  "nameLabel": "Full name",
-  "@nameLabel": {
-    "description": "Label of the full name field."
-  },
-
-  "phoneLabel": "Phone",
-  "@phoneLabel": {
-    "description": "Label of the phone number field."
-  },
-
-  "nameRequired": "Enter your full name.",
-  "@nameRequired": {
-    "description": "Validation message shown when the name field is left empty."
-  },
-
-  "nameTooShort": "{count, plural, one{Use at least {count} character.} other{Use at least {count} characters.}}",
-  "@nameTooShort": {
-    "description": "Validation message shown when the name is below the minimum length.",
-    "placeholders": {
-      "count": { "type": "int" }
-    }
-  },
-
-  "phoneRequired": "Enter your phone number.",
-  "@phoneRequired": {
-    "description": "Validation message shown when the phone field is left empty."
-  },
-
-  "phoneInvalid": "{count, plural, one{Enter {count} digit, starting with {leadingDigit}.} other{Enter {count} digits, starting with {leadingDigit}.}}",
-  "@phoneInvalid": {
-    "description": "Validation message shown when the phone number is not a whole local number.",
-    "placeholders": {
-      "count": { "type": "int" },
-      "leadingDigit": { "type": "String" }
-    }
-  },
-
-  "forgotPasswordTitle": "Reset your password",
-  "@forgotPasswordTitle": {
-    "description": "Heading over the photograph on the forgot-password screen."
-  },
-
-  "forgotPasswordSubtitle": "Enter the email on your account and we will send you a reset link.",
-  "@forgotPasswordSubtitle": {
-    "description": "Line under the forgot-password heading, explaining what the field is for."
-  },
-
-  "sendResetLink": "Send reset link",
-  "@sendResetLink": {
-    "description": "Button that submits the forgot-password form."
-  },
-
-  "backToLogIn": "Back to log in",
-  "@backToLogIn": {
-    "description": "Link under the send button that returns to the login form."
-  },
-
-  "verifyCodeTitle": "Verify your number",
-  "@verifyCodeTitle": {
-    "description": "Heading over the photograph on the code-entry screen."
-  },
-
-  "verifyCodeSubtitle": "We sent a 6-digit code to {destination}.",
-  "@verifyCodeSubtitle": {
-    "description": "Line under the code-entry heading, naming where the code was sent.",
-    "placeholders": {
-      "destination": { "type": "String" }
-    }
-  },
-
-  "verifyCodeDestinationFallback": "your number",
-  "@verifyCodeDestinationFallback": {
-    "description": "Stands in for the phone number or address when the screen was opened without one."
-  },
-
-  "verificationCodeLabel": "Verification code",
-  "@verificationCodeLabel": {
-    "description": "Label above the row of digit boxes."
-  },
-
-  "verifyAction": "Verify",
-  "@verifyAction": {
-    "description": "Button that submits the verification code."
-  },
-
-  "verifyNoCodePrompt": "Didn't get the code ?",
-  "@verifyNoCodePrompt": {
-    "description": "Question beside the resend link."
-  },
-
-  "verifyResendCountdown": "{count, plural, one{You can resend after {count} second.} other{You can resend after {count} seconds.}}",
-  "@verifyResendCountdown": {
-    "description": "Shown in place of the resend line while the wait for another code is still running. Counts down once a second.",
-    "placeholders": {
-      "count": { "type": "int" }
-    }
-  },
-
-  "resend": "Resend",
-  "@resend": {
-    "description": "Link that asks for a new verification code."
-  },
-
-  "verifyCodeResent": "A new code is on its way",
-  "@verifyCodeResent": {
-    "description": "Toast shown after a new verification code has been requested."
-  },
-
   "languageSwitchLabel": "Language",
   "@languageSwitchLabel": {
-    "description": "Screen-reader label for the EN / Arabic switch. The two options label themselves, each in its own script."
+    "description": "Screen-reader label for the EN / عربي switch."
   },
-
-  "skip": "Skip",
-  "@skip": {
-    "description": "Button that leaves onboarding without reading it."
+  "continueAction": "Continue",
+  "@continueAction": {
+    "description": "Generic continue button."
   },
-
-  "next": "Next",
-  "@next": {
-    "description": "Button that advances to the next onboarding section."
-  },
-
-  "getStarted": "Get Started",
-  "@getStarted": {
-    "description": "Button on the last onboarding section, which finishes the flow. Replaces `next` there so the final step reads as an ending rather than as one more page."
-  },
-
-  "sectionProgress": "Section {current} of {total}",
-  "@sectionProgress": {
-    "description": "Screen-reader announcement of the position within a paged flow. Not shown visually.",
-    "placeholders": {
-      "current": { "type": "int" },
-      "total": { "type": "int" }
-    }
-  },
-
-  "emailLabel": "Email",
-  "@emailLabel": {
-    "description": "Label of the email field."
-  },
-
-  "passwordLabel": "Password",
-  "@passwordLabel": {
-    "description": "Label of the password field."
-  },
-
   "showPassword": "Show password",
   "@showPassword": {
-    "description": "Tooltip and screen-reader label of the button that reveals the password."
+    "description": "Screen-reader label for the eye toggle when the password is hidden."
   },
-
   "hidePassword": "Hide password",
   "@hidePassword": {
-    "description": "Tooltip and screen-reader label of the button that re-hides the password."
+    "description": "Screen-reader label for the eye toggle when the password is shown."
   },
-
-  "institutionLabel": "Institution",
-  "@institutionLabel": {
-    "description": "Label of the field naming the university, faculty, club or association an academic account acts for."
-  },
-
-  "institutionHint": "{count, plural, one{At least {count} character.} other{At least {count} characters, as it appears on your accreditation.}}",
-  "@institutionHint": {
-    "description": "Instruction under the institution field.",
-    "placeholders": {
-      "count": { "type": "int" }
-    }
-  },
-
-  "institutionRequired": "Enter the institution you represent.",
-  "@institutionRequired": {
-    "description": "Validation message shown when the institution field is left empty."
-  },
-
-  "institutionTooShort": "{count, plural, one{Use at least {count} character.} other{Use at least {count} characters.}}",
-  "@institutionTooShort": {
-    "description": "Validation message shown when the institution name is below the minimum length.",
-    "placeholders": {
-      "count": { "type": "int" }
-    }
-  },
-
-  "documentUploadAction": "Upload file",
-  "@documentUploadAction": {
-    "description": "Placeholder inside an empty document field, standing where the file name will go."
-  },
-
-  "documentMissing": "Attach this document.",
-  "@documentMissing": {
-    "description": "Validation message shown when a required document has no file attached."
-  },
-
-  "documentReplace": "Choose a different file",
-  "@documentReplace": {
-    "description": "Bottom sheet action that reopens the file browser for a document that already has a file."
-  },
-
-  "documentRemove": "Remove file",
-  "@documentRemove": {
-    "description": "Bottom sheet action that detaches the file currently on a document field."
-  },
-
-  "documentTooLarge": "This file is over {count} MB. Attach a smaller one.",
-  "@documentTooLarge": {
-    "description": "Validation message shown when an attached document exceeds the size limit.",
-    "placeholders": {
-      "count": { "type": "int" }
-    }
-  },
-
-  "documentWrongType": "Attach a PDF or an image.",
-  "@documentWrongType": {
-    "description": "Validation message shown when an attached document is neither a PDF nor an image."
-  },
-
-  "documentIdentityCard": "National ID card",
-  "@documentIdentityCard": {
-    "description": "Label of the identity document field. The Algerian carte nationale d'identité."
-  },
-
-  "documentIdentityCardHint": "Front and back, in one file",
-  "@documentIdentityCardHint": {
-    "description": "Instruction under the identity card field."
-  },
-
-  "documentCommercialRegister": "Commercial register or artisan card",
-  "@documentCommercialRegister": {
-    "description": "Label of the trading licence field. Either the registre de commerce or the carte d'artisan — providers hold one or the other."
-  },
-
-  "documentCommercialRegisterHint": "Whichever body you are registered with",
-  "@documentCommercialRegisterHint": {
-    "description": "Instruction under the commercial register field, explaining that either document is accepted."
-  },
-
-  "documentTaxRegistration": "Tax registration card (NIF)",
-  "@documentTaxRegistration": {
-    "description": "Label of the fiscal registration field. NIF is the Algerian numéro d'identification fiscale and is not translated."
-  },
-
-  "documentTaxRegistrationHint": "Shows your fiscal identification number",
-  "@documentTaxRegistrationHint": {
-    "description": "Instruction under the tax registration field."
-  },
-
-  "documentAccreditation": "Accreditation",
-  "@documentAccreditation": {
-    "description": "Label of the accreditation field. The Algerian agrément issued to an association or club."
-  },
-
-  "documentAccreditationHint": "The agrément issued to your association or club",
-  "@documentAccreditationHint": {
-    "description": "Instruction under the accreditation field."
-  },
-
-  "documentAuthorisationLetter": "Letter of authorisation",
-  "@documentAuthorisationLetter": {
-    "description": "Label of the field proving the applicant may act for the institution."
-  },
-
-  "documentAuthorisationLetterHint": "Signed proof that you represent the institution",
-  "@documentAuthorisationLetterHint": {
-    "description": "Instruction under the letter of authorisation field."
-  },
-
-  "documentAssociationStatutes": "Association statutes (optional)",
-  "@documentAssociationStatutes": {
-    "description": "Label of the bylaws field. Marked optional in the label because not every academic body is an association."
-  },
-
-  "documentAssociationStatutesHint": "Required for associations and clubs",
-  "@documentAssociationStatutesHint": {
-    "description": "Instruction under the association statutes field."
-  },
-
-  "nameHint": "{count, plural, one{At least {count} letter, no digits or symbols.} other{At least {count} letters, no digits or symbols.}}",
-  "@nameHint": {
-    "description": "Instruction under the full name field, stating the minimum length and the characters it refuses.",
-    "placeholders": {
-      "count": { "type": "int" }
-    }
-  },
-
-  "phoneHint": "{count, plural, one{{count} digit, starting with {leadingDigit}.} other{{count} digits, starting with {leadingDigit}.}}",
-  "@phoneHint": {
-    "description": "Instruction under the phone field, stating the exact length of a local number and the digit it opens with.",
-    "placeholders": {
-      "count": { "type": "int" },
-      "leadingDigit": { "type": "String" }
-    }
-  },
-
-  "namePlaceholder": "Amina Benali",
-  "@namePlaceholder": {
-    "description": "Greyed example inside the empty full name field. A plausible Algerian name, not an instruction."
-  },
-
-  "institutionPlaceholder": "Université d'Alger 1",
-  "@institutionPlaceholder": {
-    "description": "Greyed example inside the empty institution field."
-  },
-
-  "emailPlaceholder": "name@example.com",
-  "@emailPlaceholder": {
-    "description": "Greyed example inside the empty email field, showing the shape of an address."
-  },
-
-  "phonePlaceholder": "0X XX XX XX XX",
-  "@phonePlaceholder": {
-    "description": "Greyed example inside the empty phone field, showing an Algerian number the way it is written."
-  },
-
-  "emailHint": "No spaces, and one @.",
-  "@emailHint": {
-    "description": "Instruction under the email field. States the rule; the example lives in the field's own placeholder, so it is not repeated here."
-  },
-
-  "passwordHint": "{count, plural, one{At least {count} character, no spaces.} other{At least {count} characters, no spaces.}}",
-  "@passwordHint": {
-    "description": "Instruction under the password field, stating the minimum length.",
-    "placeholders": {
-      "count": { "type": "int" }
-    }
-  },
-
-  "emailRequired": "Enter your email address.",
-  "@emailRequired": {
-    "description": "Validation message shown when the email field is left empty."
-  },
-
-  "emailInvalid": "Enter a valid email address, like name@example.com.",
-  "@emailInvalid": {
-    "description": "Validation message shown when the email is not a plausible address."
-  },
-
-  "passwordRequired": "Enter your password.",
-  "@passwordRequired": {
-    "description": "Validation message shown when the password field is left empty."
-  },
-
-  "passwordTooShort": "{count, plural, one{Use at least {count} character.} other{Use at least {count} characters.}}",
-  "@passwordTooShort": {
-    "description": "Validation message shown when the password is below the minimum length.",
-    "placeholders": {
-      "count": { "type": "int" }
-    }
-  },
-
   "unknownRouteTitle": "Page not found",
   "@unknownRouteTitle": {
-    "description": "App bar title of the screen shown for an unrecognised route."
+    "description": "Title of the fallback screen for an unknown route."
   },
-
   "unknownRouteMessage": "No route defined for \"{routeName}\".",
   "@unknownRouteMessage": {
-    "description": "Body of the screen shown for an unrecognised route.",
+    "description": "Body of the fallback screen for an unknown route.",
     "placeholders": {
-      "routeName": { "type": "String" }
+      "routeName": {
+        "type": "String"
+      }
     }
   },
-
   "errorUnexpected": "Something went wrong. Please try again.",
   "@errorUnexpected": {
-    "description": "Fallback message for a failure the app has no specific wording for."
+    "description": "Generic fallback error."
   },
-
   "errorStorage": "Could not save your changes on this device.",
   "@errorStorage": {
-    "description": "Message shown when writing to on-device storage failed."
+    "description": "Writing to on-device storage failed."
+  },
+  "errorNetwork": "No connection. Check your internet and try again.",
+  "@errorNetwork": {
+    "description": "The request got no answer: offline, timeout."
+  },
+  "errorSessionExpired": "Your session has ended. Log in again to continue.",
+  "@errorSessionExpired": {
+    "description": "Shown when an action fails because the session could not be renewed."
+  },
+  "sessionExpiredTitle": "Your session has ended",
+  "@sessionExpiredTitle": {
+    "description": "Info banner title on Login after a session died mid-use."
+  },
+  "sessionExpiredBody": "Log in again to continue where you left off.",
+  "@sessionExpiredBody": {
+    "description": "Info banner body on Login after a session died mid-use."
+  },
+  "splashTagline": "Everything your event needs, in one place",
+  "@splashTagline": {
+    "description": "Tagline under the logo on the splash."
+  },
+  "splashByline": "by SYMLOOP",
+  "@splashByline": {
+    "description": "Studio credit at the bottom of the splash."
+  },
+  "skip": "Skip",
+  "@skip": {
+    "description": "Skips onboarding."
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Advances onboarding one section."
+  },
+  "getStarted": "Get started",
+  "@getStarted": {
+    "description": "Last onboarding button."
+  },
+  "sectionProgress": "Section {current} of {total}",
+  "@sectionProgress": {
+    "description": "Screen-reader label for the onboarding page dots.",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingServicesTitle": "Every service your event needs",
+  "@onboardingServicesTitle": {
+    "description": "Onboarding 1 title."
+  },
+  "onboardingServicesDescription": "Photographers, venues, caterers, DJs, florists and decorators, all in one place.",
+  "@onboardingServicesDescription": {
+    "description": "Onboarding 1 body."
+  },
+  "onboardingCompareTitle": "Compare, then book with confidence",
+  "@onboardingCompareTitle": {
+    "description": "Onboarding 2 title."
+  },
+  "onboardingCompareDescription": "Real reviews, clear prices and open dates. Message a provider before you commit.",
+  "@onboardingCompareDescription": {
+    "description": "Onboarding 2 body."
+  },
+  "onboardingTrackTitle": "Keep the whole event on track",
+  "@onboardingTrackTitle": {
+    "description": "Onboarding 3 title."
+  },
+  "onboardingTrackDescription": "Follow every booking and watch your budget as the day comes together.",
+  "@onboardingTrackDescription": {
+    "description": "Onboarding 3 body."
+  },
+  "welcomeTitle": "Let’s get started",
+  "@welcomeTitle": {
+    "description": "Welcome title."
+  },
+  "welcomeSubtitle": "Create an account to start booking or log in if you have been here before.",
+  "@welcomeSubtitle": {
+    "description": "Welcome body."
+  },
+  "createAccount": "Create an account",
+  "@createAccount": {
+    "description": "Leads to sign-up, on Welcome and Login."
+  },
+  "welcomeHaveAccount": "I already have an account",
+  "@welcomeHaveAccount": {
+    "description": "Leads to login from Welcome."
+  },
+  "roleSelectionTitle": "How will you use Eventor ?",
+  "@roleSelectionTitle": {
+    "description": "Role selection title. Note the house-style space before the question mark."
+  },
+  "roleSelectionSubtitle": "This shapes your whole experience in the app. It cannot be changed later.",
+  "@roleSelectionSubtitle": {
+    "description": "Role selection body."
+  },
+  "roleClientTitle": "I'm planning an event",
+  "@roleClientTitle": {
+    "description": "Client role card title."
+  },
+  "roleClientDescription": "Find and book my event team",
+  "@roleClientDescription": {
+    "description": "Client role card description."
+  },
+  "roleProviderTitle": "I offer a service",
+  "@roleProviderTitle": {
+    "description": "Provider role card title."
+  },
+  "roleProviderDescription": "List my services and manage bookings",
+  "@roleProviderDescription": {
+    "description": "Provider role card description."
+  },
+  "registerTitle": "Create your account",
+  "@registerTitle": {
+    "description": "Register title."
+  },
+  "registerSubtitle": "Just a few details, then you can start booking your event team.",
+  "@registerSubtitle": {
+    "description": "Register body for a client."
+  },
+  "registerSubtitleProvider": "Tell us about you and your business. You'll add your documents next.",
+  "@registerSubtitleProvider": {
+    "description": "Register body for a provider."
+  },
+  "registerBusinessTitle": "Your business",
+  "@registerBusinessTitle": {
+    "description": "Section title over the provider-only fields."
+  },
+  "registerBusinessNote": "Shown to clients on your profile.",
+  "@registerBusinessNote": {
+    "description": "Note under the business section title."
+  },
+  "registerCreateAccount": "Create account",
+  "@registerCreateAccount": {
+    "description": "Register submit button."
+  },
+  "registerTermsPrefix": "By continuing you agree to our ",
+  "@registerTermsPrefix": {
+    "description": "First half of the terms line; the link follows it."
+  },
+  "registerTermsLink": "Terms and Privacy Policy",
+  "@registerTermsLink": {
+    "description": "The linked half of the terms line."
+  },
+  "registerTermsSuffix": ".",
+  "@registerTermsSuffix": {
+    "description": "Closes the terms sentence after the link."
+  },
+  "registerHasAccountPrompt": "Already have an account ?",
+  "@registerHasAccountPrompt": {
+    "description": "Prompt before the Log in link on Register."
+  },
+  "registerEmailTakenTitle": "This email already has an account",
+  "@registerEmailTakenTitle": {
+    "description": "08b banner title."
+  },
+  "registerEmailTakenBody": "Log in instead, or sign up with a different address.",
+  "@registerEmailTakenBody": {
+    "description": "08b banner body."
+  },
+  "logIn": "Log in",
+  "@logIn": {
+    "description": "Log in button and link."
+  },
+  "nameLabel": "Full name",
+  "@nameLabel": {
+    "description": "Full name field label."
+  },
+  "namePlaceholder": "Amina Benali",
+  "@namePlaceholder": {
+    "description": "Example shown in the empty name field."
+  },
+  "emailLabel": "Email",
+  "@emailLabel": {
+    "description": "Email field label."
+  },
+  "emailPlaceholder": "name@example.com",
+  "@emailPlaceholder": {
+    "description": "Example shown in the empty email field."
+  },
+  "phoneLabel": "Phone",
+  "@phoneLabel": {
+    "description": "Phone field label."
+  },
+  "phonePlaceholder": "0555 12 34 56",
+  "@phonePlaceholder": {
+    "description": "Example shown in the empty phone field."
+  },
+  "phoneHint": "10 digits starting with 0, or +213.",
+  "@phoneHint": {
+    "description": "Helper under the phone field."
+  },
+  "passwordLabel": "Password",
+  "@passwordLabel": {
+    "description": "Password field label."
+  },
+  "passwordHint": "{count, plural, one{At least {count} character, with a letter and a digit.} other{At least {count} characters, with a letter and a digit.}}",
+  "@passwordHint": {
+    "description": "Helper under a new-password field stating the server rule.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "newPasswordLabel": "New password",
+  "@newPasswordLabel": {
+    "description": "New password field label."
+  },
+  "confirmPasswordLabel": "Confirm password",
+  "@confirmPasswordLabel": {
+    "description": "Confirm password field label."
+  },
+  "businessNameLabel": "Business name",
+  "@businessNameLabel": {
+    "description": "Business name field label."
+  },
+  "businessNamePlaceholder": "Studio Lumière",
+  "@businessNamePlaceholder": {
+    "description": "Example shown in the empty business name field."
+  },
+  "categoryLabel": "Category",
+  "@categoryLabel": {
+    "description": "Provider category select label."
+  },
+  "categoryPlaceholder": "Choose a category",
+  "@categoryPlaceholder": {
+    "description": "Empty category select."
+  },
+  "categorySheetTitle": "Choose your category",
+  "@categorySheetTitle": {
+    "description": "Title of the category picker sheet."
+  },
+  "wilayaOptionalLabel": "Wilaya (optional)",
+  "@wilayaOptionalLabel": {
+    "description": "Client wilaya select label."
+  },
+  "wilayaPlaceholder": "Choose a wilaya",
+  "@wilayaPlaceholder": {
+    "description": "Empty wilaya select."
+  },
+  "wilayaSheetTitle": "Choose your wilaya",
+  "@wilayaSheetTitle": {
+    "description": "Title of the wilaya picker sheet."
+  },
+  "wilayaSearchHint": "Find a wilaya",
+  "@wilayaSearchHint": {
+    "description": "Search field hint in the wilaya picker."
+  },
+  "wilayasServedLabel": "Wilayas served",
+  "@wilayasServedLabel": {
+    "description": "Provider wilayas select label."
+  },
+  "wilayasServedPlaceholder": "Choose where you work",
+  "@wilayasServedPlaceholder": {
+    "description": "Empty wilayas-served select."
+  },
+  "wilayasServedSheetTitle": "Where do you work ?",
+  "@wilayasServedSheetTitle": {
+    "description": "Title of the wilayas-served picker sheet."
+  },
+  "referenceLoadFailed": "Could not load the list. Tap to try again.",
+  "@referenceLoadFailed": {
+    "description": "Shown when wilayas or categories failed to load."
+  },
+  "nameRequired": "Enter your full name.",
+  "@nameRequired": {
+    "description": "Name left empty."
+  },
+  "nameTooShort": "{count, plural, one{Use at least {count} character.} other{Use at least {count} characters.}}",
+  "@nameTooShort": {
+    "description": "Name below the minimum length.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "businessNameRequired": "Enter your business name.",
+  "@businessNameRequired": {
+    "description": "Business name left empty."
+  },
+  "emailRequired": "Enter your email address.",
+  "@emailRequired": {
+    "description": "Email left empty."
+  },
+  "emailInvalid": "Enter a valid email address, like name@example.com.",
+  "@emailInvalid": {
+    "description": "Email does not look like an address."
+  },
+  "emailTaken": "This email already has an account.",
+  "@emailTaken": {
+    "description": "Email already used by another account."
+  },
+  "phoneRequired": "Enter your phone number.",
+  "@phoneRequired": {
+    "description": "Phone left empty."
+  },
+  "phoneInvalid": "Enter 10 digits starting with 0, or a +213 number.",
+  "@phoneInvalid": {
+    "description": "Phone is not a whole Algerian number."
+  },
+  "phoneTaken": "This phone number already has an account.",
+  "@phoneTaken": {
+    "description": "Phone already used by another account."
+  },
+  "passwordRequired": "Enter your password.",
+  "@passwordRequired": {
+    "description": "Password left empty."
+  },
+  "passwordTooShort": "{count, plural, one{Use at least {count} character.} other{Use at least {count} characters.}}",
+  "@passwordTooShort": {
+    "description": "Password below the minimum length.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "passwordNeedsLetterAndDigit": "Use at least one letter and one digit.",
+  "@passwordNeedsLetterAndDigit": {
+    "description": "Password lacks a letter or a digit."
+  },
+  "passwordWeak": "This password is too easy to guess. Choose another.",
+  "@passwordWeak": {
+    "description": "Server refused the password as too common."
+  },
+  "passwordMismatch": "The two passwords do not match.",
+  "@passwordMismatch": {
+    "description": "Confirmation differs from the password."
+  },
+  "categoryRequired": "Choose your category.",
+  "@categoryRequired": {
+    "description": "Provider category not picked."
+  },
+  "wilayasRequired": "Choose at least one wilaya.",
+  "@wilayasRequired": {
+    "description": "No wilaya served picked."
+  },
+  "verifyEmailTitle": "Confirm your email",
+  "@verifyEmailTitle": {
+    "description": "10b title."
+  },
+  "verifyEmailSubtitle": "Enter the code we sent to {email} to activate your account.",
+  "@verifyEmailSubtitle": {
+    "description": "10b body.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "verificationCodeLabel": "Verification code",
+  "@verificationCodeLabel": {
+    "description": "Label over the code boxes."
+  },
+  "verifyAction": "Verify",
+  "@verifyAction": {
+    "description": "Submits a code."
+  },
+  "verifyNoCodePrompt": "Didn't get the code ?",
+  "@verifyNoCodePrompt": {
+    "description": "Prompt before Resend."
+  },
+  "resend": "Resend",
+  "@resend": {
+    "description": "Asks for a new code."
+  },
+  "resendIn": "Resend in {time}",
+  "@resendIn": {
+    "description": "Resend while the cooldown runs; time is m:ss.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyCodeResent": "A new code is on its way",
+  "@verifyCodeResent": {
+    "description": "Toast after a code was resent."
+  },
+  "codeInvalidTitle": "That code is not right",
+  "@codeInvalidTitle": {
+    "description": "10c banner title."
+  },
+  "codeInvalidBody": "Check the six digits and try again.",
+  "@codeInvalidBody": {
+    "description": "10c banner body. The design adds an attempts count the API does not provide."
+  },
+  "mockCodeHint": "Mock mode — the code is always {code}.",
+  "@mockCodeHint": {
+    "description": "Under the code boxes in mock builds only: no email is sent there, so the tester is told the code.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "codeExpiredTitle": "That code has expired",
+  "@codeExpiredTitle": {
+    "description": "10d banner title."
+  },
+  "codeExpiredBody": "Codes last 15 minutes. Ask for a new one and we will send it straight away.",
+  "@codeExpiredBody": {
+    "description": "10d banner body."
+  },
+  "documentsTitle": "Verify your business",
+  "@documentsTitle": {
+    "description": "08e title."
+  },
+  "documentsSubtitle": "Upload these three documents. We review them in one to two days.",
+  "@documentsSubtitle": {
+    "description": "08e body."
+  },
+  "documentsSectionTitle": "Verification documents",
+  "@documentsSectionTitle": {
+    "description": "08e section title."
+  },
+  "documentsSectionNote": "We review these before your services go live.",
+  "@documentsSectionNote": {
+    "description": "08e section note."
+  },
+  "documentsSubmit": "Submit for review",
+  "@documentsSubmit": {
+    "description": "08e primary button."
+  },
+  "documentsLater": "I'll do it later",
+  "@documentsLater": {
+    "description": "08e ghost button."
+  },
+  "documentsSubmitted": "Documents sent. We review them in one to two days.",
+  "@documentsSubmitted": {
+    "description": "Toast after submitting for review."
+  },
+  "documentUploadAction": "Upload file",
+  "@documentUploadAction": {
+    "description": "Empty document field."
+  },
+  "documentUploading": "Uploading…",
+  "@documentUploading": {
+    "description": "Helper while a document uploads."
+  },
+  "documentUploaded": "Received",
+  "@documentUploaded": {
+    "description": "Helper once a document is on the server."
+  },
+  "documentUnderReview": "Under review",
+  "@documentUnderReview": {
+    "description": "Helper for a document awaiting review."
+  },
+  "documentApproved": "Approved",
+  "@documentApproved": {
+    "description": "Helper for an approved document."
+  },
+  "documentReplace": "Choose a different file",
+  "@documentReplace": {
+    "description": "Document actions sheet: replace."
+  },
+  "documentRemove": "Remove file",
+  "@documentRemove": {
+    "description": "Document actions sheet: remove."
+  },
+  "documentMissing": "Attach this document.",
+  "@documentMissing": {
+    "description": "Document left empty."
+  },
+  "documentTooLarge": "This file is over {count} MB. Attach a smaller one.",
+  "@documentTooLarge": {
+    "description": "File above the size cap.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "documentWrongType": "Attach a PDF or an image.",
+  "@documentWrongType": {
+    "description": "File of a refused type."
+  },
+  "documentUploadFailed": "Upload failed. Tap to try again.",
+  "@documentUploadFailed": {
+    "description": "Upload did not go through."
+  },
+  "documentIdentityCard": "National ID card",
+  "@documentIdentityCard": {
+    "description": "Document label."
+  },
+  "documentIdentityCardHint": "Front and back, in one file",
+  "@documentIdentityCardHint": {
+    "description": "Document helper."
+  },
+  "documentCommercialRegister": "Commercial register or artisan card",
+  "@documentCommercialRegister": {
+    "description": "Document label."
+  },
+  "documentCommercialRegisterHint": "Whichever body you are registered with",
+  "@documentCommercialRegisterHint": {
+    "description": "Document helper."
+  },
+  "documentTaxRegistration": "Tax registration card (NIF)",
+  "@documentTaxRegistration": {
+    "description": "Document label."
+  },
+  "documentTaxRegistrationHint": "Shows your fiscal identification number",
+  "@documentTaxRegistrationHint": {
+    "description": "Document helper."
+  },
+  "loginTitle": "Welcome back",
+  "@loginTitle": {
+    "description": "Login title."
+  },
+  "loginSubtitle": "Log in to pick up where you left off.",
+  "@loginSubtitle": {
+    "description": "Login body."
+  },
+  "forgotPassword": "Forgot password ?",
+  "@forgotPassword": {
+    "description": "Link to the reset flow."
+  },
+  "loginNewPrompt": "New to Eventor ?",
+  "@loginNewPrompt": {
+    "description": "Prompt before Create an account on Login."
+  },
+  "loginWrongTitle": "Email or password is incorrect",
+  "@loginWrongTitle": {
+    "description": "07b banner title."
+  },
+  "loginWrongBody": "Check the address and try again — passwords are case sensitive.",
+  "@loginWrongBody": {
+    "description": "07b banner body."
+  },
+  "loginUnverifiedTitle": "Confirm your email first",
+  "@loginUnverifiedTitle": {
+    "description": "07c banner title."
+  },
+  "loginUnverifiedBody": "We sent a 6-digit code to {email} when you signed up. It is still waiting.",
+  "@loginUnverifiedBody": {
+    "description": "07c banner body.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "loginSendNewCode": "Send a new code",
+  "@loginSendNewCode": {
+    "description": "07c banner link."
+  },
+  "loginLockedTitle": "Too many failed attempts",
+  "@loginLockedTitle": {
+    "description": "07d banner title."
+  },
+  "loginLockedBody": "This account is locked for a while to keep it safe. You can try again at {time}, or reset your password now.",
+  "@loginLockedBody": {
+    "description": "07d banner body; time is the clock time the lock ends.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "loginTryAgainAt": "Try again at {time}",
+  "@loginTryAgainAt": {
+    "description": "07d disabled button; time is a clock time.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "loginBlockedTitle": "This account is blocked",
+  "@loginBlockedTitle": {
+    "description": "Banner title when the account is blocked; the body is the server message."
+  },
+  "loginNotAllowedTitle": "This account can't use the app",
+  "@loginNotAllowedTitle": {
+    "description": "Banner title for an admin account."
+  },
+  "passwordResetDone": "Password updated. Log in with your new password.",
+  "@passwordResetDone": {
+    "description": "Toast on Login after a reset."
+  },
+  "forgotPasswordTitle": "Reset your password",
+  "@forgotPasswordTitle": {
+    "description": "09 title."
+  },
+  "forgotPasswordSubtitle": "Enter the email on your account and we will send you a 6-digit code.",
+  "@forgotPasswordSubtitle": {
+    "description": "09 body."
+  },
+  "sendCode": "Send code",
+  "@sendCode": {
+    "description": "09 button."
+  },
+  "backToLogIn": "Back to log in",
+  "@backToLogIn": {
+    "description": "Ghost button back to Login."
+  },
+  "resetCodeTitle": "Check your email",
+  "@resetCodeTitle": {
+    "description": "10 title."
+  },
+  "resetCodeSubtitle": "We sent a 6-digit code to {email}.",
+  "@resetCodeSubtitle": {
+    "description": "10 body.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "resetPasswordTitle": "Set a new password",
+  "@resetPasswordTitle": {
+    "description": "10a title."
+  },
+  "resetPasswordSubtitle": "Your new password must be different from the one you used before.",
+  "@resetPasswordSubtitle": {
+    "description": "10a body."
+  },
+  "resetPasswordAction": "Reset password",
+  "@resetPasswordAction": {
+    "description": "10a button."
+  },
+  "setPasswordTitle": "Set your password",
+  "@setPasswordTitle": {
+    "description": "10f title."
+  },
+  "setPasswordSubtitle": "Your Eventor account is ready. Choose a password and you are signed in.",
+  "@setPasswordSubtitle": {
+    "description": "10f body."
+  },
+  "setPasswordAction": "Set password and sign in",
+  "@setPasswordAction": {
+    "description": "10f button."
+  },
+  "needHelpContactSupport": "Need help ? Contact support",
+  "@needHelpContactSupport": {
+    "description": "10f/10g ghost button."
+  },
+  "contactSupport": "Contact support",
+  "@contactSupport": {
+    "description": "10g primary button, replacing Request a new link."
+  },
+  "inviteExpiredTitle": "This invite link has expired",
+  "@inviteExpiredTitle": {
+    "description": "10g banner title."
+  },
+  "inviteExpiredBody": "Invite links last 7 days and can only be used once. Ask us for a fresh one and it will arrive in a moment.",
+  "@inviteExpiredBody": {
+    "description": "10g banner body."
+  },
+  "inviteInvalidTitle": "This invite link does not work",
+  "@inviteInvalidTitle": {
+    "description": "Banner title when the invite token is invalid or missing."
+  },
+  "inviteInvalidBody": "Open the link from your invitation email again, or ask us for a new one.",
+  "@inviteInvalidBody": {
+    "description": "Banner body when the invite token is invalid or missing."
+  },
+  "supportEmailSubject": "Help with my Eventor account",
+  "@supportEmailSubject": {
+    "description": "Subject of the support email opened from 10g."
+  },
+  "homeUploadDocuments": "Upload documents",
+  "@homeUploadDocuments": {
+    "description": "Leads to 08e from home."
+  },
+  "logOut": "Log out",
+  "@logOut": {
+    "description": "Signs out."
+  },
+  "statusPending": "Pending",
+  "@statusPending": {
+    "description": "Status badge."
+  },
+  "statusAccepted": "Accepted",
+  "@statusAccepted": {
+    "description": "Status badge."
+  },
+  "statusDeclined": "Declined",
+  "@statusDeclined": {
+    "description": "Status badge."
+  },
+  "statusCompleted": "Completed",
+  "@statusCompleted": {
+    "description": "Status badge."
+  },
+  "statusCancelled": "Cancelled",
+  "@statusCancelled": {
+    "description": "Status badge."
+  },
+  "availabilityAvailable": "Available",
+  "@availabilityAvailable": {
+    "description": "Availability badge."
+  },
+  "availabilityUnavailable": "Unavailable",
+  "@availabilityUnavailable": {
+    "description": "Availability badge."
+  },
+  "ratingLabel": "Rated {score} out of 5",
+  "@ratingLabel": {
+    "description": "Screen-reader label for a rating without count.",
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingWithCountLabel": "{count, plural, one{Rated {score} out of 5 from {count} review} other{Rated {score} out of 5 from {count} reviews}}",
+  "@ratingWithCountLabel": {
+    "description": "Screen-reader label for a rating with its count.",
+    "placeholders": {
+      "score": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewCount": "{count, plural, one{({count} review)} other{({count} reviews)}}",
+  "@reviewCount": {
+    "description": "Review count beside a rating.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "priceFrom": "From",
+  "@priceFrom": {
+    "description": "Above a starting price."
+  },
+  "requestAccept": "Accept",
+  "@requestAccept": {
+    "description": "Accept a booking request."
+  },
+  "requestDecline": "Decline",
+  "@requestDecline": {
+    "description": "Decline a booking request."
+  },
+  "searchHint": "Search",
+  "@searchHint": {
+    "description": "Default search field hint."
+  },
+  "selectionNoMatch": "Nothing matches that search.",
+  "@selectionNoMatch": {
+    "description": "Empty state of a filtered picker."
+  },
+  "selectionDone": "Done",
+  "@selectionDone": {
+    "description": "Closes a multi-select picker with nothing chosen."
+  },
+  "selectionDoneCount": "{count, plural, one{Done · {count} selected} other{Done · {count} selected}}",
+  "@selectionDoneCount": {
+    "description": "Closes a multi-select picker, stating how many are chosen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "currencyDzd": "DA",
+  "@currencyDzd": {
+    "description": "The Algerian dinar, after an amount: 45 000 DA."
+  },
+  "priceOnQuote": "On quote",
+  "@priceOnQuote": {
+    "description": "Shown instead of a price for a service priced on quote."
+  },
+  "ratingNew": "New",
+  "@ratingNew": {
+    "description": "Shown instead of a star score for something nobody has reviewed yet."
+  },
+  "comingSoon": "Coming soon",
+  "@comingSoon": {
+    "description": "Toast for a link to a screen that is not built yet."
+  },
+  "stateErrorTitle": "We could not load this",
+  "@stateErrorTitle": {
+    "description": "Title of the error card shown when a list or detail fails to load."
+  },
+  "stateRetry": "Try again",
+  "@stateRetry": {
+    "description": "Button on the error card that reloads."
+  },
+  "verifiedProvider": "Verified provider",
+  "@verifiedProvider": {
+    "description": "Badge on a provider whose documents Eventor checked."
+  },
+  "readMore": "Read more",
+  "@readMore": {
+    "description": "Expands a long description."
+  },
+  "readLess": "Read less",
+  "@readLess": {
+    "description": "Collapses an expanded description."
+  },
+  "seeAll": "See all",
+  "@seeAll": {
+    "description": "Link beside a section title that opens the full list."
+  },
+  "seeAllCount": "See all {count}",
+  "@seeAllCount": {
+    "description": "Link that opens a full list, with its size.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noLongerAvailable": "No longer available",
+  "@noLongerAvailable": {
+    "description": "On a saved item whose service or pack is no longer listed."
+  },
+  "undo": "Undo",
+  "@undo": {
+    "description": "Toast action that reverses the last change."
+  },
+  "favouriteSave": "Save",
+  "@favouriteSave": {
+    "description": "Screen-reader label of an empty heart: saves the item to favourites."
+  },
+  "favouriteSaved": "Saved",
+  "@favouriteSaved": {
+    "description": "Screen-reader label of a filled heart: the item is in favourites."
+  },
+  "favouriteFailed": "We could not update your favourites. Try again.",
+  "@favouriteFailed": {
+    "description": "Toast when saving or un-saving a favourite fails."
+  },
+  "favouriteRemoved": "Removed from favourites",
+  "@favouriteRemoved": {
+    "description": "Toast after removing an item on the Favorites screen, with Undo."
+  },
+  "priceUnitPerEvent": "per event",
+  "@priceUnitPerEvent": {
+    "description": "Price unit: the price covers one event."
+  },
+  "priceUnitPerHour": "per hour",
+  "@priceUnitPerHour": {
+    "description": "Price unit: charged by the hour."
+  },
+  "priceUnitPerPerson": "per person",
+  "@priceUnitPerPerson": {
+    "description": "Price unit: charged per guest."
+  },
+  "priceUnitPerDay": "per day",
+  "@priceUnitPerDay": {
+    "description": "Price unit: charged by the day."
+  },
+  "eventTypeWedding": "Wedding",
+  "@eventTypeWedding": {
+    "description": "Event type chip."
+  },
+  "eventTypeEngagement": "Engagement",
+  "@eventTypeEngagement": {
+    "description": "Event type chip."
+  },
+  "eventTypeHenna": "Henna",
+  "@eventTypeHenna": {
+    "description": "Event type chip."
+  },
+  "eventTypeBirthday": "Birthday",
+  "@eventTypeBirthday": {
+    "description": "Event type chip."
+  },
+  "eventTypeCircumcision": "Circumcision",
+  "@eventTypeCircumcision": {
+    "description": "Event type chip."
+  },
+  "eventTypeGraduation": "Graduation",
+  "@eventTypeGraduation": {
+    "description": "Event type chip."
+  },
+  "eventTypeCorporate": "Corporate",
+  "@eventTypeCorporate": {
+    "description": "Event type chip."
+  },
+  "eventTypeConference": "Conference",
+  "@eventTypeConference": {
+    "description": "Event type chip."
+  },
+  "eventTypeOther": "Other",
+  "@eventTypeOther": {
+    "description": "Event type chip."
+  },
+  "calendarSelected": "Selected",
+  "@calendarSelected": {
+    "description": "Calendar legend: the chosen day."
+  },
+  "calendarAvailable": "Available",
+  "@calendarAvailable": {
+    "description": "Calendar legend: a day that can be requested."
+  },
+  "calendarBooked": "Fully booked",
+  "@calendarBooked": {
+    "description": "Calendar legend: a day with no capacity left."
+  },
+  "calendarUnavailable": "Unavailable",
+  "@calendarUnavailable": {
+    "description": "Calendar legend: a day the provider does not offer, or too soon."
+  },
+  "calendarPreviousMonth": "Previous month",
+  "@calendarPreviousMonth": {
+    "description": "Screen-reader label of the calendar's back arrow."
+  },
+  "calendarNextMonth": "Next month",
+  "@calendarNextMonth": {
+    "description": "Screen-reader label of the calendar's forward arrow."
+  },
+  "calendarMinNotice": "{count, plural, one{Dates need at least {count} day's notice.} other{Dates need at least {count} days' notice.}}",
+  "@calendarMinNotice": {
+    "description": "Under a calendar: the minimum notice, from the app config.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notAcceptingTitle": "Not taking new bookings",
+  "@notAcceptingTitle": {
+    "description": "Action bar when the provider paused bookings."
+  },
+  "notAcceptingBody": "Messages are still open",
+  "@notAcceptingBody": {
+    "description": "Under 'Not taking new bookings': messaging still works."
+  },
+  "sendMessage": "Send a message",
+  "@sendMessage": {
+    "description": "Button that opens a chat with the provider."
+  },
+  "messageProvider": "Message the provider",
+  "@messageProvider": {
+    "description": "Screen-reader label of the message icon button."
+  },
+  "requestBooking": "Request booking",
+  "@requestBooking": {
+    "description": "Primary button on a service."
+  },
+  "requestPack": "Request pack",
+  "@requestPack": {
+    "description": "Primary button on a pack."
+  },
+  "packSave": "Save",
+  "@packSave": {
+    "description": "Before a pack's saving amount: 'Save 45 000 DA'."
+  },
+  "basedOnReviews": "{count, plural, one{Based on {count} review} other{Based on {count} reviews}}",
+  "@basedOnReviews": {
+    "description": "Under the big rating on a detail screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bookedTimes": "{count, plural, =0{Not booked yet} one{Booked once} other{Booked {count} times}}",
+  "@bookedTimes": {
+    "description": "How often a service was booked, on a result card.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "servicesCount": "{count, plural, one{{count} service} other{{count} services}}",
+  "@servicesCount": {
+    "description": "A count of services.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packBy": "by {name}",
+  "@packBy": {
+    "description": "The provider behind a pack.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "photoCounterLabel": "Photo {index} of {count}",
+  "@photoCounterLabel": {
+    "description": "Screen-reader label of a photo carousel's position.",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "backLabelOnPhoto": "Back",
+  "@backLabelOnPhoto": {
+    "description": "Screen-reader label of the round Back button over a photo."
+  },
+  "navHome": "Home",
+  "@navHome": {
+    "description": "Bottom navigation tab."
+  },
+  "navSearch": "Search",
+  "@navSearch": {
+    "description": "Bottom navigation tab."
+  },
+  "navBookings": "Bookings",
+  "@navBookings": {
+    "description": "Bottom navigation tab."
+  },
+  "navMessages": "Messages",
+  "@navMessages": {
+    "description": "Bottom navigation tab."
+  },
+  "navProfile": "Profile",
+  "@navProfile": {
+    "description": "Bottom navigation tab."
+  },
+  "tabComingSoonTitle": "Coming soon",
+  "@tabComingSoonTitle": {
+    "description": "Title on a tab whose screens are not built yet."
+  },
+  "tabComingSoonBody": "This part of Eventor is on its way.",
+  "@tabComingSoonBody": {
+    "description": "Body on a tab whose screens are not built yet."
+  },
+  "profileFavourites": "Favorites",
+  "@profileFavourites": {
+    "description": "Row on the Profile tab that opens the saved services and packs."
+  },
+  "profileMoreSoon": "More settings are coming soon.",
+  "@profileMoreSoon": {
+    "description": "Note under the Profile tab's rows while the full profile is not built."
+  },
+  "greetingMorning": "Good morning",
+  "@greetingMorning": {
+    "description": "Home greeting, 05:00–11:59."
+  },
+  "greetingAfternoon": "Good afternoon",
+  "@greetingAfternoon": {
+    "description": "Home greeting, 12:00–17:59."
+  },
+  "greetingEvening": "Good evening",
+  "@greetingEvening": {
+    "description": "Home greeting, 18:00–04:59."
+  },
+  "chooseCity": "Choose your city",
+  "@chooseCity": {
+    "description": "Home's city pill when the client has none, and the title of the city sheet."
+  },
+  "chooseCitySubtitle": "We show services that cover it. Only wilayas open on Eventor are listed.",
+  "@chooseCitySubtitle": {
+    "description": "Under the city sheet's title."
+  },
+  "cityChangeFailed": "We could not change your city. Try again.",
+  "@cityChangeFailed": {
+    "description": "Toast when saving the chosen city fails."
+  },
+  "homeSearchHint": "Search a service or a provider",
+  "@homeSearchHint": {
+    "description": "Placeholder of Home's search field."
+  },
+  "homeFiltersLabel": "Filters",
+  "@homeFiltersLabel": {
+    "description": "Screen-reader label of Home's filter button."
+  },
+  "homeNotificationsLabel": "Notifications",
+  "@homeNotificationsLabel": {
+    "description": "Screen-reader label of Home's bell."
+  },
+  "homeNotificationsUnread": "Notifications, unread",
+  "@homeNotificationsUnread": {
+    "description": "Screen-reader label of Home's bell when something is unread."
+  },
+  "homeYourBookings": "Your bookings",
+  "@homeYourBookings": {
+    "description": "Home section title."
+  },
+  "homeYourBudget": "Your budget",
+  "@homeYourBudget": {
+    "description": "Home section title."
+  },
+  "budgetDetails": "Details",
+  "@budgetDetails": {
+    "description": "Link beside 'Your budget'."
+  },
+  "budgetOf": "of",
+  "@budgetOf": {
+    "description": "Between the spent and the planned amounts: '180 000 DA of 400 000 DA planned'."
+  },
+  "budgetPlanned": "planned",
+  "@budgetPlanned": {
+    "description": "After the planned amount on Home's budget card."
+  },
+  "budgetBooked": "{booked} of {count, plural, one{{count} service} other{{count} services}} booked",
+  "@budgetBooked": {
+    "description": "Under the budget bar.",
+    "placeholders": {
+      "booked": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "budgetEmptyTitle": "Plan your budget",
+  "@budgetEmptyTitle": {
+    "description": "Home's budget card when there is none (11c)."
+  },
+  "budgetEmptyBody": "Set a total, then track what each service really costs. Only you can see it.",
+  "@budgetEmptyBody": {
+    "description": "Body of the 11c budget card."
+  },
+  "budgetCreate": "Create a budget",
+  "@budgetCreate": {
+    "description": "Button on the 11c budget card."
+  },
+  "homeReadyPacks": "Ready Packs",
+  "@homeReadyPacks": {
+    "description": "Home section title, and the title of screen 19."
+  },
+  "homeServicesNearYou": "Services near you",
+  "@homeServicesNearYou": {
+    "description": "Home's last section: the best-rated services in the client's city."
+  },
+  "filtersTitle": "Filters",
+  "@filtersTitle": {
+    "description": "Title of the filters drawer (11a)."
+  },
+  "filtersClose": "Close filters",
+  "@filtersClose": {
+    "description": "Screen-reader label of the drawer's close button."
+  },
+  "filtersSortBy": "Sort by",
+  "@filtersSortBy": {
+    "description": "Filters group label."
+  },
+  "sortRelevance": "Relevance",
+  "@sortRelevance": {
+    "description": "Sort order."
+  },
+  "sortPriceLow": "Lowest price",
+  "@sortPriceLow": {
+    "description": "Sort order."
+  },
+  "sortPriceHigh": "Highest price",
+  "@sortPriceHigh": {
+    "description": "Sort order."
+  },
+  "sortRating": "Top rated",
+  "@sortRating": {
+    "description": "Sort order."
+  },
+  "sortPopular": "Most popular",
+  "@sortPopular": {
+    "description": "Sort order."
+  },
+  "sortNewest": "Newest",
+  "@sortNewest": {
+    "description": "Sort order."
+  },
+  "filtersCategory": "Category",
+  "@filtersCategory": {
+    "description": "Filters group label."
+  },
+  "filtersWilaya": "Wilaya",
+  "@filtersWilaya": {
+    "description": "Filters group label, and the drill-in's title."
+  },
+  "filtersAllWilayas": "All wilayas",
+  "@filtersAllWilayas": {
+    "description": "Chip that opens the full wilaya list."
+  },
+  "filtersBudget": "Budget",
+  "@filtersBudget": {
+    "description": "Filters group label."
+  },
+  "filtersEventDate": "Event date",
+  "@filtersEventDate": {
+    "description": "Filters group label."
+  },
+  "filtersEventDateAny": "Any date",
+  "@filtersEventDateAny": {
+    "description": "The event date field when no date is set."
+  },
+  "filtersEventDateHint": "Only providers free on that day.",
+  "@filtersEventDateHint": {
+    "description": "Under the event date field."
+  },
+  "filtersEventDateClear": "Clear the date",
+  "@filtersEventDateClear": {
+    "description": "Screen-reader label of the button that clears the event date."
+  },
+  "filtersRating": "Rating",
+  "@filtersRating": {
+    "description": "Filters group label."
+  },
+  "filtersRatingAny": "Any",
+  "@filtersRatingAny": {
+    "description": "Rating chip: no minimum."
+  },
+  "filtersSaved": "Saved",
+  "@filtersSaved": {
+    "description": "Filters group label."
+  },
+  "filtersFavouritesOnly": "Favorites only",
+  "@filtersFavouritesOnly": {
+    "description": "Switch that keeps only saved services."
+  },
+  "filtersClearAll": "Clear all",
+  "@filtersClearAll": {
+    "description": "Resets every filter."
+  },
+  "filtersShowCount": "{count, plural, =0{No services} one{Show {count} service} other{Show {count} services}}",
+  "@filtersShowCount": {
+    "description": "The drawer's primary button, with the live result count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filtersShow": "Show services",
+  "@filtersShow": {
+    "description": "The drawer's primary button while the count is loading or unknown."
+  },
+  "wilayaDoneCount": "{count, plural, =0{Done} one{Done · {count} selected} other{Done · {count} selected}}",
+  "@wilayaDoneCount": {
+    "description": "The wilaya drill-in's primary button.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wilayaClear": "Clear",
+  "@wilayaClear": {
+    "description": "The wilaya drill-in's secondary button."
+  },
+  "eventDateSheetTitle": "Pick your event date",
+  "@eventDateSheetTitle": {
+    "description": "Title of the sheet that picks the filters' event date."
+  },
+  "searchRecent": "Recent searches",
+  "@searchRecent": {
+    "description": "S1 section title."
+  },
+  "searchClear": "Clear",
+  "@searchClear": {
+    "description": "Link that empties the recent searches."
+  },
+  "searchRemoveRecent": "Remove {query}",
+  "@searchRemoveRecent": {
+    "description": "Screen-reader label of a recent search's remove button.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchBrowseCategories": "Browse categories",
+  "@searchBrowseCategories": {
+    "description": "S1 section title."
+  },
+  "resultsCount": "{count, plural, =0{No services} one{{count} service} other{{count} services}}",
+  "@resultsCount": {
+    "description": "How many results S2 found.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "resultsSortChip": "Sort · {order}",
+  "@resultsSortChip": {
+    "description": "S2 chip that opens the sort choices.",
+    "placeholders": {
+      "order": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsFiltersChip": "{count, plural, =0{Filters} other{Filters · {count}}}",
+  "@resultsFiltersChip": {
+    "description": "S2 chip that opens the filters drawer, with how many are on.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "resultsAllServices": "All services",
+  "@resultsAllServices": {
+    "description": "S2 title when there is neither a search nor a category."
+  },
+  "resultsEmptyTitle": "Nothing matches those filters",
+  "@resultsEmptyTitle": {
+    "description": "S2b title."
+  },
+  "resultsEmptyBody": "Try a wider budget, another wilaya or fewer filters.",
+  "@resultsEmptyBody": {
+    "description": "S2b body."
+  },
+  "resultsEmptySearch": "No services for “{query}”.",
+  "@resultsEmptySearch": {
+    "description": "S2b line naming the search that found nothing.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsClearFilters": "Clear all filters",
+  "@resultsClearFilters": {
+    "description": "S2b button."
+  },
+  "resultsLoadMoreFailed": "We could not load more results.",
+  "@resultsLoadMoreFailed": {
+    "description": "Under the list when the next page fails."
+  },
+  "resultsRemoveFilter": "Remove filter {label}",
+  "@resultsRemoveFilter": {
+    "description": "Screen-reader label of a removable filter chip.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "filterChipFavourites": "Favorites",
+  "@filterChipFavourites": {
+    "description": "Removable chip for the favourites-only filter."
+  },
+  "serviceAbout": "About this service",
+  "@serviceAbout": {
+    "description": "Section title on 12."
+  },
+  "serviceGoodToKnow": "Good to know",
+  "@serviceGoodToKnow": {
+    "description": "Card title on 12 and 20."
+  },
+  "serviceCancellation": "Provider's policy: {policy}",
+  "@serviceCancellation": {
+    "description": "The provider's own cancellation policy, quoted.",
+    "placeholders": {
+      "policy": {
+        "type": "String"
+      }
+    }
+  },
+  "serviceExtras": "Extras",
+  "@serviceExtras": {
+    "description": "Section title on 12: paid add-ons."
+  },
+  "servicePickDate": "Pick a date",
+  "@servicePickDate": {
+    "description": "Section title above the calendar on 12 and 20."
+  },
+  "selectedDateLabel": "Your date",
+  "@selectedDateLabel": {
+    "description": "Before the chosen day under the calendar."
+  },
+  "calendarConfirmNote": "The provider confirms the exact time after your request.",
+  "@calendarConfirmNote": {
+    "description": "Under the calendar on 12."
+  },
+  "monthLoadFailed": "We could not load this month.",
+  "@monthLoadFailed": {
+    "description": "In place of the calendar when a month fails to load."
+  },
+  "serviceReviews": "Reviews",
+  "@serviceReviews": {
+    "description": "Section title on 12, 13 and 20."
+  },
+  "serviceNoReviews": "No reviews yet",
+  "@serviceNoReviews": {
+    "description": "In the reviews section when there are none."
+  },
+  "servicePacksFromProvider": "Packs from this provider",
+  "@servicePacksFromProvider": {
+    "description": "Section title on 12."
+  },
+  "serviceReport": "Report this service",
+  "@serviceReport": {
+    "description": "Link at the foot of 12."
+  },
+  "upToGuests": "{count, plural, one{Up to {count} guest} other{Up to {count} guests}}",
+  "@upToGuests": {
+    "description": "A capacity line.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "yearsInBusiness": "{count, plural, one{{count} year in business} other{{count} years in business}}",
+  "@yearsInBusiness": {
+    "description": "On the provider mini-card.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "repliesIn": "Usually replies in {time}",
+  "@repliesIn": {
+    "description": "Reply time, from the API ('2 h').",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "detailGoneTitle": "This is no longer available",
+  "@detailGoneTitle": {
+    "description": "When a service, provider or pack was removed."
+  },
+  "detailGoneBody": "It may have been removed by the provider.",
+  "@detailGoneBody": {
+    "description": "Under 'This is no longer available'."
+  },
+  "detailGoneBack": "Go back",
+  "@detailGoneBack": {
+    "description": "Button on the no-longer-available card."
+  },
+  "profileChecked": "What we checked",
+  "@profileChecked": {
+    "description": "Section title on 13."
+  },
+  "checkIdentity": "Identity verified",
+  "@checkIdentity": {
+    "description": "A check on 13: national ID checked by Eventor."
+  },
+  "checkRegistration": "Registered activity",
+  "@checkRegistration": {
+    "description": "A check on 13: commercial register or artisan card verified."
+  },
+  "checkReplyTime": "Replies quickly",
+  "@checkReplyTime": {
+    "description": "A check on 13: measured over the last 30 days."
+  },
+  "profileAbout": "About",
+  "@profileAbout": {
+    "description": "Section title on 13."
+  },
+  "profileServices": "Services",
+  "@profileServices": {
+    "description": "Section title on 13."
+  },
+  "profileWhereTheyWork": "Where they work",
+  "@profileWhereTheyWork": {
+    "description": "Section title on 13."
+  },
+  "profileLanguages": "Speaks {languages}",
+  "@profileLanguages": {
+    "description": "Languages the provider speaks.",
+    "placeholders": {
+      "languages": {
+        "type": "String"
+      }
+    }
+  },
+  "profileMemberSince": "Member since",
+  "@profileMemberSince": {
+    "description": "Before the month and year the provider joined."
+  },
+  "profileReport": "Report this provider",
+  "@profileReport": {
+    "description": "Link at the foot of 13."
+  },
+  "langAr": "Arabic",
+  "@langAr": {
+    "description": "A language name."
+  },
+  "langFr": "French",
+  "@langFr": {
+    "description": "A language name."
+  },
+  "langEn": "English",
+  "@langEn": {
+    "description": "A language name."
+  },
+  "statReviewsLabel": "{count, plural, one{review} other{reviews}}",
+  "@statReviewsLabel": {
+    "description": "Under the rating in 13's stat strip (the number is shown above it).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statCompletedLabel": "{count, plural, one{booking completed} other{bookings completed}}",
+  "@statCompletedLabel": {
+    "description": "Under the completed count in 13's stat strip.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statYearsLabel": "{count, plural, one{year in business} other{years in business}}",
+  "@statYearsLabel": {
+    "description": "Under the years count in 13's stat strip.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packsSubtitle": "Bundles put together by one provider — a single price, everything included.",
+  "@packsSubtitle": {
+    "description": "Under the title of 19."
+  },
+  "packsAll": "All",
+  "@packsAll": {
+    "description": "Event type chip on 19: no filter."
+  },
+  "packsSortedBy": "Sorted by {order}",
+  "@packsSortedBy": {
+    "description": "The sort row on 19.",
+    "placeholders": {
+      "order": {
+        "type": "String"
+      }
+    }
+  },
+  "packOrderSavings": "best savings",
+  "@packOrderSavings": {
+    "description": "Pack sort order, inside 'Sorted by …'."
+  },
+  "packOrderPriceAsc": "lowest price",
+  "@packOrderPriceAsc": {
+    "description": "Pack sort order, inside 'Sorted by …'."
+  },
+  "packOrderPriceDesc": "highest price",
+  "@packOrderPriceDesc": {
+    "description": "Pack sort order, inside 'Sorted by …'."
+  },
+  "packOrderRating": "top rated",
+  "@packOrderRating": {
+    "description": "Pack sort order, inside 'Sorted by …'."
+  },
+  "packOrderPopular": "most popular",
+  "@packOrderPopular": {
+    "description": "Pack sort order, inside 'Sorted by …'."
+  },
+  "packsEmptyTitle": "No packs here yet",
+  "@packsEmptyTitle": {
+    "description": "19 when an event type has no packs."
+  },
+  "packsEmptyBody": "Try another event type.",
+  "@packsEmptyBody": {
+    "description": "Under 'No packs here yet'."
+  },
+  "packBadge": "{count, plural, one{Ready Pack · {count} service} other{Ready Pack · {count} services}}",
+  "@packBadge": {
+    "description": "Badge above a pack's name on 20.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packBookings": "{count, plural, =0{Not booked yet} one{Booked once} other{Booked {count} times}}",
+  "@packBookings": {
+    "description": "How often a pack was booked, on 20.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packVersus": "versus booking separately",
+  "@packVersus": {
+    "description": "Beside the saving on 20's price card."
+  },
+  "packInside": "What is inside",
+  "@packInside": {
+    "description": "Section title on 20."
+  },
+  "packBookedSeparately": "Booked separately",
+  "@packBookedSeparately": {
+    "description": "The total row under a pack's items."
+  },
+  "packCalendarHint": "Only days when every service in the pack is free.",
+  "@packCalendarHint": {
+    "description": "Under the calendar on 20."
+  },
+  "packAbout": "About this pack",
+  "@packAbout": {
+    "description": "Section title on 20."
+  },
+  "packAvailableIn": "Available in {wilayas}",
+  "@packAvailableIn": {
+    "description": "Where every service in the pack works.",
+    "placeholders": {
+      "wilayas": {
+        "type": "String"
+      }
+    }
+  },
+  "packAllServices": "{count, plural, one{{count} service included} other{all {count} services}}",
+  "@packAllServices": {
+    "description": "Under the price in 20's sticky bar.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "favouritesTitle": "Favorites",
+  "@favouritesTitle": {
+    "description": "Title of screen 17."
+  },
+  "favouritesServices": "Services",
+  "@favouritesServices": {
+    "description": "Tab on 17."
+  },
+  "favouritesPacks": "Packs",
+  "@favouritesPacks": {
+    "description": "Tab on 17."
+  },
+  "favouritesAll": "All",
+  "@favouritesAll": {
+    "description": "Category chip on 17: every category."
+  },
+  "favouritesEmptyServices": "No saved services yet",
+  "@favouritesEmptyServices": {
+    "description": "17's Services tab when empty."
+  },
+  "favouritesEmptyPacks": "No saved packs yet",
+  "@favouritesEmptyPacks": {
+    "description": "17's Packs tab when empty."
+  },
+  "favouritesEmptyBody": "Tap the heart on a service or a pack to keep it here.",
+  "@favouritesEmptyBody": {
+    "description": "Under 17's empty title."
+  },
+  "favouritesExplore": "Explore",
+  "@favouritesExplore": {
+    "description": "17's empty-state button: opens Search."
+  },
+  "pressBackAgainToExit": "Press back again to exit",
+  "@pressBackAgainToExit": {
+    "description": "Toast on Home after the first Back press; a second press within two seconds closes the app."
+  },
+  "offlineTitle": "You are offline",
+  "@offlineTitle": {
+    "description": "Title of the offline banner."
+  },
+  "offlineRetry": "Retry",
+  "@offlineRetry": {
+    "description": "The action on the offline banner."
+  },
+  "messagesTitle": "Messages",
+  "@messagesTitle": {
+    "description": "Screen 14 title."
+  },
+  "messagesSearchHint": "Search a conversation",
+  "@messagesSearchHint": {
+    "description": "Search field hint on screen 14."
+  },
+  "messagesFilterAll": "All",
+  "@messagesFilterAll": {
+    "description": "Screen 14 chip: every conversation."
+  },
+  "messagesFilterUnread": "Unread",
+  "@messagesFilterUnread": {
+    "description": "Screen 14 chip: conversations with unread messages."
+  },
+  "messagesFilterBookings": "Bookings",
+  "@messagesFilterBookings": {
+    "description": "Screen 14 chip: conversations attached to a booking."
+  },
+  "messagesEmptyTitle": "No messages yet",
+  "@messagesEmptyTitle": {
+    "description": "Screen 14 empty state title."
+  },
+  "messagesEmptyBody": "When you write to a provider, your conversations appear here.",
+  "@messagesEmptyBody": {
+    "description": "Screen 14 empty state body."
+  },
+  "messagesEmptyAction": "Find a provider",
+  "@messagesEmptyAction": {
+    "description": "Screen 14 empty state button to the Search tab."
+  },
+  "messagesUnreadEmpty": "You're all caught up",
+  "@messagesUnreadEmpty": {
+    "description": "Screen 14 empty state under the Unread chip."
+  },
+  "messagesBookingsEmpty": "No booking conversations yet",
+  "@messagesBookingsEmpty": {
+    "description": "Screen 14 empty state under the Bookings chip."
+  },
+  "messagesNoMatch": "No conversations match \"{query}\"",
+  "@messagesNoMatch": {
+    "description": "Screen 14 empty search result.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineMessagesBody": "These are your last messages. New ones arrive when you reconnect.",
+  "@offlineMessagesBody": {
+    "description": "Offline banner body on screen 14."
+  },
+  "chatDispute": "Dispute · {reference}",
+  "@chatDispute": {
+    "description": "Name of a dispute conversation; reference is a booking reference like EVT-2041.",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "chatDisputeNoRef": "Dispute",
+  "@chatDisputeNoRef": {
+    "description": "Name of a dispute conversation with no booking reference."
+  },
+  "chatSupport": "Eventor support",
+  "@chatSupport": {
+    "description": "Name of the Eventor support conversation."
+  },
+  "chatDeletedAccount": "Deleted account",
+  "@chatDeletedAccount": {
+    "description": "Name shown when the other person's account was deleted."
+  },
+  "chatPhoto": "Photo",
+  "@chatPhoto": {
+    "description": "Preview of a conversation whose last message is a photo."
+  },
+  "chatRemoved": "Removed by Eventor",
+  "@chatRemoved": {
+    "description": "A message Eventor removed (bubble and preview)."
+  },
+  "chatYesterday": "Yesterday",
+  "@chatYesterday": {
+    "description": "Time ladder: a message from yesterday."
+  },
+  "messagesUnreadCount": "{count, plural, =1{1 unread message} other{{count} unread messages}}",
+  "@messagesUnreadCount": {
+    "description": "Screen-reader label for a conversation's unread badge.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatComposerHint": "Write a message",
+  "@chatComposerHint": {
+    "description": "Chat composer placeholder."
+  },
+  "chatComposerDisputeHint": "Write to both parties",
+  "@chatComposerDisputeHint": {
+    "description": "Chat composer placeholder in a dispute chat."
+  },
+  "chatClosed": "This conversation was closed by Eventor. You can still read it.",
+  "@chatClosed": {
+    "description": "Shown in place of the composer when a chat is closed."
+  },
+  "chatOtherBlocked": "This account is no longer active. You can still read the conversation.",
+  "@chatOtherBlocked": {
+    "description": "Shown in place of the composer when the other account is blocked or deleted."
+  },
+  "chatMaskedNote": "Number hidden until the booking is accepted",
+  "@chatMaskedNote": {
+    "description": "Caption under a message whose contact details were hidden."
+  },
+  "chatNotSent": "Not sent · Tap to retry",
+  "@chatNotSent": {
+    "description": "Under a message that failed to send."
+  },
+  "chatNewMessages": "New messages",
+  "@chatNewMessages": {
+    "description": "Pill that jumps to new messages below."
+  },
+  "chatSayHello": "Say hello to {name}",
+  "@chatSayHello": {
+    "description": "Empty draft chat hint.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToday": "Today",
+  "@chatToday": {
+    "description": "Date pill for today's messages."
+  },
+  "chatGroupSubtitle": "You, {name} and Eventor support",
+  "@chatGroupSubtitle": {
+    "description": "Subtitle of a dispute chat; name is the provider.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatViewProfile": "View profile",
+  "@chatViewProfile": {
+    "description": "Chat ⋯ menu: open the provider's profile."
+  },
+  "chatReportUser": "Report {name}",
+  "@chatReportUser": {
+    "description": "Chat ⋯ menu: report the other person.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatCopy": "Copy",
+  "@chatCopy": {
+    "description": "Message long-press menu: copy the text."
+  },
+  "chatReportMessage": "Report",
+  "@chatReportMessage": {
+    "description": "Message long-press menu: report the message."
+  },
+  "photoReload": "Tap to reload",
+  "@photoReload": {
+    "description": "On a chat photo that failed to load."
+  },
+  "reportTitle": "Report",
+  "@reportTitle": {
+    "description": "Report sheet title."
+  },
+  "reportReasonInappropriate": "Inappropriate",
+  "@reportReasonInappropriate": {
+    "description": "Report reason."
+  },
+  "reportReasonSpam": "Spam",
+  "@reportReasonSpam": {
+    "description": "Report reason."
+  },
+  "reportReasonContact": "Sharing contact details",
+  "@reportReasonContact": {
+    "description": "Report reason."
+  },
+  "reportReasonHarassment": "Harassment",
+  "@reportReasonHarassment": {
+    "description": "Report reason."
+  },
+  "reportReasonFake": "Fake or scam",
+  "@reportReasonFake": {
+    "description": "Report reason."
+  },
+  "reportReasonOther": "Other",
+  "@reportReasonOther": {
+    "description": "Report reason."
+  },
+  "reportNoteHint": "Add a note (optional)",
+  "@reportNoteHint": {
+    "description": "Report sheet note hint."
+  },
+  "reportSend": "Send report",
+  "@reportSend": {
+    "description": "Report sheet button."
+  },
+  "chatSend": "Send",
+  "@chatSend": {
+    "description": "Send button label."
+  },
+  "chatAttach": "Add a photo",
+  "@chatAttach": {
+    "description": "The composer's + button."
+  },
+  "chatMore": "More options",
+  "@chatMore": {
+    "description": "The chat's ⋯ button."
+  },
+  "chatRemoveAttachment": "Remove photo",
+  "@chatRemoveAttachment": {
+    "description": "The ✕ on the attached photo."
+  },
+  "chatSending": "Sending",
+  "@chatSending": {
+    "description": "Screen-reader label for a message still sending."
+  },
+  "chatOlderFailed": "Could not load older messages",
+  "@chatOlderFailed": {
+    "description": "Top of the thread when older messages failed to load."
+  },
+  "photoViewerClose": "Close",
+  "@photoViewerClose": {
+    "description": "Photo viewer close button."
+  },
+  "chatUnavailable": "This conversation is no longer available",
+  "@chatUnavailable": {
+    "description": "Chat that is gone or not yours."
+  },
+  "chatCopied": "Copied",
+  "@chatCopied": {
+    "description": "Toast after copying a message."
+  },
+  "chatPhotoNeedsText": "Send a message first",
+  "@chatPhotoNeedsText": {
+    "description": "Toast when attaching a photo in a new chat."
+  },
+  "photoTooLarge": "This photo is larger than {mb} MB",
+  "@photoTooLarge": {
+    "description": "Toast for a photo over the size limit.",
+    "placeholders": {
+      "mb": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWrongType": "Use a JPEG, PNG, WebP or HEIC photo",
+  "@photoWrongType": {
+    "description": "Toast for an unsupported photo type."
+  },
+  "reportSent": "Thanks — we'll look into it",
+  "@reportSent": {
+    "description": "Toast after a report."
+  },
+  "reportAlready": "You already reported this",
+  "@reportAlready": {
+    "description": "Toast when the same thing was reported before."
+  },
+  "notificationsTitle": "Notifications",
+  "@notificationsTitle": {
+    "description": "Screen 16 title."
+  },
+  "notificationsMarkAll": "Mark all read",
+  "@notificationsMarkAll": {
+    "description": "Screen 16 action."
+  },
+  "notificationsToday": "Today",
+  "@notificationsToday": {
+    "description": "Screen 16 group label."
+  },
+  "notificationsThisWeek": "This week",
+  "@notificationsThisWeek": {
+    "description": "Screen 16 group label."
+  },
+  "notificationsEarlier": "Earlier",
+  "@notificationsEarlier": {
+    "description": "Screen 16 group label."
+  },
+  "notificationsEmptyTitle": "No notifications yet",
+  "@notificationsEmptyTitle": {
+    "description": "Screen 16 empty state title."
+  },
+  "notificationsEmptyBody": "Booking updates, messages and reminders will show up here.",
+  "@notificationsEmptyBody": {
+    "description": "Screen 16 empty state body."
+  },
+  "notificationUnread": "Unread",
+  "@notificationUnread": {
+    "description": "Screen-reader suffix for an unread notification."
+  },
+  "offlineNotificationsBody": "These are your last notifications. New ones arrive when you reconnect.",
+  "@offlineNotificationsBody": {
+    "description": "Offline banner body on screen 16."
+  },
+  "budgetTitle": "Budget",
+  "@budgetTitle": {
+    "description": "Top bar of 18, 18a and 18f."
+  },
+  "budgetEdit": "Edit",
+  "@budgetEdit": {
+    "description": "18's top-bar action, opening 18f."
+  },
+  "budgetCreateIntroTitle": "Plan your event budget",
+  "@budgetCreateIntroTitle": {
+    "description": "Heading of 18a Create."
+  },
+  "budgetEditIntroTitle": "Edit your budget",
+  "@budgetEditIntroTitle": {
+    "description": "Heading of 18f Edit."
+  },
+  "budgetEditIntroBody": "Changing the total leaves your expense lines untouched. Only you can see this.",
+  "@budgetEditIntroBody": {
+    "description": "Under the 18f heading."
+  },
+  "budgetNameLabel": "Budget name",
+  "@budgetNameLabel": {
+    "description": "Field label on 18a/18f."
+  },
+  "budgetNameHint": "e.g. Our wedding",
+  "@budgetNameHint": {
+    "description": "Placeholder of the budget name."
+  },
+  "budgetEventDateLabel": "Event date",
+  "@budgetEventDateLabel": {
+    "description": "Field label on 18a/18f, and the date sheet title."
+  },
+  "budgetEventDateClear": "Remove the date",
+  "@budgetEventDateClear": {
+    "description": "Date sheet button that clears the optional event date."
+  },
+  "optionalField": "Optional",
+  "@optionalField": {
+    "description": "Placeholder of an optional picker field."
+  },
+  "budgetTotalLabel": "Total budget",
+  "@budgetTotalLabel": {
+    "description": "Field label on 18a/18f. Arabic carries the currency in the label, as drawn."
+  },
+  "amountFieldSuffix": "DA",
+  "@amountFieldSuffix": {
+    "description": "Unit inside an amount field. Empty in Arabic, whose labels carry (دج) instead."
+  },
+  "budgetCreateAction": "Create budget",
+  "@budgetCreateAction": {
+    "description": "Button on 18a."
+  },
+  "budgetSaveChanges": "Save changes",
+  "@budgetSaveChanges": {
+    "description": "Button on 18f."
+  },
+  "budgetSpent": "spent",
+  "@budgetSpent": {
+    "description": "After the big amount on 18's summary."
+  },
+  "budgetAllocatedLines": "{count, plural, =0{DA allocated across 0 lines} =1{DA allocated across 1 line} other{DA allocated across {count} lines}}",
+  "@budgetAllocatedLines": {
+    "description": "After the planned total on 18: \"380 000 DA allocated across 6 lines\". The amount is a separate token before it.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "budgetRemaining": "Remaining",
+  "@budgetRemaining": {
+    "description": "18's stat label."
+  },
+  "budgetServicesBooked": "Services booked",
+  "@budgetServicesBooked": {
+    "description": "18's stat label."
+  },
+  "budgetBookedOf": "{booked} of {count}",
+  "@budgetBookedOf": {
+    "description": "\"3 of 6\" under Services booked on 18.",
+    "placeholders": {
+      "booked": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "budgetExpenseLines": "Expense lines",
+  "@budgetExpenseLines": {
+    "description": "18's list heading."
+  },
+  "budgetActualVsPlanned": "Actual vs planned",
+  "@budgetActualVsPlanned": {
+    "description": "Beside 18's list heading."
+  },
+  "budgetNotBookedYet": "Not booked yet",
+  "@budgetNotBookedYet": {
+    "description": "A line with no linked booking."
+  },
+  "budgetLineOnPlan": "on plan",
+  "@budgetLineOnPlan": {
+    "description": "Under a line whose spent amount equals its plan."
+  },
+  "budgetLinePlanned": "planned",
+  "@budgetLinePlanned": {
+    "description": "Under a line with nothing spent yet, after its planned amount."
+  },
+  "budgetNoLinesTitle": "No expense lines yet",
+  "@budgetNoLinesTitle": {
+    "description": "18c empty card title."
+  },
+  "budgetNoLinesBody": "Add a line for each service you are paying for, and the remaining amount keeps itself up to date.",
+  "@budgetNoLinesBody": {
+    "description": "18c empty card body."
+  },
+  "budgetAddExpense": "Add an expense",
+  "@budgetAddExpense": {
+    "description": "18's button, and 18d's title."
+  },
+  "budgetOverTitle": "You are over your budget",
+  "@budgetOverTitle": {
+    "description": "18g banner title."
+  },
+  "budgetOverBody": "You have spent more than your total. Raise the budget, or trim a line.",
+  "@budgetOverBody": {
+    "description": "18g banner body."
+  },
+  "expenseNewTitle": "New expense line",
+  "@expenseNewTitle": {
+    "description": "18d heading."
+  },
+  "expenseNewBody": "A name and a planned amount are enough to start. Everything else can wait.",
+  "@expenseNewBody": {
+    "description": "Under the 18d heading."
+  },
+  "expenseLineTitle": "Expense line",
+  "@expenseLineTitle": {
+    "description": "18b top bar."
+  },
+  "expenseEditBody": "Linking a booking shows who it is with and counts it as booked. You still enter what you actually paid.",
+  "@expenseEditBody": {
+    "description": "Under the 18b heading."
+  },
+  "expenseDelete": "Delete",
+  "@expenseDelete": {
+    "description": "18b's top-bar action, opening 18e."
+  },
+  "expenseCategoryLabel": "Category",
+  "@expenseCategoryLabel": {
+    "description": "Field label on 18d/18b, and the category sheet title."
+  },
+  "expenseCategoryPlaceholder": "Choose a category",
+  "@expenseCategoryPlaceholder": {
+    "description": "Category field before one is chosen."
+  },
+  "expenseNoCategory": "No category",
+  "@expenseNoCategory": {
+    "description": "First row of the category sheet, to clear it."
+  },
+  "expenseLabelLabel": "Label",
+  "@expenseLabelLabel": {
+    "description": "Field label on 18d/18b."
+  },
+  "expenseLabelHint": "e.g. Wedding cake",
+  "@expenseLabelHint": {
+    "description": "Placeholder of the line label."
+  },
+  "expensePlannedLabel": "Planned amount",
+  "@expensePlannedLabel": {
+    "description": "Field label on 18d/18b."
+  },
+  "expenseSpentLabel": "Spent so far",
+  "@expenseSpentLabel": {
+    "description": "Field label on 18d/18b."
+  },
+  "expenseBookingLabel": "Linked booking",
+  "@expenseBookingLabel": {
+    "description": "Field label on 18d/18b."
+  },
+  "expenseNotLinked": "Not linked",
+  "@expenseNotLinked": {
+    "description": "Linked booking field with none, and the first row of 18h."
+  },
+  "expenseAddLine": "Add line",
+  "@expenseAddLine": {
+    "description": "Button on 18d."
+  },
+  "expenseSaveLine": "Save line",
+  "@expenseSaveLine": {
+    "description": "Button on 18b."
+  },
+  "expenseFullTitle": "This budget is full",
+  "@expenseFullTitle": {
+    "description": "18i banner title."
+  },
+  "expenseFullBody": "You have reached the maximum number of expense lines. Delete one you no longer need, or merge two into a single line.",
+  "@expenseFullBody": {
+    "description": "18i banner body."
+  },
+  "expenseDeleteTitle": "Delete this line ?",
+  "@expenseDeleteTitle": {
+    "description": "18e sheet title. Space before ? per the copy rule."
+  },
+  "expenseDeleteBody": "It disappears from your budget and the remaining amount is recalculated. The booking it is linked to is not touched.",
+  "@expenseDeleteBody": {
+    "description": "18e sheet body."
+  },
+  "expenseDeleteSpent": "Spent",
+  "@expenseDeleteSpent": {
+    "description": "18e recap row."
+  },
+  "expenseDeletePlanned": "Planned",
+  "@expenseDeletePlanned": {
+    "description": "18e recap row."
+  },
+  "expenseDeleteConfirm": "Delete line",
+  "@expenseDeleteConfirm": {
+    "description": "18e destructive button."
+  },
+  "expenseDeleteKeep": "Keep it",
+  "@expenseDeleteKeep": {
+    "description": "18e cancel button."
+  },
+  "linkBookingTitle": "Link a booking",
+  "@linkBookingTitle": {
+    "description": "18h top bar."
+  },
+  "linkBookingIntro": "Only your own bookings appear here. Linking one fills in the provider and counts this line in “services booked”.",
+  "@linkBookingIntro": {
+    "description": "18h intro."
+  },
+  "linkBookingNoneBody": "This line is not tied to any booking",
+  "@linkBookingNoneBody": {
+    "description": "Under 18h's Not linked row."
+  },
+  "linkBookingUsedOn": "On “{label}”",
+  "@linkBookingUsedOn": {
+    "description": "On a booking already linked to another line of the budget.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "linkBookingNote": "A booking already used on another line is shown greyed out, so the same amount is never counted twice.",
+  "@linkBookingNote": {
+    "description": "Under the 18h list."
+  },
+  "linkBookingAction": "Link booking",
+  "@linkBookingAction": {
+    "description": "Button on 18h."
+  },
+  "linkBookingEmptyTitle": "No bookings yet",
+  "@linkBookingEmptyTitle": {
+    "description": "18h with nothing to link."
+  },
+  "linkBookingEmptyBody": "Once you book a service, you can link it to this line.",
+  "@linkBookingEmptyBody": {
+    "description": "18h with nothing to link."
+  },
+  "discardTitle": "Discard your changes ?",
+  "@discardTitle": {
+    "description": "Sheet when leaving a form with unsaved edits."
+  },
+  "discardBody": "What you changed here will not be saved.",
+  "@discardBody": {
+    "description": "Sheet when leaving a form with unsaved edits."
+  },
+  "discardConfirm": "Discard",
+  "@discardConfirm": {
+    "description": "Destructive button of the discard sheet."
+  },
+  "discardKeep": "Keep editing",
+  "@discardKeep": {
+    "description": "Cancel button of the discard sheet."
+  },
+  "navRequests": "Requests",
+  "@navRequests": {
+    "description": "The provider's second tab."
+  },
+  "navServices": "Services",
+  "@navServices": {
+    "description": "The provider's third tab."
+  },
+  "profileDocuments": "My documents",
+  "@profileDocuments": {
+    "description": "Row on the provider's Profile tab."
+  },
+  "providerAccepting": "Accepting bookings",
+  "@providerAccepting": {
+    "description": "21's availability pill, and its first choice."
+  },
+  "providerPaused": "Bookings paused",
+  "@providerPaused": {
+    "description": "21's availability pill when paused, and its second choice."
+  },
+  "providerAcceptingHint": "Clients can send you new requests.",
+  "@providerAcceptingHint": {
+    "description": "Under the Accepting choice."
+  },
+  "providerPausedHint": "No new requests until you turn it back on. Your services stay visible.",
+  "@providerPausedHint": {
+    "description": "Under the Paused choice."
+  },
+  "providerAvailabilityTitle": "Your availability",
+  "@providerAvailabilityTitle": {
+    "description": "Title of the availability sheet on 21."
+  },
+  "providerAvailabilityBody": "Pausing keeps the bookings you already have.",
+  "@providerAvailabilityBody": {
+    "description": "Subtitle of the availability sheet."
+  },
+  "providerNowAccepting": "You are accepting bookings again.",
+  "@providerNowAccepting": {
+    "description": "Toast after turning bookings back on."
+  },
+  "providerNowPaused": "New bookings are paused.",
+  "@providerNowPaused": {
+    "description": "Toast after pausing bookings."
+  },
+  "providerStatRequests": "Requests",
+  "@providerStatRequests": {
+    "description": "21's counter."
+  },
+  "providerStatUpcoming": "Upcoming",
+  "@providerStatUpcoming": {
+    "description": "21's counter."
+  },
+  "providerStatServices": "Services",
+  "@providerStatServices": {
+    "description": "21's counter."
+  },
+  "providerRequestsTitle": "Booking requests",
+  "@providerRequestsTitle": {
+    "description": "21's section."
+  },
+  "providerNoRequestsTitle": "No new requests",
+  "@providerNoRequestsTitle": {
+    "description": "21 with no pending request."
+  },
+  "providerNoRequestsBody": "New booking requests show up here, and you have {hours} h to answer each one.",
+  "@providerNoRequestsBody": {
+    "description": "21 with no pending request.",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "providerNoRequestsPausedBody": "Your bookings are paused, so clients cannot send new requests.",
+  "@providerNoRequestsPausedBody": {
+    "description": "21 with no request while paused."
+  },
+  "providerReplyWithin": "{hours, plural, =0{reply now} other{reply within {hours} h}}",
+  "@providerReplyWithin": {
+    "description": "End of a request row's meta line on 21.",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "providerAccepted": "Request from {name} accepted.",
+  "@providerAccepted": {
+    "description": "Toast after Accept.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "providerDeclined": "Request declined.",
+  "@providerDeclined": {
+    "description": "Toast after P3."
+  },
+  "providerUpcomingTitle": "Upcoming bookings",
+  "@providerUpcomingTitle": {
+    "description": "21's section."
+  },
+  "providerNoUpcoming": "No confirmed bookings ahead yet.",
+  "@providerNoUpcoming": {
+    "description": "21's upcoming section when empty."
+  },
+  "providerAvailabilityCalendar": "Availability calendar",
+  "@providerAvailabilityCalendar": {
+    "description": "21's button."
+  },
+  "providerServicesTitle": "Your services",
+  "@providerServicesTitle": {
+    "description": "21's section."
+  },
+  "providerManage": "Manage",
+  "@providerManage": {
+    "description": "21's link beside Your services."
+  },
+  "providerAddService": "Add a service",
+  "@providerAddService": {
+    "description": "21's button."
+  },
+  "providerServicesAfterApproval": "Available once your profile is approved.",
+  "@providerServicesAfterApproval": {
+    "description": "Under the disabled Add a service on 21a/21b."
+  },
+  "serviceStatusPublished": "Published",
+  "@serviceStatusPublished": {
+    "description": "Service status badge."
+  },
+  "serviceStatusDraft": "Draft",
+  "@serviceStatusDraft": {
+    "description": "Service status badge."
+  },
+  "serviceStatusHidden": "Hidden",
+  "@serviceStatusHidden": {
+    "description": "Service status badge."
+  },
+  "documentStateInReview": "In review",
+  "@documentStateInReview": {
+    "description": "Document status pill."
+  },
+  "documentStateApproved": "Approved",
+  "@documentStateApproved": {
+    "description": "Document status pill."
+  },
+  "documentStateRejected": "Rejected",
+  "@documentStateRejected": {
+    "description": "Document status pill."
+  },
+  "documentStateMissing": "Missing",
+  "@documentStateMissing": {
+    "description": "Document status pill."
+  },
+  "documentRegisterShort": "Register or artisan card",
+  "@documentRegisterShort": {
+    "description": "The register document in lists (21a/21b/08d)."
+  },
+  "documentPhraseNationalId": "national ID card",
+  "@documentPhraseNationalId": {
+    "description": "The ID card inside a sentence."
+  },
+  "documentPhraseRegister": "register or artisan card",
+  "@documentPhraseRegister": {
+    "description": "The register inside a sentence."
+  },
+  "documentPhraseTaxCard": "tax card (NIF)",
+  "@documentPhraseTaxCard": {
+    "description": "The tax card inside a sentence."
+  },
+  "providerFinishTitle": "Finish your verification",
+  "@providerFinishTitle": {
+    "description": "21a title while documents are missing."
+  },
+  "providerMissingOne": "Send your {document} so we can start the review. It usually takes one to two days.",
+  "@providerMissingOne": {
+    "description": "21a body with one document missing.",
+    "placeholders": {
+      "document": {
+        "type": "String"
+      }
+    }
+  },
+  "providerMissingMany": "{count, plural, other{Send your remaining {count} documents so we can start the review. It usually takes one to two days.}}",
+  "@providerMissingMany": {
+    "description": "21a body with several missing.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerReviewTitle": "Profile under review",
+  "@providerReviewTitle": {
+    "description": "21a title once everything is sent."
+  },
+  "providerReviewBody": "We are checking your documents. It usually takes one to two days — we will let you know.",
+  "@providerReviewBody": {
+    "description": "21a body once everything is sent."
+  },
+  "providerRejectedTitle": "Profile not approved",
+  "@providerRejectedTitle": {
+    "description": "21b title."
+  },
+  "providerRejectedOne": "Your {document} was not accepted. Send a new one to go back into review.",
+  "@providerRejectedOne": {
+    "description": "21b body, one refused document.",
+    "placeholders": {
+      "document": {
+        "type": "String"
+      }
+    }
+  },
+  "providerRejectedMany": "{count, plural, other{{count} documents were not accepted. Send new ones to go back into review.}}",
+  "@providerRejectedMany": {
+    "description": "21b body, several refused.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerStepAccount": "Account created",
+  "@providerStepAccount": {
+    "description": "Verification step."
+  },
+  "providerStepDocuments": "Documents sent",
+  "@providerStepDocuments": {
+    "description": "Verification step."
+  },
+  "providerStepDocumentsCount": "Documents sent · {sent} of {total}",
+  "@providerStepDocumentsCount": {
+    "description": "Verification step while some are missing.",
+    "placeholders": {
+      "sent": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "providerStepUnderReview": "Under review",
+  "@providerStepUnderReview": {
+    "description": "Verification step."
+  },
+  "providerStepReviewed": "Reviewed",
+  "@providerStepReviewed": {
+    "description": "Verification step on 21b."
+  },
+  "providerStepApproved": "Approved",
+  "@providerStepApproved": {
+    "description": "Verification step."
+  },
+  "providerStepNotApproved": "Not approved",
+  "@providerStepNotApproved": {
+    "description": "Verification step on 21b."
+  },
+  "providerYourDocuments": "Your documents",
+  "@providerYourDocuments": {
+    "description": "Heading on 21a/21b/08d."
+  },
+  "providerResubmit": "Resubmit documents",
+  "@providerResubmit": {
+    "description": "21b and 08d button."
+  },
+  "providerUploadNationalId": "Upload ID card",
+  "@providerUploadNationalId": {
+    "description": "21a button, ID card missing."
+  },
+  "providerUploadRegister": "Upload register card",
+  "@providerUploadRegister": {
+    "description": "21a button, register missing."
+  },
+  "providerUploadTaxCard": "Upload tax card",
+  "@providerUploadTaxCard": {
+    "description": "21a button, tax card missing."
+  },
+  "declineTitle": "Decline this request ?",
+  "@declineTitle": {
+    "description": "P3 title."
+  },
+  "declineBody": "{name} is told straight away and the date is released on your calendar. You cannot undo this — a new request would be needed.",
+  "@declineBody": {
+    "description": "P3 body.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "declineReasonLabel": "Why are you declining ?",
+  "@declineReasonLabel": {
+    "description": "P3 field label."
+  },
+  "declineReasonHint": "e.g. Already booked that day",
+  "@declineReasonHint": {
+    "description": "P3 field placeholder."
+  },
+  "declineReasonHelper": "{name} will see this reason.",
+  "@declineReasonHelper": {
+    "description": "Under the P3 field.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "declineNote": "The date opens up for other clients as soon as you decline.",
+  "@declineNote": {
+    "description": "P3 note."
+  },
+  "declineConfirm": "Decline request",
+  "@declineConfirm": {
+    "description": "P3 destructive button."
+  },
+  "declineGoBack": "Go back",
+  "@declineGoBack": {
+    "description": "P3 cancel button."
+  },
+  "resubmitTitle": "Action needed",
+  "@resubmitTitle": {
+    "description": "08d title."
+  },
+  "resubmitBody": "{count, plural, =1{One document was not accepted. Upload it again and your services go back for review.} other{{count} documents were not accepted. Upload them again and your services go back for review.}}",
+  "@resubmitBody": {
+    "description": "08d body.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "resubmitMissingBody": "{count, plural, =1{One document is still missing. Send it and your profile goes into review.} other{{count} documents are still missing. Send them and your profile goes into review.}}",
+  "@resubmitMissingBody": {
+    "description": "08d body when nothing was refused, only missing.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "resubmitNothingBody": "Nothing to fix: your documents are with the reviewers.",
+  "@resubmitNothingBody": {
+    "description": "08d when nothing needs sending."
+  },
+  "resubmitRejectedOn": "Rejected {date}",
+  "@resubmitRejectedOn": {
+    "description": "08d reason card badge.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "resubmitReasonGiven": "Reason given",
+  "@resubmitReasonGiven": {
+    "description": "08d reason card label."
+  },
+  "resubmitNoReason": "Not accepted",
+  "@resubmitNoReason": {
+    "description": "08d reason card when the reviewer gave no reason."
+  },
+  "resubmitUploadNew": "Upload a new file",
+  "@resubmitUploadNew": {
+    "description": "08d upload slot."
+  },
+  "resubmitHint": "PDF or image, max {mb} MB",
+  "@resubmitHint": {
+    "description": "Under the 08d upload slot.",
+    "placeholders": {
+      "mb": {
+        "type": "int"
+      }
+    }
+  },
+  "resubmitChange": "Change",
+  "@resubmitChange": {
+    "description": "Swap the picked file on 08d."
+  },
+  "resubmitRemove": "Remove this file",
+  "@resubmitRemove": {
+    "description": "Screen-reader label of the x on a picked file."
+  },
+  "resubmitNotNow": "Not now",
+  "@resubmitNotNow": {
+    "description": "08d secondary button."
+  },
+  "resubmitSent": "Documents sent — we will review them within a day or two.",
+  "@resubmitSent": {
+    "description": "Toast after 08d."
+  },
+  "resubmitFailed": "A file did not go through. Nothing else was lost — try again.",
+  "@resubmitFailed": {
+    "description": "Toast when an 08d upload fails."
+  },
+  "messagesEmptyBodyProvider": "When a client writes to you, the conversation appears here.",
+  "@messagesEmptyBodyProvider": {
+    "description": "14's empty state for a provider."
+  },
+  "budgetDelete": "Delete budget",
+  "@budgetDelete": {
+    "description": "18f link at the end of the form."
+  },
+  "budgetDeleteTitle": "Delete this budget ?",
+  "@budgetDeleteTitle": {
+    "description": "Sheet title before deleting the budget."
+  },
+  "budgetDeleteBody": "Your budget and all its expense lines are removed for good. The bookings they were linked to are not touched.",
+  "@budgetDeleteBody": {
+    "description": "Sheet body before deleting the budget."
+  },
+  "budgetDeleteConfirm": "Delete budget",
+  "@budgetDeleteConfirm": {
+    "description": "Destructive button of the delete-budget sheet."
+  },
+  "budgetDeleted": "Budget deleted.",
+  "@budgetDeleted": {
+    "description": "Toast after deleting the budget."
+  },
+  "budgetDeleteUnavailable": "Deleting a budget is not available yet.",
+  "@budgetDeleteUnavailable": {
+    "description": "Toast when the server has no delete route yet."
   }
 }
