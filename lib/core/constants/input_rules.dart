@@ -1,16 +1,21 @@
 import 'package:flutter/services.dart';
 
+import '../errors/validation_error.dart';
+
 /// The rules the app's inputs enforce.
 ///
 /// The formatter that blocks bad keystrokes, the hint that describes the rule
 /// and the validator that checks it all read from here, so the three can never
-/// disagree about what a valid value is.
+/// disagree about what a valid value is. The bounds are the API's own — a
+/// value that passes here is one the server accepts.
 abstract final class InputRules {
-  static const int minPasswordLength = 6;
-  static const int maxPasswordLength = 64;
+  /// The API's password floor. The live value comes from `/app/config`
+  /// (`passwordPolicy.minLength`); this is the fallback and today's value.
+  static const int minPasswordLength = 10;
+  static const int maxPasswordLength = 128;
 
-  /// RFC 5321 caps an address at 254 characters.
-  static const int maxEmailLength = 254;
+  /// The API caps an address at 190 characters.
+  static const int maxEmailLength = 190;
 
   /// Deliberately permissive: it rejects obvious typos without turning away
   /// addresses that are unusual but valid.
@@ -32,11 +37,29 @@ abstract final class InputRules {
     LengthLimitingTextInputFormatter(maxPasswordLength),
   ];
 
-  /// What an attached document may be.
-  ///
-  /// A scan arrives as a PDF and a photograph of a card as an image, and
-  /// nothing else is a document. Kept lower-case because that is what the
-  /// comparison expects.
+  /// Whether [password] has at least one letter and one digit — the second
+  /// half of the API's rule. Letters in any script count.
+  static bool hasLetterAndDigit(String password) =>
+      RegExp(r'\p{L}', unicode: true).hasMatch(password) &&
+      RegExp(r'\d').hasMatch(password);
+
+  /// Checks a password being *chosen* — sign-up, reset, invite — against the
+  /// server's policy. Login does not use this: it has no minimum.
+  static PasswordError? validateNewPassword(
+    String password, {
+    int minLength = minPasswordLength,
+    bool needsLetterAndDigit = true,
+  }) {
+    if (password.isEmpty) return const PasswordRequired();
+    if (password.length < minLength) return PasswordTooShort(minLength);
+    if (needsLetterAndDigit && !hasLetterAndDigit(password)) {
+      return const PasswordNeedsLetterAndDigit();
+    }
+    return null;
+  }
+
+  /// What an attached document may be. A scan arrives as a PDF and a
+  /// photograph of a card as an image.
   static const List<String> documentExtensions = <String>[
     'pdf',
     'jpg',
@@ -44,7 +67,8 @@ abstract final class InputRules {
     'png',
   ];
 
-  /// Stated in whole megabytes because that is how the message says it.
+  /// Stated in whole megabytes because that is how the message says it. The
+  /// server's value comes back with the documents; this is the fallback.
   static const int maxDocumentMegabytes = 5;
   static const int maxDocumentBytes = maxDocumentMegabytes * 1024 * 1024;
 
@@ -52,28 +76,22 @@ abstract final class InputRules {
   static bool isAcceptableDocumentType(String extension) =>
       documentExtensions.contains(extension.toLowerCase());
 
-  /// An institution name is a proper noun like a person's, so it follows the
-  /// same floor rather than inventing a second one.
-  static const int minInstitutionLength = 2;
-  static const int maxInstitutionLength = 120;
-
   static const int minNameLength = 2;
-  static const int maxNameLength = 80;
 
-  /// A local number, written in full: ten digits beginning with a zero.
-  ///
-  /// This deliberately turns away an international `+` form — the app asks for
-  /// the number the way it is dialled locally, and one shape is easier to
-  /// state, to check and to store than two.
+  /// The API's cap on `fullName`.
+  static const int maxNameLength = 120;
+
+  static const int minBusinessNameLength = 2;
+
+  /// The API's cap on `businessName`.
+  static const int maxBusinessNameLength = 150;
+
+  /// A local Algerian number: ten digits beginning with a zero.
   static const int phoneLength = 10;
   static const String phoneLeadingDigit = '0';
 
-  /// An institution name legitimately carries digits and punctuation —
-  /// "Université d'Alger 1" — so only its length is bounded.
-  static final List<TextInputFormatter> institutionFormatters =
-      <TextInputFormatter>[
-    LengthLimitingTextInputFormatter(maxInstitutionLength),
-  ];
+  /// The country code the server stores every number with.
+  static const String phoneCountryCode = '+213';
 
   /// A name is rejected for what it must *not* contain rather than for what it
   /// may. An allow-list of letters would have to enumerate every script the
@@ -85,27 +103,40 @@ abstract final class InputRules {
     LengthLimitingTextInputFormatter(maxNameLength),
   ];
 
-  /// Digits, and no more of them than the number holds.
-  static final List<TextInputFormatter> phoneFormatters =
+  /// A business name legitimately carries digits and punctuation — "Studio
+  /// 21", "Salle d'Or" — so only its length is bounded.
+  static final List<TextInputFormatter> businessNameFormatters =
       <TextInputFormatter>[
-    FilteringTextInputFormatter.digitsOnly,
-    LengthLimitingTextInputFormatter(phoneLength),
+    LengthLimitingTextInputFormatter(maxBusinessNameLength),
   ];
 
-  /// The digits of [phone] on their own.
-  ///
-  /// The formatter above already keeps everything else out as it is typed, but
-  /// a value set programmatically — a paste, an autofill — never passes
-  /// through it, so the check reads through any spacing it brought with it.
-  static String phoneDigits(String phone) =>
-      phone.replaceAll(RegExp(r'[^0-9]'), '');
+  /// Digits, a leading `+` and the spaces people type between groups — the
+  /// field accepts a number written either way the API does.
+  static final List<TextInputFormatter> phoneFormatters =
+      <TextInputFormatter>[
+    FilteringTextInputFormatter.allow(RegExp(r'[0-9+ ]')),
+    LengthLimitingTextInputFormatter(17),
+  ];
 
-  /// Whether [phone] is a whole local number.
-  static bool isPhoneComplete(String phone) {
-    final String digits = phoneDigits(phone);
-    return digits.length == phoneLength &&
-        digits.startsWith(phoneLeadingDigit);
+  /// [phone] in the local form, `0XXXXXXXXX`, or `null` when it is not a
+  /// whole Algerian number in either form.
+  ///
+  /// Accepts `0555 12 34 56`, `+213 555 12 34 56` and `213555123456`. The
+  /// server stores and returns `+213…`, so a number coming back from a profile
+  /// normalises here too.
+  static String? normalisePhone(String phone) {
+    final String digits = phone.replaceAll(RegExp(r'[^0-9]'), '');
+    final String local = digits.startsWith('213') && digits.length == 12
+        ? '0${digits.substring(3)}'
+        : digits;
+    if (local.length != phoneLength || !local.startsWith(phoneLeadingDigit)) {
+      return null;
+    }
+    return local;
   }
+
+  /// Whether [phone] is a whole number in either form.
+  static bool isPhoneComplete(String phone) => normalisePhone(phone) != null;
 
   /// How many digits a verification code carries.
   static const int verificationCodeLength = 6;
@@ -122,5 +153,6 @@ abstract final class InputRules {
   /// Digits, and the punctuation that has no business in a person's name.
   /// Hyphens and apostrophes are deliberately absent — plenty of names have
   /// them.
-  static final RegExp _digitsOrSymbols = RegExp(r'[0-9_@#$%^&*()+=\[\]{}<>/\\|~`]');
+  static final RegExp _digitsOrSymbols =
+      RegExp(r'[0-9_@#$%^&*()+=\[\]{}<>/\\|~`]');
 }

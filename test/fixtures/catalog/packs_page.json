@@ -1,0 +1,157 @@
+{
+  "data": [
+    {
+      "id": "e03b28ba-30dd-4eb0-ada3-4d74d878ffee",
+      "name": "Mariage Vue sur Mer",
+      "nameEn": "Mariage Vue sur Mer",
+      "nameAr": "زفاف بإطلالة على البحر",
+      "eventType": "wedding",
+      "wilaya": {
+        "code": 31,
+        "name": "Oran",
+        "nameEn": "Oran",
+        "nameAr": "وهران"
+      },
+      "price": "399000.00",
+      "sumOfItems": "453500.00",
+      "savings": "54500.00",
+      "savingsPercent": 12,
+      "itemsCount": 3,
+      "categoryNames": [
+        "Venues",
+        "Catering",
+        "Decoration"
+      ],
+      "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/11c72bf8-9642-485e-91d7-a8c002bc599d?variant=medium&exp=1790240163&sig=7UkINWfSRY7trTzHnnNJ6m2PPdKDWACOWBFwbzuZKOE",
+      "avgRating": "0.00",
+      "ratingCount": 0,
+      "bookingsCount": 0,
+      "provider": {
+        "id": "94305376-287a-4966-9546-8c3afd247e88",
+        "businessName": "Salle El Bahia",
+        "category": {
+          "id": "bb28c638-c0ea-4140-b9d9-fd5535a6c4b6",
+          "slug": "salles-des-fetes",
+          "name": "Venues",
+          "nameEn": "Venues",
+          "nameAr": "قاعات الحفلات",
+          "icon": "building"
+        },
+        "avatarUrl": null,
+        "verified": true,
+        "avgRating": "3.80",
+        "ratingCount": 5,
+        "completedBookingsCount": 5,
+        "yearsActive": 14,
+        "avgReplyMinutes": null,
+        "replyTime": null,
+        "acceptingBookings": true
+      },
+      "isFavourite": false
+    },
+    {
+      "id": "384ad0fe-c56f-435f-a9bb-a97605fee82d",
+      "name": "Photo + Vidéo Mariage",
+      "nameEn": "Photo + Vidéo Mariage",
+      "nameAr": "باقة صور وفيديو الزفاف",
+      "eventType": "wedding",
+      "wilaya": {
+        "code": 16,
+        "name": "Alger",
+        "nameEn": "Alger",
+        "nameAr": "الجزائر"
+      },
+      "price": "202000.00",
+      "sumOfItems": "238000.00",
+      "savings": "36000.00",
+      "savingsPercent": 15.1,
+      "itemsCount": 3,
+      "categoryNames": [
+        "Photography",
+        "Photography",
+        "Photography"
+      ],
+      "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/0f2af59a-b338-47ac-a59d-79f7a03e8f7b?variant=medium&exp=1790240163&sig=jWK5asmqmuaK_TjCkb-mOyZD3yH7qSJJbTcufi5RBDA",
+      "avgRating": "0.00",
+      "ratingCount": 0,
+      "bookingsCount": 0,
+      "provider": {
+        "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+        "businessName": "Studio Lumière",
+        "category": {
+          "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+          "slug": "photographie",
+          "name": "Photography",
+          "nameEn": "Photography",
+          "nameAr": "التصوير",
+          "icon": "camera"
+        },
+        "avatarUrl": null,
+        "verified": true,
+        "avgRating": "4.80",
+        "ratingCount": 5,
+        "completedBookingsCount": 7,
+        "yearsActive": 15,
+        "avgReplyMinutes": null,
+        "replyTime": null,
+        "acceptingBookings": true
+      },
+      "isFavourite": false
+    },
+    {
+      "id": "2ed8ef06-7c7b-4fba-8138-aad86c3889e7",
+      "name": "Fiançailles au Jardin",
+      "nameEn": "Fiançailles au Jardin",
+      "nameAr": "خطوبة في الحديقة",
+      "eventType": "engagement",
+      "wilaya": {
+        "code": 42,
+        "name": "Tipaza",
+        "nameEn": "Tipaza",
+        "nameAr": "تيبازة"
+      },
+      "price": "303000.00",
+      "sumOfItems": "337600.00",
+      "savings": "34600.00",
+      "savingsPercent": 10.2,
+      "itemsCount": 3,
+      "categoryNames": [
+        "Venues",
+        "Catering",
+        "Decoration"
+      ],
+      "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/94a996f8-fa43-4567-bcc9-090bc985399d?variant=medium&exp=1790240163&sig=NQ9AyNFOqzP6nwv05fxWD5nKBDJA5r8pkxjM1JmY17s",
+      "avgRating": "0.00",
+      "ratingCount": 0,
+      "bookingsCount": 0,
+      "provider": {
+        "id": "fe9734e0-24c4-4640-ae2a-d07220ed3f5a",
+        "businessName": "Salle Les Oliviers",
+        "category": {
+          "id": "bb28c638-c0ea-4140-b9d9-fd5535a6c4b6",
+          "slug": "salles-des-fetes",
+          "name": "Venues",
+          "nameEn": "Venues",
+          "nameAr": "قاعات الحفلات",
+          "icon": "building"
+        },
+        "avatarUrl": null,
+        "verified": true,
+        "avgRating": "4.80",
+        "ratingCount": 5,
+        "completedBookingsCount": 5,
+        "yearsActive": 1,
+        "avgReplyMinutes": null,
+        "replyTime": null,
+        "acceptingBookings": true
+      },
+      "isFavourite": false
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 100,
+    "total": 8,
+    "totalPages": 1
+  }
+}

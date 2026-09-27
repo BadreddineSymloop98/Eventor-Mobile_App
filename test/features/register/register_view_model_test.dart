@@ -1,459 +1,469 @@
-import 'package:eventor/core/constants/input_rules.dart';
+import 'dart:async';
+
+import 'package:eventor/core/config/app_config.dart';
+import 'package:eventor/core/errors/failure.dart';
 import 'package:eventor/core/errors/validation_error.dart';
-import 'package:eventor/core/services/document_picker.dart';
-import 'package:eventor/features/register/model/account_document.dart';
+import 'package:eventor/core/models/account.dart';
+import 'package:eventor/core/routing/app_routes.dart';
+import 'package:eventor/features/auth/data/auth_repository.dart';
 import 'package:eventor/features/register/view_model/register_view_model.dart';
-import 'package:eventor/features/role_selection/model/user_role.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// A file that passes every rule, so a test can attach without thinking.
-const DocumentFile _validPdf = DocumentFile(
-  name: 'id-card.pdf',
-  sizeInBytes: 1024,
-  extension: 'pdf',
-);
-
-/// Stands in for the platform browser, handing back whatever the test chose.
-DocumentPicker _pickerReturning(DocumentFile? file) => () async => file;
+import '../../support/fakes.dart';
+import '../feature_test_helpers.dart';
 
 void main() {
-  late RegisterViewModel viewModel;
+  late FakeAuthRepository auth;
+  late FakeReferenceRepository reference;
 
-  setUp(() => viewModel = RegisterViewModel());
-  tearDown(() => viewModel.dispose());
+  setUp(() {
+    auth = FakeAuthRepository();
+    reference = FakeReferenceRepository();
+  });
 
-  /// Fills every field with a value that passes, so a test can spoil one of
-  /// them and watch only that one's answer change.
-  void fillValidForm() {
-    viewModel.nameController.text = 'Zaki';
-    viewModel.emailController.text = 'zaki@example.com';
-    viewModel.phoneController.text = '0501234567';
-    viewModel.passwordController.text = 'secret123';
+  /// A view model for [role], with its reference lists already loaded.
+  Future<RegisterViewModel> build({
+    UserRole role = UserRole.client,
+    AppConfig config = const AppConfig(),
+    String language = 'en',
+  }) async {
+    final RegisterViewModel viewModel = RegisterViewModel(
+      auth: auth,
+      reference: reference,
+      config: config,
+      role: role,
+      languageCode: () => language,
+    );
+    addTearDown(viewModel.dispose);
+    await flushAsync();
+    return viewModel;
   }
 
-  group('RegisterViewModel per-field state', () {
-    test('starts with nothing satisfied', () {
-      expect(viewModel.isNameSatisfied, isFalse);
-      expect(viewModel.isEmailSatisfied, isFalse);
-      expect(viewModel.isPhoneSatisfied, isFalse);
-      expect(viewModel.isPasswordSatisfied, isFalse);
+  /// Fills the personal fields with values that pass, so a test can spoil
+  /// one and watch only that one's answer change.
+  void fillPersonal(RegisterViewModel viewModel) {
+    viewModel.nameController.text = 'Amina Benali';
+    viewModel.emailController.text = '  amina@example.com ';
+    viewModel.phoneController.text = '0555 12 34 56';
+    viewModel.passwordController.text = 'secret12345';
+  }
+
+  /// Fills the provider's business section on top of [fillPersonal].
+  void fillBusiness(RegisterViewModel viewModel) {
+    viewModel.businessNameController.text = ' Studio 21 ';
+    viewModel.selectCategory(FakeReferenceRepository.sampleCategories.first);
+    viewModel.selectWilayasServed(<Wilaya>{
+      FakeReferenceRepository.sampleWilayas[1],
+      FakeReferenceRepository.sampleWilayas[0],
+    });
+  }
+
+  group('RegisterViewModel reference lists', () {
+    test('a client loads the wilayas but not the categories', () async {
+      final RegisterViewModel viewModel = await build();
+
+      expect(viewModel.wilayas, FakeReferenceRepository.sampleWilayas);
+      expect(viewModel.categories, isEmpty);
+      expect(viewModel.isLoadingReference, isFalse);
+      expect(viewModel.referenceFailed, isFalse);
+    });
+
+    test('a provider loads both', () async {
+      final RegisterViewModel viewModel = await build(role: UserRole.provider);
+
+      expect(viewModel.wilayas, FakeReferenceRepository.sampleWilayas);
+      expect(viewModel.categories, FakeReferenceRepository.sampleCategories);
+    });
+
+    test('a failed load is reported and can be retried', () async {
+      reference.fail = true;
+      final RegisterViewModel viewModel = await build();
+
+      expect(viewModel.referenceFailed, isTrue);
+      expect(viewModel.wilayas, isEmpty);
+
+      reference.fail = false;
+      await viewModel.loadReference();
+
+      expect(viewModel.referenceFailed, isFalse);
+      expect(viewModel.wilayas, isNotEmpty);
+    });
+  });
+
+  group('RegisterViewModel canSubmit', () {
+    test('a client needs the four personal fields and nothing else', () async {
+      final RegisterViewModel viewModel = await build();
       expect(viewModel.canSubmit, isFalse);
-    });
 
-    test('answers for each field independently as it is typed into', () {
-      viewModel.nameController.text = 'Zaki';
+      fillPersonal(viewModel);
 
-      expect(viewModel.isNameSatisfied, isTrue);
-      expect(viewModel.isEmailSatisfied, isFalse);
-      expect(viewModel.canSubmit, isFalse);
-    });
-
-    test('holds off until a value actually meets its rule', () {
-      // One letter is below the minimum, so the name is not satisfied yet.
-      viewModel.nameController.text = 'Z';
-      expect(viewModel.isNameSatisfied, isFalse);
-
-      viewModel.nameController.text = 'Za';
-      expect(viewModel.isNameSatisfied, isTrue);
-    });
-
-    test('wants a phone number of exactly the local length', () {
-      viewModel.phoneController.text = '050123456';
-      expect(viewModel.isPhoneSatisfied, isFalse);
-
-      viewModel.phoneController.text = '0501234567';
-      expect(viewModel.isPhoneSatisfied, isTrue);
-    });
-
-    test('turns away a phone number that does not open with a zero', () {
-      // Ten digits, but not a local number — an international form pasted in
-      // without its "+" would look like this.
-      viewModel.phoneController.text = '9661234567';
-      expect(viewModel.isPhoneSatisfied, isFalse);
-    });
-
-    test('reads through spacing a pasted number brought with it', () {
-      viewModel.phoneController.text = '050 123 4567';
-      expect(viewModel.isPhoneSatisfied, isTrue);
-    });
-
-    test('treats a half-typed address as unsatisfied', () {
-      viewModel.emailController.text = 'zaki@ex';
-      expect(viewModel.isEmailSatisfied, isFalse);
-
-      viewModel.emailController.text = 'zaki@example.com';
-      expect(viewModel.isEmailSatisfied, isTrue);
-    });
-
-    test('allows submission only once every field is satisfied', () {
-      fillValidForm();
-
-      expect(viewModel.isNameSatisfied, isTrue);
-      expect(viewModel.isEmailSatisfied, isTrue);
-      expect(viewModel.isPhoneSatisfied, isTrue);
-      expect(viewModel.isPasswordSatisfied, isTrue);
+      // The wilaya is optional for a client.
       expect(viewModel.canSubmit, isTrue);
     });
 
-    test('withdraws submission when a field is emptied again', () {
-      fillValidForm();
-      viewModel.phoneController.text = '';
-
-      expect(viewModel.isPhoneSatisfied, isFalse);
+    test('a provider also needs a business, a category and wilayas', () async {
+      final RegisterViewModel viewModel = await build(role: UserRole.provider);
+      fillPersonal(viewModel);
       expect(viewModel.canSubmit, isFalse);
-    });
 
-    test('reports a bad phone number with the rule it broke', () async {
-      fillValidForm();
-      viewModel.phoneController.text = '1234567890';
+      viewModel.businessNameController.text = 'Studio 21';
+      expect(viewModel.canSubmit, isFalse);
 
-      expect(await viewModel.submit(), isFalse);
-      expect(
-        viewModel.phoneError,
-        isA<PhoneInvalid>()
-            .having(
-              (PhoneInvalid error) => error.requiredDigits,
-              'requiredDigits',
-              InputRules.phoneLength,
-            )
-            .having(
-              (PhoneInvalid error) => error.leadingDigit,
-              'leadingDigit',
-              InputRules.phoneLeadingDigit,
-            ),
-      );
-    });
+      viewModel.selectCategory(FakeReferenceRepository.sampleCategories.first);
+      expect(viewModel.canSubmit, isFalse);
 
-    test('notifies when a single field flips, not only the whole form', () {
-      int notifications = 0;
-      viewModel.addListener(() => notifications++);
-
-      // The form is nowhere near submittable, so the only thing that changed
-      // is this one field — and the screen still has to hear about it to drop
-      // the field's instruction.
-      viewModel.nameController.text = 'Zaki';
-
-      expect(notifications, greaterThan(0));
+      viewModel.selectWilayasServed(<Wilaya>{
+        FakeReferenceRepository.sampleWilayas.first,
+      });
+      expect(viewModel.canSubmit, isTrue);
     });
   });
 
-  group('RegisterViewModel role shape', () {
-    test('asks a planner for no documents and no institution', () {
-      final RegisterViewModel planner = RegisterViewModel(
-        role: UserRole.planner,
-      );
-      addTearDown(planner.dispose);
+  group('RegisterViewModel validation', () {
+    test(
+      'an empty form reports every personal field and sends nothing',
+      () async {
+        final RegisterViewModel viewModel = await build();
 
-      expect(planner.documents, isEmpty);
-      expect(planner.isReviewed, isFalse);
-      expect(planner.needsInstitution, isFalse);
-      // Nothing to attach, so the documents half of the gate is already met.
-      expect(planner.areDocumentsSatisfied, isTrue);
-    });
+        expect(await viewModel.submit(), isNull);
 
-    test('asks a provider for its trading papers', () {
-      final RegisterViewModel provider = RegisterViewModel(
-        role: UserRole.provider,
-        picker: _pickerReturning(_validPdf),
-      );
-      addTearDown(provider.dispose);
-
-      expect(provider.documents, <AccountDocument>[
-        AccountDocument.identityCard,
-        AccountDocument.commercialRegister,
-        AccountDocument.taxRegistration,
-      ]);
-      expect(provider.isReviewed, isTrue);
-      expect(provider.needsInstitution, isFalse);
-    });
-
-    test('asks an institution for its accreditation and who it acts for', () {
-      final RegisterViewModel institution = RegisterViewModel(
-        role: UserRole.institution,
-        picker: _pickerReturning(_validPdf),
-      );
-      addTearDown(institution.dispose);
-
-      expect(institution.documents, <AccountDocument>[
-        AccountDocument.identityCard,
-        AccountDocument.accreditation,
-        AccountDocument.authorisationLetter,
-        AccountDocument.associationStatutes,
-      ]);
-      expect(institution.needsInstitution, isTrue);
-    });
-
-    test('falls back to the plain form when no role was carried over', () {
-      final RegisterViewModel unknown = RegisterViewModel();
-      addTearDown(unknown.dispose);
-
-      expect(unknown.documents, isEmpty);
-      expect(unknown.needsInstitution, isFalse);
-    });
-  });
-
-  group('RegisterViewModel documents', () {
-    late RegisterViewModel provider;
-
-    setUp(
-      () => provider = RegisterViewModel(
-        role: UserRole.provider,
-        picker: _pickerReturning(_validPdf),
-      ),
-    );
-    tearDown(() => provider.dispose());
-
-    void fillTypedFields(RegisterViewModel target) {
-      target.nameController.text = 'Zaki';
-      target.emailController.text = 'zaki@example.com';
-      target.phoneController.text = '0501234567';
-      target.passwordController.text = 'secret123';
-    }
-
-    test('holds the button until every required document is attached',
-        () async {
-      fillTypedFields(provider);
-      expect(provider.canSubmit, isFalse);
-
-      for (final AccountDocument document in provider.documents) {
-        await provider.pickDocument(document);
-      }
-
-      expect(provider.areDocumentsSatisfied, isTrue);
-      expect(provider.canSubmit, isTrue);
-    });
-
-    test('does not let an optional document hold the form up', () async {
-      final RegisterViewModel institution = RegisterViewModel(
-        role: UserRole.institution,
-        picker: _pickerReturning(_validPdf),
-      );
-      addTearDown(institution.dispose);
-
-      fillTypedFields(institution);
-      institution.institutionController.text = 'Université d\'Alger 1';
-
-      for (final AccountDocument document in institution.documents
-          .where((AccountDocument d) => !d.isOptional)) {
-        await institution.pickDocument(document);
-      }
-
-      // The statutes are still missing, and that is allowed.
-      expect(
-        institution.fileNameFor(AccountDocument.associationStatutes),
-        isNull,
-      );
-      expect(institution.canSubmit, isTrue);
-    });
-
-    test('reports every missing document on submit', () async {
-      fillTypedFields(provider);
-      await provider.pickDocument(AccountDocument.identityCard);
-
-      expect(await provider.submit(), isFalse);
-      expect(provider.errorFor(AccountDocument.identityCard), isNull);
-      expect(
-        provider.errorFor(AccountDocument.commercialRegister),
-        isA<DocumentMissing>(),
-      );
-      expect(
-        provider.errorFor(AccountDocument.taxRegistration),
-        isA<DocumentMissing>(),
-      );
-    });
-
-    test('clears a document error as soon as something is attached', () async {
-      fillTypedFields(provider);
-      await provider.submit();
-      expect(
-        provider.errorFor(AccountDocument.commercialRegister),
-        isA<DocumentMissing>(),
-      );
-
-      await provider.pickDocument(AccountDocument.commercialRegister);
-
-      expect(provider.errorFor(AccountDocument.commercialRegister), isNull);
-    });
-
-    test('detaching a document closes the gate again', () async {
-      fillTypedFields(provider);
-      for (final AccountDocument document in provider.documents) {
-        await provider.pickDocument(document);
-      }
-      expect(provider.canSubmit, isTrue);
-
-      provider.removeDocument(AccountDocument.taxRegistration);
-
-      expect(provider.canSubmit, isFalse);
-    });
-  });
-
-  group('RegisterViewModel institution field', () {
-    late RegisterViewModel institution;
-
-    setUp(
-      () => institution = RegisterViewModel(
-        role: UserRole.institution,
-        picker: _pickerReturning(_validPdf),
-      ),
-    );
-    tearDown(() => institution.dispose());
-
-    test('is required for the role that acts on behalf of one', () async {
-      institution.nameController.text = 'Zaki';
-      institution.emailController.text = 'zaki@example.com';
-      institution.phoneController.text = '0501234567';
-      institution.passwordController.text = 'secret123';
-      for (final AccountDocument document in institution.documents) {
-        await institution.pickDocument(document);
-      }
-
-      expect(institution.canSubmit, isFalse);
-
-      institution.institutionController.text = 'Université d\'Alger 1';
-
-      expect(institution.isInstitutionSatisfied, isTrue);
-      expect(institution.canSubmit, isTrue);
-    });
-
-    test('reports the reason it was rejected', () async {
-      expect(await institution.submit(), isFalse);
-      expect(institution.institutionError, isA<InstitutionRequired>());
-    });
-
-    test('is not checked for a role that is never asked for one', () async {
-      final RegisterViewModel provider = RegisterViewModel(
-        role: UserRole.provider,
-        picker: _pickerReturning(_validPdf),
-      );
-      addTearDown(provider.dispose);
-
-      await provider.submit();
-
-      // The controller is empty, but the provider form never showed the field.
-      expect(provider.institutionError, isNull);
-    });
-  });
-
-  group('RegisterViewModel document validation', () {
-    RegisterViewModel providerPicking(DocumentFile? file) => RegisterViewModel(
-      role: UserRole.provider,
-      picker: _pickerReturning(file),
+        expect(viewModel.nameError, isA<NameRequired>());
+        expect(viewModel.emailError, isA<EmailRequired>());
+        expect(viewModel.phoneError, isA<PhoneRequired>());
+        expect(viewModel.passwordError, isA<PasswordRequired>());
+        expect(auth.registrations, isEmpty);
+      },
     );
 
-    test('keeps a file that meets both rules', () async {
-      final RegisterViewModel viewModel = providerPicking(_validPdf);
-      addTearDown(viewModel.dispose);
+    test('a one-letter name is too short', () async {
+      final RegisterViewModel viewModel = await build();
+      fillPersonal(viewModel);
+      viewModel.nameController.text = 'A';
 
-      await viewModel.pickDocument(AccountDocument.identityCard);
-
-      expect(
-        viewModel.fileNameFor(AccountDocument.identityCard),
-        'id-card.pdf',
-      );
-      expect(viewModel.errorFor(AccountDocument.identityCard), isNull);
+      expect(await viewModel.submit(), isNull);
+      expect(viewModel.nameError, isA<NameTooShort>());
     });
 
-    test('turns away a file over the size limit', () async {
-      final RegisterViewModel viewModel = providerPicking(
-        DocumentFile(
-          name: 'huge-scan.pdf',
-          sizeInBytes: InputRules.maxDocumentBytes + 1,
-          extension: 'pdf',
+    test('an address without a domain is invalid', () async {
+      final RegisterViewModel viewModel = await build();
+      fillPersonal(viewModel);
+      viewModel.emailController.text = 'amina@';
+
+      expect(await viewModel.submit(), isNull);
+      expect(viewModel.emailError, isA<EmailInvalid>());
+    });
+
+    test(
+      'a phone number that is neither 0XXXXXXXXX nor +213 is invalid',
+      () async {
+        final RegisterViewModel viewModel = await build();
+        fillPersonal(viewModel);
+        viewModel.phoneController.text = '555 12 34';
+
+        expect(await viewModel.submit(), isNull);
+        expect(viewModel.phoneError, isA<PhoneInvalid>());
+        expect(auth.registrations, isEmpty);
+      },
+    );
+
+    test('the password follows the server policy: 10 characters', () async {
+      final RegisterViewModel viewModel = await build();
+      fillPersonal(viewModel);
+      viewModel.passwordController.text = 'abc123';
+
+      expect(await viewModel.submit(), isNull);
+      expect(
+        viewModel.passwordError,
+        isA<PasswordTooShort>().having(
+          (PasswordTooShort e) => e.minimumLength,
+          'minimumLength',
+          10,
         ),
       );
-      addTearDown(viewModel.dispose);
+    });
 
-      await viewModel.pickDocument(AccountDocument.identityCard);
+    test(
+      'the password follows the server policy: a letter and a digit',
+      () async {
+        final RegisterViewModel viewModel = await build();
+        fillPersonal(viewModel);
+        viewModel.passwordController.text = 'abcdefghijkl';
 
-      expect(viewModel.fileNameFor(AccountDocument.identityCard), isNull);
+        expect(await viewModel.submit(), isNull);
+        expect(viewModel.passwordError, isA<PasswordNeedsLetterAndDigit>());
+      },
+    );
+
+    test('a stricter policy from the config is the one enforced', () async {
+      final RegisterViewModel viewModel = await build(
+        config: const AppConfig(passwordMinLength: 14),
+      );
+      fillPersonal(viewModel);
+
+      expect(viewModel.minPasswordLength, 14);
+      expect(await viewModel.submit(), isNull);
       expect(
-        viewModel.errorFor(AccountDocument.identityCard),
-        isA<DocumentTooLarge>().having(
-          (DocumentTooLarge error) => error.maximumMegabytes,
-          'maximumMegabytes',
-          InputRules.maxDocumentMegabytes,
+        viewModel.passwordError,
+        isA<PasswordTooShort>().having(
+          (PasswordTooShort e) => e.minimumLength,
+          'minimumLength',
+          14,
         ),
       );
     });
 
-    test('turns away a file that is neither a PDF nor an image', () async {
-      final RegisterViewModel viewModel = providerPicking(
-        const DocumentFile(
-          name: 'notes.docx',
-          sizeInBytes: 2048,
-          extension: 'docx',
-        ),
-      );
-      addTearDown(viewModel.dispose);
+    test(
+      'a provider missing the business section is told what is missing',
+      () async {
+        final RegisterViewModel viewModel = await build(
+          role: UserRole.provider,
+        );
+        fillPersonal(viewModel);
 
-      await viewModel.pickDocument(AccountDocument.identityCard);
+        expect(await viewModel.submit(), isNull);
+        expect(viewModel.businessNameError, isA<NameRequired>());
+        expect(viewModel.categoryError, isA<SelectionRequired>());
+        expect(viewModel.wilayasError, isA<SelectionRequired>());
+        expect(auth.registrations, isEmpty);
+      },
+    );
 
-      expect(viewModel.fileNameFor(AccountDocument.identityCard), isNull);
-      expect(
-        viewModel.errorFor(AccountDocument.identityCard),
-        isA<DocumentWrongType>(),
-      );
+    test('an error clears once its own field changes, not before', () async {
+      final RegisterViewModel viewModel = await build();
+      await viewModel.submit();
+
+      viewModel.emailController.text = 'a';
+      expect(viewModel.emailError, isNull);
+      // Untouched fields keep their verdicts.
+      expect(viewModel.nameError, isA<NameRequired>());
     });
 
-    test('accepts a photograph of a card, not only a scan', () async {
-      final RegisterViewModel viewModel = providerPicking(
-        const DocumentFile(
-          name: 'id.JPG',
-          sizeInBytes: 2048,
-          // The platform may report the extension in any case.
-          extension: 'JPG',
-        ),
-      );
-      addTearDown(viewModel.dispose);
+    test('picking what was missing clears its error', () async {
+      final RegisterViewModel viewModel = await build(role: UserRole.provider);
+      await viewModel.submit();
 
-      await viewModel.pickDocument(AccountDocument.identityCard);
+      viewModel.selectCategory(FakeReferenceRepository.sampleCategories.first);
+      viewModel.selectWilayasServed(<Wilaya>{
+        FakeReferenceRepository.sampleWilayas.first,
+      });
 
-      expect(viewModel.fileNameFor(AccountDocument.identityCard), 'id.JPG');
+      expect(viewModel.categoryError, isNull);
+      expect(viewModel.wilayasError, isNull);
+    });
+  });
+
+  group('RegisterViewModel submit', () {
+    test(
+      'a client sends the personal fields, trimmed and normalised',
+      () async {
+        final RegisterViewModel viewModel = await build(language: 'ar');
+        fillPersonal(viewModel);
+        viewModel.selectWilaya(FakeReferenceRepository.sampleWilayas[1]);
+
+        final VerifyEmailArgs? args = await viewModel.submit();
+
+        expect(auth.registrations, hasLength(1));
+        final RegistrationRequest sent = auth.registrations.single;
+        expect(sent.role, UserRole.client);
+        expect(sent.fullName, 'Amina Benali');
+        expect(sent.email, 'amina@example.com');
+        // Spaces typed between groups are not part of the number.
+        expect(sent.phone, '0555123456');
+        expect(sent.password, 'secret12345');
+        // The emails the account receives follow the language on screen.
+        expect(sent.language, 'ar');
+        expect(sent.wilayaCode, 16);
+        // A client never sends provider fields — the API refuses them.
+        expect(sent.businessName, isNull);
+        expect(sent.categoryId, isNull);
+        expect(sent.wilayaCodes, isEmpty);
+        expect(sent.toJson().containsKey('businessName'), isFalse);
+
+        expect(args, isNotNull);
+        expect(args!.email, 'amina@example.com');
+        expect(args.resendAfterSeconds, auth.resendAfterSeconds);
+      },
+    );
+
+    test('a client without a wilaya sends none', () async {
+      final RegisterViewModel viewModel = await build();
+      fillPersonal(viewModel);
+
+      await viewModel.submit();
+
+      expect(auth.registrations.single.wilayaCode, isNull);
     });
 
-    test('treats a cancelled pick as nothing having happened', () async {
-      final RegisterViewModel viewModel = providerPicking(null);
-      addTearDown(viewModel.dispose);
+    test('a +213 number is accepted and sent in the local form', () async {
+      final RegisterViewModel viewModel = await build();
+      fillPersonal(viewModel);
+      viewModel.phoneController.text = '+213 555 12 34 56';
 
-      await viewModel.pickDocument(AccountDocument.identityCard);
+      await viewModel.submit();
 
-      expect(viewModel.fileNameFor(AccountDocument.identityCard), isNull);
-      // Backing out of the browser is not a complaint about the field.
-      expect(viewModel.errorFor(AccountDocument.identityCard), isNull);
+      expect(auth.registrations.single.phone, '0555123456');
     });
 
-    test('a rejected pick leaves an already-good file alone', () async {
-      DocumentFile? next = _validPdf;
-      final RegisterViewModel viewModel = RegisterViewModel(
-        role: UserRole.provider,
-        picker: () async => next,
-      );
-      addTearDown(viewModel.dispose);
+    test('a provider sends the business section as well', () async {
+      final RegisterViewModel viewModel = await build(role: UserRole.provider);
+      fillPersonal(viewModel);
+      fillBusiness(viewModel);
 
-      await viewModel.pickDocument(AccountDocument.identityCard);
-      expect(
-        viewModel.fileNameFor(AccountDocument.identityCard),
-        'id-card.pdf',
-      );
+      final VerifyEmailArgs? args = await viewModel.submit();
 
-      next = const DocumentFile(
-        name: 'notes.docx',
-        sizeInBytes: 2048,
-        extension: 'docx',
-      );
-      await viewModel.pickDocument(AccountDocument.identityCard);
+      final RegistrationRequest sent = auth.registrations.single;
+      expect(sent.role, UserRole.provider);
+      expect(sent.businessName, 'Studio 21');
+      expect(sent.categoryId, 'cat-photo');
+      expect(sent.wilayaCodes, unorderedEquals(<int>[16, 9]));
+      // The single wilaya is the client's own; for a provider it would be an
+      // arbitrary pick from the served set.
+      expect(sent.wilayaCode, isNull);
+      expect(sent.language, 'en');
+      expect(args, isNotNull);
+    });
 
-      // Losing a good document because the next pick was bad would be worse
-      // than the rejection itself.
-      expect(
-        viewModel.fileNameFor(AccountDocument.identityCard),
-        'id-card.pdf',
+    test(
+      'is busy while the request is out, and ignores a second tap',
+      () async {
+        final RegisterViewModel viewModel = await build();
+        fillPersonal(viewModel);
+        final Completer<void> gate = Completer<void>();
+        auth.gate = gate;
+
+        final Future<VerifyEmailArgs?> pending = viewModel.submit();
+        await flushAsync();
+
+        expect(viewModel.isBusy, isTrue);
+        expect(await viewModel.submit(), isNull);
+
+        gate.complete();
+        expect(await pending, isNotNull);
+        expect(viewModel.isBusy, isFalse);
+        expect(auth.registrations, hasLength(1));
+      },
+    );
+  });
+
+  group('RegisterViewModel server refusals', () {
+    test('EMAIL_TAKEN raises the 08b banner and marks the address', () async {
+      auth.registerError = apiFailure(ApiErrorCode.emailTaken, statusCode: 409);
+      final RegisterViewModel viewModel = await build();
+      fillPersonal(viewModel);
+
+      expect(await viewModel.submit(), isNull);
+
+      expect(viewModel.emailTaken, isTrue);
+      expect(viewModel.emailError, isA<EmailTaken>());
+      // Turned into a banner, so nothing is left for a generic toast.
+      expect(viewModel.failure, isNull);
+      expect(viewModel.hasError, isFalse);
+    });
+
+    test('editing the address retires the 08b banner', () async {
+      auth.registerError = apiFailure(ApiErrorCode.emailTaken, statusCode: 409);
+      final RegisterViewModel viewModel = await build();
+      fillPersonal(viewModel);
+      await viewModel.submit();
+
+      viewModel.emailController.text = 'other@example.com';
+
+      expect(viewModel.emailTaken, isFalse);
+      expect(viewModel.emailError, isNull);
+    });
+
+    test('PHONE_TAKEN is an error on the phone field', () async {
+      auth.registerError = apiFailure(ApiErrorCode.phoneTaken, statusCode: 409);
+      final RegisterViewModel viewModel = await build();
+      fillPersonal(viewModel);
+
+      await viewModel.submit();
+
+      expect(viewModel.phoneError, isA<PhoneTaken>());
+      expect(viewModel.emailTaken, isFalse);
+      expect(viewModel.failure, isNull);
+    });
+
+    test('PASSWORD_WEAK is an error on the password field', () async {
+      auth.registerError = apiFailure(ApiErrorCode.passwordWeak);
+      final RegisterViewModel viewModel = await build();
+      fillPersonal(viewModel);
+
+      await viewModel.submit();
+
+      expect(viewModel.passwordError, isA<PasswordWeak>());
+      expect(viewModel.failure, isNull);
+    });
+
+    test('CATEGORY_NOT_FOUND clears the pick and asks for another', () async {
+      auth.registerError = apiFailure(
+        ApiErrorCode.categoryNotFound,
+        statusCode: 404,
       );
-      expect(
-        viewModel.errorFor(AccountDocument.identityCard),
-        isA<DocumentWrongType>(),
-      );
+      final RegisterViewModel viewModel = await build(role: UserRole.provider);
+      fillPersonal(viewModel);
+      fillBusiness(viewModel);
+
+      await viewModel.submit();
+      await flushAsync();
+
+      expect(viewModel.category, isNull);
+      expect(viewModel.categoryError, isA<SelectionRequired>());
+      expect(viewModel.failure, isNull);
+      // The list is reloaded, since the category vanished from it.
+      expect(viewModel.categories, isNotEmpty);
+    });
+
+    test(
+      'WILAYA_NOT_FOUND clears a provider\'s wilayas and asks again',
+      () async {
+        auth.registerError = apiFailure(
+          ApiErrorCode.wilayaNotFound,
+          statusCode: 404,
+        );
+        final RegisterViewModel viewModel = await build(
+          role: UserRole.provider,
+        );
+        fillPersonal(viewModel);
+        fillBusiness(viewModel);
+
+        await viewModel.submit();
+
+        expect(viewModel.wilayasServed, isEmpty);
+        expect(viewModel.wilayasError, isA<SelectionRequired>());
+      },
+    );
+
+    test(
+      'WILAYA_NOT_FOUND clears a client\'s wilaya and leaves the reason to '
+      'the view',
+      () async {
+        auth.registerError = apiFailure(
+          ApiErrorCode.wilayaNotFound,
+          statusCode: 404,
+        );
+        final RegisterViewModel viewModel = await build();
+        fillPersonal(viewModel);
+        viewModel.selectWilaya(FakeReferenceRepository.sampleWilayas[1]);
+
+        await viewModel.submit();
+
+        expect(viewModel.wilaya, isNull);
+        // The optional field has no error line, so the failure stays for the
+        // view to report instead of the choice silently vanishing.
+        expect(viewModel.failure, isA<ApiFailure>());
+      },
+    );
+
+    test('anything else is left for the view to report', () async {
+      auth.registerError = const NetworkFailure();
+      final RegisterViewModel viewModel = await build();
+      fillPersonal(viewModel);
+
+      expect(await viewModel.submit(), isNull);
+
+      expect(viewModel.failure, isA<NetworkFailure>());
+      expect(viewModel.emailTaken, isFalse);
     });
   });
 }

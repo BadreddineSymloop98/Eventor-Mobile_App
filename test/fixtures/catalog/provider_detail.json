@@ -1,0 +1,458 @@
+{
+  "data": {
+    "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+    "businessName": "Studio Lumière",
+    "category": {
+      "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+      "slug": "photographie",
+      "name": "Photography",
+      "nameEn": "Photography",
+      "nameAr": "التصوير",
+      "icon": "camera"
+    },
+    "avatarUrl": null,
+    "verified": true,
+    "avgRating": "4.80",
+    "ratingCount": 5,
+    "completedBookingsCount": 7,
+    "yearsActive": 15,
+    "avgReplyMinutes": null,
+    "replyTime": null,
+    "acceptingBookings": true,
+    "bio": "Wedding and engagement photography in Algiers since 2014.",
+    "bioEn": "Wedding and engagement photography in Algiers since 2014.",
+    "bioAr": "تصوير الأعراس والخطوبة في الجزائر العاصمة منذ 2014.",
+    "languagesSpoken": [
+      "ar",
+      "fr",
+      "en"
+    ],
+    "wilayas": [
+      {
+        "code": 9,
+        "name": "Blida",
+        "nameEn": "Blida",
+        "nameAr": "البليدة"
+      },
+      {
+        "code": 16,
+        "name": "Alger",
+        "nameEn": "Alger",
+        "nameAr": "الجزائر"
+      },
+      {
+        "code": 42,
+        "name": "Tipaza",
+        "nameEn": "Tipaza",
+        "nameAr": "تيبازة"
+      }
+    ],
+    "checks": [
+      {
+        "code": "identity",
+        "title": "Identity verified",
+        "detail": "National ID checked by Eventor",
+        "passed": true
+      },
+      {
+        "code": "registration",
+        "title": "Registered activity",
+        "detail": "Commercial register or artisan card verified",
+        "passed": true
+      },
+      {
+        "code": "reply_time",
+        "title": "Reply time",
+        "detail": "Measured over the last 30 days",
+        "passed": false
+      }
+    ],
+    "servicesCount": 4,
+    "services": [
+      {
+        "id": "d5fce8fc-5589-4453-a268-219bb633748d",
+        "title": "Premium wedding album · 40 pages",
+        "titleEn": "Premium wedding album · 40 pages",
+        "titleAr": "ألبوم زفاف فاخر · 40 صفحة",
+        "category": {
+          "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+          "slug": "photographie",
+          "name": "Photography",
+          "nameEn": "Photography",
+          "nameAr": "التصوير",
+          "icon": "camera"
+        },
+        "basePrice": "28000.00",
+        "priceType": "per_event",
+        "priceTypeLabel": "per event",
+        "avgRating": "5.00",
+        "ratingCount": 1,
+        "bookingsCount": 2,
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/a7ce860d-8619-4ddb-8473-a1e64a49427d?variant=medium&exp=1790240197&sig=GmQQDuO-3kjBK9SzN4im-6jEueBc1hhZgiMc6tl0j6k",
+        "wilayas": [
+          {
+            "code": 9,
+            "name": "Blida",
+            "nameEn": "Blida",
+            "nameAr": "البليدة"
+          }
+        ],
+        "provider": {
+          "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+          "businessName": "Studio Lumière",
+          "category": {
+            "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+            "slug": "photographie",
+            "name": "Photography",
+            "nameEn": "Photography",
+            "nameAr": "التصوير",
+            "icon": "camera"
+          },
+          "avatarUrl": null,
+          "verified": true,
+          "avgRating": "4.80",
+          "ratingCount": 5,
+          "completedBookingsCount": 7,
+          "yearsActive": 15,
+          "avgReplyMinutes": null,
+          "replyTime": null,
+          "acceptingBookings": true
+        },
+        "isFavourite": false
+      },
+      {
+        "id": "892e3d17-0f2e-4348-a5f0-5a0df2b285ef",
+        "title": "Wedding photo & video coverage",
+        "titleEn": "Wedding photo & video coverage",
+        "titleAr": "تغطية زفاف بالصورة والفيديو",
+        "category": {
+          "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+          "slug": "photographie",
+          "name": "Photography",
+          "nameEn": "Photography",
+          "nameAr": "التصوير",
+          "icon": "camera"
+        },
+        "basePrice": "120000.00",
+        "priceType": "per_event",
+        "priceTypeLabel": "per event",
+        "avgRating": "5.00",
+        "ratingCount": 2,
+        "bookingsCount": 2,
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/944630eb-2dad-47f4-a9e1-280fd69bee3b?variant=medium&exp=1790240197&sig=DS1qEZ6RjGQj0rQe_zqqlcegIHIJ7JgwRxheTVBnA3I",
+        "wilayas": [
+          {
+            "code": 9,
+            "name": "Blida",
+            "nameEn": "Blida",
+            "nameAr": "البليدة"
+          },
+          {
+            "code": 16,
+            "name": "Alger",
+            "nameEn": "Alger",
+            "nameAr": "الجزائر"
+          },
+          {
+            "code": 42,
+            "name": "Tipaza",
+            "nameEn": "Tipaza",
+            "nameAr": "تيبازة"
+          }
+        ],
+        "provider": {
+          "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+          "businessName": "Studio Lumière",
+          "category": {
+            "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+            "slug": "photographie",
+            "name": "Photography",
+            "nameEn": "Photography",
+            "nameAr": "التصوير",
+            "icon": "camera"
+          },
+          "avatarUrl": null,
+          "verified": true,
+          "avgRating": "4.80",
+          "ratingCount": 5,
+          "completedBookingsCount": 7,
+          "yearsActive": 15,
+          "avgReplyMinutes": null,
+          "replyTime": null,
+          "acceptingBookings": true
+        },
+        "isFavourite": false
+      },
+      {
+        "id": "d1f300e9-1950-4d28-b149-43b5eefb5f5c",
+        "title": "Cinematic wedding film",
+        "titleEn": "Cinematic wedding film",
+        "titleAr": "فيلم زفاف سينمائي",
+        "category": {
+          "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+          "slug": "photographie",
+          "name": "Photography",
+          "nameEn": "Photography",
+          "nameAr": "التصوير",
+          "icon": "camera"
+        },
+        "basePrice": "90000.00",
+        "priceType": "per_event",
+        "priceTypeLabel": "per event",
+        "avgRating": "5.00",
+        "ratingCount": 1,
+        "bookingsCount": 1,
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/8f855222-63d5-4cdd-80c6-bb5f207a6d41?variant=medium&exp=1790240197&sig=AYQHqfWvtcRLGpJrduO3Wd_bVX2u87m644NV3JqqyJ0",
+        "wilayas": [
+          {
+            "code": 9,
+            "name": "Blida",
+            "nameEn": "Blida",
+            "nameAr": "البليدة"
+          }
+        ],
+        "provider": {
+          "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+          "businessName": "Studio Lumière",
+          "category": {
+            "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+            "slug": "photographie",
+            "name": "Photography",
+            "nameEn": "Photography",
+            "nameAr": "التصوير",
+            "icon": "camera"
+          },
+          "avatarUrl": null,
+          "verified": true,
+          "avgRating": "4.80",
+          "ratingCount": 5,
+          "completedBookingsCount": 7,
+          "yearsActive": 15,
+          "avgReplyMinutes": null,
+          "replyTime": null,
+          "acceptingBookings": true
+        },
+        "isFavourite": false
+      },
+      {
+        "id": "98209b95-db94-43d3-9c27-e6ab2132fd60",
+        "title": "Engagement photo session",
+        "titleEn": "Engagement photo session",
+        "titleAr": "جلسة تصوير الخطوبة",
+        "category": {
+          "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+          "slug": "photographie",
+          "name": "Photography",
+          "nameEn": "Photography",
+          "nameAr": "التصوير",
+          "icon": "camera"
+        },
+        "basePrice": "35000.00",
+        "priceType": "per_event",
+        "priceTypeLabel": "per event",
+        "avgRating": "4.00",
+        "ratingCount": 1,
+        "bookingsCount": 2,
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/80571625-8f88-4c78-a5e8-68928ada319d?variant=medium&exp=1790240197&sig=rQfYkQ51YBZUZ9VPKsgBCv_wZ-rOYGetAQq1O_EJa1I",
+        "wilayas": [
+          {
+            "code": 9,
+            "name": "Blida",
+            "nameEn": "Blida",
+            "nameAr": "البليدة"
+          },
+          {
+            "code": 16,
+            "name": "Alger",
+            "nameEn": "Alger",
+            "nameAr": "الجزائر"
+          }
+        ],
+        "provider": {
+          "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+          "businessName": "Studio Lumière",
+          "category": {
+            "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+            "slug": "photographie",
+            "name": "Photography",
+            "nameEn": "Photography",
+            "nameAr": "التصوير",
+            "icon": "camera"
+          },
+          "avatarUrl": null,
+          "verified": true,
+          "avgRating": "4.80",
+          "ratingCount": 5,
+          "completedBookingsCount": 7,
+          "yearsActive": 15,
+          "avgReplyMinutes": null,
+          "replyTime": null,
+          "acceptingBookings": true
+        },
+        "isFavourite": false
+      }
+    ],
+    "packs": [
+      {
+        "id": "cc5deb82-bac3-4b4f-8198-dddf36a13498",
+        "name": "Pack Fiançailles Photo",
+        "nameEn": "Pack Fiançailles Photo",
+        "nameAr": "باقة تصوير الخطوبة",
+        "eventType": "engagement",
+        "wilaya": {
+          "code": 16,
+          "name": "Alger",
+          "nameEn": "Alger",
+          "nameAr": "الجزائر"
+        },
+        "price": "56000.00",
+        "sumOfItems": "63000.00",
+        "savings": "7000.00",
+        "savingsPercent": 11.1,
+        "itemsCount": 2,
+        "categoryNames": [
+          "Photography",
+          "Photography"
+        ],
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/7d56feb8-c835-4d0e-8234-821ccc60b8cf?variant=medium&exp=1790240197&sig=P1APvEodpKvUYDyNhZ8fHE_m9FsWXCOzsHug77YryxA",
+        "avgRating": "0.00",
+        "ratingCount": 0,
+        "bookingsCount": 0,
+        "provider": {
+          "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+          "businessName": "Studio Lumière",
+          "category": {
+            "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+            "slug": "photographie",
+            "name": "Photography",
+            "nameEn": "Photography",
+            "nameAr": "التصوير",
+            "icon": "camera"
+          },
+          "avatarUrl": null,
+          "verified": true,
+          "avgRating": "4.80",
+          "ratingCount": 5,
+          "completedBookingsCount": 7,
+          "yearsActive": 15,
+          "avgReplyMinutes": null,
+          "replyTime": null,
+          "acceptingBookings": true
+        },
+        "isFavourite": false
+      },
+      {
+        "id": "384ad0fe-c56f-435f-a9bb-a97605fee82d",
+        "name": "Photo + Vidéo Mariage",
+        "nameEn": "Photo + Vidéo Mariage",
+        "nameAr": "باقة صور وفيديو الزفاف",
+        "eventType": "wedding",
+        "wilaya": {
+          "code": 16,
+          "name": "Alger",
+          "nameEn": "Alger",
+          "nameAr": "الجزائر"
+        },
+        "price": "202000.00",
+        "sumOfItems": "238000.00",
+        "savings": "36000.00",
+        "savingsPercent": 15.1,
+        "itemsCount": 3,
+        "categoryNames": [
+          "Photography",
+          "Photography",
+          "Photography"
+        ],
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/0f2af59a-b338-47ac-a59d-79f7a03e8f7b?variant=medium&exp=1790240197&sig=6Cc3BF-orQPpivcaGz2p1FsI2Lr0bLAU0Gt0UQAE_pU",
+        "avgRating": "0.00",
+        "ratingCount": 0,
+        "bookingsCount": 0,
+        "provider": {
+          "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+          "businessName": "Studio Lumière",
+          "category": {
+            "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+            "slug": "photographie",
+            "name": "Photography",
+            "nameEn": "Photography",
+            "nameAr": "التصوير",
+            "icon": "camera"
+          },
+          "avatarUrl": null,
+          "verified": true,
+          "avgRating": "4.80",
+          "ratingCount": 5,
+          "completedBookingsCount": 7,
+          "yearsActive": 15,
+          "avgReplyMinutes": null,
+          "replyTime": null,
+          "acceptingBookings": true
+        },
+        "isFavourite": false
+      }
+    ],
+    "ratingBreakdown": [
+      {
+        "stars": 5,
+        "count": 4,
+        "percent": 80
+      },
+      {
+        "stars": 4,
+        "count": 1,
+        "percent": 20
+      },
+      {
+        "stars": 3,
+        "count": 0,
+        "percent": 0
+      },
+      {
+        "stars": 2,
+        "count": 0,
+        "percent": 0
+      },
+      {
+        "stars": 1,
+        "count": 0,
+        "percent": 0
+      }
+    ],
+    "recentReviews": [
+      {
+        "id": "6e67bee3-424c-4677-83ab-fa0cc438d730",
+        "authorName": "Amel B.",
+        "authorAvatarUrl": null,
+        "rating": 5,
+        "comment": "أطباق شهية وتقديم أنيق، الضيوف كانوا سعداء جدًا.",
+        "redacted": false,
+        "reply": "Merci beaucoup pour votre confiance, ce fut un plaisir !",
+        "repliedAt": "2026-09-17T19:11:57.846Z",
+        "createdAt": "2026-09-17T05:11:57.846Z"
+      },
+      {
+        "id": "b0f361a7-07dc-4fd1-8e45-a0eb88bee8d9",
+        "authorName": "Omar A.",
+        "authorAvatarUrl": null,
+        "rating": 5,
+        "comment": "أطباق شهية وتقديم أنيق، الضيوف كانوا سعداء جدًا.",
+        "redacted": false,
+        "reply": "Thanks for the feedback, we have contacted you to make it right.",
+        "repliedAt": "2026-09-16T02:39:13.621Z",
+        "createdAt": "2026-09-15T15:39:13.621Z"
+      },
+      {
+        "id": "282c26b9-89d1-447c-8ae1-a755413086fe",
+        "authorName": "Ines B.",
+        "authorAvatarUrl": null,
+        "rating": 4,
+        "comment": "Très bon rapport qualité-prix, décoration exactement comme sur les photos.",
+        "redacted": false,
+        "reply": null,
+        "repliedAt": null,
+        "createdAt": "2026-08-23T09:13:03.647Z"
+      }
+    ],
+    "memberSince": "2026-01-29T15:20:05.814Z"
+  }
+}

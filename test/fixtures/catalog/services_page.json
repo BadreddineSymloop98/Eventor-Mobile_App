@@ -1,0 +1,181 @@
+{
+  "data": [
+    {
+      "id": "892e3d17-0f2e-4348-a5f0-5a0df2b285ef",
+      "title": "Wedding photo & video coverage",
+      "titleEn": "Wedding photo & video coverage",
+      "titleAr": "تغطية زفاف بالصورة والفيديو",
+      "category": {
+        "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+        "slug": "photographie",
+        "name": "Photography",
+        "nameEn": "Photography",
+        "nameAr": "التصوير",
+        "icon": "camera"
+      },
+      "basePrice": "120000.00",
+      "priceType": "per_event",
+      "priceTypeLabel": "per event",
+      "avgRating": "5.00",
+      "ratingCount": 2,
+      "bookingsCount": 2,
+      "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/944630eb-2dad-47f4-a9e1-280fd69bee3b?variant=medium&exp=1790240162&sig=7RezEfgShv6vboib-1XNTV3aWDbm45yhmfNXLopG5Fw",
+      "wilayas": [
+        {
+          "code": 9,
+          "name": "Blida",
+          "nameEn": "Blida",
+          "nameAr": "البليدة"
+        },
+        {
+          "code": 16,
+          "name": "Alger",
+          "nameEn": "Alger",
+          "nameAr": "الجزائر"
+        },
+        {
+          "code": 42,
+          "name": "Tipaza",
+          "nameEn": "Tipaza",
+          "nameAr": "تيبازة"
+        }
+      ],
+      "provider": {
+        "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+        "businessName": "Studio Lumière",
+        "category": {
+          "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+          "slug": "photographie",
+          "name": "Photography",
+          "nameEn": "Photography",
+          "nameAr": "التصوير",
+          "icon": "camera"
+        },
+        "avatarUrl": null,
+        "verified": true,
+        "avgRating": "4.80",
+        "ratingCount": 5,
+        "completedBookingsCount": 7,
+        "yearsActive": 15,
+        "avgReplyMinutes": null,
+        "replyTime": null,
+        "acceptingBookings": true
+      },
+      "isFavourite": false
+    },
+    {
+      "id": "98209b95-db94-43d3-9c27-e6ab2132fd60",
+      "title": "Engagement photo session",
+      "titleEn": "Engagement photo session",
+      "titleAr": "جلسة تصوير الخطوبة",
+      "category": {
+        "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+        "slug": "photographie",
+        "name": "Photography",
+        "nameEn": "Photography",
+        "nameAr": "التصوير",
+        "icon": "camera"
+      },
+      "basePrice": "35000.00",
+      "priceType": "per_event",
+      "priceTypeLabel": "per event",
+      "avgRating": "4.00",
+      "ratingCount": 1,
+      "bookingsCount": 2,
+      "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/80571625-8f88-4c78-a5e8-68928ada319d?variant=medium&exp=1790240162&sig=rM15mHVTAipcV1-tKa9CzDD2QrOHWsMbZFOe-5gMUbk",
+      "wilayas": [
+        {
+          "code": 9,
+          "name": "Blida",
+          "nameEn": "Blida",
+          "nameAr": "البليدة"
+        },
+        {
+          "code": 16,
+          "name": "Alger",
+          "nameEn": "Alger",
+          "nameAr": "الجزائر"
+        }
+      ],
+      "provider": {
+        "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+        "businessName": "Studio Lumière",
+        "category": {
+          "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+          "slug": "photographie",
+          "name": "Photography",
+          "nameEn": "Photography",
+          "nameAr": "التصوير",
+          "icon": "camera"
+        },
+        "avatarUrl": null,
+        "verified": true,
+        "avgRating": "4.80",
+        "ratingCount": 5,
+        "completedBookingsCount": 7,
+        "yearsActive": 15,
+        "avgReplyMinutes": null,
+        "replyTime": null,
+        "acceptingBookings": true
+      },
+      "isFavourite": false
+    },
+    {
+      "id": "f491ca64-3892-4191-b146-e557b441374d",
+      "title": "Grande salle · 150 seats",
+      "titleEn": "Grande salle · 150 seats",
+      "titleAr": "القاعة الكبرى · 150 مقعدًا",
+      "category": {
+        "id": "bb28c638-c0ea-4140-b9d9-fd5535a6c4b6",
+        "slug": "salles-des-fetes",
+        "name": "Venues",
+        "nameEn": "Venues",
+        "nameAr": "قاعات الحفلات",
+        "icon": "building"
+      },
+      "basePrice": "250000.00",
+      "priceType": "per_event",
+      "priceTypeLabel": "per event",
+      "avgRating": "4.00",
+      "ratingCount": 1,
+      "bookingsCount": 2,
+      "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/29bb5eb6-5c3f-4769-915d-b17cfef01e4c?variant=medium&exp=1790240162&sig=rvWqp-5WgAyS1Y-CaeZDJ88tuYI1SVHky-rZXzYuGUU",
+      "wilayas": [
+        {
+          "code": 9,
+          "name": "Blida",
+          "nameEn": "Blida",
+          "nameAr": "البليدة"
+        }
+      ],
+      "provider": {
+        "id": "c62532f4-6fa9-4752-9f82-cdbea4b0dd07",
+        "businessName": "Salle Yasmine",
+        "category": {
+          "id": "bb28c638-c0ea-4140-b9d9-fd5535a6c4b6",
+          "slug": "salles-des-fetes",
+          "name": "Venues",
+          "nameEn": "Venues",
+          "nameAr": "قاعات الحفلات",
+          "icon": "building"
+        },
+        "avatarUrl": null,
+        "verified": true,
+        "avgRating": "4.57",
+        "ratingCount": 7,
+        "completedBookingsCount": 9,
+        "yearsActive": 5,
+        "avgReplyMinutes": null,
+        "replyTime": null,
+        "acceptingBookings": true
+      },
+      "isFavourite": false
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 100,
+    "total": 41,
+    "totalPages": 1
+  }
+}

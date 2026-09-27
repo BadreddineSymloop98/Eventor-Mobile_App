@@ -3,72 +3,63 @@ import 'package:flutter/widgets.dart';
 import '../../../core/base/base_view_model.dart';
 import '../../../core/constants/input_rules.dart';
 import '../../../core/errors/validation_error.dart';
+import '../../auth/data/auth_repository.dart';
 
-/// Drives the forgot-password form.
+/// Drives `09 Forgot password`: one email field and a request for a code.
 ///
-/// One field, one request. Validation follows the same two-pass shape as the
-/// other forms: as the user types it answers "is this fillable yet", which
-/// enables the button; on submit it runs again to produce the message.
+/// The server answers the same whether or not the address has an account —
+/// telling an anonymous caller which emails exist would be user enumeration —
+/// so success here means only "a code was sent if there is an account", and
+/// the user always moves on to `10`.
 class ForgotPasswordViewModel extends BaseViewModel {
-  ForgotPasswordViewModel() {
-    emailController.addListener(_onFieldChanged);
+  ForgotPasswordViewModel({required this._auth, String? initialEmail}) {
+    emailController.text = initialEmail ?? '';
+    emailController.addListener(_onEmailChanged);
+    _onEmailChanged();
   }
+
+  final AuthRepository _auth;
 
   final TextEditingController emailController = TextEditingController();
-  final FocusNode emailFocusNode = FocusNode();
 
+  bool _canSubmit = false;
   EmailError? _emailError;
-  bool _isEmailFillable = false;
 
+  bool get canSubmit => _canSubmit;
   EmailError? get emailError => _emailError;
 
-  /// Whether the form is complete enough to send.
-  bool get canSubmit => _isEmailFillable && !isBusy;
-
-  /// Validates the address and asks for a reset link.
-  ///
-  /// Returns whether the caller may continue to the code-entry screen.
-  Future<bool> sendResetLink() async {
-    if (!_validate()) return false;
-
-    final bool? succeeded = await runGuarded(_requestReset);
-    return succeeded ?? false;
-  }
-
-  /// Placeholder for the real request.
-  ///
-  /// There is no backend, so any address that parses is accepted. Note that
-  /// the real one should behave the same way whether or not the address is on
-  /// file — telling an anonymous caller which emails have accounts is a way of
-  /// enumerating users.
-  Future<bool> _requestReset() async => true;
-
-  void _onFieldChanged() {
-    final bool isFillable = _validateEmail(emailController.text.trim()) == null;
-    if (isFillable == _isEmailFillable) return;
-
-    _isEmailFillable = isFillable;
+  /// The address the code went to, or `null` if the request did not go out.
+  Future<String?> sendCode() async {
+    final String email = emailController.text.trim();
+    _emailError = email.isEmpty
+        ? const EmailRequired()
+        : InputRules.emailPattern.hasMatch(email)
+            ? null
+            : const EmailInvalid();
     notifyListeners();
+    if (_emailError != null) return null;
+
+    final bool? sent = await runGuarded(() async {
+      await _auth.forgotPassword(email);
+      return true;
+    });
+    return sent == true ? email : null;
   }
 
-  bool _validate() {
-    _emailError = _validateEmail(emailController.text.trim());
-    notifyListeners();
-    return _emailError == null;
-  }
-
-  EmailError? _validateEmail(String email) {
-    if (email.isEmpty) return const EmailRequired();
-    if (!InputRules.emailPattern.hasMatch(email)) return const EmailInvalid();
-    return null;
+  void _onEmailChanged() {
+    final bool canSubmit =
+        InputRules.emailPattern.hasMatch(emailController.text.trim());
+    final bool hadError = _emailError != null;
+    if (hadError) _emailError = null;
+    if (canSubmit != _canSubmit || hadError) {
+      _canSubmit = canSubmit;
+      notifyListeners();
+    }
   }
 
   @override
   void dispose() {
-    emailController
-      ..removeListener(_onFieldChanged)
-      ..dispose();
-    emailFocusNode.dispose();
+    emailController.dispose();
     super.dispose();
   }
 }

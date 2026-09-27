@@ -1,0 +1,277 @@
+{
+  "data": {
+    "id": "892e3d17-0f2e-4348-a5f0-5a0df2b285ef",
+    "title": "Wedding photo & video coverage",
+    "titleEn": "Wedding photo & video coverage",
+    "titleAr": "تغطية زفاف بالصورة والفيديو",
+    "category": {
+      "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+      "slug": "photographie",
+      "name": "Photography",
+      "nameEn": "Photography",
+      "nameAr": "التصوير",
+      "icon": "camera"
+    },
+    "basePrice": "120000.00",
+    "priceType": "per_event",
+    "priceTypeLabel": "per event",
+    "avgRating": "5.00",
+    "ratingCount": 2,
+    "bookingsCount": 2,
+    "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/944630eb-2dad-47f4-a9e1-280fd69bee3b?variant=medium&exp=1790240195&sig=TwTUnl6ISJzsBN1yGO2XrWY4qO32XmLYcEdQ6ZTtHPE",
+    "wilayas": [
+      {
+        "code": 9,
+        "name": "Blida",
+        "nameEn": "Blida",
+        "nameAr": "البليدة"
+      },
+      {
+        "code": 16,
+        "name": "Alger",
+        "nameEn": "Alger",
+        "nameAr": "الجزائر"
+      },
+      {
+        "code": 42,
+        "name": "Tipaza",
+        "nameEn": "Tipaza",
+        "nameAr": "تيبازة"
+      }
+    ],
+    "provider": {
+      "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+      "businessName": "Studio Lumière",
+      "category": {
+        "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+        "slug": "photographie",
+        "name": "Photography",
+        "nameEn": "Photography",
+        "nameAr": "التصوير",
+        "icon": "camera"
+      },
+      "avatarUrl": null,
+      "verified": true,
+      "avgRating": "4.80",
+      "ratingCount": 5,
+      "completedBookingsCount": 7,
+      "yearsActive": 15,
+      "avgReplyMinutes": null,
+      "replyTime": null,
+      "acceptingBookings": true
+    },
+    "isFavourite": false,
+    "description": "Wedding photo & video coverage. Two photographers cover the day from the preparations to the last dance. Edited photos delivered in 3 weeks through a private online gallery.",
+    "descriptionEn": "Wedding photo & video coverage. Two photographers cover the day from the preparations to the last dance. Edited photos delivered in 3 weeks through a private online gallery.",
+    "descriptionAr": "تغطية زفاف بالصورة والفيديو. مصوران يغطيان اليوم من التحضيرات إلى آخر رقصة. تسليم الصور المعدلة خلال 3 أسابيع عبر معرض خاص على الإنترنت.",
+    "cancellationPolicy": "Free cancellation up to 30 days before the event. After that, the deposit paid in cash is not returned. Date changes are possible once, subject to availability.",
+    "cancellationPolicyEn": "Free cancellation up to 30 days before the event. After that, the deposit paid in cash is not returned. Date changes are possible once, subject to availability.",
+    "cancellationPolicyAr": "إلغاء مجاني حتى 30 يومًا قبل المناسبة. بعد ذلك لا يُسترجع العربون المدفوع نقدًا. يمكن تغيير التاريخ مرة واحدة حسب التوفر.",
+    "facts": [
+      {
+        "label": "Team",
+        "value": "2 photographers",
+        "labelEn": "Team",
+        "valueEn": "2 photographers",
+        "labelAr": "الفريق",
+        "valueAr": "مصوران"
+      },
+      {
+        "label": "Delivery",
+        "value": "3 weeks",
+        "labelEn": "Delivery",
+        "valueEn": "3 weeks",
+        "labelAr": "التسليم",
+        "valueAr": "3 أسابيع"
+      }
+    ],
+    "extras": [
+      {
+        "id": "1be12177-c217-4dd3-95d9-d320ba036d86",
+        "name": "Drone footage",
+        "nameEn": "Drone footage",
+        "nameAr": "تصوير بالدرون",
+        "price": "15000.00"
+      }
+    ],
+    "photos": [
+      {
+        "id": "944630eb-2dad-47f4-a9e1-280fd69bee3b",
+        "thumbUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/944630eb-2dad-47f4-a9e1-280fd69bee3b?variant=thumb&exp=1790240195&sig=2fnUY57Lr_XJC-qCLmrjRsvttqVYojx3LFkB5nGEg8M",
+        "mediumUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/944630eb-2dad-47f4-a9e1-280fd69bee3b?variant=medium&exp=1790240195&sig=TwTUnl6ISJzsBN1yGO2XrWY4qO32XmLYcEdQ6ZTtHPE",
+        "largeUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/944630eb-2dad-47f4-a9e1-280fd69bee3b?exp=1790240195&sig=q9vEjrDneHPlZdea9R1fvRtLdEz29B2gQquvORO8P8I",
+        "width": 1200,
+        "height": 800
+      },
+      {
+        "id": "0f83919e-697b-47f9-816b-06a1e9260762",
+        "thumbUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/0f83919e-697b-47f9-816b-06a1e9260762?variant=thumb&exp=1790240195&sig=Tj7bx4D0pqwuvA3hsxIPwLHRfqUvwLV5PBe765ROpLw",
+        "mediumUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/0f83919e-697b-47f9-816b-06a1e9260762?variant=medium&exp=1790240195&sig=YHzWhveIJnk78X0AjO6PMAVX8qJnBPHFPGivOBr0CW0",
+        "largeUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/0f83919e-697b-47f9-816b-06a1e9260762?exp=1790240195&sig=VbwIKiqEbvgRlFI0-JshgdiKgGYJBq2zF0NaeYtYjkc",
+        "width": 1200,
+        "height": 800
+      },
+      {
+        "id": "a45c495d-81a7-4eb6-b7d3-be1962f80cbf",
+        "thumbUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/a45c495d-81a7-4eb6-b7d3-be1962f80cbf?variant=thumb&exp=1790240195&sig=RPWOqQxhjjMOatQC6-sDQX2IC6TGiTU7G34tqqjCyaQ",
+        "mediumUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/a45c495d-81a7-4eb6-b7d3-be1962f80cbf?variant=medium&exp=1790240195&sig=a2TsW9w2-RYjjji1tKKjtjL7lXZ0g4i2HlA4CrPcdbM",
+        "largeUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/a45c495d-81a7-4eb6-b7d3-be1962f80cbf?exp=1790240195&sig=fbm8x_vfzg0C5MGa5mAakpausikkQ3Gorw48lI4prjI",
+        "width": 1200,
+        "height": 800
+      }
+    ],
+    "maxGuests": null,
+    "maxEventsPerDay": 1,
+    "ratingBreakdown": [
+      {
+        "stars": 5,
+        "count": 2,
+        "percent": 100
+      },
+      {
+        "stars": 4,
+        "count": 0,
+        "percent": 0
+      },
+      {
+        "stars": 3,
+        "count": 0,
+        "percent": 0
+      },
+      {
+        "stars": 2,
+        "count": 0,
+        "percent": 0
+      },
+      {
+        "stars": 1,
+        "count": 0,
+        "percent": 0
+      }
+    ],
+    "recentReviews": [
+      {
+        "id": "6e67bee3-424c-4677-83ab-fa0cc438d730",
+        "authorName": "Amel B.",
+        "authorAvatarUrl": null,
+        "rating": 5,
+        "comment": "أطباق شهية وتقديم أنيق، الضيوف كانوا سعداء جدًا.",
+        "redacted": false,
+        "reply": "Merci beaucoup pour votre confiance, ce fut un plaisir !",
+        "repliedAt": "2026-09-17T19:11:57.846Z",
+        "createdAt": "2026-09-17T05:11:57.846Z"
+      },
+      {
+        "id": "b0f361a7-07dc-4fd1-8e45-a0eb88bee8d9",
+        "authorName": "Omar A.",
+        "authorAvatarUrl": null,
+        "rating": 5,
+        "comment": "أطباق شهية وتقديم أنيق، الضيوف كانوا سعداء جدًا.",
+        "redacted": false,
+        "reply": "Thanks for the feedback, we have contacted you to make it right.",
+        "repliedAt": "2026-09-16T02:39:13.621Z",
+        "createdAt": "2026-09-15T15:39:13.621Z"
+      }
+    ],
+    "providerPacks": [
+      {
+        "id": "cc5deb82-bac3-4b4f-8198-dddf36a13498",
+        "name": "Pack Fiançailles Photo",
+        "nameEn": "Pack Fiançailles Photo",
+        "nameAr": "باقة تصوير الخطوبة",
+        "eventType": "engagement",
+        "wilaya": {
+          "code": 16,
+          "name": "Alger",
+          "nameEn": "Alger",
+          "nameAr": "الجزائر"
+        },
+        "price": "56000.00",
+        "sumOfItems": "63000.00",
+        "savings": "7000.00",
+        "savingsPercent": 11.1,
+        "itemsCount": 2,
+        "categoryNames": [
+          "Photography",
+          "Photography"
+        ],
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/7d56feb8-c835-4d0e-8234-821ccc60b8cf?variant=medium&exp=1790240195&sig=XxDIvde6X90_PcDckVLmjDDR8UYwXlJcUBcMCXB-a-s",
+        "avgRating": "0.00",
+        "ratingCount": 0,
+        "bookingsCount": 0,
+        "provider": {
+          "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+          "businessName": "Studio Lumière",
+          "category": {
+            "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+            "slug": "photographie",
+            "name": "Photography",
+            "nameEn": "Photography",
+            "nameAr": "التصوير",
+            "icon": "camera"
+          },
+          "avatarUrl": null,
+          "verified": true,
+          "avgRating": "4.80",
+          "ratingCount": 5,
+          "completedBookingsCount": 7,
+          "yearsActive": 15,
+          "avgReplyMinutes": null,
+          "replyTime": null,
+          "acceptingBookings": true
+        },
+        "isFavourite": false
+      },
+      {
+        "id": "384ad0fe-c56f-435f-a9bb-a97605fee82d",
+        "name": "Photo + Vidéo Mariage",
+        "nameEn": "Photo + Vidéo Mariage",
+        "nameAr": "باقة صور وفيديو الزفاف",
+        "eventType": "wedding",
+        "wilaya": {
+          "code": 16,
+          "name": "Alger",
+          "nameEn": "Alger",
+          "nameAr": "الجزائر"
+        },
+        "price": "202000.00",
+        "sumOfItems": "238000.00",
+        "savings": "36000.00",
+        "savingsPercent": 15.1,
+        "itemsCount": 3,
+        "categoryNames": [
+          "Photography",
+          "Photography",
+          "Photography"
+        ],
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/0f2af59a-b338-47ac-a59d-79f7a03e8f7b?variant=medium&exp=1790240195&sig=vPCpvGcRDD9TbVSjbK-M17o3RJgF1P509w8YN2GShqU",
+        "avgRating": "0.00",
+        "ratingCount": 0,
+        "bookingsCount": 0,
+        "provider": {
+          "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+          "businessName": "Studio Lumière",
+          "category": {
+            "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+            "slug": "photographie",
+            "name": "Photography",
+            "nameEn": "Photography",
+            "nameAr": "التصوير",
+            "icon": "camera"
+          },
+          "avatarUrl": null,
+          "verified": true,
+          "avgRating": "4.80",
+          "ratingCount": 5,
+          "completedBookingsCount": 7,
+          "yearsActive": 15,
+          "avgReplyMinutes": null,
+          "replyTime": null,
+          "acceptingBookings": true
+        },
+        "isFavourite": false
+      }
+    ],
+    "updatedAt": "2026-09-20T17:05:41.985Z"
+  }
+}
