@@ -1,43 +1,111 @@
-/// Names of every route the app can navigate to.
+import '../models/account.dart';
+
+/// Every place the app can be, as a path.
+///
+/// Paths rather than names because go_router matches on them — and one of
+/// them, [setPassword], has to match a web link an admin's invite email sends
+/// (`${APP_PUBLIC_URL}/set-password?token=…`) so the app can open it.
 abstract final class AppRoutes {
-  /// The screen the app opens on, matching "01 Splash" in the design.
+  /// The splash — `01`. Also where every route waits while the app is still
+  /// starting up.
   static const String splash = '/';
 
   static const String onboarding = '/onboarding';
 
-  /// Where an unauthenticated user lands: the choice between creating an
-  /// account and signing in.
+  /// `05` — where anyone without a session lands, until they have taken one
+  /// of its two doors once. After that, [login] is the landing.
   static const String welcome = '/welcome';
 
-  /// Where "Create an account" leads: the fork that decides what the rest of
-  /// the app looks like for this person.
-  static const String roleSelection = '/role-selection';
+  /// `06` — the fork between client and provider.
+  static const String roleSelection = '/role';
 
-  /// The sign-up form. Role selection leads here, carrying the chosen role as
-  /// its route argument.
+  /// `08` / `08a`. Carries the chosen role as `?role=`.
   static const String register = '/register';
 
-  /// Asks where to send a reset link. Reached from the login form.
+  /// `10b`–`10d` — confirming the email after sign-up. Carries
+  /// [VerifyEmailArgs] as `extra`.
+  static const String verifyEmail = '/verify-email';
+
+  /// `08e` — a new provider's documents. Signed in.
+  static const String documents = '/documents';
+
+  /// `07`–`07d`. Takes an optional `?email=` to prefill.
+  static const String login = '/login';
+
+  /// `09`.
   static const String forgotPassword = '/forgot-password';
 
-  /// Where a one-time code is entered. Reached from sign-up and from a
-  /// password reset, carrying where the code was sent as its argument.
-  static const String verifyCode = '/verify-code';
+  /// `10` — the code for a password reset. Carries the email as `?email=`.
+  static const String resetCode = '/reset/code';
 
-  static const String login = '/login';
+  /// `10a` — the new password. Carries [ResetPasswordArgs] as `extra`.
+  static const String resetPassword = '/reset/password';
+
+  /// `10f` / `10g` — an admin's invite link. `?token=`.
+  static const String setPassword = '/set-password';
+
+  /// Where a signed-in user lands.
   static const String home = '/home';
 
-  /// The app always opens on the splash — it is what covers the moment the
-  /// app is working out where to send the user, so it cannot itself depend on
-  /// that answer.
-  static const String initial = splash;
+  /// The component gallery. Only registered in debug builds.
+  static const String gallery = '/gallery';
 
-  /// Where the splash hands over to once it knows.
-  ///
-  /// Onboarding is a one-time flow: once it has been completed, later launches
-  /// go straight to [welcome], which is the design's landing point for anyone
-  /// without a session. [login] is reached from there rather than directly —
-  /// it is one of two choices, not the default one.
-  static String afterSplash({required bool hasSeenOnboarding}) =>
-      hasSeenOnboarding ? welcome : onboarding;
+  /// The routes someone without a session may visit.
+  static const Set<String> public = <String>{
+    onboarding,
+    welcome,
+    roleSelection,
+    register,
+    verifyEmail,
+    login,
+    forgotPassword,
+    resetCode,
+    resetPassword,
+    setPassword,
+    gallery,
+  };
+
+  static String registerFor(UserRole role) =>
+      Uri(path: register, queryParameters: <String, String>{
+        'role': role.apiValue,
+      }).toString();
+
+  /// Login, optionally prefilled, optionally announcing a finished reset.
+  static String loginWith({String? email, bool afterReset = false}) {
+    final Map<String, String> query = <String, String>{
+      if (email != null && email.isNotEmpty) 'email': email,
+      if (afterReset) 'reset': '1',
+    };
+    // An empty map would still add a bare "?".
+    return query.isEmpty
+        ? login
+        : Uri(path: login, queryParameters: query).toString();
+  }
+
+  static String resetCodeFor(String email) => Uri(
+        path: resetCode,
+        queryParameters: <String, String>{'email': email},
+      ).toString();
 }
+
+/// What `10b` needs to know about the code that was just sent.
+class VerifyEmailArgs {
+  const VerifyEmailArgs({
+    required this.email,
+    required this.resendAfterSeconds,
+  });
+
+  final String email;
+  final int resendAfterSeconds;
+}
+
+/// What `10a` carries forward from `10`.
+class ResetPasswordArgs {
+  const ResetPasswordArgs({required this.email, required this.code});
+
+  final String email;
+  final String code;
+}
+
+/// Why `10a` sent the user back to `10`.
+enum ResetCodeProblem { invalid, expired }

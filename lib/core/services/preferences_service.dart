@@ -9,6 +9,7 @@ class PreferencesService {
   const PreferencesService(this._preferences);
 
   static const String _hasSeenOnboardingKey = 'has_seen_onboarding';
+  static const String _hasSeenWelcomeKey = 'has_seen_welcome';
   static const String _localeKey = 'locale';
 
   final SharedPreferences _preferences;
@@ -24,6 +25,14 @@ class PreferencesService {
 
   Future<void> markOnboardingAsSeen() {
     return _preferences.setBool(_hasSeenOnboardingKey, true);
+  }
+
+  /// Whether the user has already taken one of Welcome's two doors on this
+  /// device. From then on a signed-out launch opens on Login instead.
+  bool get hasSeenWelcome => _preferences.getBool(_hasSeenWelcomeKey) ?? false;
+
+  Future<void> markWelcomeAsSeen() {
+    return _preferences.setBool(_hasSeenWelcomeKey, true);
   }
 
   /// The language the user picked, or `null` when they have not picked one and

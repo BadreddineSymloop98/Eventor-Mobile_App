@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/input_rules.dart';
-import '../../../core/constants/ui_helpers.dart';
+import '../../../core/errors/failure.dart';
 import '../../../core/localization/app_localizations_x.dart';
+import '../../../core/constants/ui_helpers.dart';
 import '../../../core/routing/app_routes.dart';
-import '../../../core/widgets/app_text_field.dart';
-import '../../../core/widgets/main_button.dart';
-import '../../../core/widgets/photo_sheet_layout.dart';
+import '../../../core/widgets/layout/photo_sheet_layout.dart';
+import '../../../core/widgets/molecules/app_text_field.dart';
+import '../../../core/widgets/molecules/app_toast.dart';
+import '../../../core/widgets/molecules/main_button.dart';
 import '../../../l10n/app_localizations.dart';
 import '../view_model/forgot_password_view_model.dart';
 
-/// Asks for the address a reset link should go to.
-///
-/// Shares its shape with the login screen — see [PhotoSheetLayout] — and
-/// differs only in what sits on the sheet.
+/// `09 Forgot password` — asks where to send a 6-digit reset code.
 class ForgotPasswordView extends StatelessWidget {
   const ForgotPasswordView({super.key});
 
@@ -24,17 +24,23 @@ class ForgotPasswordView extends StatelessWidget {
   Future<void> _send(BuildContext context) async {
     final ForgotPasswordViewModel viewModel =
         context.read<ForgotPasswordViewModel>();
-    final NavigatorState navigator = Navigator.of(context);
-
     FocusScope.of(context).unfocus();
 
-    final bool succeeded = await viewModel.sendResetLink();
-    if (!succeeded || !context.mounted) return;
+    final String? email = await viewModel.sendCode();
+    if (!context.mounted) return;
 
-    await navigator.pushNamed(
-      AppRoutes.verifyCode,
-      arguments: viewModel.emailController.text.trim(),
-    );
+    if (email != null) {
+      context.push(AppRoutes.resetCodeFor(email));
+      return;
+    }
+    final Failure? failure = viewModel.failure;
+    if (failure != null) {
+      showAppToast(
+        context,
+        context.l10n.forFailure(failure),
+        tone: AppToastTone.error,
+      );
+    }
   }
 
   @override
@@ -53,39 +59,35 @@ class ForgotPasswordView extends StatelessWidget {
         children: <Widget>[
           AppTextField(
             controller: viewModel.emailController,
-            focusNode: viewModel.emailFocusNode,
             label: l10n.emailLabel,
+            hintText: l10n.emailPlaceholder,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.done,
             autofillHints: const <String>[AutofillHints.email],
             inputFormatters: InputRules.emailFormatters,
-            // An address is Latin text even in an Arabic UI.
             textDirection: TextDirection.ltr,
-            hintText: l10n.emailPlaceholder,
             errorText: viewModel.emailError == null
                 ? null
                 : l10n.forEmailError(viewModel.emailError!),
             onSubmitted: (_) => _send(context),
           ),
+          SizedBox(height: AppSpacing.md.dh),
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               MainButton(
-                label: l10n.sendResetLink,
+                label: l10n.sendCode,
                 canBeTapped: viewModel.canSubmit,
                 isLoading: viewModel.isBusy,
                 onPressed: () => _send(context),
               ),
               SizedBox(height: AppSpacing.sm.dh),
-              Align(
-                child: MainButton(
-                  label: l10n.backToLogIn,
-                  style: MainButtonStyle.ghost,
-                  // Pops rather than pushing login again: this screen was
-                  // opened from it, so the form is still underneath.
-                  onPressed: () => Navigator.of(context).maybePop(),
-                ),
+              MainButton(
+                label: l10n.backToLogIn,
+                style: MainButtonStyle.ghost,
+                // The login form is still underneath.
+                onPressed: () => context.pop(),
               ),
             ],
           ),

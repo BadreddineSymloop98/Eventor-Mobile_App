@@ -4,7 +4,7 @@ import '../../l10n/app_localizations.dart';
 import '../errors/failure.dart';
 import '../errors/validation_error.dart';
 
-/// Shorthand for reaching the strings: `context.l10n.signIn`.
+/// Shorthand for reaching the strings: `context.l10n.logIn`.
 extension LocalizationsX on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this);
 }
@@ -17,6 +17,12 @@ extension AppLocalizationsX on AppLocalizations {
   String forFailure(Failure failure) {
     return switch (failure) {
       StorageFailure() => errorStorage,
+      NetworkFailure() => errorNetwork,
+      SessionExpiredFailure() => errorSessionExpired,
+      // The server's sentence is already in the request's language; it is
+      // only replaced when it is missing.
+      ApiFailure(:final String message) =>
+        message.trim().isEmpty ? errorUnexpected : message,
       UnexpectedFailure() => errorUnexpected,
     };
   }
@@ -25,6 +31,7 @@ extension AppLocalizationsX on AppLocalizations {
     return switch (error) {
       EmailRequired() => emailRequired,
       EmailInvalid() => emailInvalid,
+      EmailTaken() => emailTaken,
     };
   }
 
@@ -38,11 +45,8 @@ extension AppLocalizationsX on AppLocalizations {
   String forPhoneError(PhoneError error) {
     return switch (error) {
       PhoneRequired() => phoneRequired,
-      PhoneInvalid(
-        :final int requiredDigits,
-        :final String leadingDigit,
-      ) =>
-        phoneInvalid(requiredDigits, leadingDigit),
+      PhoneInvalid() => phoneInvalid,
+      PhoneTaken() => phoneTaken,
     };
   }
 
@@ -51,14 +55,9 @@ extension AppLocalizationsX on AppLocalizations {
       PasswordRequired() => passwordRequired,
       PasswordTooShort(:final int minimumLength) =>
         passwordTooShort(minimumLength),
-    };
-  }
-
-  String forInstitutionError(InstitutionError error) {
-    return switch (error) {
-      InstitutionRequired() => institutionRequired,
-      InstitutionTooShort(:final int minimumLength) =>
-        institutionTooShort(minimumLength),
+      PasswordNeedsLetterAndDigit() => passwordNeedsLetterAndDigit,
+      PasswordWeak() => passwordWeak,
+      PasswordMismatch() => passwordMismatch,
     };
   }
 
@@ -68,6 +67,7 @@ extension AppLocalizationsX on AppLocalizations {
       DocumentTooLarge(:final int maximumMegabytes) =>
         documentTooLarge(maximumMegabytes),
       DocumentWrongType() => documentWrongType,
+      DocumentUploadFailed() => documentUploadFailed,
     };
   }
 }

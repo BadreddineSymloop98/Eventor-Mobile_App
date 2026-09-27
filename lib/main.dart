@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'app/app_services.dart';
 import 'app/eventor_app.dart';
-import 'core/services/preferences_service.dart';
 
 Future<void> main() async {
-  // Required before touching platform channels — SharedPreferences is loaded
-  // below, before the first frame.
+  // Required before touching platform channels — SharedPreferences and the
+  // secure store are read below, before the first frame.
   WidgetsFlutterBinding.ensureInitialized();
 
   // The app is designed for portrait only. Locking it here means the layouts
@@ -17,7 +17,11 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  final PreferencesService preferences = await PreferencesService.load();
+  final AppServices services = await AppServices.create();
 
-  runApp(EventorApp(preferences: preferences));
+  runApp(EventorApp(services: services));
+
+  // Not awaited: the splash is on screen while this runs, and the router
+  // moves on by itself once it is done.
+  services.startup.run();
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../constants/ui_helpers.dart';
-import 'app_semantic_colors.dart';
 
 /// Central theme definition for the app.
 ///
@@ -48,9 +47,25 @@ abstract final class AppTheme {
       inputDecorationTheme: const InputDecorationTheme(
         border: OutlineInputBorder(borderRadius: AppRadii.mdAll),
       ),
-      extensions: <ThemeExtension<dynamic>>[
-        AppSemanticColors.of(brightness),
-      ],
+      // The design has no ripple anywhere: pressed states are their own
+      // colours (`bg/brand-pressed`, `bg/surface-pressed`…), drawn by each
+      // widget. Switching the splash off here stops stock Material widgets —
+      // list tiles, icon buttons — from adding a ripple the design never drew.
+      splashFactory: NoSplash.splashFactory,
+      // Sheets carry the P3 treatment: 24pt top corners on a neutral 50%
+      // scrim. Set once here so `showModalBottomSheet` gets it by default.
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: AppColors.bgSurface,
+        modalBarrierColor: AppColors.bgScrim.withValues(
+          alpha: AppColors.scrimOpacity,
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(AppRadii.xl),
+          ),
+        ),
+        showDragHandle: false,
+      ),
     );
   }
 
@@ -81,8 +96,8 @@ abstract final class AppTheme {
       onSurfaceVariant: AppColors.textSecondary,
       outline: AppColors.borderDefault,
       outlineVariant: AppColors.borderBrandSubtle,
-      error: AppColors.statusDeclined,
-      onError: AppColors.textOnBrand,
+      error: AppColors.bgDanger,
+      onError: AppColors.textOnDanger,
     );
   }
 }
@@ -90,7 +105,7 @@ abstract final class AppTheme {
 /// Which font family each locale is set in.
 ///
 /// Latin and Arabic rarely share a typeface well, so the two are chosen
-/// separately: Inter sets the Latin copy and Cairo the Arabic. The names live
+/// separately: Figtree sets the Latin copy and Cairo the Arabic. The names live
 /// in [AppFontFamilies] and the files are declared in `pubspec.yaml`.
 ///
 /// Note that this keys off the *app's* language, not off the script of any
