@@ -119,6 +119,28 @@ abstract final class AppRoutes {
   static const String providerMessages = '/provider/messages';
   static const String providerProfile = '/provider/profile';
 
+  // Section 10 · Provider · Booking module. Everything sits under
+  // `/provider/` so the role gate ([isProviderOnly]) covers it; none of these
+  // is inside the shell — they open full screen, over the tabs.
+
+  /// `P2`–`P2e` — a request or booking, by id.
+  static const String providerBooking = '/provider/booking';
+
+  /// `P6` opened on its Packs chip (`P10`) — the Services tab's second list.
+  static const String providerPacksTab = '/provider/services?view=packs';
+
+  /// `P7` — a new service.
+  static const String providerNewService = '/provider/service/new';
+
+  /// `P11` — a new pack.
+  static const String providerNewPack = '/provider/pack/new';
+
+  /// `P11a` — the services a pack is made of; carries [ChooseServicesArgs].
+  static const String providerChooseServices = '/provider/pack/services';
+
+  /// `P15` — the availability calendar.
+  static const String providerAvailability = '/provider/availability';
+
   /// `08d` — sending again the documents a reviewer refused. Full screen,
   /// over the provider's tabs.
   static const String resubmitDocuments = '/documents/resubmit';
@@ -188,6 +210,28 @@ abstract final class AppRoutes {
 
   /// `B8`.
   static String invoiceFor(String id) => '$booking/$id/invoice';
+
+  /// `P2`–`P2e`.
+  static String providerBookingFor(String id) => '$providerBooking/$id';
+
+  /// `P4` — carries the [BookingDetail] as `extra`.
+  static String providerRescheduleFor(String id) => '$providerBooking/$id/reschedule';
+
+  /// `P5` — the booking as `extra` when it is at hand; loaded by id when it
+  /// is not (the post-event notification).
+  static String providerCheckInFor(String id) => '$providerBooking/$id/check-in';
+
+  /// `P7a`.
+  static String providerEditServiceFor(String id) => '/provider/service/$id';
+
+  /// `P8`.
+  static String providerServicePhotosFor(String id) => '/provider/service/$id/photos';
+
+  /// `P12`.
+  static String providerEditPackFor(String id) => '/provider/pack/$id';
+
+  /// `P13`.
+  static String providerPackPhotosFor(String id) => '/provider/pack/$id/photos';
 
   static String _withDate(String path, DateTime? date) => Uri(
         path: path,
@@ -332,4 +376,14 @@ class RequestSentArgs {
 
   /// "2 h", from the provider's profile.
   final String? replyTime;
+}
+
+/// What `P11a` opens with: the services already chosen, in order, and the
+/// pack's wilaya — a service that does not cover it cannot be picked. `P11a`
+/// pops with the new ordered list of service ids.
+class ChooseServicesArgs {
+  const ChooseServicesArgs({required this.selected, this.wilayaCode});
+
+  final List<String> selected;
+  final int? wilayaCode;
 }

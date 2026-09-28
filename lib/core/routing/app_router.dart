@@ -69,6 +69,10 @@ import '../catalog/recent_searches.dart';
 import '../catalog/service_query.dart';
 import '../catalog/catalog_repository.dart';
 import '../../features/provider_home/view/provider_home_view.dart';
+import '../../features/provider_requests/provider_requests_routes.dart';
+import '../../features/provider_services/provider_services_routes.dart';
+import '../../features/availability/availability_routes.dart';
+import '../provider_catalog/provider_catalog_repository.dart';
 import '../../features/provider_home/view_model/provider_home_view_model.dart';
 import '../../features/resubmit_documents/view/resubmit_documents_view.dart';
 import '../../features/resubmit_documents/view_model/resubmit_documents_view_model.dart';
@@ -76,10 +80,7 @@ import '../../features/shell/view/provider_profile_tab_view.dart';
 import '../../features/shell/view/provider_shell.dart';
 import '../provider/provider_repository.dart';
 import '../../features/shell/view/client_shell.dart';
-import '../../features/shell/view/placeholder_tab_view.dart';
 import '../../features/shell/view/profile_tab_view.dart';
-import '../localization/app_localizations_x.dart';
-import '../widgets/atoms/app_icon.dart';
 import '../../features/login/view/login_view.dart';
 import '../../features/login/view_model/login_view_model.dart';
 import '../../features/onboarding/view/onboarding_view.dart';
@@ -456,8 +457,7 @@ abstract final class AppRouter {
             ),
           ],
         ),
-        // The provider's five tabs (21). Home and Messages are real; the
-        // request, service and profile modules are still to come.
+        // The provider's five tabs (21). The profile tab is still a stub.
         StatefulShellRoute.indexedStack(
           builder: (_, _, StatefulNavigationShell shell) =>
               ProviderShell(navigationShell: shell),
@@ -483,23 +483,19 @@ abstract final class AppRouter {
             ),
             StatefulShellBranch(
               routes: <RouteBase>[
+                // P1 / P1a / P1b.
                 GoRoute(
                   path: AppRoutes.providerRequests,
-                  builder: (BuildContext context, _) => PlaceholderTabView(
-                    title: context.l10n.navRequests,
-                    icon: AppIcons.calendar,
-                  ),
+                  builder: buildProviderRequestsTab,
                 ),
               ],
             ),
             StatefulShellBranch(
               routes: <RouteBase>[
+                // P6 / P10 and their empty and hidden states.
                 GoRoute(
                   path: AppRoutes.providerServices,
-                  builder: (BuildContext context, _) => PlaceholderTabView(
-                    title: context.l10n.navServices,
-                    icon: AppIcons.briefcase,
-                  ),
+                  builder: buildProviderServicesTab,
                 ),
               ],
             ),
@@ -525,6 +521,19 @@ abstract final class AppRouter {
                 ),
               ],
             ),
+          ],
+        ),
+        // Section 10: P2–P5, full screen over the provider's tabs.
+        ...providerRequestsRoutes(),
+        // P7–P13: services, packs and their photos.
+        ...providerServicesRoutes(),
+        // P15: the calendar; its "Which services" picker lists the
+        // provider's own services.
+        ...availabilityRoutes(
+          loadServices: (BuildContext context) async => <ProviderServiceRow>[
+            for (final ProviderServiceSummary service
+                in await context.read<ProviderCatalogRepository>().services())
+              service.toRow(),
           ],
         ),
         // 08d, full screen over the provider's tabs.

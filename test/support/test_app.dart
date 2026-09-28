@@ -20,6 +20,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'budget_fakes.dart';
 import 'fakes.dart';
+import 'availability_fakes.dart';
+import 'provider_catalog_fakes.dart';
 import 'provider_fakes.dart';
 
 /// The locales the suite exercises.
@@ -41,6 +43,8 @@ class TestApp {
     this.budget,
     this.bookings,
     this.provider,
+    this.providerCatalog,
+    this.availability,
   );
 
   final AppServices services;
@@ -54,6 +58,8 @@ class TestApp {
   final FakeBudgetRepository budget;
   final FakeBookingsRepository bookings;
   final FakeProviderRepository provider;
+  final FakeProviderCatalogRepository providerCatalog;
+  final FakeAvailabilityRepository availability;
 
   SessionController get session => services.session;
 
@@ -78,6 +84,8 @@ Future<TestApp> buildTestApp({
   FakeBudgetRepository? budget,
   FakeBookingsRepository? bookings,
   FakeProviderRepository? provider,
+  FakeProviderCatalogRepository? providerCatalog,
+  FakeAvailabilityRepository? availability,
   AppConfig config = const AppConfig(),
 }) async {
   SharedPreferences.setMockInitialValues(<String, Object>{
@@ -101,6 +109,10 @@ Future<TestApp> buildTestApp({
   final FakeBudgetRepository fakeBudget = budget ?? FakeBudgetRepository();
   final FakeBookingsRepository fakeBookings = bookings ?? FakeBookingsRepository();
   final FakeProviderRepository fakeProvider = provider ?? FakeProviderRepository();
+  final FakeProviderCatalogRepository fakeProviderCatalog =
+      providerCatalog ?? FakeProviderCatalogRepository();
+  final FakeAvailabilityRepository fakeAvailability =
+      availability ?? FakeAvailabilityRepository();
   final SessionController session = SessionController(fakeAuth);
   final AppStartup startup = AppStartup(config: fakeConfig, session: session);
   final TokenStore tokens = TokenStore();
@@ -122,6 +134,8 @@ Future<TestApp> buildTestApp({
     bookings: fakeBookings,
     budget: fakeBudget,
     provider: fakeProvider,
+    providerCatalog: fakeProviderCatalog,
+    availability: fakeAvailability,
     badges: ShellBadges(notifications: fakeNotifications),
     session: session,
     startup: startup,
@@ -144,6 +158,8 @@ Future<TestApp> buildTestApp({
     fakeBudget,
     fakeBookings,
     fakeProvider,
+    fakeProviderCatalog,
+    fakeAvailability,
   );
 }
 

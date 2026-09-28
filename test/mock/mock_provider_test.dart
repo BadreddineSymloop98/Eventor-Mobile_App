@@ -48,14 +48,17 @@ void main() {
   group('the verified provider (21)', () {
     setUp(() => signIn('verified.provider@eventor.test'));
 
-    test('has two requests, two bookings ahead and their services', () async {
+    test('has two requests, three bookings ahead and their services', () async {
       final ProviderHome home = await provider.home();
 
       expect(home.state, ProviderHomeState.verified);
       expect(home.documents, isNull);
       expect(home.requests.map((BookingCard b) => b.counterpartyName),
           <String>['Nadia Kaci', 'Yacine Meddour']);
-      expect(home.upcoming, hasLength(2));
+      // Lila, Sofiane — and the seeded client's Grande salle booking, from
+      // the store both sides share.
+      expect(home.upcoming.map((BookingCard b) => b.counterpartyName),
+          <String>['Amina Benali', 'Lila Hamadi', 'Sofiane Brahimi']);
       expect(home.counts.requests, 2);
       expect(home.services, isNotEmpty);
       expect(home.acceptingBookings, isTrue);
@@ -64,11 +67,12 @@ void main() {
     test('accepts a request, which moves to upcoming', () async {
       final ProviderHome before = await provider.home();
 
-      await provider.accept(before.requests.first.id);
+      final ProviderBooking accepted = await provider.accept(before.requests.first.id);
       final ProviderHome after = await provider.home();
 
+      expect(accepted.status, 'accepted');
       expect(after.requests, hasLength(1));
-      expect(after.counts.upcoming, 3);
+      expect(after.counts.upcoming, 4);
     });
 
     test('declines with a reason, and refuses an empty or long one', () async {

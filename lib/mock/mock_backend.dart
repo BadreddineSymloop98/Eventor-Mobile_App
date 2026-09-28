@@ -355,6 +355,7 @@ class MockBackend {
     _codeSentAt.clear();
     _providerBookings.clear();
     _clientBookings.clear();
+    _stores.clear();
     _seedFavourites();
     _seedBudgets();
     await _save();
@@ -413,6 +414,12 @@ class MockBackend {
           ];
         });
       }
+      final Object? stores = json['stores'];
+      if (stores is Map<String, Object?>) {
+        stores.forEach((String name, Object? value) {
+          if (value is Map<String, Object?>) _stores[name] = value;
+        });
+      }
       final Object? budgets = json['budgets'];
       if (budgets is Map<String, Object?>) {
         budgets.forEach((String email, Object? budget) {
@@ -444,6 +451,7 @@ class MockBackend {
           'budgets': _budgets,
           'providerBookings': _providerBookings,
           'clientBookings': _clientBookings,
+          'stores': _stores,
         }),
       );
 
@@ -871,6 +879,21 @@ class MockBackend {
   }
 
   Future<void> saveProvider() => _save();
+
+  // ---------------------------------------------------------------- stores
+
+  /// Named pieces of state for features the backend does not model field by
+  /// field — the shared bookings, a provider's services, packs and
+  /// availability blocks. Persisted with everything else, cleared by [reset].
+  final Map<String, Map<String, Object?>> _stores = <String, Map<String, Object?>>{};
+
+  /// The store called [name], created by [seed] the first time it is asked
+  /// for. Change it in place, then call [saveStores]. JSON types only: it
+  /// comes back from storage as decoded JSON.
+  Map<String, Object?> store(String name, Map<String, Object?> Function() seed) =>
+      _stores.putIfAbsent(name, seed);
+
+  Future<void> saveStores() => _save();
 
   MockAccount requireProvider() {
     final MockAccount account = requireSession();

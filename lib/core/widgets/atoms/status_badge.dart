@@ -144,9 +144,13 @@ class ServiceStatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _OutlinedPill(
-      color: status == ServiceStatusKind.published
-          ? AppColors.statusAccepted
-          : AppColors.statusCompleted,
+      // P6b: an admin hid it — red, like a declined booking; a draft is
+      // only unfinished, so grey.
+      color: switch (status) {
+        ServiceStatusKind.published => AppColors.statusAccepted,
+        ServiceStatusKind.draft => AppColors.statusCompleted,
+        ServiceStatusKind.hidden => AppColors.statusDeclined,
+      },
       label: switch (status) {
         ServiceStatusKind.published => context.l10n.serviceStatusPublished,
         ServiceStatusKind.draft => context.l10n.serviceStatusDraft,

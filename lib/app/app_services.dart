@@ -2,6 +2,7 @@ import 'dart:ui' show PlatformDispatcher;
 
 import 'package:go_router/go_router.dart';
 
+import '../core/availability/availability_repository.dart';
 import '../core/bookings/bookings_repository.dart';
 import '../core/budget/budget_repository.dart';
 import '../core/catalog/catalog_repository.dart';
@@ -14,6 +15,7 @@ import '../core/messaging/messaging_repository.dart';
 import '../core/network/api_client.dart';
 import '../core/notifications/notifications_repository.dart';
 import '../core/provider/provider_repository.dart';
+import '../core/provider_catalog/provider_catalog_repository.dart';
 import '../core/reference/reference_repository.dart';
 import '../core/routing/app_router.dart';
 import '../core/services/preferences_service.dart';
@@ -22,12 +24,15 @@ import '../core/session/token_store.dart';
 import '../core/startup/app_startup.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/documents_repository.dart';
+import '../mock/mock_availability.dart';
 import '../mock/mock_backend.dart';
+import '../mock/mock_calendar_booking.dart';
 import '../mock/mock_budget.dart';
 import '../features/shell/shell_badges.dart';
 import '../mock/mock_catalog.dart';
 import '../mock/mock_messaging.dart';
 import '../mock/mock_provider.dart';
+import '../mock/mock_provider_catalog.dart';
 import '../mock/mock_repositories.dart';
 
 /// Everything that lives for the whole run of the app, built once.
@@ -54,6 +59,8 @@ class AppServices {
     required this.bookings,
     required this.budget,
     required this.provider,
+    required this.providerCatalog,
+    required this.availability,
     required this.badges,
     required this.session,
     required this.startup,
@@ -132,11 +139,51 @@ class AppServices {
             api,
             itemsMax: () => config.current.budgetItemsMax,
           );
+    // Section 10. In a mock build the three provider mocks lean on each
+    // other the way the live server's tables do: a service with an accepted
+    // booking ahead can't be deleted, the calendar shows the bookings, and a
+    // date the provider blocked outright can't be proposed on P4.
+    final MockCalendarBookings? calendarBookings = mock == null
+        ? null
+        : (MockAccount p) => mockCalendarBookings(mock, p);
+    bool bookedAhead(bool Function(MockCalendarBooking b) matches) {
+      final MockBackend backend = mock!;
+      final String today = apiDate(backend.now);
+      return calendarBookings!(backend.requireProvider()).any(
+        (MockCalendarBooking b) =>
+            b.isAccepted && b.date.compareTo(today) >= 0 && matches(b),
+      );
+    }
+
+    final MockProviderCatalogRepository? catalogMock = mock == null
+        ? null
+        : MockProviderCatalogRepository(
+            mock,
+            languageCode: languageCode,
+            config: config.current,
+            hasUpcomingBookings: (String id) =>
+                bookedAhead((MockCalendarBooking b) => b.serviceId == id),
+            packHasUpcomingBookings: (String id) =>
+                bookedAhead((MockCalendarBooking b) => b.packId == id),
+          );
+    final ProviderCatalogRepository providerCatalog =
+        catalogMock ?? ApiProviderCatalogRepository(api);
+    final MockAvailabilityRepository? availabilityMock = mock == null
+        ? null
+        : MockAvailabilityRepository(
+            mock,
+            bookings: calendarBookings!,
+            serviceIdsOf: catalogMock!.serviceIdsOf,
+          );
+    final AvailabilityRepository availability =
+        availabilityMock ?? ApiAvailabilityRepository(api);
     final ProviderRepository provider = mock != null
         ? MockProviderRepository(
             mock,
             MockCatalogLookups(mock, languageCode: languageCode),
             messaging: messagingStore,
+            blockedDates: availabilityMock!.wholeDayBlocksOf,
+            serviceRows: catalogMock!.serviceRowsOf,
           )
         : ApiProviderRepository(api);
     final SessionController session = SessionController(auth);
@@ -172,6 +219,8 @@ class AppServices {
       bookings: bookings,
       budget: budget,
       provider: provider,
+      providerCatalog: providerCatalog,
+      availability: availability,
       badges: badges,
       mockBackend: mock,
       session: session,
@@ -212,6 +261,12 @@ class AppServices {
 
   /// The provider's home (21) and their answers to requests.
   final ProviderRepository provider;
+
+  /// The provider's services and packs (P6–P14).
+  final ProviderCatalogRepository providerCatalog;
+
+  /// The provider's availability calendar (P15).
+  final AvailabilityRepository availability;
 
   /// The bottom nav's counts.
   final ShellBadges badges;

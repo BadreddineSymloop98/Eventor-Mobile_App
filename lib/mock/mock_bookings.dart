@@ -18,21 +18,84 @@ String _iso(int ms) =>
 
 DateTime _day(Object? apiDay) => DateTime.parse(apiDay! as String);
 
-/// The stored booking records of the signed-in client, and how the live API
-/// renders and changes them. A record keeps ids and English/Arabic pairs
-/// only; each read renders it in the request's language, so switching
-/// language re-labels every booking.
+bool _sameDay(DateTime a, DateTime b) =>
+    a.year == b.year && a.month == b.month && a.day == b.day;
+
+/// Which side of a booking a call comes from — the client's `/app/bookings`
+/// routes or the provider's `/app/provider/bookings`. Stored as the API
+/// names it (`by`, `cancelledBy`, `proposedByRole`).
+enum _Side {
+  client,
+  provider;
+
+  _Side get other => this == client ? provider : client;
+}
+
+/// The one store both sides read and write (user decision 1, 2026-09-28): a
+/// client's request is the provider's request, a provider's answer is what
+/// the client sees. Saved by older builds in `clientBookings` /
+/// `providerBookings`; those are left alone and this store seeds afresh.
+const String _bookingStore = 'bookings';
+
+/// The dispute types the API knows — anything else is refused.
+const Set<String> _disputeTypes = <String>{
+  'provider_no_show',
+  'client_no_show',
+  'service_not_as_described',
+  'incomplete_or_late',
+  'price_disagreement',
+  'cancellation_disagreement',
+  'damage_or_safety',
+  'behaviour',
+  'other',
+};
+
+/// Salle Yasmine's catalog services — the seeded verified provider's
+/// (`verified.provider@eventor.test`, matched by business name).
+const String _grandeSalle = 'f491ca64-3892-4191-b146-e557b441374d';
+const String _salleDesFetes = '90639ce6-9ca2-472c-86d6-b514f7178564';
+const String _menuMariage = '6252a3b3-cd93-4126-ad2a-2010a598aaa8';
+const String _decorFloral = 'b15c4ecc-6ada-4da7-85b2-684aeefaa4fa';
+
+/// Every booking record, and how the live API renders and changes it for
+/// one side. A record keeps ids, English/Arabic pairs and side-neutral facts
+/// only (`clientCheckedIn`, `providerCheckedIn`, `by: client|provider`);
+/// each read renders it for the caller's side and language, so the client
+/// and the provider see the same booking from their own end.
 class _MockBookings {
-  _MockBookings(this._catalog);
+  _MockBookings(this._catalog, {this.side = _Side.client});
 
   final _MockCatalog _catalog;
 
+  /// Whose routes these are.
+  final _Side side;
+
   MockBackend get _backend => _catalog._backend;
   bool get _isArabic => _catalog._isArabic;
+  bool get _forProvider => side == _Side.provider;
 
   // --------------------------------------------------------------- store
 
-  List<Map<String, Object?>> _records() {
+  /// The stored list itself — add to it, and the store has the booking.
+  List<Object?> _list() => _backend.store(
+        _bookingStore,
+        () => <String, Object?>{'records': _seed()},
+      )['records']! as List<Object?>;
+
+  /// Every record, both sides, brought up to date first.
+  List<Map<String, Object?>> _all() {
+    final List<Map<String, Object?>> records = _rows(_list()).toList();
+    records.forEach(_settle);
+    return records;
+  }
+
+  Future<void> _save() => _backend.saveStores();
+
+  /// The caller, for this side's routes — or the API's refusal: a provider
+  /// on a client route is `FORBIDDEN_ROLE`, a client on a provider route
+  /// `NOT_A_PROVIDER`.
+  MockAccount _viewer() {
+    if (_forProvider) return _backend.requireProvider();
     final MockAccount account = _backend.requireSession();
     if (account.role != UserRole.client) {
       throw const ApiFailure(
@@ -41,25 +104,61 @@ class _MockBookings {
         message: 'Your account role cannot access this.',
       );
     }
-    final List<Map<String, Object?>> records =
-        _backend.clientBookings(_seed);
-    records.forEach(_settle);
-    return records;
+    return account;
   }
 
-  /// The client's bookings as `AppBookingDetailDto`s — cards read the same
-  /// map. Empty for anyone but a signed-in client.
+  /// The catalog provider a record was made to.
+  static String _providerIdOf(Map<String, Object?> r) =>
+      (_MockCatalog._services[r['serviceId']]?['providerId'] ??
+          _MockCatalog._packs[r['packId']]?['providerId'])! as String;
+
+  /// The catalog provider trading as [account]'s business — how a mock
+  /// provider account owns the catalog's bookings.
+  static String? _catalogIdOf(MockAccount account) {
+    for (final Map<String, Object?> p in _MockCatalog._providers.values) {
+      if (p['businessName'] == account.businessName) return p['id'] as String?;
+    }
+    return null;
+  }
+
+  bool _belongsTo(Map<String, Object?> r, MockAccount account) =>
+      account.role == UserRole.provider
+          ? _providerIdOf(r) == _catalogIdOf(account)
+          : r['clientEmail'] == account.email;
+
+  /// The caller's own records.
+  List<Map<String, Object?>> _records() {
+    final MockAccount viewer = _viewer();
+    return _all().where((Map<String, Object?> r) => _belongsTo(r, viewer)).toList();
+  }
+
+  /// [provider]'s records, without a session — for the availability mock.
+  List<Map<String, Object?>> recordsOf(MockAccount provider) =>
+      _all().where((Map<String, Object?> r) => _belongsTo(r, provider)).toList();
+
+  /// The caller's bookings as `AppBookingDetailDto`s — cards read the same
+  /// map. On the client side, empty for anyone but a signed-in client.
   List<Map<String, Object?>> rendered() {
-    final MockAccount? account = _backend.sessionAccount;
-    if (account == null || account.role != UserRole.client) {
-      return <Map<String, Object?>>[];
+    if (!_forProvider) {
+      final MockAccount? account = _backend.sessionAccount;
+      if (account == null || account.role != UserRole.client) {
+        return <Map<String, Object?>>[];
+      }
     }
     return _records().map(render).toList();
   }
 
+  /// One of the caller's records. Someone else's reads as missing to a
+  /// client, and as `NOT_OWNER` to a provider — as live.
   Map<String, Object?> _record(String id) {
-    for (final Map<String, Object?> r in _records()) {
-      if (r['id'] == id) return r;
+    final MockAccount viewer = _viewer();
+    for (final Map<String, Object?> r in _all()) {
+      if (r['id'] != id) continue;
+      if (_belongsTo(r, viewer)) return r;
+      if (_forProvider) {
+        throw _failure(403, ApiErrorCode.notOwner, 'You do not own this item.');
+      }
+      break;
     }
     throw const ApiFailure(
       statusCode: 404,
@@ -68,27 +167,51 @@ class _MockBookings {
     );
   }
 
-  /// Whether the signed-in client already holds [day] with [serviceId] —
-  /// their own request makes the provider's day busy, as live.
-  bool heldByMe(String serviceId, DateTime day) {
-    final MockAccount? account = _backend.sessionAccount;
-    if (account == null || account.role != UserRole.client) return false;
-    for (final Map<String, Object?> r in _backend.clientBookings(_seed)) {
-      final String status = r['status']! as String;
-      if (status != 'pending' && status != 'accepted') continue;
-      final Map<String, Object?>? pack = _MockCatalog._packs[r['packId']];
-      final bool books = r['serviceId'] == serviceId ||
-          (pack != null &&
-              (pack['items']! as List<Object?>).contains(serviceId));
-      final DateTime held = _day(r['eventDate']);
-      if (books &&
-          held.year == day.year &&
-          held.month == day.month &&
-          held.day == day.day) {
-        return true;
+  static bool _isLive(Map<String, Object?> r) =>
+      r['status'] == 'pending' || r['status'] == 'accepted';
+
+  /// Whether [r] books [serviceId] — itself, or inside its pack.
+  static bool _books(Map<String, Object?> r, String serviceId) {
+    if (r['serviceId'] == serviceId) return true;
+    final Map<String, Object?>? pack = _MockCatalog._packs[r['packId']];
+    return pack != null && (pack['items']! as List<Object?>).contains(serviceId);
+  }
+
+  static int _capacity(String serviceId) =>
+      (_MockCatalog._services[serviceId]?['maxEventsPerDay'] as num?)?.toInt() ?? 1;
+
+  /// Whether [serviceId] is taken on [day] for the catalog: the signed-in
+  /// client already holds it with a request of their own, or live bookings
+  /// fill the service's daily capacity.
+  bool dayFull(String serviceId, DateTime day) {
+    final MockAccount? viewer = _backend.sessionAccount;
+    int taken = 0;
+    for (final Map<String, Object?> r in _all()) {
+      if (!_isLive(r) || !_books(r, serviceId) || !_sameDay(_day(r['eventDate']), day)) {
+        continue;
       }
+      if (viewer != null && r['clientEmail'] == viewer.email) return true;
+      taken++;
     }
-    return false;
+    return taken >= _capacity(serviceId);
+  }
+
+  /// Other live bookings leave no room for [r] on [day] — what the
+  /// provider's own reschedule and accept run into.
+  bool _noRoomFor(
+    Map<String, Object?> r,
+    DateTime day, {
+    bool acceptedOnly = false,
+  }) {
+    final String? serviceId = r['serviceId'] as String?;
+    if (serviceId == null) return false;
+    int taken = 0;
+    for (final Map<String, Object?> other in _all()) {
+      if (other['id'] == r['id'] || !_books(other, serviceId)) continue;
+      if (acceptedOnly ? other['status'] != 'accepted' : !_isLive(other)) continue;
+      if (_sameDay(_day(other['eventDate']), day)) taken++;
+    }
+    return taken >= _capacity(serviceId);
   }
 
   /// What the server's jobs would have done by now: an accepted booking is
@@ -99,7 +222,7 @@ class _MockBookings {
     if (_backend.now.isBefore(closes)) return;
     r['status'] = 'completed';
     r['completedAt'] = closes.millisecondsSinceEpoch;
-    _timeline(r, 'completed', at: closes);
+    _timeline(r, 'completed', by: 'system', at: closes);
   }
 
   void _timeline(
@@ -117,19 +240,110 @@ class _MockBookings {
     });
   }
 
+  /// Who the client is: their account when they have one (the name follows
+  /// a profile edit), else what the record kept.
+  Map<String, Object?> _clientOf(Map<String, Object?> r) {
+    final MockAccount? account =
+        _backend.accountByEmail((r['clientEmail'] as String?) ?? '');
+    return <String, Object?>{
+      'id': account?.id ?? r['clientId'],
+      'fullName': account?.fullName ?? r['clientName'],
+      'phone': account?.phone ?? r['clientPhone'],
+      'email': r['clientEmail'],
+    };
+  }
+
   // --------------------------------------------------------------- seeds
 
-  /// The seeded client's bookings: one per state the booking screens draw.
-  /// Three sit on the seeded budget's lines; the rest cover B4a–B4d, B6a
-  /// and B7. Other clients start with none.
-  List<Map<String, Object?>> _seed(MockAccount account) {
-    if (account.email != 'client@eventor.test') return <Map<String, Object?>>[];
+  /// Both sides' seeded bookings, made once for the whole store: the seeded
+  /// client's (one per state B3/B4 draw) and Salle Yasmine's (one per state
+  /// P1–P5 draw). The client's booking on Salle Yasmine's Grande salle is on
+  /// both lists — with a date the provider proposed, waiting for the client.
+  List<Map<String, Object?>> _seed() => <Map<String, Object?>>[
+        ..._clientSeeds(),
+        ..._providerSeeds(),
+      ];
+
+  static String? _commune(int wilaya, String nameEn) {
+    for (final Map<String, Object?> c
+        in mockCommunes[wilaya] ?? const <Map<String, Object?>>[]) {
+      if (c['nameEn'] == nameEn) return c['id'] as String?;
+    }
+    return (mockCommunes[wilaya] ?? const <Map<String, Object?>>[])
+        .firstOrNull?['id'] as String?;
+  }
+
+  /// One record, as `create` makes it, for the seeds.
+  Map<String, Object?> _seedRecord({
+    required String id,
+    required String reference,
+    required String status,
+    required DateTime eventDate,
+    required int createdAt,
+    required String clientEmail,
+    required String clientName,
+    required String clientPhone,
+    required String clientId,
+    String? serviceId,
+    String? packId,
+    String eventType = 'wedding',
+    int guests = 150,
+    String startTime = '13:00',
+    String? endTime = '23:00',
+    int wilayaCode = 16,
+    String? communeId,
+    String? locationText,
+    String? clientNote,
+    Map<String, int> extras = const <String, int>{},
+  }) =>
+      <String, Object?>{
+        'id': id,
+        'reference': reference,
+        'status': status,
+        'serviceId': serviceId,
+        'packId': packId,
+        'eventType': eventType,
+        'eventDate': apiDate(eventDate),
+        'startTime': startTime,
+        'endTime': endTime,
+        'guests': guests,
+        'wilayaCode': wilayaCode,
+        'communeId': communeId,
+        'locationText': locationText,
+        'clientNote': clientNote,
+        'extras': <String, Object?>{...extras},
+        'createdAt': createdAt,
+        'clientId': clientId,
+        'clientEmail': clientEmail,
+        'clientName': clientName,
+        'clientPhone': clientPhone,
+        'timeline': <Object?>[
+          <String, Object?>{'type': 'created', 'by': 'client', 'at': createdAt},
+        ],
+        'reschedules': <Object?>[],
+        'clientCheckedIn': false,
+        'providerCheckedIn': false,
+      };
+
+  /// The provider's acceptance, [after] the request was made.
+  void _seedAccepted(Map<String, Object?> r, {Duration after = const Duration(hours: 2)}) {
+    final int at = (r['createdAt']! as int) + after.inMilliseconds;
+    (r['timeline']! as List<Object?>).add(
+      <String, Object?>{'type': 'accepted', 'by': 'provider', 'at': at},
+    );
+    r['acceptedAt'] = at;
+    r['invoiceNumber'] =
+        'INV-${_backend.now.year}-${(r['reference']! as String).substring(4)}';
+  }
+
+  /// The seeded client's bookings — three sit on the seeded budget's lines;
+  /// the rest cover B4a–B4d, B6a and B7.
+  List<Map<String, Object?>> _clientSeeds() {
     final DateTime now = _backend.now;
     final DateTime today = DateTime(now.year, now.month, now.day);
     DateTime inDays(int days) => DateTime(today.year, today.month, today.day + days);
     int ago(Duration d) => now.subtract(d).millisecondsSinceEpoch;
-    final String? commune = (mockCommunes[16] ?? const <Map<String, Object?>>[])
-        .firstOrNull?['id'] as String?;
+    final String? commune = _commune(16, 'Alger Centre');
 
     Map<String, Object?> record({
       required String id,
@@ -143,44 +357,27 @@ class _MockBookings {
       String? endTime = '23:00',
       Map<String, int> extras = const <String, int>{},
       Duration createdAgo = const Duration(days: 30),
-    }) {
-      final Map<String, Object?> s = mockCatalogServices[service];
-      return <String, Object?>{
-        'id': id,
-        'reference': reference,
-        'status': status,
-        'serviceId': packId == null ? s['id'] : null,
-        'packId': packId,
-        'eventType': 'wedding',
-        'eventDate': apiDate(inDays(inDaysFromToday)),
-        'startTime': startTime,
-        'endTime': endTime,
-        'guests': guests,
-        'wilayaCode': 16,
-        'communeId': commune,
-        'locationText': 'Salle Yasmine, Route de Chéraga',
-        'clientNote': 'The ceremony starts at 15:00.',
-        'extras': extras,
-        'createdAt': ago(createdAgo),
-        'timeline': <Object?>[
-          <String, Object?>{'type': 'created', 'by': 'client', 'at': ago(createdAgo)},
-        ],
-        'reschedules': <Object?>[],
-        'checkedIn': false,
-        'otherCheckedIn': false,
-      };
-    }
-
-    void accepted(Map<String, Object?> r, {Duration after = const Duration(hours: 2)}) {
-      final int created = r['createdAt']! as int;
-      final int at = created + after.inMilliseconds;
-      (r['timeline']! as List<Object?>).add(
-        <String, Object?>{'type': 'accepted', 'by': 'provider', 'at': at},
-      );
-      r['acceptedAt'] = at;
-      r['invoiceNumber'] =
-          'INV-${now.year}-${(r['reference']! as String).substring(4)}';
-    }
+    }) =>
+        _seedRecord(
+          id: id,
+          reference: reference,
+          status: status,
+          serviceId: packId == null ? mockCatalogServices[service]['id']! as String : null,
+          packId: packId,
+          eventDate: inDays(inDaysFromToday),
+          createdAt: ago(createdAgo),
+          clientId: 'mock-client',
+          clientEmail: 'client@eventor.test',
+          clientName: 'Amina Benali',
+          clientPhone: '+213555000001',
+          guests: guests,
+          startTime: startTime,
+          endTime: endTime,
+          communeId: commune,
+          locationText: 'Salle Yasmine, Route de Chéraga',
+          clientNote: 'The ceremony starts at 15:00.',
+          extras: extras,
+        );
 
     final Map<String, Object?> lumiere = record(
       id: 'mock-booking-1',
@@ -190,7 +387,7 @@ class _MockBookings {
       status: 'accepted',
       extras: <String, int>{'${mockCatalogServices[0]['id']}-x1': 1},
     );
-    accepted(lumiere);
+    _seedAccepted(lumiere);
 
     final Map<String, Object?> pending = record(
       id: 'mock-booking-2',
@@ -202,6 +399,7 @@ class _MockBookings {
       createdAgo: const Duration(hours: 3),
     );
 
+    // Salle Yasmine's Grande salle: the provider proposed a new date.
     final Map<String, Object?> proposal = record(
       id: 'mock-booking-3',
       reference: 'EVT-002031',
@@ -209,7 +407,7 @@ class _MockBookings {
       inDaysFromToday: mockEventInDays,
       status: 'accepted',
     );
-    accepted(proposal);
+    _seedAccepted(proposal);
     (proposal['reschedules']! as List<Object?>).add(<String, Object?>{
       'id': 'mock-reschedule-1',
       'status': 'pending',
@@ -232,7 +430,7 @@ class _MockBookings {
       startTime: '09:00',
       endTime: '13:00',
     );
-    accepted(decoration);
+    _seedAccepted(decoration);
 
     final Map<String, Object?> completed = record(
       id: 'mock-booking-5',
@@ -242,16 +440,13 @@ class _MockBookings {
       status: 'completed',
       createdAgo: const Duration(days: 60),
     );
-    accepted(completed);
+    _seedAccepted(completed);
     final DateTime completedAt = inDays(-11);
-    completed['completedAt'] = completedAt.millisecondsSinceEpoch;
-    completed['checkedIn'] = true;
-    completed['otherCheckedIn'] = true;
-    (completed['timeline']! as List<Object?>).add(<String, Object?>{
-      'type': 'completed',
-      'by': 'client',
-      'at': completedAt.millisecondsSinceEpoch,
-    });
+    completed
+      ..['completedAt'] = completedAt.millisecondsSinceEpoch
+      ..['clientCheckedIn'] = true
+      ..['providerCheckedIn'] = true;
+    _timeline(completed, 'completed', by: 'client', at: completedAt);
 
     final Map<String, Object?> cancelled = record(
       id: 'mock-booking-6',
@@ -260,9 +455,10 @@ class _MockBookings {
       inDaysFromToday: mockEventInDays,
       status: 'cancelled',
     );
-    accepted(cancelled);
-    cancelled['cancelReason'] = 'The venue changed, we moved the date.';
-    cancelled['cancelledBy'] = 'client';
+    _seedAccepted(cancelled);
+    cancelled
+      ..['cancelReason'] = 'The venue changed, we moved the date.'
+      ..['cancelledBy'] = 'client';
     (cancelled['timeline']! as List<Object?>).add(<String, Object?>{
       'type': 'cancelled',
       'by': 'client',
@@ -293,9 +489,9 @@ class _MockBookings {
       inDaysFromToday: -1,
       status: 'accepted',
     );
-    accepted(checkIn);
+    _seedAccepted(checkIn);
     // The provider has already said "All good": the client's tap closes it.
-    checkIn['otherCheckedIn'] = true;
+    checkIn['providerCheckedIn'] = true;
 
     final Map<String, Object?> pack = record(
       id: 'mock-booking-9',
@@ -305,7 +501,7 @@ class _MockBookings {
       status: 'accepted',
       packId: mockCatalogPacks[1]['id']! as String,
     );
-    accepted(pack);
+    _seedAccepted(pack);
 
     return <Map<String, Object?>>[
       lumiere,
@@ -318,6 +514,219 @@ class _MockBookings {
       checkIn,
       pack,
     ];
+  }
+
+  /// Salle Yasmine's requests and bookings from clients without an account
+  /// here: two requests to answer (P1), two bookings ahead — one with a date
+  /// the client proposed (P4a) — one event just behind (P2b → P5), one
+  /// completed (P2e), one declined (P2c) and one the client cancelled (P2d).
+  List<Map<String, Object?>> _providerSeeds() {
+    final DateTime now = _backend.now;
+    final DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime inDays(int days) => DateTime(today.year, today.month, today.day + days);
+    int ago(Duration d) => now.subtract(d).millisecondsSinceEpoch;
+
+    Map<String, Object?> record({
+      required int n,
+      required String reference,
+      required String client,
+      required String phone,
+      required String serviceId,
+      required int inDaysFromToday,
+      required String status,
+      required Duration createdAgo,
+      String eventType = 'wedding',
+      int guests = 150,
+      String startTime = '13:00',
+      String? endTime = '23:00',
+      int wilayaCode = 16,
+      String commune = 'Hydra',
+      String? locationText,
+      String? note,
+      Map<String, int> extras = const <String, int>{},
+    }) =>
+        _seedRecord(
+          id: 'mock-request-$n',
+          reference: reference,
+          status: status,
+          serviceId: serviceId,
+          eventType: eventType,
+          eventDate: inDays(inDaysFromToday),
+          createdAt: ago(createdAgo),
+          clientId: 'mock-guest-$n',
+          clientEmail: '${client.toLowerCase().replaceAll(' ', '.')}@example.dz',
+          clientName: client,
+          clientPhone: phone,
+          guests: guests,
+          startTime: startTime,
+          endTime: endTime,
+          wilayaCode: wilayaCode,
+          communeId: _commune(wilayaCode, commune),
+          locationText: locationText,
+          clientNote: note,
+          extras: extras,
+        );
+
+    final Map<String, Object?> nadia = record(
+      n: 1,
+      reference: 'EVT-2026-0142',
+      client: 'Nadia Kaci',
+      phone: '+213770551288',
+      serviceId: _salleDesFetes,
+      inDaysFromToday: 18,
+      status: 'pending',
+      createdAgo: const Duration(hours: 1),
+      commune: 'Dely Ibrahim',
+      locationText: 'Route de Chéraga, Dely Ibrahim',
+      note: 'We would like the hall ready by noon for the decoration team, '
+          'and the lights dimmed for the first dance.',
+      extras: <String, int>{'$_salleDesFetes-x0': 2},
+    );
+
+    final Map<String, Object?> yacine = record(
+      n: 2,
+      reference: 'EVT-2026-0151',
+      client: 'Yacine Meddour',
+      phone: '+213661204417',
+      serviceId: _grandeSalle,
+      inDaysFromToday: 24,
+      status: 'pending',
+      createdAgo: const Duration(hours: 36),
+      eventType: 'engagement',
+      guests: 60,
+      startTime: '16:00',
+      endTime: '20:00',
+      wilayaCode: 9,
+      commune: 'Blida',
+    );
+
+    final Map<String, Object?> lila = record(
+      n: 3,
+      reference: 'EVT-2026-0133',
+      client: 'Lila Hamadi',
+      phone: '+213550918273',
+      serviceId: _decorFloral,
+      inDaysFromToday: 25,
+      status: 'accepted',
+      createdAgo: const Duration(days: 6),
+      eventType: 'engagement',
+      guests: 80,
+      startTime: '15:00',
+      endTime: '21:00',
+      extras: <String, int>{'$_decorFloral-x0': 1},
+    );
+    _seedAccepted(lila);
+
+    // P4a: the client asks to move it; the provider answers.
+    final Map<String, Object?> sofiane = record(
+      n: 4,
+      reference: 'EVT-2026-0128',
+      client: 'Sofiane Brahimi',
+      phone: '+213770334521',
+      serviceId: _salleDesFetes,
+      inDaysFromToday: 33,
+      status: 'accepted',
+      createdAgo: const Duration(days: 9),
+      guests: 320,
+      commune: 'Kouba',
+    );
+    _seedAccepted(sofiane, after: const Duration(hours: 5));
+    (sofiane['reschedules']! as List<Object?>).add(<String, Object?>{
+      'id': 'mock-reschedule-2',
+      'status': 'pending',
+      'oldDate': sofiane['eventDate'],
+      'newDate': apiDate(inDays(40)),
+      'newStartTime': '13:00',
+      'newEndTime': '23:00',
+      'reason': 'Our families asked to move to the Saturday after. Everything else stays the same.',
+      'by': 'client',
+      'createdAt': ago(const Duration(hours: 20)),
+    });
+
+    // P2b: the event was yesterday — "Confirm the event".
+    final Map<String, Object?> karima = record(
+      n: 5,
+      reference: 'EVT-2026-0117',
+      client: 'Karima Ait Ali',
+      phone: '+213698112043',
+      serviceId: _menuMariage,
+      inDaysFromToday: -1,
+      status: 'accepted',
+      createdAgo: const Duration(days: 20),
+      guests: 200,
+      commune: 'Chéraga',
+    );
+    _seedAccepted(karima);
+
+    final Map<String, Object?> samir = record(
+      n: 6,
+      reference: 'EVT-2026-0098',
+      client: 'Samir Bouzid',
+      phone: '+213551667390',
+      serviceId: _grandeSalle,
+      inDaysFromToday: -12,
+      status: 'completed',
+      createdAgo: const Duration(days: 45),
+      eventType: 'birthday',
+      guests: 90,
+      startTime: '18:00',
+      endTime: '23:30',
+      wilayaCode: 9,
+      commune: 'Boufarik',
+    );
+    _seedAccepted(samir);
+    final DateTime closed = inDays(-11);
+    samir
+      ..['completedAt'] = closed.millisecondsSinceEpoch
+      ..['clientCheckedIn'] = true
+      ..['providerCheckedIn'] = true;
+    _timeline(samir, 'checked_in', by: 'provider', at: inDays(-12).add(const Duration(hours: 23)));
+    _timeline(samir, 'checked_in', by: 'client', at: closed);
+    _timeline(samir, 'completed', by: 'client', at: closed);
+
+    final Map<String, Object?> meriem = record(
+      n: 7,
+      reference: 'EVT-2026-0155',
+      client: 'Meriem Saadi',
+      phone: '+213770889014',
+      serviceId: _salleDesFetes,
+      inDaysFromToday: 30,
+      status: 'declined',
+      createdAgo: const Duration(days: 3),
+      guests: 250,
+    );
+    meriem['declineReason'] = 'Already booked for another wedding that day.';
+    (meriem['timeline']! as List<Object?>).add(<String, Object?>{
+      'type': 'declined',
+      'by': 'provider',
+      'reason': meriem['declineReason'],
+      'at': (meriem['createdAt']! as int) + const Duration(hours: 4).inMilliseconds,
+    });
+
+    final Map<String, Object?> rachid = record(
+      n: 8,
+      reference: 'EVT-2026-0120',
+      client: 'Rachid Mansouri',
+      phone: '+213662450981',
+      serviceId: _grandeSalle,
+      inDaysFromToday: 20,
+      status: 'cancelled',
+      createdAgo: const Duration(days: 15),
+      wilayaCode: 9,
+      commune: 'Blida',
+    );
+    _seedAccepted(rachid);
+    rachid
+      ..['cancelReason'] = 'Our families moved the wedding to the summer.'
+      ..['cancelledBy'] = 'client';
+    (rachid['timeline']! as List<Object?>).add(<String, Object?>{
+      'type': 'cancelled',
+      'by': 'client',
+      'reason': rachid['cancelReason'],
+      'at': ago(const Duration(days: 2)),
+    });
+
+    return <Map<String, Object?>>[nadia, yacine, lila, sofiane, karima, samir, meriem, rachid];
   }
 
   // -------------------------------------------------------------- pricing
@@ -431,42 +840,50 @@ class _MockBookings {
     return '$sign${abs ~/ 100}.${(abs % 100).toString().padLeft(2, '0')}';
   }
 
+  Map<String, Object?> _priceOf(Map<String, Object?> r) => _price(
+        serviceId: r['serviceId'] as String?,
+        packId: r['packId'] as String?,
+        startTime: r['startTime'] as String?,
+        endTime: r['endTime'] as String?,
+        guests: (r['guests'] as num?)?.toInt(),
+        extras: <String, int>{
+          for (final MapEntry<String, Object?> e
+              in (r['extras'] as Map<String, Object?>? ?? const <String, Object?>{})
+                  .entries)
+            e.key: (e.value! as num).toInt(),
+        },
+      );
+
   // ------------------------------------------------------------ rendering
 
+  /// [r] as `AppBookingDetailDto`, from this side: the counterparty is the
+  /// other one, the actions are this side's, "checked in" and "awaiting me"
+  /// are this side's, and the client's phone and email stay hidden from the
+  /// provider until they accept.
   Map<String, Object?> render(Map<String, Object?> r) {
     final String? serviceId = r['serviceId'] as String?;
     final String? packId = r['packId'] as String?;
     final Map<String, Object?>? service = _MockCatalog._services[serviceId];
     final Map<String, Object?>? pack = _MockCatalog._packs[packId];
-    final String providerId =
-        (service?['providerId'] ?? pack?['providerId'])! as String;
+    final String providerId = _providerIdOf(r);
     final Map<String, Object?> provider = _MockCatalog._providers[providerId]!;
     final String business = provider['businessName']! as String;
+    final Map<String, Object?> client = _clientOf(r);
     final String status = r['status']! as String;
-    final bool contactOpen = status == 'accepted' || status == 'completed';
-    final String titleEn =
-        (service?['titleEn'] ?? pack?['nameEn'])! as String;
-    final String titleAr =
-        (service?['titleAr'] ?? pack?['nameAr'])! as String;
-    final List<String> photos =
-        _MockCatalog._files(service ?? pack!);
-    final Map<String, Object?> price = _price(
-      serviceId: serviceId,
-      packId: packId,
-      startTime: r['startTime'] as String?,
-      endTime: r['endTime'] as String?,
-      guests: r['guests'] as int?,
-      extras: <String, int>{
-        for (final MapEntry<String, Object?> e
-            in (r['extras'] as Map<String, Object?>? ?? const <String, Object?>{})
-                .entries)
-          e.key: (e.value! as num).toInt(),
-      },
-    );
+    // The provider keeps the client's details in their history once
+    // accepted (P2d); a client loses the provider's number on cancelling.
+    final bool contactOpen = status == 'accepted' ||
+        status == 'completed' ||
+        (_forProvider && status == 'cancelled' && r['acceptedAt'] != null);
+    final String titleEn = (service?['titleEn'] ?? pack?['nameEn'])! as String;
+    final String titleAr = (service?['titleAr'] ?? pack?['nameAr'])! as String;
+    final List<String> photos = _MockCatalog._files(service ?? pack!);
+    final Map<String, Object?> price = _priceOf(r);
     final Map<String, Object?>? dispute = r['dispute'] as Map<String, Object?>?;
     final int? completedAt = r['completedAt'] as int?;
     final DateTime now = _backend.now;
-    final bool reviewWindowOpen = status == 'completed' &&
+    final bool reviewWindowOpen = !_forProvider &&
+        status == 'completed' &&
         completedAt != null &&
         r['reviewId'] == null &&
         (dispute == null || dispute['status'] == 'resolved') &&
@@ -479,7 +896,7 @@ class _MockBookings {
               .add(const Duration(days: 60)),
         );
     final String? invoiceNumber = r['invoiceNumber'] as String?;
-    final MockAccount account = _backend.requireSession();
+    final String me = side.name;
 
     String? communeName() {
       for (final Map<String, Object?> c
@@ -493,7 +910,8 @@ class _MockBookings {
 
     String? actor(Object? by) => switch (by) {
           'provider' => business,
-          'client' => account.fullName,
+          'client' => client['fullName'] as String?,
+          'admin' => 'Eventor',
           _ => null,
         };
 
@@ -520,16 +938,27 @@ class _MockBookings {
       'wilaya': _MockCatalog._wilayaRef((r['wilayaCode']! as num).toInt()),
       'guests': r['guests'],
       'total': price['total'],
-      'counterparty': <String, Object?>{
-        'id': providerId,
-        'fullName': business,
-        'avatarUrl': null,
-        'businessName': business,
-        'phone': contactOpen ? _phoneOf(providerId) : null,
-        'email': null,
-      },
+      'counterparty': _forProvider
+          ? <String, Object?>{
+              'id': client['id'],
+              'fullName': client['fullName'],
+              'avatarUrl': null,
+              'businessName': null,
+              'phone': contactOpen ? client['phone'] : null,
+              'email': contactOpen ? client['email'] : null,
+            }
+          : <String, Object?>{
+              'id': providerId,
+              'fullName': business,
+              'avatarUrl': null,
+              'businessName': business,
+              'phone': contactOpen ? _phoneOf(providerId) : null,
+              'email': null,
+            },
       'conversationId': null,
-      'allowedActions': _actions(r, reviewWindowOpen: reviewWindowOpen),
+      'allowedActions': _forProvider
+          ? _providerActions(r)
+          : _clientActions(r, reviewWindowOpen: reviewWindowOpen),
       'createdAt': _iso(r['createdAt']! as int),
       'locationText': r['locationText'],
       'communeName': communeName(),
@@ -572,7 +1001,7 @@ class _MockBookings {
             'newEndTime': x['newEndTime'],
             'reason': x['reason'],
             'proposedByRole': x['by'],
-            'awaitingMe': x['status'] == 'pending' && x['by'] == 'provider',
+            'awaitingMe': x['status'] == 'pending' && x['by'] != me,
             'createdAt': _iso(x['createdAt']! as int),
           },
       ],
@@ -584,7 +1013,9 @@ class _MockBookings {
               'version': 1,
               'total': price['total'],
               'voided': status == 'cancelled',
-              'pdfPath': '/api/v1/app/bookings/${r['id']}/invoice.pdf',
+              'pdfPath': _forProvider
+                  ? '/api/v1/app/provider/bookings/${r['id']}/invoice.pdf'
+                  : '/api/v1/app/bookings/${r['id']}/invoice.pdf',
               'issuedAt': _iso((r['acceptedAt'] ?? r['createdAt'])! as int),
             },
       'dispute': dispute == null
@@ -594,12 +1025,12 @@ class _MockBookings {
               'reference': dispute['reference'],
               'status': dispute['status'],
               'type': dispute['type'],
-              'openedByMe': true,
+              'openedByMe': (dispute['by'] ?? 'client') == me,
               'createdAt': _iso(dispute['createdAt']! as int),
             },
-      'checkedIn': r['checkedIn'] ?? false,
-      'otherCheckedIn': r['otherCheckedIn'] ?? false,
-      'reviewId': r['reviewId'],
+      'checkedIn': r[_forProvider ? 'providerCheckedIn' : 'clientCheckedIn'] ?? false,
+      'otherCheckedIn': r[_forProvider ? 'clientCheckedIn' : 'providerCheckedIn'] ?? false,
+      'reviewId': _forProvider ? null : r['reviewId'],
       'reviewWindowOpen': reviewWindowOpen,
       'disputeWindowOpen': _disputeWindowOpen(r),
     };
@@ -622,35 +1053,63 @@ class _MockBookings {
         now.isBefore(event.add(const Duration(days: 4)));
   }
 
+  bool _eventPassed(Map<String, Object?> r) {
+    final DateTime now = _backend.now;
+    return _day(r['eventDate']).isBefore(DateTime(now.year, now.month, now.day));
+  }
+
+  static bool _proposalOpen(Map<String, Object?> r) =>
+      _rows(r['reschedules']).any((Map<String, Object?> x) => x['status'] == 'pending');
+
+  /// A pending proposal the other side made — this side's turn to answer.
+  bool _awaitingMe(Map<String, Object?> r) => _rows(r['reschedules']).any(
+        (Map<String, Object?> x) => x['status'] == 'pending' && x['by'] != side.name,
+      );
+
   /// `allowedActions` for the client, as the status rules give them.
-  List<String> _actions(
+  List<String> _clientActions(
     Map<String, Object?> r, {
     required bool reviewWindowOpen,
   }) {
     final String status = r['status']! as String;
-    final DateTime now = _backend.now;
-    final DateTime today = DateTime(now.year, now.month, now.day);
-    final bool passed = _day(r['eventDate']).isBefore(today);
-    final bool proposalOpen = (r['reschedules']! as List<Object?>).any(
-      (Object? x) => (x! as Map<String, Object?>)['status'] == 'pending',
-    );
-    final bool awaitingMe = _rows(r['reschedules']).any(
-      (Map<String, Object?> x) =>
-          x['status'] == 'pending' && x['by'] == 'provider',
-    );
+    final bool passed = _eventPassed(r);
     return <String>[
       'message',
       if (status == 'pending') ...<String>['cancel', 'reschedule'],
       if (status == 'accepted' && !passed) ...<String>[
         'cancel',
-        if (!proposalOpen) 'reschedule',
-        if (awaitingMe) 'respond_reschedule',
+        if (!_proposalOpen(r)) 'reschedule',
+        if (_awaitingMe(r)) 'respond_reschedule',
       ],
-      if (status == 'accepted' && passed && r['checkedIn'] != true && r['dispute'] == null)
+      if (status == 'accepted' && passed && r['clientCheckedIn'] != true && r['dispute'] == null)
         'check_in',
       if ((status == 'accepted' || status == 'completed') && r['invoiceNumber'] != null)
         'invoice',
       if (reviewWindowOpen) 'review',
+      if (_disputeWindowOpen(r)) 'dispute',
+    ];
+  }
+
+  /// `allowedActions` for the provider: answer a request (or move it), then
+  /// cancel, move or answer a move until the event, confirm it after.
+  List<String> _providerActions(Map<String, Object?> r) {
+    final String status = r['status']! as String;
+    final bool passed = _eventPassed(r);
+    return <String>[
+      'message',
+      if (status == 'pending') ...<String>['accept', 'decline', if (!_proposalOpen(r)) 'reschedule'],
+      if (status == 'accepted' && !passed) ...<String>[
+        'cancel',
+        if (!_proposalOpen(r)) 'reschedule',
+        if (_awaitingMe(r)) 'respond_reschedule',
+      ],
+      if (status == 'accepted' &&
+          passed &&
+          r['providerCheckedIn'] != true &&
+          r['dispute'] == null)
+        'check_in',
+      if ((status == 'accepted' || status == 'completed') && r['invoiceNumber'] != null)
+        'invoice',
       if (_disputeWindowOpen(r)) 'dispute',
     ];
   }
@@ -728,8 +1187,10 @@ class _MockBookings {
     };
   }
 
+  /// B1 / B9a "Send": the request lands in the shared store, so the
+  /// provider's P1 has it at once.
   Future<Map<String, Object?>> create(BookingRequest request) async {
-    final List<Map<String, Object?>> records = _records();
+    final MockAccount client = _viewer();
     _checkExtras(request);
     final String? communeId = request.communeId;
     if (communeId != null) {
@@ -772,49 +1233,116 @@ class _MockBookings {
       'clientNote': request.clientNote?.trim().isEmpty ?? true
           ? null
           : request.clientNote!.trim(),
-      'extras': <String, int>{
+      'extras': <String, Object?>{
         for (final MapEntry<String, int> e in request.extras.entries)
           if (e.value > 0) e.key: e.value,
       },
       'createdAt': ms,
+      'clientId': client.id,
+      'clientEmail': client.email,
+      'clientName': client.fullName,
+      'clientPhone': client.phone,
       'timeline': <Object?>[
         <String, Object?>{'type': 'created', 'by': 'client', 'at': ms},
       ],
       'reschedules': <Object?>[],
-      'checkedIn': false,
-      'otherCheckedIn': false,
+      'clientCheckedIn': false,
+      'providerCheckedIn': false,
     };
-    records.add(record);
-    await _backend.saveClientBookings();
+    _list().add(record);
+    await _save();
     return render(record);
   }
 
+  /// The provider's Accept: only a verified provider, only a pending
+  /// request, and only while the day still has room.
+  Future<Map<String, Object?>> accept(String id) async {
+    final MockAccount provider = _viewer();
+    if (provider.verificationStatus != VerificationStatus.verified) {
+      throw _failure(
+        422,
+        ApiErrorCode.providerNotVerified,
+        'Your profile is still being reviewed. You can publish and accept bookings once it is approved.',
+      );
+    }
+    final Map<String, Object?> r = _record(id);
+    _mustBePending(r, to: 'accepted');
+    final DateTime day = _day(r['eventDate']);
+    if (_noRoomFor(r, day, acceptedOnly: true)) {
+      throw _failure(409, ApiErrorCode.dateUnavailable,
+          'The provider is not available on ${r['eventDate']}.');
+    }
+    final int ms = _backend.now.millisecondsSinceEpoch;
+    r
+      ..['status'] = 'accepted'
+      ..['acceptedAt'] = ms
+      ..['invoiceNumber'] =
+          'INV-${_backend.now.year}-${(r['reference']! as String).substring(4)}';
+    _timeline(r, 'accepted', by: 'provider');
+    await _save();
+    return render(r);
+  }
+
+  /// The provider's Decline (P3): a reason of 1–60 characters the client
+  /// reads.
+  Future<Map<String, Object?>> decline(String id, String reason) async {
+    _viewer();
+    _checkText(reason, max: 60);
+    final Map<String, Object?> r = _record(id);
+    _mustBePending(r, to: 'declined');
+    r
+      ..['status'] = 'declined'
+      ..['declineReason'] = reason.trim();
+    _closeProposals(r);
+    _timeline(r, 'declined', by: 'provider', reason: reason.trim());
+    await _save();
+    return render(r);
+  }
+
+  void _mustBePending(Map<String, Object?> r, {required String to}) {
+    if (r['status'] != 'pending') {
+      throw _failure(409, ApiErrorCode.bookingInvalidTransition,
+          'A booking cannot move from "${r['status']}" to "$to".');
+    }
+  }
+
+  static void _closeProposals(Map<String, Object?> r) {
+    for (final Map<String, Object?> row in _rows(r['reschedules'])) {
+      if (row['status'] == 'pending') row['status'] = 'cancelled';
+    }
+  }
+
+  /// B5 for the client (a request or a booking), P2a's "Cancel booking" for
+  /// the provider (an accepted booking only — a request is declined).
   Future<Map<String, Object?>> cancel(String id, String reason) async {
     final Map<String, Object?> r = _record(id);
     final String status = r['status']! as String;
-    if (status != 'pending' && status != 'accepted') {
+    final bool allowed =
+        status == 'accepted' || (!_forProvider && status == 'pending');
+    if (!allowed) {
       throw _failure(409, ApiErrorCode.bookingInvalidTransition,
           'A booking cannot move from "$status" to "cancelled".');
     }
     _checkText(reason, max: 60);
-    r['status'] = 'cancelled';
-    r['cancelReason'] = reason.trim();
-    r['cancelledBy'] = 'client';
-    for (final Object? x in r['reschedules']! as List<Object?>) {
-      final Map<String, Object?> row = x! as Map<String, Object?>;
-      if (row['status'] == 'pending') row['status'] = 'cancelled';
-    }
-    _timeline(r, 'cancelled', by: 'client', reason: reason.trim());
-    await _backend.saveClientBookings();
+    r
+      ..['status'] = 'cancelled'
+      ..['cancelReason'] = reason.trim()
+      ..['cancelledBy'] = side.name;
+    _closeProposals(r);
+    _timeline(r, 'cancelled', by: side.name, reason: reason.trim());
+    await _save();
     return render(r);
   }
 
+  /// B6 / P4. A pending request moves at once; an accepted booking gets a
+  /// proposal the other side answers — one open at a time.
   Future<Map<String, Object?>> reschedule(
     String id, {
     required DateTime date,
     required String reason,
     String? startTime,
     String? endTime,
+    Set<String> blockedDates = const <String>{},
   }) async {
     final Map<String, Object?> r = _record(id);
     final String status = r['status']! as String;
@@ -827,16 +1355,23 @@ class _MockBookings {
     if (date.isBefore(DateTime(now.year, now.month, now.day))) {
       throw _failure(422, ApiErrorCode.bookingDatePast, 'The date is in the past.');
     }
-    final List<Object?> proposals = r['reschedules']! as List<Object?>;
-    if (proposals.any((Object? x) => (x! as Map<String, Object?>)['status'] == 'pending')) {
+    if (_proposalOpen(r)) {
       throw _failure(409, ApiErrorCode.reschedulePendingExists,
           'A new date is already waiting for confirmation. Cancel it first.');
     }
-    final String? serviceId = r['serviceId'] as String?;
-    final DayState state = serviceId != null
-        ? _catalog._dayState(serviceId, date)
-        : _catalog._packDayState(_MockCatalog._packs[r['packId']]!, date);
-    if (state != DayState.available) {
+    final bool unavailable;
+    if (_forProvider) {
+      // The provider's own calendar: their other bookings and whole-day
+      // blocks, not the catalog's view of it.
+      unavailable = _noRoomFor(r, date) || blockedDates.contains(apiDate(date));
+    } else {
+      final String? serviceId = r['serviceId'] as String?;
+      final DayState state = serviceId != null
+          ? _catalog._dayState(serviceId, date)
+          : _catalog._packDayState(_MockCatalog._packs[r['packId']]!, date);
+      unavailable = state != DayState.available;
+    }
+    if (unavailable) {
       throw _failure(409, ApiErrorCode.dateUnavailable,
           'The provider is not available on ${apiDate(date)}.');
     }
@@ -845,24 +1380,25 @@ class _MockBookings {
       r['eventDate'] = apiDate(date);
       r['startTime'] = startTime ?? r['startTime'];
       r['endTime'] = startTime == null ? r['endTime'] : endTime;
-      _timeline(r, 'rescheduled', by: 'client', reason: reason.trim());
+      _timeline(r, 'rescheduled', by: side.name, reason: reason.trim());
     } else {
-      proposals.add(<String, Object?>{
+      (r['reschedules']! as List<Object?>).add(<String, Object?>{
         'id': 'mock-reschedule-${now.millisecondsSinceEpoch}',
         'status': 'pending',
         'oldDate': r['eventDate'],
         'newDate': apiDate(date),
         'newStartTime': startTime,
-        'newEndTime': endTime,
+        'newEndTime': startTime == null ? null : endTime,
         'reason': reason.trim(),
-        'by': 'client',
+        'by': side.name,
         'createdAt': now.millisecondsSinceEpoch,
       });
     }
-    await _backend.saveClientBookings();
+    await _save();
     return render(r);
   }
 
+  /// Accept or reject the other side's proposal, or withdraw one's own.
   Future<Map<String, Object?>> answerReschedule(
     String id,
     String rescheduleId, {
@@ -881,9 +1417,18 @@ class _MockBookings {
       throw _failure(409, ApiErrorCode.rescheduleNotPending,
           'This reschedule proposal is already ${row['status']}.');
     }
-    final bool mine = row['by'] == 'client';
+    final bool mine = row['by'] == side.name;
     if (mine == (answer != 'withdraw')) {
       throw _failure(403, ApiErrorCode.notOwner, 'You do not own this item.');
+    }
+    final String status = r['status']! as String;
+    if (answer != 'withdraw' && status != 'pending' && status != 'accepted') {
+      throw _failure(409, ApiErrorCode.bookingNotEditable,
+          'This action is not possible while the booking is $status.');
+    }
+    if (answer == 'accept' && _forProvider && _noRoomFor(r, _day(row['newDate']))) {
+      throw _failure(409, ApiErrorCode.dateUnavailable,
+          'The provider is not available on ${row['newDate']}.');
     }
     switch (answer) {
       case 'accept':
@@ -893,53 +1438,60 @@ class _MockBookings {
           r['startTime'] = row['newStartTime'];
           r['endTime'] = row['newEndTime'];
         }
-        _timeline(r, 'rescheduled', by: 'client');
+        _timeline(r, 'rescheduled', by: side.name);
       case 'reject':
         row['status'] = 'rejected';
       case 'withdraw':
         row['status'] = 'cancelled';
     }
-    await _backend.saveClientBookings();
+    await _save();
     return render(r);
   }
 
+  /// "All good" from this side (B7 / P5): the booking completes once both
+  /// sides said so.
   Future<Map<String, Object?>> checkIn(String id) async {
     final Map<String, Object?> r = _record(id);
+    final String mine = _forProvider ? 'providerCheckedIn' : 'clientCheckedIn';
+    final String theirs = _forProvider ? 'clientCheckedIn' : 'providerCheckedIn';
     if (r['dispute'] != null) {
       throw _failure(409, ApiErrorCode.checkInDisputed,
           'A problem is already open on this booking.');
     }
-    if (r['status'] != 'accepted' || r['checkedIn'] == true) {
+    if (r['status'] != 'accepted' || r[mine] == true) {
       throw _failure(409, ApiErrorCode.checkInNotAllowed,
           'This booking cannot be confirmed in its current state.');
     }
-    final DateTime now = _backend.now;
-    if (!_day(r['eventDate']).isBefore(DateTime(now.year, now.month, now.day))) {
+    if (!_eventPassed(r)) {
       throw _failure(422, ApiErrorCode.checkInTooEarly,
           'You can confirm once the event has taken place.');
     }
-    r['checkedIn'] = true;
-    _timeline(r, 'checked_in', by: 'client');
-    if (r['otherCheckedIn'] == true) {
+    r[mine] = true;
+    _timeline(r, 'checked_in', by: side.name);
+    if (r[theirs] == true) {
       // Both sides said "All good": it completes at once.
       r['status'] = 'completed';
-      r['completedAt'] = now.millisecondsSinceEpoch;
-      _timeline(r, 'completed', by: 'client');
+      r['completedAt'] = _backend.now.millisecondsSinceEpoch;
+      _timeline(r, 'completed', by: side.name);
     }
-    await _backend.saveClientBookings();
+    await _save();
     return render(r);
   }
 
+  /// The invoice Eventor issued on acceptance, the same for both sides.
   Map<String, Object?> invoice(String id) {
     final Map<String, Object?> r = _record(id);
     final String? number = r['invoiceNumber'] as String?;
-    if (number == null) {
+    final String status = r['status']! as String;
+    // The provider route reads accepted or completed bookings only.
+    if (number == null || (_forProvider && status != 'accepted' && status != 'completed')) {
       throw _failure(404, ApiErrorCode.invoiceNotFound, 'This booking has no invoice.');
     }
     final Map<String, Object?> detail = render(r);
-    final Map<String, Object?> party =
-        detail['counterparty']! as Map<String, Object?>;
-    final MockAccount account = _backend.requireSession();
+    final Map<String, Object?> client = _clientOf(r);
+    final String providerId = _providerIdOf(r);
+    final String business =
+        _MockCatalog._providers[providerId]!['businessName']! as String;
     final int total = _cents(detail['total']! as String);
     final int fee = (total * 8 / 100).round();
     return <String, Object?>{
@@ -959,18 +1511,18 @@ class _MockBookings {
         'phone': '+213 23 00 00 00',
       },
       'client': <String, Object?>{
-        'id': account.id,
-        'name': account.fullName,
+        'id': client['id'],
+        'name': client['fullName'],
         'businessName': null,
-        'email': account.email,
-        'phone': account.phone,
+        'email': client['email'],
+        'phone': client['phone'],
       },
       'provider': <String, Object?>{
-        'id': party['id'],
-        'name': party['fullName'],
-        'businessName': party['businessName'],
+        'id': providerId,
+        'name': business,
+        'businessName': business,
         'email': null,
-        'phone': party['phone'],
+        'phone': _phoneOf(providerId),
       },
       'titleEn': detail['titleEn'],
       'titleAr': detail['titleAr'],
@@ -1039,6 +1591,7 @@ class _MockBookings {
     return Uint8List.fromList(latin1.encode(pdf.toString()));
   }
 
+  /// The client's review — only clients review.
   Future<void> review(String id, int rating, String comment) async {
     final Map<String, Object?> r = _record(id);
     if (r['reviewId'] != null) {
@@ -1058,12 +1611,13 @@ class _MockBookings {
     final int length = comment.trim().length;
     if (length < 10 || length > 2000) throw _invalid('comment');
     r['reviewId'] = 'mock-review-${_backend.now.millisecondsSinceEpoch}';
-    await _backend.saveClientBookings();
+    await _save();
   }
 
+  /// `POST /app/bookings/{id}/disputes`, for either side.
   Future<Map<String, Object?>> openDispute(
     String id,
-    DisputeType type,
+    String type,
     String description,
   ) async {
     final Map<String, Object?> r = _record(id);
@@ -1081,6 +1635,7 @@ class _MockBookings {
       throw _failure(422, ApiErrorCode.disputeWindowClosed,
           'The dispute window for this booking is closed.');
     }
+    if (!_disputeTypes.contains(type)) throw _invalid('type');
     final int length = description.trim().length;
     if (length < 30 || length > 5000) throw _invalid('description');
     final int ms = _backend.now.millisecondsSinceEpoch;
@@ -1088,12 +1643,13 @@ class _MockBookings {
       'id': 'mock-dispute-$ms',
       'reference': 'DSP-${(ms ~/ 1000 % 1000000).toString().padLeft(6, '0')}',
       'status': 'open',
-      'type': type.apiValue,
+      'type': type,
+      'by': side.name,
       'createdAt': ms,
     };
     r['dispute'] = dispute;
-    _timeline(r, 'dispute_opened', by: 'client');
-    await _backend.saveClientBookings();
+    _timeline(r, 'dispute_opened', by: side.name);
+    await _save();
     return <String, Object?>{
       'id': dispute['id'],
       'reference': dispute['reference'],
@@ -1115,6 +1671,197 @@ class _MockBookings {
           FieldError(field: field, code: 'INVALID', message: 'Invalid value.'),
         ],
       );
+
+  // ------------------------------------------------------ provider reads
+
+  /// `GET /app/provider/bookings?tab=` — requests newest first, upcoming
+  /// soonest first, past latest first.
+  List<Map<String, Object?>> providerTab(String tab) {
+    final DateTime now = _backend.now;
+    final String today = apiDate(DateTime(now.year, now.month, now.day));
+    bool ahead(Map<String, Object?> r) => (r['eventDate']! as String).compareTo(today) >= 0;
+    final List<Map<String, Object?>> found = _records().where((Map<String, Object?> r) {
+      final String status = r['status']! as String;
+      return switch (tab) {
+        'upcoming' => status == 'accepted' && ahead(r),
+        'past' => status == 'completed' || (status == 'accepted' && !ahead(r)),
+        _ => status == 'pending',
+      };
+    }).toList()
+      ..sort((Map<String, Object?> a, Map<String, Object?> b) => switch (tab) {
+            'upcoming' => (a['eventDate']! as String).compareTo(b['eventDate']! as String),
+            'past' => (b['eventDate']! as String).compareTo(a['eventDate']! as String),
+            _ => (b['createdAt']! as int).compareTo(a['createdAt']! as int),
+          });
+    return found.map(render).toList();
+  }
+
+  /// `GET /app/provider/availability?month=` from the bookings alone: a day
+  /// with an accepted booking is `booked`, one with a request `held`, one in
+  /// [blockedDates] `blocked`. The availability mock (P15) owns the blocks.
+  Map<String, Object?> providerMonth(
+    DateTime month, {
+    Set<String> blockedDates = const <String>{},
+  }) {
+    final MockAccount provider = _viewer();
+    final String? catalogId = _catalogIdOf(provider);
+    final List<Map<String, Object?>> live =
+        _records().where(_isLive).toList();
+    int capacity = 1;
+    for (final Map<String, Object?> s in _MockCatalog._services.values) {
+      if (s['providerId'] == catalogId) {
+        final int max = (s['maxEventsPerDay'] as num?)?.toInt() ?? 1;
+        if (max > capacity) capacity = max;
+      }
+    }
+    final int days = DateTime(month.year, month.month + 1, 0).day;
+    return <String, Object?>{
+      'providerId': catalogId,
+      'month': monthParam(month),
+      'maxEventsPerDay': capacity,
+      'days': <Map<String, Object?>>[
+        for (int d = 1; d <= days; d++)
+          () {
+            final String date = apiDate(DateTime(month.year, month.month, d));
+            final List<Map<String, Object?>> items = <Map<String, Object?>>[
+              for (final Map<String, Object?> r in live)
+                if (r['eventDate'] == date)
+                  <String, Object?>{
+                    'id': null,
+                    'kind': r['status'] == 'accepted' ? 'booked' : 'held',
+                    'date': date,
+                    'startTime': r['startTime'],
+                    'endTime': r['endTime'],
+                    'service': r['serviceId'] == null
+                        ? null
+                        : <String, Object?>{
+                            'id': r['serviceId'],
+                            'titleEn': _MockCatalog._services[r['serviceId']]!['titleEn'],
+                            'titleAr': _MockCatalog._services[r['serviceId']]!['titleAr'],
+                          },
+                    'booking': <String, Object?>{
+                      'id': r['id'],
+                      'reference': r['reference'],
+                      'status': r['status'],
+                    },
+                    'note': null,
+                    'removable': false,
+                  },
+            ];
+            final String status = items.any((Map<String, Object?> i) => i['kind'] == 'booked')
+                ? 'booked'
+                : items.isNotEmpty
+                    ? 'held'
+                    : blockedDates.contains(date)
+                        ? 'blocked'
+                        : 'free';
+            return <String, Object?>{'date': date, 'status': status, 'items': items};
+          }(),
+      ],
+    };
+  }
+
+  /// [provider]'s live bookings, for the availability calendar.
+  List<MockCalendarBooking> calendar(MockAccount provider) => <MockCalendarBooking>[
+        for (final Map<String, Object?> r in recordsOf(provider))
+          if (_isLive(r))
+            MockCalendarBooking(
+              id: r['id']! as String,
+              reference: r['reference']! as String,
+              clientName: _clientOf(r)['fullName']! as String,
+              date: r['eventDate']! as String,
+              isAccepted: r['status'] == 'accepted',
+              startTime: r['startTime'] as String?,
+              endTime: r['endTime'] as String?,
+              serviceId: r['serviceId'] as String?,
+              packId: r['packId'] as String?,
+              titleEn: (_MockCatalog._services[r['serviceId']]?['titleEn'] ??
+                  _MockCatalog._packs[r['packId']]?['nameEn']) as String?,
+              titleAr: (_MockCatalog._services[r['serviceId']]?['titleAr'] ??
+                  _MockCatalog._packs[r['packId']]?['nameAr']) as String?,
+            ),
+      ];
+}
+
+/// The live (pending or accepted) bookings made to [provider], from the
+/// shared booking store — the [MockCalendarBookings] the availability mock
+/// (P15) takes. Reads no session: wire it as
+/// `(MockAccount p) => mockCalendarBookings(backend, p)`.
+List<MockCalendarBooking> mockCalendarBookings(
+  MockBackend backend,
+  MockAccount provider,
+) =>
+    _MockBookings(_MockCatalog(backend, () => 'en'), side: _Side.provider)
+        .calendar(provider);
+
+/// The provider's routes on the shared booking store — what
+/// `MockProviderRepository` answers with, in `AppBookingDetailDto` /
+/// `AvailabilityMonthDto` JSON.
+class MockProviderBookings {
+  MockProviderBookings(
+    MockBackend backend, {
+    required String Function() languageCode,
+  }) : _bookings = _MockBookings(
+          _MockCatalog(backend, languageCode),
+          side: _Side.provider,
+        );
+
+  MockProviderBookings._(_MockCatalog catalog)
+      : _bookings = _MockBookings(catalog, side: _Side.provider);
+
+  final _MockBookings _bookings;
+
+  /// One tab of P1, whole — the repository pages it.
+  List<Map<String, Object?>> tab(String tab) => _bookings.providerTab(tab);
+
+  Map<String, Object?> detail(String id) => _bookings.render(_bookings._record(id));
+
+  Future<Map<String, Object?>> accept(String id) => _bookings.accept(id);
+
+  Future<Map<String, Object?>> decline(String id, String reason) =>
+      _bookings.decline(id, reason);
+
+  Future<Map<String, Object?>> cancel(String id, String reason) =>
+      _bookings.cancel(id, reason);
+
+  Future<Map<String, Object?>> reschedule(
+    String id, {
+    required DateTime date,
+    required String reason,
+    String? startTime,
+    String? endTime,
+    Set<String> blockedDates = const <String>{},
+  }) =>
+      _bookings.reschedule(
+        id,
+        date: date,
+        reason: reason,
+        startTime: startTime,
+        endTime: endTime,
+        blockedDates: blockedDates,
+      );
+
+  Future<Map<String, Object?>> answerReschedule(
+    String id,
+    String rescheduleId,
+    String answer,
+  ) =>
+      _bookings.answerReschedule(id, rescheduleId, answer: answer);
+
+  Future<Map<String, Object?>> checkIn(String id) => _bookings.checkIn(id);
+
+  Future<Map<String, Object?>> openDispute(String id, String type, String description) =>
+      _bookings.openDispute(id, type, description);
+
+  Map<String, Object?> invoice(String id) => _bookings.invoice(id);
+
+  Uint8List invoicePdf(String id) => _bookings.invoicePdf(id);
+
+  Map<String, Object?> month(
+    DateTime month, {
+    Set<String> blockedDates = const <String>{},
+  }) =>
+      _bookings.providerMonth(month, blockedDates: blockedDates);
 }
 
 /// [BookingsRepository] on the [MockBackend], with the live API's rules:
@@ -1264,7 +2011,7 @@ class MockBookingsRepository implements BookingsRepository {
   }) async {
     await _backend.delay();
     return BookingDisputeSummary.fromJson(
-      await _bookings.openDispute(id, type, description),
+      await _bookings.openDispute(id, type.apiValue, description),
     );
   }
 }

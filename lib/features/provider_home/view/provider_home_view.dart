@@ -25,6 +25,7 @@ import '../../../core/widgets/molecules/state_card.dart';
 import '../../../core/widgets/organisms/cards.dart' as ui;
 import '../../../l10n/app_localizations.dart';
 import '../../shell/shell_badges.dart';
+import '../../provider_booking/view/widgets/provider_booking_sheets.dart';
 import '../../shell/view/client_shell.dart' show ScrollToTopOnReselect;
 import '../view_model/provider_home_view_model.dart';
 import 'widgets/provider_home_widgets.dart';
@@ -33,9 +34,9 @@ import 'widgets/provider_home_widgets.dart';
 /// is approved, 21a (pending) and 21b (rejected) in its place; 21c while an
 /// admin has the account blocked.
 ///
-/// Requests are answered here: Accept at once, Decline through P3's sheet.
-/// Everything the request, service and calendar modules will own says
-/// "Coming soon" until they are built.
+/// Requests are answered here: Accept at once, Decline through P3's sheet;
+/// a request or a booking opens P2. What the service and calendar modules
+/// will own says "Coming soon" until they are wired.
 class ProviderHomeView extends StatefulWidget {
   const ProviderHomeView({super.key});
 
@@ -52,8 +53,6 @@ class _ProviderHomeViewState extends State<ProviderHomeView> {
     super.dispose();
   }
 
-  void _comingSoon() => showComingSoon(context, context.l10n.comingSoon);
-
   Future<void> _refresh(ProviderHomeViewModel viewModel) async {
     final Failure? failure = await viewModel.refresh();
     if (failure != null && mounted) {
@@ -63,6 +62,17 @@ class _ProviderHomeViewState extends State<ProviderHomeView> {
 
   /// 08e or 08d, then back to a home that reflects what was sent.
   Future<void> _openDocuments(ProviderHomeViewModel viewModel, String location) async {
+    await context.push(location);
+    if (mounted) await viewModel.refresh();
+  }
+
+  /// P2, then back to a home that reflects what was done there.
+  Future<void> _openBooking(ProviderHomeViewModel viewModel, BookingCard booking) =>
+      _open(viewModel, AppRoutes.providerBookingFor(booking.id));
+
+  /// Opens a full-screen page over the tabs, then re-reads the home — a
+  /// service saved, a day blocked or a request answered there shows here.
+  Future<void> _open(ProviderHomeViewModel viewModel, String location) async {
     await context.push(location);
     if (mounted) await viewModel.refresh();
   }
@@ -127,7 +137,8 @@ class _ProviderHomeViewState extends State<ProviderHomeView> {
         viewModel: viewModel,
         onAccept: (BookingCard r) => _accept(viewModel, r),
         onDecline: (BookingCard r) => _decline(viewModel, r),
-        onComingSoon: _comingSoon,
+        onOpen: (BookingCard b) => _openBooking(viewModel, b),
+        onNavigate: (String location) => _open(viewModel, location),
       );
     } else if (home.isBlocked) {
       body = _BlockedContent(
@@ -208,14 +219,19 @@ class _VerifiedContent extends StatelessWidget {
     required this.viewModel,
     required this.onAccept,
     required this.onDecline,
-    required this.onComingSoon,
+    required this.onOpen,
+    required this.onNavigate,
   });
 
   final ProviderHome home;
   final ProviderHomeViewModel viewModel;
   final ValueChanged<BookingCard> onAccept;
   final ValueChanged<BookingCard> onDecline;
-  final VoidCallback onComingSoon;
+
+  /// P2 for a request or a booking.
+  final ValueChanged<BookingCard> onOpen;
+  /// P15, P7 and P7a — pushed over the tabs.
+  final ValueChanged<String> onNavigate;
 
   @override
   Widget build(BuildContext context) {
@@ -274,7 +290,7 @@ class _VerifiedContent extends StatelessWidget {
                         onDecline: request.can(BookingAction.decline)
                             ? () => onDecline(request)
                             : null,
-                        onTap: onComingSoon,
+                        onTap: () => onOpen(request),
                       ),
                     ],
                   ],
@@ -283,7 +299,13 @@ class _VerifiedContent extends StatelessWidget {
         _section(
           title: l10n.providerUpcomingTitle,
           action: home.upcoming.isEmpty ? null : l10n.seeAll,
-          onAction: () => context.go(AppRoutes.providerRequests),
+          // The Requests tab, on its Upcoming list.
+          onAction: () => context.go(
+            Uri(
+              path: AppRoutes.providerRequests,
+              queryParameters: <String, String>{'tab': ProviderBookingTab.upcoming.apiValue},
+            ).toString(),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -293,7 +315,7 @@ class _VerifiedContent extends StatelessWidget {
                   counterpartName: booking.counterpartyName,
                   meta: when(booking),
                   status: BookingStatusKind.fromApi(booking.status),
-                  onTap: onComingSoon,
+                  onTap: () => onOpen(booking),
                 ),
                 SizedBox(height: AppSpacing.sm.dh),
               ],
@@ -308,7 +330,7 @@ class _VerifiedContent extends StatelessWidget {
                 label: l10n.providerAvailabilityCalendar,
                 style: MainButtonStyle.secondary,
                 icon: AppIcons.calendar,
-                onPressed: onComingSoon,
+                onPressed: () => onNavigate(AppRoutes.providerAvailability),
               ),
             ],
           ),
@@ -332,14 +354,14 @@ class _VerifiedContent extends StatelessWidget {
                     ProviderServiceStatus.draft => ServiceStatusKind.draft,
                     ProviderServiceStatus.hidden => ServiceStatusKind.hidden,
                   }),
-                  onTap: onComingSoon,
+                  onTap: () => onNavigate(AppRoutes.providerEditServiceFor(service.id)),
                 ),
                 SizedBox(height: AppSpacing.sm.dh),
               ],
               MainButton(
                 label: l10n.providerAddService,
                 style: MainButtonStyle.secondary,
-                onPressed: onComingSoon,
+                onPressed: () => onNavigate(AppRoutes.providerNewService),
               ),
             ],
           ),

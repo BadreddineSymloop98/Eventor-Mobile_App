@@ -266,9 +266,12 @@ class _ChatViewState extends State<ChatView> {
           if (booking != null)
             BookingContextCard(
               booking: booking,
-              onTap: context.read<SessionController>().user?.isProvider ?? true
-                  ? () => showComingSoon(context, l10n.comingSoon)
-                  : () => context.push(AppRoutes.bookingFor(booking.id)),
+              // P2 for a provider, B4 for a client.
+              onTap: () => context.push(
+                context.read<SessionController>().user?.isProvider ?? false
+                    ? AppRoutes.providerBookingFor(booking.id)
+                    : AppRoutes.bookingFor(booking.id),
+              ),
             ),
           Expanded(child: _body(viewModel)),
           if (viewModel.loadState == ChatLoadState.ready) _composer(viewModel),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+import '../core/availability/availability_repository.dart';
 import '../core/bookings/bookings_repository.dart';
 import '../core/budget/budget_repository.dart';
 import '../core/catalog/catalog_repository.dart';
@@ -14,6 +15,7 @@ import '../core/localization/locale_controller.dart';
 import '../core/messaging/messaging_repository.dart';
 import '../core/notifications/notifications_repository.dart';
 import '../core/provider/provider_repository.dart';
+import '../core/provider_catalog/provider_catalog_repository.dart';
 import '../core/reference/reference_repository.dart';
 import '../core/services/preferences_service.dart';
 import '../core/session/session_controller.dart';
@@ -60,6 +62,8 @@ class EventorApp extends StatelessWidget {
         Provider<BookingsRepository>.value(value: services.bookings),
         Provider<BudgetRepository>.value(value: services.budget),
         Provider<ProviderRepository>.value(value: services.provider),
+        Provider<ProviderCatalogRepository>.value(value: services.providerCatalog),
+        Provider<AvailabilityRepository>.value(value: services.availability),
         Provider<NotificationsRepository>.value(
           value: services.notifications,
         ),

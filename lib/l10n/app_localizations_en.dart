@@ -852,12 +852,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navProfile => 'Profile';
 
   @override
-  String get tabComingSoonTitle => 'Coming soon';
-
-  @override
-  String get tabComingSoonBody => 'This part of Eventor is on its way.';
-
-  @override
   String get profileFavourites => 'Favorites';
 
   @override
@@ -3234,4 +3228,1511 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceDownloadNoticeText => 'Download complete · Tap to open';
+
+  @override
+  String get availabilityTitle => 'Availability';
+
+  @override
+  String get availabilityLegendFree => 'Free';
+
+  @override
+  String get availabilityLegendPartial => 'Partly blocked';
+
+  @override
+  String get availabilityLegendBlocked => 'Blocked';
+
+  @override
+  String get availabilityLegendHeld => 'Request held';
+
+  @override
+  String get availabilityLegendBooked => 'Booked';
+
+  @override
+  String get availabilityToday => 'Today';
+
+  @override
+  String availabilityNotice(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Clients must book at least $count days ahead.',
+      one: 'Clients must book at least $count day ahead.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get availabilityTapHint =>
+      'Tap a day to see what is on it, or to block it.';
+
+  @override
+  String get availabilityBlockDay => 'Block a day';
+
+  @override
+  String availabilityDaySummary(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count things are on this day.',
+      one: 'One thing is on this day.',
+      zero: 'Nothing is on this day yet.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get availabilityDayRemoveHint =>
+      'Only blocks you added can be removed.';
+
+  @override
+  String get availabilityDayPast =>
+      'This day has passed. Nothing on it can be changed.';
+
+  @override
+  String get availabilityItemBlockedAllDay => 'Blocked all day';
+
+  @override
+  String get availabilityItemBlockedSlot => 'Blocked';
+
+  @override
+  String availabilityItemBooked(String reference) {
+    return 'Booked — $reference';
+  }
+
+  @override
+  String availabilityItemHeld(String reference) {
+    return 'Request held — $reference';
+  }
+
+  @override
+  String get availabilityAllServices => 'All services';
+
+  @override
+  String availabilityItemNote(String note) {
+    return '“$note”';
+  }
+
+  @override
+  String get availabilityRemove => 'Remove';
+
+  @override
+  String get availabilityCannotRemove => 'Cannot be removed';
+
+  @override
+  String get availabilityWhyBooked =>
+      'An accepted booking. Cancel or move it from the booking.';
+
+  @override
+  String get availabilityWhyHeld =>
+      'A request waiting for your answer holds this day.';
+
+  @override
+  String get availabilityBlockWholeDay => 'Block the whole day';
+
+  @override
+  String get availabilityBlockSlot => 'Block a time slot';
+
+  @override
+  String get availabilityBlockAnotherSlot => 'Block another slot';
+
+  @override
+  String get availabilityClose => 'Close';
+
+  @override
+  String get availabilityAlreadyBlocked =>
+      'This day is already blocked for every service.';
+
+  @override
+  String get availabilityFullyBooked =>
+      'This day is fully booked, so there is nothing left to block.';
+
+  @override
+  String availabilityBlockDayTitle(String day) {
+    return 'Block $day';
+  }
+
+  @override
+  String availabilityBlockSlotTitle(String day) {
+    return 'Block part of $day';
+  }
+
+  @override
+  String get availabilityBlockDayBody =>
+      'Clients will not be able to book this day. You can remove the block at any time.';
+
+  @override
+  String get availabilityBlockSlotBody =>
+      'Clients can still book the rest of the day. You can remove the block at any time.';
+
+  @override
+  String get availabilityModeWholeDay => 'Whole day';
+
+  @override
+  String get availabilityModeSlot => 'Time slot';
+
+  @override
+  String get availabilityModeSelected => 'Selected';
+
+  @override
+  String get availabilityServicesLabel => 'Which services';
+
+  @override
+  String get availabilityServicesSubtitle =>
+      'Block every service, or just one.';
+
+  @override
+  String get availabilityServicesFailed =>
+      'We could not load your services. Try again.';
+
+  @override
+  String get availabilityNoteLabel => 'Note (only you see it)';
+
+  @override
+  String get availabilityNoteHint => 'e.g. Family wedding';
+
+  @override
+  String get availabilityConfirmDay => 'Block the day';
+
+  @override
+  String get availabilityConfirmSlot => 'Block the slot';
+
+  @override
+  String get availabilityCancel => 'Cancel';
+
+  @override
+  String get availabilitySlotHelper =>
+      'Clients can still book outside these hours.';
+
+  @override
+  String get availabilityTimesMissing => 'Pick when the slot starts and ends.';
+
+  @override
+  String get availabilityHeldWarning =>
+      'A request is waiting on this day. Blocking it does not decline the request.';
+
+  @override
+  String get availabilityBookedWarning =>
+      'This day already has a booking. Blocking it does not cancel the booking.';
+
+  @override
+  String get availabilityErrorDatePast =>
+      'This day has already passed. Pick another day.';
+
+  @override
+  String get availabilityErrorServiceInvalid =>
+      'That service can no longer be blocked. Pick another one, or block all services.';
+
+  @override
+  String get availabilityErrorNotRemovable =>
+      'This block can no longer be removed. The calendar is up to date again.';
+
+  @override
+  String get availabilityErrorNotFound =>
+      'This block was already removed. The calendar is up to date again.';
+
+  @override
+  String availabilityBlockedDayToast(String day) {
+    return '$day is blocked.';
+  }
+
+  @override
+  String availabilityBlockedSlotToast(String day) {
+    return 'Part of $day is blocked.';
+  }
+
+  @override
+  String get availabilityRemovedToast => 'Block removed.';
+
+  @override
+  String get availabilityRestoredToast => 'Block put back.';
+
+  @override
+  String get providerRequestsTabTitle => 'Requests';
+
+  @override
+  String get providerRequestsChipRequests => 'Requests';
+
+  @override
+  String get providerRequestsChipUpcoming => 'Upcoming';
+
+  @override
+  String get providerRequestsChipPast => 'Past';
+
+  @override
+  String get providerRequestsEmptyTitle => 'No requests yet';
+
+  @override
+  String providerRequestsEmptyBody(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours hours',
+      one: '1 hour',
+    );
+    return 'When a client asks to book one of your services, it arrives here. You have $_temp0 to accept or decline before the request expires.';
+  }
+
+  @override
+  String get providerRequestsEmptyUpcomingTitle => 'No bookings ahead';
+
+  @override
+  String get providerRequestsEmptyUpcomingBody =>
+      'Requests you accept show up here until the event day.';
+
+  @override
+  String get providerRequestsEmptyPastTitle => 'No past bookings yet';
+
+  @override
+  String get providerRequestsEmptyPastBody =>
+      'Once an event is behind you, it moves here with its invoice.';
+
+  @override
+  String get providerRequestsReviewBody =>
+      'We are checking your documents. Your services stay unpublished until then, so clients cannot send you requests yet.';
+
+  @override
+  String get providerRequestsRejectedBody =>
+      'Some of your documents were not accepted. Your services stay unpublished until your profile is approved, so clients cannot send you requests yet.';
+
+  @override
+  String get providerRequestsSeeDocuments => 'See my documents';
+
+  @override
+  String providerRequestsReplyWithin(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'Reply within $hours h',
+      zero: 'Reply now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String providerRequestsAccepted(String name) {
+    return 'Request from $name accepted — it is now under Upcoming.';
+  }
+
+  @override
+  String get providerBookingTitleRequest => 'Request';
+
+  @override
+  String providerBookingStepRequestedBy(String client) {
+    return 'Requested by $client';
+  }
+
+  @override
+  String get providerBookingStepYourReply => 'Your reply';
+
+  @override
+  String get providerBookingStepYouAccepted => 'You accepted';
+
+  @override
+  String get providerBookingStepYouDeclined => 'You declined';
+
+  @override
+  String providerBookingStepCancelledBy(String client) {
+    return 'Cancelled by $client';
+  }
+
+  @override
+  String get providerBookingStepCancelledByEventor => 'Cancelled by Eventor';
+
+  @override
+  String get providerBookingStepConfirmEvent => 'Confirm the event';
+
+  @override
+  String get providerBookingStepWaitingBoth => 'Waiting for both of you';
+
+  @override
+  String providerBookingStepYouConfirmed(String client) {
+    return 'You confirmed · waiting for $client';
+  }
+
+  @override
+  String providerBookingStepClientConfirmed(String client) {
+    return '$client confirmed · waiting for you';
+  }
+
+  @override
+  String get providerBookingStepBothConfirmed => 'both of you confirmed';
+
+  @override
+  String providerBookingStepClientProposed(String client) {
+    return '$client proposed a new date';
+  }
+
+  @override
+  String get providerBookingStepYouProposed => 'You proposed a new date';
+
+  @override
+  String providerBookingStepWaitingFor(String client) {
+    return 'waiting for $client';
+  }
+
+  @override
+  String providerBookingYourService(String category) {
+    return 'Your service · $category';
+  }
+
+  @override
+  String get providerBookingYourPack => 'Your pack';
+
+  @override
+  String get providerBookingTheEvent => 'The event';
+
+  @override
+  String get providerBookingClientNote => 'Client’s note';
+
+  @override
+  String get providerBookingTotalOnSite => 'Total · client pays on site';
+
+  @override
+  String get providerBookingCashNote =>
+      'The client pays you in cash on the day. Nothing is collected through Eventor.';
+
+  @override
+  String get providerBookingClientSection => 'Client';
+
+  @override
+  String get providerBookingContactHidden => 'Hidden until you accept';
+
+  @override
+  String get providerBookingContactNotShared => 'Not shared';
+
+  @override
+  String providerBookingContactPending(String client) {
+    return '$client’s phone and email appear here as soon as you accept the request.';
+  }
+
+  @override
+  String providerBookingContactAccepted(String client) {
+    return '$client’s phone and email are shared because you accepted this booking.';
+  }
+
+  @override
+  String providerBookingContactUntilClosed(String client) {
+    return '$client’s phone and email stay visible until the booking is closed.';
+  }
+
+  @override
+  String get providerBookingContactDeclined =>
+      'Contact details are never shared for a request you declined.';
+
+  @override
+  String get providerBookingContactHistory =>
+      'Contact details stay visible while this booking is in your history.';
+
+  @override
+  String get providerBookingContactWithdrawn =>
+      'Contact details are not shared for a request that was cancelled.';
+
+  @override
+  String get providerBookingPolicySetByYou => 'Set by you';
+
+  @override
+  String providerBookingMessageClient(String client) {
+    return 'Message $client';
+  }
+
+  @override
+  String get providerBookingAcceptRequest => 'Accept request';
+
+  @override
+  String get providerBookingConfirmEvent => 'Confirm the event';
+
+  @override
+  String get providerBookingDeclinedTitle => 'You declined this request';
+
+  @override
+  String providerBookingDeclinedBody(String client) {
+    return 'The date is free again on your calendar and $client has been told.';
+  }
+
+  @override
+  String providerBookingCancelledByClientTitle(String client) {
+    return '$client cancelled this booking';
+  }
+
+  @override
+  String get providerBookingCancelledByClientBody =>
+      'The date is free again on your calendar and the invoice has been voided.';
+
+  @override
+  String providerBookingCancelledByYouBody(String client) {
+    return '$client has been told, the date is free again on your calendar and the invoice has been voided.';
+  }
+
+  @override
+  String get providerBookingCancelledByEventorTitle =>
+      'Eventor cancelled this booking';
+
+  @override
+  String providerBookingRequestWithdrawnTitle(String client) {
+    return '$client cancelled this request';
+  }
+
+  @override
+  String get providerBookingRequestWithdrawnBody =>
+      'The date is free again on your calendar.';
+
+  @override
+  String providerBookingReviewTitle(String client) {
+    return '$client can review this booking';
+  }
+
+  @override
+  String get providerBookingReviewBody =>
+      'Their review appears in Reviews, where you can reply to it once. Clients have 60 days after the event to leave one.';
+
+  @override
+  String providerBookingProposalTitle(String client) {
+    return '$client proposes a new date';
+  }
+
+  @override
+  String providerBookingProposalHelper(String date, String client) {
+    return 'If you decline, the $date booking stands and $client may cancel it.';
+  }
+
+  @override
+  String providerBookingProposalSentTitle(String date) {
+    return 'Proposal sent: $date';
+  }
+
+  @override
+  String providerBookingProposalSentBody(String date, String client) {
+    return 'The booking stays on $date until $client answers.';
+  }
+
+  @override
+  String get providerBookingWithdraw => 'Withdraw';
+
+  @override
+  String providerBookingProposalSentToast(String client) {
+    return 'Proposal sent. $client will be told.';
+  }
+
+  @override
+  String providerBookingCancelBody(String client) {
+    return '$client is told straight away, the date is released on your calendar and the invoice is voided. This cannot be undone.';
+  }
+
+  @override
+  String get providerBookingCancelReasonHint =>
+      'e.g. The hall is closed for repairs that day';
+
+  @override
+  String get providerBookingCancelNote =>
+      'Clients count on you: cancel only when there is no other way. Proposing a new date is often better.';
+
+  @override
+  String get providerBookingCancelKeep => 'Keep the booking';
+
+  @override
+  String get providerBookingDeclineTitle => 'Decline this request?';
+
+  @override
+  String get providerBookingDeclineReasonLabel => 'Why are you declining?';
+
+  @override
+  String get providerBookingProblemClientNoShow => 'The client didn’t show up';
+
+  @override
+  String get providerBookingProblemCancellation => 'Cancellation disagreement';
+
+  @override
+  String get providerBookingLegendFree => 'Free';
+
+  @override
+  String get providerBookingLegendBlocked => 'Blocked by you';
+
+  @override
+  String get providerBookingRescheduleFootnote =>
+      'Days you are already booked or have blocked are greyed out.';
+
+  @override
+  String get providerBookingTimeHelper =>
+      'The times the client asked for, until you change them.';
+
+  @override
+  String get providerBookingRescheduleReasonHint =>
+      'e.g. The hall is only free the week after';
+
+  @override
+  String providerBookingRescheduleReasonError(String client) {
+    return 'Say why — $client reads this first.';
+  }
+
+  @override
+  String providerBookingRescheduleHold(String date, String client) {
+    return 'The $date booking stays in place until $client answers. If the proposal is declined, nothing changes and the price stays the same.';
+  }
+
+  @override
+  String providerBookingReschedulePendingNote(String client) {
+    return 'The request moves to the new date straight away and $client is told. You can then accept it.';
+  }
+
+  @override
+  String get providerBookingRescheduleTakenBody =>
+      'You are no longer free that day. Pick another date.';
+
+  @override
+  String providerBookingCheckInBody(String client, String date) {
+    return 'The event with $client was on $date. Confirm before we close the booking — it takes one tap.';
+  }
+
+  @override
+  String providerBookingAllGoodBody(String client) {
+    return 'The event went ahead as agreed. We close the booking and $client can leave a review.';
+  }
+
+  @override
+  String get providerBookingProblemBody =>
+      'The client did not show up, or something else went wrong. We open a dispute and support steps in.';
+
+  @override
+  String get providerBookingRemindTomorrow => 'Remind me tomorrow';
+
+  @override
+  String get providerBookingCheckInFootnote =>
+      'If neither of you answers, the booking closes on its own 72 hours after the event.';
+
+  @override
+  String providerBookingCheckInWaiting(String client) {
+    return 'Thanks! It closes once $client confirms too.';
+  }
+
+  @override
+  String get providerBookingCheckInNothing =>
+      'There is nothing to confirm on this booking now.';
+
+  @override
+  String get providerBookingOpen => 'See the booking';
+
+  @override
+  String get providerServiceTabTitle => 'My services';
+
+  @override
+  String get providerPackTabTitle => 'My packs';
+
+  @override
+  String get providerServiceChipServices => 'Services';
+
+  @override
+  String get providerServiceChipPacks => 'Packs';
+
+  @override
+  String get providerServiceEmptyTitle => 'No services yet';
+
+  @override
+  String get providerServiceEmptyBody =>
+      'A service is what clients find and book — a package, a session, a hire. Add one, then publish it when it is ready.';
+
+  @override
+  String providerServiceRatingLine(int count, String rating) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$rating · $count reviews',
+      one: '$rating · 1 review',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceNoReviews => 'No reviews yet';
+
+  @override
+  String get providerServiceNotPublishedYet => 'Not published yet';
+
+  @override
+  String providerServiceHiddenOn(String date) {
+    return 'Hidden on $date';
+  }
+
+  @override
+  String providerServicePhotosCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count photos',
+      one: '1 photo',
+      zero: 'no photos',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String providerServiceBookingsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count bookings',
+      one: '1 booking',
+      zero: 'no bookings',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String providerServiceMissingNote(String items) {
+    return 'Missing before publishing: $items';
+  }
+
+  @override
+  String get providerServiceMissingTitleEn => 'English title';
+
+  @override
+  String get providerServiceMissingTitleAr => 'Arabic title';
+
+  @override
+  String get providerServiceMissingDescriptionEn => 'English description';
+
+  @override
+  String get providerServiceMissingDescriptionAr => 'Arabic description';
+
+  @override
+  String get providerServiceMissingPrice => 'a base price';
+
+  @override
+  String get providerServiceMissingPhotos => 'a photo';
+
+  @override
+  String get providerServiceMissingCategory => 'a category';
+
+  @override
+  String get providerServiceMissingWilayas => 'an open wilaya';
+
+  @override
+  String get providerServiceListSeparator => ', ';
+
+  @override
+  String providerServiceNotVisibleClosed(int count, String wilayas) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Not visible to clients — $wilayas are closed on Eventor right now',
+      one: 'Not visible to clients — $wilayas is closed on Eventor right now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceNotVisibleNoWilaya =>
+      'Not visible to clients — it covers no wilaya open on Eventor';
+
+  @override
+  String get providerServiceNotVisibleReview =>
+      'Not visible to clients — your profile is still being reviewed';
+
+  @override
+  String get providerServiceNotVisibleBlocked =>
+      'Not visible to clients — your account is blocked';
+
+  @override
+  String get providerServiceHiddenFinal =>
+      'Eventor hid this service. Clients cannot see it and you cannot publish it again. Edits are still saved.';
+
+  @override
+  String get providerServiceHiddenReviewable =>
+      'Eventor hid this service. Clients cannot see it. Fix it, then contact support to have it reviewed again. Edits are still saved.';
+
+  @override
+  String providerServiceHiddenMessage(String message) {
+    return 'Eventor’s note: “$message”';
+  }
+
+  @override
+  String get providerServiceUnpublish => 'Unpublish';
+
+  @override
+  String get providerServiceEdit => 'Edit';
+
+  @override
+  String get providerServicePublish => 'Publish';
+
+  @override
+  String get providerServicePublished => 'Published — clients can find it now';
+
+  @override
+  String get providerServiceUnpublished => 'Unpublished — it is a draft again';
+
+  @override
+  String get providerServiceDraftSaved => 'Draft saved';
+
+  @override
+  String get providerServiceChangesSaved => 'Changes saved';
+
+  @override
+  String get providerServiceDeleted => 'Service deleted';
+
+  @override
+  String get providerServiceUnpublishTitle => 'Unpublish this service?';
+
+  @override
+  String get providerServiceUnpublishBody =>
+      'It leaves search and your profile straight away and goes back to your drafts. Bookings already accepted are kept.';
+
+  @override
+  String get providerServiceKeepPublished => 'Keep it published';
+
+  @override
+  String get providerServiceDeleteTitle => 'Delete this service?';
+
+  @override
+  String get providerServiceDeleteBody =>
+      'Deleting is permanent. Requests still waiting for your answer on it are cancelled.';
+
+  @override
+  String get providerServiceDeleteConfirm => 'Delete';
+
+  @override
+  String get providerServiceDeleteKeep => 'Keep it';
+
+  @override
+  String get providerServiceDeleteButton => 'Delete this service';
+
+  @override
+  String get providerServiceDeleteCaption =>
+      'Deleting is permanent. It is refused while the service still has upcoming bookings or sits in a pack.';
+
+  @override
+  String get providerServiceDeleteRefusedTitle =>
+      'This service cannot be deleted yet';
+
+  @override
+  String get providerServiceDeleteRefusedBody =>
+      'Deleting is blocked while this is true. Unpublishing is available now and takes it out of search straight away.';
+
+  @override
+  String get providerServiceDeleteRefusedBodyPlain =>
+      'Deleting is blocked while this is true.';
+
+  @override
+  String providerServiceBlockerBookings(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count accepted bookings are still ahead',
+      one: '1 accepted booking is still ahead',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceBlockerBookingsUncounted =>
+      'Accepted bookings are still ahead';
+
+  @override
+  String providerServiceBlockerPacks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'It belongs to $count of your packs',
+      one: 'It belongs to 1 of your packs',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceBlockerPacksUncounted =>
+      'It still sits in one of your packs';
+
+  @override
+  String get providerServiceUnpublishInstead => 'Unpublish instead';
+
+  @override
+  String get providerServiceCancel => 'Cancel';
+
+  @override
+  String get providerServiceEditTitle => 'Edit service';
+
+  @override
+  String get providerServiceLangEnglish => 'English';
+
+  @override
+  String get providerServiceLangArabic => 'عربي';
+
+  @override
+  String providerServiceLangArabicMissing(String what) {
+    String _temp0 = intl.Intl.selectLogic(what, {
+      'both': 'Arabic still needs a title and a description. Both are required before you can publish.',
+      'title':
+          'Arabic still needs a title. It is required before you can publish.',
+      'other': 'Arabic still needs a description. It is required before you can publish.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String providerServiceLangEnglishMissing(String what) {
+    String _temp0 = intl.Intl.selectLogic(what, {
+      'both': 'English still needs a title and a description. Both are required before you can publish.',
+      'title':
+          'English still needs a title. It is required before you can publish.',
+      'other': 'English still needs a description. It is required before you can publish.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceLangComplete =>
+      'English and Arabic are both complete.';
+
+  @override
+  String get providerServiceLangCompleteLive =>
+      'English and Arabic are both complete. This service is live, so edits show to clients straight away.';
+
+  @override
+  String get providerServiceBasics => 'Basics';
+
+  @override
+  String get providerServicePricing => 'Pricing';
+
+  @override
+  String get providerServiceCapacity => 'Capacity';
+
+  @override
+  String get providerServiceIncluded => 'What is included';
+
+  @override
+  String get providerServiceExtras => 'Extras';
+
+  @override
+  String get providerServiceWilayas => 'Wilayas covered';
+
+  @override
+  String get providerServicePolicy => 'Cancellation policy';
+
+  @override
+  String get providerServicePhotos => 'Photos';
+
+  @override
+  String get providerServiceCategory => 'Category';
+
+  @override
+  String get providerServiceChoose => 'Choose';
+
+  @override
+  String providerServiceTitleLabel(String language) {
+    String _temp0 = intl.Intl.selectLogic(language, {
+      'ar': 'Title (Arabic)',
+      'other': 'Title (English)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String providerServiceDescriptionLabel(String language) {
+    String _temp0 = intl.Intl.selectLogic(language, {
+      'ar': 'Description (Arabic)',
+      'other': 'Description (English)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String providerServicePolicyLabel(String language) {
+    String _temp0 = intl.Intl.selectLogic(language, {
+      'ar': 'Shown to clients before they book (Arabic)',
+      'other': 'Shown to clients before they book (English)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceBasePriceLabel => 'Base price (DA)';
+
+  @override
+  String get providerServiceBasePriceHelper =>
+      'The starting price, before any extras.';
+
+  @override
+  String get providerServiceStartingPriceLabel => 'Starting price (DA)';
+
+  @override
+  String get providerServiceStartingPriceHelper =>
+      'Clients see “On quote”. This figure is what a pack counts for it.';
+
+  @override
+  String get providerServicePriceTypeLabel => 'Price type';
+
+  @override
+  String providerServicePriceTypeOption(String type) {
+    String _temp0 = intl.Intl.selectLogic(type, {
+      'per_event': 'Per event',
+      'per_hour': 'Per hour',
+      'per_person': 'Per person',
+      'per_day': 'Per day',
+      'other': 'On quote',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceMaxEventsLabel => 'Max events per day';
+
+  @override
+  String get providerServiceMaxGuestsLabel => 'Max guests';
+
+  @override
+  String get providerServiceMaxGuestsNone => 'Leave empty for no limit';
+
+  @override
+  String providerServiceRange(int min, int max) {
+    return 'Between $min and $max';
+  }
+
+  @override
+  String get providerServiceFieldRequired => 'Required';
+
+  @override
+  String get providerServiceAddFact => 'Add a fact';
+
+  @override
+  String get providerServiceEditFact => 'Edit a fact';
+
+  @override
+  String get providerServiceNoFacts =>
+      'Nothing listed yet — duration, team, delivery…';
+
+  @override
+  String get providerServiceFactSheetBody =>
+      'Clients read it in their own language, so both are needed.';
+
+  @override
+  String get providerServiceFactLabelEn => 'Label (English)';
+
+  @override
+  String get providerServiceFactValueEn => 'Value (English)';
+
+  @override
+  String get providerServiceFactLabelAr => 'Label (Arabic)';
+
+  @override
+  String get providerServiceFactValueAr => 'Value (Arabic)';
+
+  @override
+  String get providerServiceSheetSave => 'Save';
+
+  @override
+  String get providerServiceRemove => 'Remove';
+
+  @override
+  String get providerServiceAddExtra => 'Add an extra';
+
+  @override
+  String get providerServiceEditExtra => 'Edit an extra';
+
+  @override
+  String get providerServiceNoExtras => 'No extras yet';
+
+  @override
+  String get providerServiceExtraSheetBody =>
+      'A paid option clients can add to their booking.';
+
+  @override
+  String get providerServiceExtraNameEn => 'Name (English)';
+
+  @override
+  String get providerServiceExtraNameAr => 'Name (Arabic)';
+
+  @override
+  String get providerServiceExtraNameArHelper =>
+      'Until you add it, clients reading Arabic see the English name.';
+
+  @override
+  String get providerServiceExtraPrice => 'Price (DA)';
+
+  @override
+  String get providerServiceAddWilaya => '+ Add wilaya';
+
+  @override
+  String get providerServiceWilayaPickerBody =>
+      'Only wilayas open on Eventor are listed.';
+
+  @override
+  String providerServiceRemoveWilaya(String name) {
+    return 'Remove $name';
+  }
+
+  @override
+  String get providerServiceNoWilayas =>
+      'Add at least one open wilaya before you publish.';
+
+  @override
+  String providerServicePhotosAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count added',
+      zero: 'None yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServicePhotosNeedDraft =>
+      'To add photos, first give the service a category, an English title, a base price and a price type.';
+
+  @override
+  String get providerServiceDraftSavedForPhotos =>
+      'Draft saved — now add your photos';
+
+  @override
+  String get providerServiceSaveDraft => 'Save draft';
+
+  @override
+  String get providerServiceSave => 'Save';
+
+  @override
+  String get providerServiceSaveChanges => 'Save changes';
+
+  @override
+  String get providerServiceFixFields => 'Fill in the fields marked in red.';
+
+  @override
+  String get providerServiceNotVerifiedTitle =>
+      'Publishing unlocks after approval';
+
+  @override
+  String get providerServiceNotVerifiedBody =>
+      'Your documents are still being reviewed. Your draft is saved — publish it as soon as your profile is approved.';
+
+  @override
+  String get providerServiceGotIt => 'Got it';
+
+  @override
+  String get providerServiceChecklistTitle => 'Not ready to publish yet';
+
+  @override
+  String get providerServiceChecklistBody =>
+      'Clients cannot see this service until everything below is filled in. Your draft is already saved.';
+
+  @override
+  String get providerServiceCheckEnglish => 'English title and description';
+
+  @override
+  String get providerServiceCheckArabic => 'Arabic title and description';
+
+  @override
+  String get providerServiceCheckPrice => 'A base price';
+
+  @override
+  String get providerServiceCheckPhotos => 'At least one photo';
+
+  @override
+  String get providerServiceCheckCategory => 'A category clients can browse';
+
+  @override
+  String get providerServiceCheckWilayas => 'At least one open wilaya';
+
+  @override
+  String get providerServiceCheckDone => 'Done';
+
+  @override
+  String get providerServiceCheckMissing => 'Missing';
+
+  @override
+  String get providerServiceFixEnglish => 'Add the English';
+
+  @override
+  String get providerServiceFixArabic => 'Add the Arabic';
+
+  @override
+  String get providerServiceFixPrice => 'Add a price';
+
+  @override
+  String get providerServiceFixPhotos => 'Add photos';
+
+  @override
+  String get providerServiceFixCategory => 'Choose a category';
+
+  @override
+  String get providerServiceFixWilayas => 'Add a wilaya';
+
+  @override
+  String get providerServiceKeepDraft => 'Keep as draft';
+
+  @override
+  String get providerServicePhotosHelper =>
+      'The first photo is the cover clients see. Tap a photo to make it the cover, move it or remove it.';
+
+  @override
+  String get providerPackPhotosHelper =>
+      'The first photo is the cover clients see in search. Tap a photo to make it the cover, move it or remove it.';
+
+  @override
+  String providerServicePhotosCounter(int count, int max) {
+    String _temp0 = intl.Intl.pluralLogic(
+      max,
+      locale: localeName,
+      other: '$count of $max photos',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServicePhotoCover => 'Cover';
+
+  @override
+  String get providerServicePhotoProcessing => 'Processing';
+
+  @override
+  String get providerServicePhotoFailed => 'Could not process';
+
+  @override
+  String get providerServicePhotoUploading => 'Uploading';
+
+  @override
+  String get providerServicePhotoUploadFailed => 'Not sent';
+
+  @override
+  String get providerServicePhotoRetry => 'Retry';
+
+  @override
+  String get providerServiceAddPhoto => 'Add photo';
+
+  @override
+  String providerServicePhotosFull(int max) {
+    String _temp0 = intl.Intl.pluralLogic(
+      max,
+      locale: localeName,
+      other:
+          'That is as many as a gallery holds — $max photos. Remove one to add another.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServicePhotosEmpty =>
+      'No photos yet — the first one you add becomes the cover.';
+
+  @override
+  String get providerServicePhotoActionsTitle => 'This photo';
+
+  @override
+  String get providerServicePhotoMakeCover => 'Make cover';
+
+  @override
+  String get providerServicePhotoMoveEarlier => 'Move earlier';
+
+  @override
+  String get providerServicePhotoMoveLater => 'Move later';
+
+  @override
+  String get providerServicePhotoRemoveTitle => 'Remove this photo?';
+
+  @override
+  String get providerServicePhotoRemoveBody =>
+      'It leaves the gallery for good.';
+
+  @override
+  String get providerServicePhotoLastRefused =>
+      'A published service needs at least one photo. Unpublish it first to remove the last one.';
+
+  @override
+  String providerServicePhotoLabel(int index) {
+    return 'Photo $index';
+  }
+
+  @override
+  String get providerPackEmptyTitle => 'No packs yet';
+
+  @override
+  String get providerPackEmptyBody =>
+      'A pack bundles two or more of your published services at a price below their total — for clients planning a whole event.';
+
+  @override
+  String providerPackEmptyNeedsServices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'A pack bundles two or more of your published services at a price below their total.',
+      one: 'A pack bundles two or more of your published services at a price below their total. You have one published service, so there is nothing to bundle yet.',
+      zero: 'A pack bundles two or more of your published services at a price below their total. You have no published service yet, so there is nothing to bundle.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackCreate => 'Create a pack';
+
+  @override
+  String get providerPackPublishAnother => 'Publish another service';
+
+  @override
+  String get providerPackStatusUnpublished => 'Unpublished';
+
+  @override
+  String providerPackServicesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count services',
+      one: '1 service',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackSaves => 'Saves';
+
+  @override
+  String get providerPackSumOfItems => 'Sum of items';
+
+  @override
+  String providerPackAttentionItem(String service) {
+    return 'Needs attention — “$service” is no longer published, so clients cannot book this pack';
+  }
+
+  @override
+  String get providerPackAttentionDeleted =>
+      'Needs attention — a service in it was deleted, so clients cannot book this pack';
+
+  @override
+  String get providerPackAttentionProfile =>
+      'Needs attention — clients cannot book it while your profile is not approved';
+
+  @override
+  String get providerPackPriceRule =>
+      'The pack price must be below the sum of its services before you can publish';
+
+  @override
+  String get providerPackUnpublishTitle => 'Unpublish this pack?';
+
+  @override
+  String get providerPackUnpublishBody =>
+      'Clients can no longer find or book it. Bookings already accepted are kept.';
+
+  @override
+  String get providerPackPublished =>
+      'Pack published — clients can book it now';
+
+  @override
+  String get providerPackUnpublished => 'Pack unpublished';
+
+  @override
+  String get providerPackDeleted => 'Pack deleted';
+
+  @override
+  String get providerPackCreateTitle => 'Create pack';
+
+  @override
+  String get providerPackEditTitle => 'Edit pack';
+
+  @override
+  String get providerPackLangArabicMissing =>
+      'Arabic still needs a name. It is required before you can publish.';
+
+  @override
+  String get providerPackLangEnglishMissing =>
+      'English still needs a name. It is required before you can save.';
+
+  @override
+  String get providerPackLangCompleteLive =>
+      'English and Arabic are both complete. This pack is live, so edits show to clients straight away.';
+
+  @override
+  String providerPackNameLabel(String language) {
+    String _temp0 = intl.Intl.selectLogic(language, {
+      'ar': 'Pack name (Arabic)',
+      'other': 'Pack name (English)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackServicesSection => 'Services in this pack';
+
+  @override
+  String get providerPackEditServices => 'Add or remove services';
+
+  @override
+  String get providerPackNoServices =>
+      'Choose 2 to 6 of your published services.';
+
+  @override
+  String providerPackSumCaption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Sum of the $count services',
+      two: 'Sum of the two services',
+      one: 'Sum of the service',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String providerPackItemNotCovering(String wilaya) {
+    return 'Doesn’t cover $wilaya';
+  }
+
+  @override
+  String get providerPackItemDraft =>
+      'Not published — clients cannot book the pack';
+
+  @override
+  String get providerPackItemHidden =>
+      'Hidden by Eventor — clients cannot book the pack';
+
+  @override
+  String get providerPackPriceLabel => 'Pack price (DA)';
+
+  @override
+  String get providerPackPriceHelper => 'Must be below the sum of the items.';
+
+  @override
+  String get providerPackPriceNotBelow =>
+      'That is not below the sum of the items — clients would pay as much or more than booking them one by one.';
+
+  @override
+  String get providerPackClientsSave => 'Clients save';
+
+  @override
+  String providerPackSavingPercent(int percent) {
+    return '· $percent% off booking them separately';
+  }
+
+  @override
+  String get providerPackEventPlace => 'Event and place';
+
+  @override
+  String get providerPackEventType => 'Event type';
+
+  @override
+  String get providerPackWilaya => 'Wilaya';
+
+  @override
+  String get providerPackWilayaPickerBody =>
+      'Every service in the pack must cover it.';
+
+  @override
+  String providerPackWilayaCovering(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count services cover it',
+      one: '1 service covers it',
+      zero: 'No service covers it',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackPhotosTitle => 'Pack photos';
+
+  @override
+  String get providerPackDeleteButton => 'Delete this pack';
+
+  @override
+  String get providerPackDeleteCaption =>
+      'Deleting is permanent and is refused while the pack still has upcoming bookings. The services inside it are not affected.';
+
+  @override
+  String get providerPackDeleteTitle => 'Delete this pack?';
+
+  @override
+  String get providerPackDeleteBody =>
+      'Deleting is permanent. The services inside it are not affected.';
+
+  @override
+  String get providerPackDeleteRefusedTitle =>
+      'This pack cannot be deleted yet';
+
+  @override
+  String get providerPackServicesRange => 'Choose 2 to 6 services.';
+
+  @override
+  String get providerPackPhotosNeedDraft =>
+      'To add photos, first give the pack an English name, 2 to 6 services, a price, an event type and a wilaya.';
+
+  @override
+  String get providerPackChecklistBody =>
+      'Clients cannot see this pack until everything below is filled in. Your draft is already saved.';
+
+  @override
+  String get providerPackCheckEnglish => 'English name';
+
+  @override
+  String get providerPackCheckArabic => 'Arabic name';
+
+  @override
+  String get providerPackCheckServices => 'At least 2 published services';
+
+  @override
+  String get providerPackCheckPrice => 'A price below the sum of the items';
+
+  @override
+  String get providerPackCheckWilaya => 'A wilaya every service covers';
+
+  @override
+  String get providerPackCheckProfile => 'An approved profile';
+
+  @override
+  String providerPackFixThese(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Fix these $count',
+      two: 'Fix these two',
+      one: 'Fix this',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackChooseTitle => 'Choose services';
+
+  @override
+  String get providerPackChooseRule =>
+      'Pick 2 to 6 of your published services. Drafts and hidden services cannot go in a pack.';
+
+  @override
+  String providerPackChosenCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count chosen',
+      zero: 'None chosen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackChosenSum => 'sum';
+
+  @override
+  String providerPackChooseDone(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Done · $count chosen',
+      zero: 'Done',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackReasonDraft => 'Draft — cannot go in a pack';
+
+  @override
+  String get providerPackReasonHidden => 'Hidden — cannot go in a pack';
+
+  @override
+  String get providerPackReasonNotCoveringAny =>
+      'Doesn’t cover the pack’s wilaya';
+
+  @override
+  String get providerPackChooseFull => 'A pack holds up to 6 services.';
+
+  @override
+  String get providerPackChooseMin => 'Choose at least 2.';
+
+  @override
+  String get providerPackChooseEmpty => 'You have no services yet.';
 }

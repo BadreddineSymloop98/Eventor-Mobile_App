@@ -1,6 +1,7 @@
 import '../../../core/base/base_view_model.dart';
 import '../../../core/bookings/models/booking_card.dart';
 import '../../../core/errors/failure.dart';
+import '../../../core/provider/models/provider_booking.dart' as provider_booking show replyHoursLeft;
 import '../../../core/provider/provider_repository.dart';
 import '../../../core/session/session_controller.dart';
 import '../../home/view_model/home_view_model.dart' show Greeting;
@@ -64,15 +65,13 @@ class ProviderHomeViewModel extends BaseViewModel {
 
   /// Whole hours left to answer [request] — "reply within 47 h" — never
   /// below zero; `null` when the server did not say when it was made.
-  int? replyHoursLeft(BookingCard request) {
-    final DateTime? made = request.createdAt;
-    if (made == null) return null;
-    final Duration left =
-        made.add(Duration(hours: _replyDeadlineHours)).difference(_now());
-    if (left.isNegative) return 0;
-    // Rounded up: 46 h 10 min still leaves "47 h" to answer in.
-    return (left.inMinutes / 60).ceil();
-  }
+  int? replyHoursLeft(BookingCard request) =>
+      // Shared with P1 / P2, so the two screens never disagree.
+      provider_booking.replyHoursLeft(
+        request,
+        deadlineHours: _replyDeadlineHours,
+        now: _now(),
+      );
 
   Future<void> load() async {
     _isLoading = true;

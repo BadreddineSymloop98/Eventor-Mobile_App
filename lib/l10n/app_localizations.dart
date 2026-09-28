@@ -1502,18 +1502,6 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get navProfile;
 
-  /// Title on a tab whose screens are not built yet.
-  ///
-  /// In en, this message translates to:
-  /// **'Coming soon'**
-  String get tabComingSoonTitle;
-
-  /// Body on a tab whose screens are not built yet.
-  ///
-  /// In en, this message translates to:
-  /// **'This part of Eventor is on its way.'**
-  String get tabComingSoonBody;
-
   /// Row on the Profile tab that opens the saved services and packs.
   ///
   /// In en, this message translates to:
@@ -5341,6 +5329,2220 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Download complete · Tap to open'**
   String get invoiceDownloadNoticeText;
+
+  /// P15 title: the provider's availability calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get availabilityTitle;
+
+  /// P15 legend and day state: nothing on the day.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get availabilityLegendFree;
+
+  /// P15 legend and day state: blocked for part of the day or one service.
+  ///
+  /// In en, this message translates to:
+  /// **'Partly blocked'**
+  String get availabilityLegendPartial;
+
+  /// P15 legend and day state: blocked all day for every service.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get availabilityLegendBlocked;
+
+  /// P15 legend and day state: a pending request holds the day.
+  ///
+  /// In en, this message translates to:
+  /// **'Request held'**
+  String get availabilityLegendHeld;
+
+  /// P15 legend and day state: an accepted booking takes the day.
+  ///
+  /// In en, this message translates to:
+  /// **'Booked'**
+  String get availabilityLegendBooked;
+
+  /// P15 legend entry and day label for today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get availabilityToday;
+
+  /// P15 caption under the calendar: the booking notice period from the server config.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Clients must book at least {count} day ahead.} other{Clients must book at least {count} days ahead.}}'**
+  String availabilityNotice(int count);
+
+  /// P15 caption under the calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a day to see what is on it, or to block it.'**
+  String get availabilityTapHint;
+
+  /// P15 sticky button: block the selected day.
+  ///
+  /// In en, this message translates to:
+  /// **'Block a day'**
+  String get availabilityBlockDay;
+
+  /// P15c subtitle: how many things are on the day.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing is on this day yet.} one{One thing is on this day.} other{{count} things are on this day.}}'**
+  String availabilityDaySummary(int count);
+
+  /// P15c subtitle, second sentence, when the day has items.
+  ///
+  /// In en, this message translates to:
+  /// **'Only blocks you added can be removed.'**
+  String get availabilityDayRemoveHint;
+
+  /// P15c subtitle for a past day (read-only).
+  ///
+  /// In en, this message translates to:
+  /// **'This day has passed. Nothing on it can be changed.'**
+  String get availabilityDayPast;
+
+  /// P15c row: a whole-day block.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked all day'**
+  String get availabilityItemBlockedAllDay;
+
+  /// P15c row: a time-slot block; the times follow as a separate run.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get availabilityItemBlockedSlot;
+
+  /// P15c row: an accepted booking and its reference.
+  ///
+  /// In en, this message translates to:
+  /// **'Booked — {reference}'**
+  String availabilityItemBooked(String reference);
+
+  /// P15c row: a pending request and its reference.
+  ///
+  /// In en, this message translates to:
+  /// **'Request held — {reference}'**
+  String availabilityItemHeld(String reference);
+
+  /// P15a/P15c: a block that covers every service.
+  ///
+  /// In en, this message translates to:
+  /// **'All services'**
+  String get availabilityAllServices;
+
+  /// P15c row: the provider's private note, quoted.
+  ///
+  /// In en, this message translates to:
+  /// **'“{note}”'**
+  String availabilityItemNote(String note);
+
+  /// P15c row action: remove a block the provider added.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get availabilityRemove;
+
+  /// P15c row status for a booking or request.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot be removed'**
+  String get availabilityCannotRemove;
+
+  /// P15c: why an accepted booking cannot be removed here.
+  ///
+  /// In en, this message translates to:
+  /// **'An accepted booking. Cancel or move it from the booking.'**
+  String get availabilityWhyBooked;
+
+  /// P15c: why a pending request cannot be removed here.
+  ///
+  /// In en, this message translates to:
+  /// **'A request waiting for your answer holds this day.'**
+  String get availabilityWhyHeld;
+
+  /// P15c action: opens P15a.
+  ///
+  /// In en, this message translates to:
+  /// **'Block the whole day'**
+  String get availabilityBlockWholeDay;
+
+  /// P15c action: opens P15b.
+  ///
+  /// In en, this message translates to:
+  /// **'Block a time slot'**
+  String get availabilityBlockSlot;
+
+  /// P15c action: opens P15b when the day already has a slot blocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Block another slot'**
+  String get availabilityBlockAnotherSlot;
+
+  /// P15c action: close the sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get availabilityClose;
+
+  /// P15c note when the day is already blocked all day.
+  ///
+  /// In en, this message translates to:
+  /// **'This day is already blocked for every service.'**
+  String get availabilityAlreadyBlocked;
+
+  /// P15c note when accepted bookings fill the day.
+  ///
+  /// In en, this message translates to:
+  /// **'This day is fully booked, so there is nothing left to block.'**
+  String get availabilityFullyBooked;
+
+  /// P15a title, e.g. Block Saturday 21 March.
+  ///
+  /// In en, this message translates to:
+  /// **'Block {day}'**
+  String availabilityBlockDayTitle(String day);
+
+  /// P15b title, e.g. Block part of Saturday 21 March.
+  ///
+  /// In en, this message translates to:
+  /// **'Block part of {day}'**
+  String availabilityBlockSlotTitle(String day);
+
+  /// P15a subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients will not be able to book this day. You can remove the block at any time.'**
+  String get availabilityBlockDayBody;
+
+  /// P15b subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients can still book the rest of the day. You can remove the block at any time.'**
+  String get availabilityBlockSlotBody;
+
+  /// P15a/P15b option row: block the whole day.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole day'**
+  String get availabilityModeWholeDay;
+
+  /// P15a/P15b option row: block a time slot.
+  ///
+  /// In en, this message translates to:
+  /// **'Time slot'**
+  String get availabilityModeSlot;
+
+  /// P15a/P15b option row value on the chosen mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected'**
+  String get availabilityModeSelected;
+
+  /// P15a/P15b option row: which services the block covers.
+  ///
+  /// In en, this message translates to:
+  /// **'Which services'**
+  String get availabilityServicesLabel;
+
+  /// Service picker subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Block every service, or just one.'**
+  String get availabilityServicesSubtitle;
+
+  /// Toast when the provider's services could not load.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not load your services. Try again.'**
+  String get availabilityServicesFailed;
+
+  /// P15a/P15b note field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (only you see it)'**
+  String get availabilityNoteLabel;
+
+  /// P15a/P15b note field hint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Family wedding'**
+  String get availabilityNoteHint;
+
+  /// P15a primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Block the day'**
+  String get availabilityConfirmDay;
+
+  /// P15b primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Block the slot'**
+  String get availabilityConfirmSlot;
+
+  /// P15a/P15b secondary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get availabilityCancel;
+
+  /// P15b helper under the From/To pickers.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients can still book outside these hours.'**
+  String get availabilitySlotHelper;
+
+  /// P15b error when a time is missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick when the slot starts and ends.'**
+  String get availabilityTimesMissing;
+
+  /// P15a/P15b note on a day a request holds.
+  ///
+  /// In en, this message translates to:
+  /// **'A request is waiting on this day. Blocking it does not decline the request.'**
+  String get availabilityHeldWarning;
+
+  /// P15a/P15b note on a day with an accepted booking.
+  ///
+  /// In en, this message translates to:
+  /// **'This day already has a booking. Blocking it does not cancel the booking.'**
+  String get availabilityBookedWarning;
+
+  /// P15a/P15b error AVAILABILITY_DATE_PAST.
+  ///
+  /// In en, this message translates to:
+  /// **'This day has already passed. Pick another day.'**
+  String get availabilityErrorDatePast;
+
+  /// P15a/P15b error AVAILABILITY_SERVICE_INVALID.
+  ///
+  /// In en, this message translates to:
+  /// **'That service can no longer be blocked. Pick another one, or block all services.'**
+  String get availabilityErrorServiceInvalid;
+
+  /// Toast for AVAILABILITY_BLOCK_NOT_REMOVABLE.
+  ///
+  /// In en, this message translates to:
+  /// **'This block can no longer be removed. The calendar is up to date again.'**
+  String get availabilityErrorNotRemovable;
+
+  /// Toast for AVAILABILITY_BLOCK_NOT_FOUND.
+  ///
+  /// In en, this message translates to:
+  /// **'This block was already removed. The calendar is up to date again.'**
+  String get availabilityErrorNotFound;
+
+  /// Toast after a whole day is blocked.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} is blocked.'**
+  String availabilityBlockedDayToast(String day);
+
+  /// Toast after a time slot is blocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Part of {day} is blocked.'**
+  String availabilityBlockedSlotToast(String day);
+
+  /// Toast after a block is removed (with Undo).
+  ///
+  /// In en, this message translates to:
+  /// **'Block removed.'**
+  String get availabilityRemovedToast;
+
+  /// Toast after Undo put the block back.
+  ///
+  /// In en, this message translates to:
+  /// **'Block put back.'**
+  String get availabilityRestoredToast;
+
+  /// P1: the Requests tab's title.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get providerRequestsTabTitle;
+
+  /// P1: the chip for pending requests.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get providerRequestsChipRequests;
+
+  /// P1: the chip for accepted bookings still ahead.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get providerRequestsChipUpcoming;
+
+  /// P1: the chip for completed and past bookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get providerRequestsChipPast;
+
+  /// P1a / P1b: no pending request.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests yet'**
+  String get providerRequestsEmptyTitle;
+
+  /// P1a: what arrives here, with the reply deadline.
+  ///
+  /// In en, this message translates to:
+  /// **'When a client asks to book one of your services, it arrives here. You have {hours, plural, =1{1 hour} other{{hours} hours}} to accept or decline before the request expires.'**
+  String providerRequestsEmptyBody(int hours);
+
+  /// P1 Upcoming chip, empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No bookings ahead'**
+  String get providerRequestsEmptyUpcomingTitle;
+
+  /// P1 Upcoming chip, empty: what shows up here.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests you accept show up here until the event day.'**
+  String get providerRequestsEmptyUpcomingBody;
+
+  /// P1 Past chip, empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No past bookings yet'**
+  String get providerRequestsEmptyPastTitle;
+
+  /// P1 Past chip, empty: what shows up here.
+  ///
+  /// In en, this message translates to:
+  /// **'Once an event is behind you, it moves here with its invoice.'**
+  String get providerRequestsEmptyPastBody;
+
+  /// P1b: why no request can come in while the profile is reviewed.
+  ///
+  /// In en, this message translates to:
+  /// **'We are checking your documents. Your services stay unpublished until then, so clients cannot send you requests yet.'**
+  String get providerRequestsReviewBody;
+
+  /// P1b for a refused profile: why no request can come in.
+  ///
+  /// In en, this message translates to:
+  /// **'Some of your documents were not accepted. Your services stay unpublished until your profile is approved, so clients cannot send you requests yet.'**
+  String get providerRequestsRejectedBody;
+
+  /// P1b: opens the provider's documents.
+  ///
+  /// In en, this message translates to:
+  /// **'See my documents'**
+  String get providerRequestsSeeDocuments;
+
+  /// P1 card / P2 timeline: hours left to answer a request.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours, plural, =0{Reply now} other{Reply within {hours} h}}'**
+  String providerRequestsReplyWithin(int hours);
+
+  /// Toast after accepting a request from P1.
+  ///
+  /// In en, this message translates to:
+  /// **'Request from {name} accepted — it is now under Upcoming.'**
+  String providerRequestsAccepted(String name);
+
+  /// P2 / P2c header while it is a request.
+  ///
+  /// In en, this message translates to:
+  /// **'Request'**
+  String get providerBookingTitleRequest;
+
+  /// P2 timeline: the client's request.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested by {client}'**
+  String providerBookingStepRequestedBy(String client);
+
+  /// P2 timeline: the provider still has to answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reply'**
+  String get providerBookingStepYourReply;
+
+  /// P2a timeline: the provider accepted.
+  ///
+  /// In en, this message translates to:
+  /// **'You accepted'**
+  String get providerBookingStepYouAccepted;
+
+  /// P2c timeline: the provider declined.
+  ///
+  /// In en, this message translates to:
+  /// **'You declined'**
+  String get providerBookingStepYouDeclined;
+
+  /// P2d timeline: the client cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled by {client}'**
+  String providerBookingStepCancelledBy(String client);
+
+  /// P2d timeline: an admin cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled by Eventor'**
+  String get providerBookingStepCancelledByEventor;
+
+  /// P2b timeline: the event is behind; both confirm it.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the event'**
+  String get providerBookingStepConfirmEvent;
+
+  /// P2b timeline: neither side confirmed yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for both of you'**
+  String get providerBookingStepWaitingBoth;
+
+  /// P2b timeline: the provider confirmed, the client not yet.
+  ///
+  /// In en, this message translates to:
+  /// **'You confirmed · waiting for {client}'**
+  String providerBookingStepYouConfirmed(String client);
+
+  /// P2b timeline: the client confirmed, the provider not yet.
+  ///
+  /// In en, this message translates to:
+  /// **'{client} confirmed · waiting for you'**
+  String providerBookingStepClientConfirmed(String client);
+
+  /// P2e timeline: both sides confirmed, after the date.
+  ///
+  /// In en, this message translates to:
+  /// **'both of you confirmed'**
+  String get providerBookingStepBothConfirmed;
+
+  /// P4a timeline: the client proposed a new date.
+  ///
+  /// In en, this message translates to:
+  /// **'{client} proposed a new date'**
+  String providerBookingStepClientProposed(String client);
+
+  /// P2 timeline: the provider proposed a new date.
+  ///
+  /// In en, this message translates to:
+  /// **'You proposed a new date'**
+  String get providerBookingStepYouProposed;
+
+  /// P2 timeline: waiting for the client's answer.
+  ///
+  /// In en, this message translates to:
+  /// **'waiting for {client}'**
+  String providerBookingStepWaitingFor(String client);
+
+  /// P2 service row: whose service and its category.
+  ///
+  /// In en, this message translates to:
+  /// **'Your service · {category}'**
+  String providerBookingYourService(String category);
+
+  /// P2 service row for a pack booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pack'**
+  String get providerBookingYourPack;
+
+  /// P2 section: date, time, type, guests.
+  ///
+  /// In en, this message translates to:
+  /// **'The event'**
+  String get providerBookingTheEvent;
+
+  /// P2 section: the note the client wrote.
+  ///
+  /// In en, this message translates to:
+  /// **'Client’s note'**
+  String get providerBookingClientNote;
+
+  /// P2 price card's total row.
+  ///
+  /// In en, this message translates to:
+  /// **'Total · client pays on site'**
+  String get providerBookingTotalOnSite;
+
+  /// P2 note under the price.
+  ///
+  /// In en, this message translates to:
+  /// **'The client pays you in cash on the day. Nothing is collected through Eventor.'**
+  String get providerBookingCashNote;
+
+  /// P2 section: who the client is.
+  ///
+  /// In en, this message translates to:
+  /// **'Client'**
+  String get providerBookingClientSection;
+
+  /// P2 client card while pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden until you accept'**
+  String get providerBookingContactHidden;
+
+  /// P2c client card.
+  ///
+  /// In en, this message translates to:
+  /// **'Not shared'**
+  String get providerBookingContactNotShared;
+
+  /// P2 contact helper while pending.
+  ///
+  /// In en, this message translates to:
+  /// **'{client}’s phone and email appear here as soon as you accept the request.'**
+  String providerBookingContactPending(String client);
+
+  /// P2a contact helper.
+  ///
+  /// In en, this message translates to:
+  /// **'{client}’s phone and email are shared because you accepted this booking.'**
+  String providerBookingContactAccepted(String client);
+
+  /// P2b contact helper.
+  ///
+  /// In en, this message translates to:
+  /// **'{client}’s phone and email stay visible until the booking is closed.'**
+  String providerBookingContactUntilClosed(String client);
+
+  /// P2c contact helper.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact details are never shared for a request you declined.'**
+  String get providerBookingContactDeclined;
+
+  /// P2d / P2e contact helper.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact details stay visible while this booking is in your history.'**
+  String get providerBookingContactHistory;
+
+  /// Contact helper on a request the client cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact details are not shared for a request that was cancelled.'**
+  String get providerBookingContactWithdrawn;
+
+  /// P2 cancellation policy caption.
+  ///
+  /// In en, this message translates to:
+  /// **'Set by you'**
+  String get providerBookingPolicySetByYou;
+
+  /// P2 ghost button: chat with the client.
+  ///
+  /// In en, this message translates to:
+  /// **'Message {client}'**
+  String providerBookingMessageClient(String client);
+
+  /// P2 primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept request'**
+  String get providerBookingAcceptRequest;
+
+  /// P2b primary button: opens P5.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the event'**
+  String get providerBookingConfirmEvent;
+
+  /// P2c callout title.
+  ///
+  /// In en, this message translates to:
+  /// **'You declined this request'**
+  String get providerBookingDeclinedTitle;
+
+  /// P2c callout body after the quoted reason.
+  ///
+  /// In en, this message translates to:
+  /// **'The date is free again on your calendar and {client} has been told.'**
+  String providerBookingDeclinedBody(String client);
+
+  /// P2d callout title.
+  ///
+  /// In en, this message translates to:
+  /// **'{client} cancelled this booking'**
+  String providerBookingCancelledByClientTitle(String client);
+
+  /// P2d callout body after the quoted reason.
+  ///
+  /// In en, this message translates to:
+  /// **'The date is free again on your calendar and the invoice has been voided.'**
+  String get providerBookingCancelledByClientBody;
+
+  /// P2d callout body when the provider cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'{client} has been told, the date is free again on your calendar and the invoice has been voided.'**
+  String providerBookingCancelledByYouBody(String client);
+
+  /// P2d callout title when an admin cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Eventor cancelled this booking'**
+  String get providerBookingCancelledByEventorTitle;
+
+  /// Callout on a request the client cancelled before an answer.
+  ///
+  /// In en, this message translates to:
+  /// **'{client} cancelled this request'**
+  String providerBookingRequestWithdrawnTitle(String client);
+
+  /// Callout body on a request the client cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'The date is free again on your calendar.'**
+  String get providerBookingRequestWithdrawnBody;
+
+  /// P2e callout title.
+  ///
+  /// In en, this message translates to:
+  /// **'{client} can review this booking'**
+  String providerBookingReviewTitle(String client);
+
+  /// P2e callout body.
+  ///
+  /// In en, this message translates to:
+  /// **'Their review appears in Reviews, where you can reply to it once. Clients have 60 days after the event to leave one.'**
+  String get providerBookingReviewBody;
+
+  /// P4a banner title.
+  ///
+  /// In en, this message translates to:
+  /// **'{client} proposes a new date'**
+  String providerBookingProposalTitle(String client);
+
+  /// P4a banner: what declining means.
+  ///
+  /// In en, this message translates to:
+  /// **'If you decline, the {date} booking stands and {client} may cancel it.'**
+  String providerBookingProposalHelper(String date, String client);
+
+  /// P2 banner: the provider's own proposal waits for the client.
+  ///
+  /// In en, this message translates to:
+  /// **'Proposal sent: {date}'**
+  String providerBookingProposalSentTitle(String date);
+
+  /// P2 banner body for the provider's proposal.
+  ///
+  /// In en, this message translates to:
+  /// **'The booking stays on {date} until {client} answers.'**
+  String providerBookingProposalSentBody(String date, String client);
+
+  /// P2 banner action: withdraw the provider's proposal.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get providerBookingWithdraw;
+
+  /// Toast after P4 sent a proposal.
+  ///
+  /// In en, this message translates to:
+  /// **'Proposal sent. {client} will be told.'**
+  String providerBookingProposalSentToast(String client);
+
+  /// Provider cancel sheet body.
+  ///
+  /// In en, this message translates to:
+  /// **'{client} is told straight away, the date is released on your calendar and the invoice is voided. This cannot be undone.'**
+  String providerBookingCancelBody(String client);
+
+  /// Provider cancel sheet: reason hint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. The hall is closed for repairs that day'**
+  String get providerBookingCancelReasonHint;
+
+  /// Provider cancel sheet: note.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients count on you: cancel only when there is no other way. Proposing a new date is often better.'**
+  String get providerBookingCancelNote;
+
+  /// Provider cancel sheet: dismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the booking'**
+  String get providerBookingCancelKeep;
+
+  /// P3 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline this request?'**
+  String get providerBookingDeclineTitle;
+
+  /// P3 reason label.
+  ///
+  /// In en, this message translates to:
+  /// **'Why are you declining?'**
+  String get providerBookingDeclineReasonLabel;
+
+  /// Provider problem sheet type.
+  ///
+  /// In en, this message translates to:
+  /// **'The client didn’t show up'**
+  String get providerBookingProblemClientNoShow;
+
+  /// Provider problem sheet type.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation disagreement'**
+  String get providerBookingProblemCancellation;
+
+  /// P4 legend: a free day.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get providerBookingLegendFree;
+
+  /// P4 legend: a day the provider blocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked by you'**
+  String get providerBookingLegendBlocked;
+
+  /// P4 note under the calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Days you are already booked or have blocked are greyed out.'**
+  String get providerBookingRescheduleFootnote;
+
+  /// P4 helper under From / To.
+  ///
+  /// In en, this message translates to:
+  /// **'The times the client asked for, until you change them.'**
+  String get providerBookingTimeHelper;
+
+  /// P4 reason hint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. The hall is only free the week after'**
+  String get providerBookingRescheduleReasonHint;
+
+  /// P4 reason missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Say why — {client} reads this first.'**
+  String providerBookingRescheduleReasonError(String client);
+
+  /// P4 hold notice on an accepted booking.
+  ///
+  /// In en, this message translates to:
+  /// **'The {date} booking stays in place until {client} answers. If the proposal is declined, nothing changes and the price stays the same.'**
+  String providerBookingRescheduleHold(String date, String client);
+
+  /// P4 notice on a pending request.
+  ///
+  /// In en, this message translates to:
+  /// **'The request moves to the new date straight away and {client} is told. You can then accept it.'**
+  String providerBookingReschedulePendingNote(String client);
+
+  /// P4 banner: the day is no longer free.
+  ///
+  /// In en, this message translates to:
+  /// **'You are no longer free that day. Pick another date.'**
+  String get providerBookingRescheduleTakenBody;
+
+  /// P5 body.
+  ///
+  /// In en, this message translates to:
+  /// **'The event with {client} was on {date}. Confirm before we close the booking — it takes one tap.'**
+  String providerBookingCheckInBody(String client, String date);
+
+  /// P5 All good card.
+  ///
+  /// In en, this message translates to:
+  /// **'The event went ahead as agreed. We close the booking and {client} can leave a review.'**
+  String providerBookingAllGoodBody(String client);
+
+  /// P5 problem card.
+  ///
+  /// In en, this message translates to:
+  /// **'The client did not show up, or something else went wrong. We open a dispute and support steps in.'**
+  String get providerBookingProblemBody;
+
+  /// P5 ghost button: close for now.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me tomorrow'**
+  String get providerBookingRemindTomorrow;
+
+  /// P5 footnote.
+  ///
+  /// In en, this message translates to:
+  /// **'If neither of you answers, the booking closes on its own 72 hours after the event.'**
+  String get providerBookingCheckInFootnote;
+
+  /// Toast after All good while the client has not confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks! It closes once {client} confirms too.'**
+  String providerBookingCheckInWaiting(String client);
+
+  /// P5 opened on a booking with nothing to confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'There is nothing to confirm on this booking now.'**
+  String get providerBookingCheckInNothing;
+
+  /// P5: opens the booking instead.
+  ///
+  /// In en, this message translates to:
+  /// **'See the booking'**
+  String get providerBookingOpen;
+
+  /// P6 title — the provider Services tab.
+  ///
+  /// In en, this message translates to:
+  /// **'My services'**
+  String get providerServiceTabTitle;
+
+  /// P10 title — the Packs chip of the Services tab.
+  ///
+  /// In en, this message translates to:
+  /// **'My packs'**
+  String get providerPackTabTitle;
+
+  /// P6/P10 chip: the services list.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get providerServiceChipServices;
+
+  /// P6/P10 chip: the packs list.
+  ///
+  /// In en, this message translates to:
+  /// **'Packs'**
+  String get providerServiceChipPacks;
+
+  /// P6a empty title.
+  ///
+  /// In en, this message translates to:
+  /// **'No services yet'**
+  String get providerServiceEmptyTitle;
+
+  /// P6a empty body.
+  ///
+  /// In en, this message translates to:
+  /// **'A service is what clients find and book — a package, a session, a hire. Add one, then publish it when it is ready.'**
+  String get providerServiceEmptyBody;
+
+  /// Service/pack card: rating and review count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{rating} · 1 review} other{{rating} · {count} reviews}}'**
+  String providerServiceRatingLine(int count, String rating);
+
+  /// Card: a published service with no reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews yet'**
+  String get providerServiceNoReviews;
+
+  /// Card: meta line of a draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Not published yet'**
+  String get providerServiceNotPublishedYet;
+
+  /// P6b card meta: when an admin hid the service.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden on {date}'**
+  String providerServiceHiddenOn(String date);
+
+  /// Card counts: photos.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{no photos} =1{1 photo} other{{count} photos}}'**
+  String providerServicePhotosCount(int count);
+
+  /// Card counts: bookings.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{no bookings} =1{1 booking} other{{count} bookings}}'**
+  String providerServiceBookingsCount(int count);
+
+  /// Draft card note; items is a list of what is missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing before publishing: {items}'**
+  String providerServiceMissingNote(String items);
+
+  /// Missing item: English title.
+  ///
+  /// In en, this message translates to:
+  /// **'English title'**
+  String get providerServiceMissingTitleEn;
+
+  /// Missing item: Arabic title.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic title'**
+  String get providerServiceMissingTitleAr;
+
+  /// Missing item: English description.
+  ///
+  /// In en, this message translates to:
+  /// **'English description'**
+  String get providerServiceMissingDescriptionEn;
+
+  /// Missing item: Arabic description.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic description'**
+  String get providerServiceMissingDescriptionAr;
+
+  /// Missing item: a base price.
+  ///
+  /// In en, this message translates to:
+  /// **'a base price'**
+  String get providerServiceMissingPrice;
+
+  /// Missing item: a photo.
+  ///
+  /// In en, this message translates to:
+  /// **'a photo'**
+  String get providerServiceMissingPhotos;
+
+  /// Missing item: a category.
+  ///
+  /// In en, this message translates to:
+  /// **'a category'**
+  String get providerServiceMissingCategory;
+
+  /// Missing item: an open wilaya.
+  ///
+  /// In en, this message translates to:
+  /// **'an open wilaya'**
+  String get providerServiceMissingWilayas;
+
+  /// Separator between items of a list inside a sentence.
+  ///
+  /// In en, this message translates to:
+  /// **', '**
+  String get providerServiceListSeparator;
+
+  /// Published-but-not-visible note: the wilayas it covers are closed.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Not visible to clients — {wilayas} is closed on Eventor right now} other{Not visible to clients — {wilayas} are closed on Eventor right now}}'**
+  String providerServiceNotVisibleClosed(int count, String wilayas);
+
+  /// Not-visible note: no open wilaya.
+  ///
+  /// In en, this message translates to:
+  /// **'Not visible to clients — it covers no wilaya open on Eventor'**
+  String get providerServiceNotVisibleNoWilaya;
+
+  /// Not-visible note: provider not verified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not visible to clients — your profile is still being reviewed'**
+  String get providerServiceNotVisibleReview;
+
+  /// Not-visible note: provider blocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Not visible to clients — your account is blocked'**
+  String get providerServiceNotVisibleBlocked;
+
+  /// P6b note when the admin does not allow a resubmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Eventor hid this service. Clients cannot see it and you cannot publish it again. Edits are still saved.'**
+  String get providerServiceHiddenFinal;
+
+  /// P6b note when the admin allows a resubmission (there is no resubmit endpoint).
+  ///
+  /// In en, this message translates to:
+  /// **'Eventor hid this service. Clients cannot see it. Fix it, then contact support to have it reviewed again. Edits are still saved.'**
+  String get providerServiceHiddenReviewable;
+
+  /// P6b: the admin’s own message.
+  ///
+  /// In en, this message translates to:
+  /// **'Eventor’s note: “{message}”'**
+  String providerServiceHiddenMessage(String message);
+
+  /// Button: unpublish a service or pack.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpublish'**
+  String get providerServiceUnpublish;
+
+  /// Card button: edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get providerServiceEdit;
+
+  /// Button: publish a service or pack.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish'**
+  String get providerServicePublish;
+
+  /// Toast after publishing a service.
+  ///
+  /// In en, this message translates to:
+  /// **'Published — clients can find it now'**
+  String get providerServicePublished;
+
+  /// Toast after unpublishing a service.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpublished — it is a draft again'**
+  String get providerServiceUnpublished;
+
+  /// Toast after saving a draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved'**
+  String get providerServiceDraftSaved;
+
+  /// Toast after saving an edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes saved'**
+  String get providerServiceChangesSaved;
+
+  /// Toast after deleting a service.
+  ///
+  /// In en, this message translates to:
+  /// **'Service deleted'**
+  String get providerServiceDeleted;
+
+  /// Confirm sheet title (decision 6).
+  ///
+  /// In en, this message translates to:
+  /// **'Unpublish this service?'**
+  String get providerServiceUnpublishTitle;
+
+  /// Confirm sheet body: unpublish a service.
+  ///
+  /// In en, this message translates to:
+  /// **'It leaves search and your profile straight away and goes back to your drafts. Bookings already accepted are kept.'**
+  String get providerServiceUnpublishBody;
+
+  /// Confirm sheet: cancel an unpublish.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it published'**
+  String get providerServiceKeepPublished;
+
+  /// Confirm sheet title: delete a service.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this service?'**
+  String get providerServiceDeleteTitle;
+
+  /// Confirm sheet body: delete a service.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting is permanent. Requests still waiting for your answer on it are cancelled.'**
+  String get providerServiceDeleteBody;
+
+  /// Confirm sheet: delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get providerServiceDeleteConfirm;
+
+  /// Confirm sheet: cancel a delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it'**
+  String get providerServiceDeleteKeep;
+
+  /// P7a danger button.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this service'**
+  String get providerServiceDeleteButton;
+
+  /// P7a danger caption.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting is permanent. It is refused while the service still has upcoming bookings or sits in a pack.'**
+  String get providerServiceDeleteCaption;
+
+  /// P7b title.
+  ///
+  /// In en, this message translates to:
+  /// **'This service cannot be deleted yet'**
+  String get providerServiceDeleteRefusedTitle;
+
+  /// P7b body when the service is published.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting is blocked while this is true. Unpublishing is available now and takes it out of search straight away.'**
+  String get providerServiceDeleteRefusedBody;
+
+  /// P7b body when there is nothing to unpublish.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting is blocked while this is true.'**
+  String get providerServiceDeleteRefusedBodyPlain;
+
+  /// P7b blocker row: accepted bookings ahead.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 accepted booking is still ahead} other{{count} accepted bookings are still ahead}}'**
+  String providerServiceBlockerBookings(int count);
+
+  /// P7b blocker row when the server gave no count.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted bookings are still ahead'**
+  String get providerServiceBlockerBookingsUncounted;
+
+  /// P7b blocker row: the service sits in packs.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{It belongs to 1 of your packs} other{It belongs to {count} of your packs}}'**
+  String providerServiceBlockerPacks(int count);
+
+  /// P7b blocker row when the server gave no count.
+  ///
+  /// In en, this message translates to:
+  /// **'It still sits in one of your packs'**
+  String get providerServiceBlockerPacksUncounted;
+
+  /// P7b primary action.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpublish instead'**
+  String get providerServiceUnpublishInstead;
+
+  /// Sheet: cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get providerServiceCancel;
+
+  /// P7a title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit service'**
+  String get providerServiceEditTitle;
+
+  /// Content-language control: English (never translated).
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get providerServiceLangEnglish;
+
+  /// Content-language control: Arabic (never translated).
+  ///
+  /// In en, this message translates to:
+  /// **'عربي'**
+  String get providerServiceLangArabic;
+
+  /// P7 helper under the language control: what the Arabic lacks (both|title|description).
+  ///
+  /// In en, this message translates to:
+  /// **'{what, select, both{Arabic still needs a title and a description. Both are required before you can publish.} title{Arabic still needs a title. It is required before you can publish.} other{Arabic still needs a description. It is required before you can publish.}}'**
+  String providerServiceLangArabicMissing(String what);
+
+  /// P7 helper: what the English lacks (both|title|description).
+  ///
+  /// In en, this message translates to:
+  /// **'{what, select, both{English still needs a title and a description. Both are required before you can publish.} title{English still needs a title. It is required before you can publish.} other{English still needs a description. It is required before you can publish.}}'**
+  String providerServiceLangEnglishMissing(String what);
+
+  /// P7 helper: both languages complete, not live.
+  ///
+  /// In en, this message translates to:
+  /// **'English and Arabic are both complete.'**
+  String get providerServiceLangComplete;
+
+  /// P7a helper: complete and live.
+  ///
+  /// In en, this message translates to:
+  /// **'English and Arabic are both complete. This service is live, so edits show to clients straight away.'**
+  String get providerServiceLangCompleteLive;
+
+  /// Form section.
+  ///
+  /// In en, this message translates to:
+  /// **'Basics'**
+  String get providerServiceBasics;
+
+  /// Form section.
+  ///
+  /// In en, this message translates to:
+  /// **'Pricing'**
+  String get providerServicePricing;
+
+  /// Form section.
+  ///
+  /// In en, this message translates to:
+  /// **'Capacity'**
+  String get providerServiceCapacity;
+
+  /// Form section: facts.
+  ///
+  /// In en, this message translates to:
+  /// **'What is included'**
+  String get providerServiceIncluded;
+
+  /// Form section: extras.
+  ///
+  /// In en, this message translates to:
+  /// **'Extras'**
+  String get providerServiceExtras;
+
+  /// Form section: wilayas.
+  ///
+  /// In en, this message translates to:
+  /// **'Wilayas covered'**
+  String get providerServiceWilayas;
+
+  /// Form section: cancellation policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation policy'**
+  String get providerServicePolicy;
+
+  /// Form section, row and P8 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get providerServicePhotos;
+
+  /// Form row: category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get providerServiceCategory;
+
+  /// Form row placeholder: nothing picked yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose'**
+  String get providerServiceChoose;
+
+  /// Form field: the title in the content language (en|ar).
+  ///
+  /// In en, this message translates to:
+  /// **'{language, select, ar{Title (Arabic)} other{Title (English)}}'**
+  String providerServiceTitleLabel(String language);
+
+  /// Form field: the description in the content language (en|ar).
+  ///
+  /// In en, this message translates to:
+  /// **'{language, select, ar{Description (Arabic)} other{Description (English)}}'**
+  String providerServiceDescriptionLabel(String language);
+
+  /// Form field: the cancellation policy in the content language (en|ar).
+  ///
+  /// In en, this message translates to:
+  /// **'{language, select, ar{Shown to clients before they book (Arabic)} other{Shown to clients before they book (English)}}'**
+  String providerServicePolicyLabel(String language);
+
+  /// Form field: base price.
+  ///
+  /// In en, this message translates to:
+  /// **'Base price (DA)'**
+  String get providerServiceBasePriceLabel;
+
+  /// Form helper: base price.
+  ///
+  /// In en, this message translates to:
+  /// **'The starting price, before any extras.'**
+  String get providerServiceBasePriceHelper;
+
+  /// Form field: base price of an on-quote service.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting price (DA)'**
+  String get providerServiceStartingPriceLabel;
+
+  /// Form helper: base price of an on-quote service.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients see “On quote”. This figure is what a pack counts for it.'**
+  String get providerServiceStartingPriceHelper;
+
+  /// Form row: price type.
+  ///
+  /// In en, this message translates to:
+  /// **'Price type'**
+  String get providerServicePriceTypeLabel;
+
+  /// Price type picker option (API value).
+  ///
+  /// In en, this message translates to:
+  /// **'{type, select, per_event{Per event} per_hour{Per hour} per_person{Per person} per_day{Per day} other{On quote}}'**
+  String providerServicePriceTypeOption(String type);
+
+  /// Form row: max events per day.
+  ///
+  /// In en, this message translates to:
+  /// **'Max events per day'**
+  String get providerServiceMaxEventsLabel;
+
+  /// Form row: max guests.
+  ///
+  /// In en, this message translates to:
+  /// **'Max guests'**
+  String get providerServiceMaxGuestsLabel;
+
+  /// Form helper: max guests is optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty for no limit'**
+  String get providerServiceMaxGuestsNone;
+
+  /// Form error: a number out of range.
+  ///
+  /// In en, this message translates to:
+  /// **'Between {min} and {max}'**
+  String providerServiceRange(int min, int max);
+
+  /// Form error: required field.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get providerServiceFieldRequired;
+
+  /// Form ghost button and sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a fact'**
+  String get providerServiceAddFact;
+
+  /// Fact sheet title when editing.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit a fact'**
+  String get providerServiceEditFact;
+
+  /// Facts card empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing listed yet — duration, team, delivery…'**
+  String get providerServiceNoFacts;
+
+  /// Fact sheet body.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients read it in their own language, so both are needed.'**
+  String get providerServiceFactSheetBody;
+
+  /// Fact sheet field.
+  ///
+  /// In en, this message translates to:
+  /// **'Label (English)'**
+  String get providerServiceFactLabelEn;
+
+  /// Fact sheet field.
+  ///
+  /// In en, this message translates to:
+  /// **'Value (English)'**
+  String get providerServiceFactValueEn;
+
+  /// Fact sheet field.
+  ///
+  /// In en, this message translates to:
+  /// **'Label (Arabic)'**
+  String get providerServiceFactLabelAr;
+
+  /// Fact sheet field.
+  ///
+  /// In en, this message translates to:
+  /// **'Value (Arabic)'**
+  String get providerServiceFactValueAr;
+
+  /// Sheet primary: save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get providerServiceSheetSave;
+
+  /// Remove a fact, an extra or a photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get providerServiceRemove;
+
+  /// Form ghost button and sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an extra'**
+  String get providerServiceAddExtra;
+
+  /// Extra sheet title when editing.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit an extra'**
+  String get providerServiceEditExtra;
+
+  /// Extras card empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No extras yet'**
+  String get providerServiceNoExtras;
+
+  /// Extra sheet body.
+  ///
+  /// In en, this message translates to:
+  /// **'A paid option clients can add to their booking.'**
+  String get providerServiceExtraSheetBody;
+
+  /// Extra sheet field.
+  ///
+  /// In en, this message translates to:
+  /// **'Name (English)'**
+  String get providerServiceExtraNameEn;
+
+  /// Extra sheet field.
+  ///
+  /// In en, this message translates to:
+  /// **'Name (Arabic)'**
+  String get providerServiceExtraNameAr;
+
+  /// Extra sheet helper: the Arabic name is optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Until you add it, clients reading Arabic see the English name.'**
+  String get providerServiceExtraNameArHelper;
+
+  /// Extra sheet field.
+  ///
+  /// In en, this message translates to:
+  /// **'Price (DA)'**
+  String get providerServiceExtraPrice;
+
+  /// Wilaya chips: add.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add wilaya'**
+  String get providerServiceAddWilaya;
+
+  /// Wilaya picker body.
+  ///
+  /// In en, this message translates to:
+  /// **'Only wilayas open on Eventor are listed.'**
+  String get providerServiceWilayaPickerBody;
+
+  /// Wilaya chip × for screen readers.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}'**
+  String providerServiceRemoveWilaya(String name);
+
+  /// Wilayas empty helper.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one open wilaya before you publish.'**
+  String get providerServiceNoWilayas;
+
+  /// Photos row value.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{None yet} other{{count} added}}'**
+  String providerServicePhotosAdded(int count);
+
+  /// Toast: Photos on an unsaved service that cannot be saved yet (decision 5).
+  ///
+  /// In en, this message translates to:
+  /// **'To add photos, first give the service a category, an English title, a base price and a price type.'**
+  String get providerServicePhotosNeedDraft;
+
+  /// Toast: the draft was saved to open Photos.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved — now add your photos'**
+  String get providerServiceDraftSavedForPhotos;
+
+  /// Sticky bar: save a new service as a draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Save draft'**
+  String get providerServiceSaveDraft;
+
+  /// Sticky bar: save a draft or hidden service.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get providerServiceSave;
+
+  /// Sticky bar: save a published service.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get providerServiceSaveChanges;
+
+  /// Toast: the form cannot be saved yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in the fields marked in red.'**
+  String get providerServiceFixFields;
+
+  /// Sheet: PROVIDER_NOT_VERIFIED on publish.
+  ///
+  /// In en, this message translates to:
+  /// **'Publishing unlocks after approval'**
+  String get providerServiceNotVerifiedTitle;
+
+  /// Sheet body: PROVIDER_NOT_VERIFIED on publish.
+  ///
+  /// In en, this message translates to:
+  /// **'Your documents are still being reviewed. Your draft is saved — publish it as soon as your profile is approved.'**
+  String get providerServiceNotVerifiedBody;
+
+  /// Sheet: acknowledge.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get providerServiceGotIt;
+
+  /// P9/P14 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Not ready to publish yet'**
+  String get providerServiceChecklistTitle;
+
+  /// P9 body.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients cannot see this service until everything below is filled in. Your draft is already saved.'**
+  String get providerServiceChecklistBody;
+
+  /// P9 row.
+  ///
+  /// In en, this message translates to:
+  /// **'English title and description'**
+  String get providerServiceCheckEnglish;
+
+  /// P9 row.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic title and description'**
+  String get providerServiceCheckArabic;
+
+  /// P9 row.
+  ///
+  /// In en, this message translates to:
+  /// **'A base price'**
+  String get providerServiceCheckPrice;
+
+  /// P9 row.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one photo'**
+  String get providerServiceCheckPhotos;
+
+  /// P9 row.
+  ///
+  /// In en, this message translates to:
+  /// **'A category clients can browse'**
+  String get providerServiceCheckCategory;
+
+  /// P9 row.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one open wilaya'**
+  String get providerServiceCheckWilayas;
+
+  /// Checklist row state for screen readers.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get providerServiceCheckDone;
+
+  /// Checklist row state for screen readers.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing'**
+  String get providerServiceCheckMissing;
+
+  /// P9 primary when the English is missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the English'**
+  String get providerServiceFixEnglish;
+
+  /// P9 primary when the Arabic is missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the Arabic'**
+  String get providerServiceFixArabic;
+
+  /// P9 primary when the price is missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a price'**
+  String get providerServiceFixPrice;
+
+  /// P9 primary when photos are missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photos'**
+  String get providerServiceFixPhotos;
+
+  /// P9 primary when the category is missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a category'**
+  String get providerServiceFixCategory;
+
+  /// P9 primary when no open wilaya is covered.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a wilaya'**
+  String get providerServiceFixWilayas;
+
+  /// P9/P14 secondary.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep as draft'**
+  String get providerServiceKeepDraft;
+
+  /// P8 helper.
+  ///
+  /// In en, this message translates to:
+  /// **'The first photo is the cover clients see. Tap a photo to make it the cover, move it or remove it.'**
+  String get providerServicePhotosHelper;
+
+  /// P13 helper.
+  ///
+  /// In en, this message translates to:
+  /// **'The first photo is the cover clients see in search. Tap a photo to make it the cover, move it or remove it.'**
+  String get providerPackPhotosHelper;
+
+  /// P8/P13 counter.
+  ///
+  /// In en, this message translates to:
+  /// **'{max, plural, other{{count} of {max} photos}}'**
+  String providerServicePhotosCounter(int count, int max);
+
+  /// Photo badge: the cover.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover'**
+  String get providerServicePhotoCover;
+
+  /// Photo badge: the server is still processing it.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing'**
+  String get providerServicePhotoProcessing;
+
+  /// Photo badge: the server could not process it.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not process'**
+  String get providerServicePhotoFailed;
+
+  /// Photo tile: upload in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading'**
+  String get providerServicePhotoUploading;
+
+  /// Photo tile: the upload failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sent'**
+  String get providerServicePhotoUploadFailed;
+
+  /// Photo tile: retry a failed upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get providerServicePhotoRetry;
+
+  /// Photo grid: add tile.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo'**
+  String get providerServiceAddPhoto;
+
+  /// P8/P13: the photo limit is reached.
+  ///
+  /// In en, this message translates to:
+  /// **'{max, plural, other{That is as many as a gallery holds — {max} photos. Remove one to add another.}}'**
+  String providerServicePhotosFull(int max);
+
+  /// P8/P13: empty gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'No photos yet — the first one you add becomes the cover.'**
+  String get providerServicePhotosEmpty;
+
+  /// Photo actions sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'This photo'**
+  String get providerServicePhotoActionsTitle;
+
+  /// Photo action.
+  ///
+  /// In en, this message translates to:
+  /// **'Make cover'**
+  String get providerServicePhotoMakeCover;
+
+  /// Photo action.
+  ///
+  /// In en, this message translates to:
+  /// **'Move earlier'**
+  String get providerServicePhotoMoveEarlier;
+
+  /// Photo action.
+  ///
+  /// In en, this message translates to:
+  /// **'Move later'**
+  String get providerServicePhotoMoveLater;
+
+  /// Confirm sheet: remove a photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this photo?'**
+  String get providerServicePhotoRemoveTitle;
+
+  /// Confirm sheet body: remove a photo.
+  ///
+  /// In en, this message translates to:
+  /// **'It leaves the gallery for good.'**
+  String get providerServicePhotoRemoveBody;
+
+  /// Toast: the last photo of a published service cannot go.
+  ///
+  /// In en, this message translates to:
+  /// **'A published service needs at least one photo. Unpublish it first to remove the last one.'**
+  String get providerServicePhotoLastRefused;
+
+  /// Photo tile for screen readers.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo {index}'**
+  String providerServicePhotoLabel(int index);
+
+  /// P10a title.
+  ///
+  /// In en, this message translates to:
+  /// **'No packs yet'**
+  String get providerPackEmptyTitle;
+
+  /// P10a body when the provider can build a pack.
+  ///
+  /// In en, this message translates to:
+  /// **'A pack bundles two or more of your published services at a price below their total — for clients planning a whole event.'**
+  String get providerPackEmptyBody;
+
+  /// P10a body when fewer than two services are published.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{A pack bundles two or more of your published services at a price below their total. You have no published service yet, so there is nothing to bundle.} =1{A pack bundles two or more of your published services at a price below their total. You have one published service, so there is nothing to bundle yet.} other{A pack bundles two or more of your published services at a price below their total.}}'**
+  String providerPackEmptyNeedsServices(int count);
+
+  /// P10a button and the + label on the Packs chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a pack'**
+  String get providerPackCreate;
+
+  /// P10a button: a draft waits to be published.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish another service'**
+  String get providerPackPublishAnother;
+
+  /// Pack status pill.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpublished'**
+  String get providerPackStatusUnpublished;
+
+  /// Pack card meta: number of services.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 service} other{{count} services}}'**
+  String providerPackServicesCount(int count);
+
+  /// Pack card: before the saving amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Saves'**
+  String get providerPackSaves;
+
+  /// Pack card: before the sum when there is no saving.
+  ///
+  /// In en, this message translates to:
+  /// **'Sum of items'**
+  String get providerPackSumOfItems;
+
+  /// Pack card note: an item is no longer published.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention — “{service}” is no longer published, so clients cannot book this pack'**
+  String providerPackAttentionItem(String service);
+
+  /// Pack card note: an item was deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention — a service in it was deleted, so clients cannot book this pack'**
+  String get providerPackAttentionDeleted;
+
+  /// Pack card note: the provider is not verified or blocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention — clients cannot book it while your profile is not approved'**
+  String get providerPackAttentionProfile;
+
+  /// Pack card note: price not below the sum.
+  ///
+  /// In en, this message translates to:
+  /// **'The pack price must be below the sum of its services before you can publish'**
+  String get providerPackPriceRule;
+
+  /// Confirm sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpublish this pack?'**
+  String get providerPackUnpublishTitle;
+
+  /// Confirm sheet body.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients can no longer find or book it. Bookings already accepted are kept.'**
+  String get providerPackUnpublishBody;
+
+  /// Toast.
+  ///
+  /// In en, this message translates to:
+  /// **'Pack published — clients can book it now'**
+  String get providerPackPublished;
+
+  /// Toast.
+  ///
+  /// In en, this message translates to:
+  /// **'Pack unpublished'**
+  String get providerPackUnpublished;
+
+  /// Toast.
+  ///
+  /// In en, this message translates to:
+  /// **'Pack deleted'**
+  String get providerPackDeleted;
+
+  /// P11 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Create pack'**
+  String get providerPackCreateTitle;
+
+  /// P12 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit pack'**
+  String get providerPackEditTitle;
+
+  /// P11 helper under the language control.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic still needs a name. It is required before you can publish.'**
+  String get providerPackLangArabicMissing;
+
+  /// P11 helper: no English name yet.
+  ///
+  /// In en, this message translates to:
+  /// **'English still needs a name. It is required before you can save.'**
+  String get providerPackLangEnglishMissing;
+
+  /// P12 helper: complete and live.
+  ///
+  /// In en, this message translates to:
+  /// **'English and Arabic are both complete. This pack is live, so edits show to clients straight away.'**
+  String get providerPackLangCompleteLive;
+
+  /// P11 field (en|ar).
+  ///
+  /// In en, this message translates to:
+  /// **'{language, select, ar{Pack name (Arabic)} other{Pack name (English)}}'**
+  String providerPackNameLabel(String language);
+
+  /// P11 section.
+  ///
+  /// In en, this message translates to:
+  /// **'Services in this pack'**
+  String get providerPackServicesSection;
+
+  /// P11 ghost button to P11a.
+  ///
+  /// In en, this message translates to:
+  /// **'Add or remove services'**
+  String get providerPackEditServices;
+
+  /// P11 services card empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose 2 to 6 of your published services.'**
+  String get providerPackNoServices;
+
+  /// P11: before the sum of the items.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Sum of the service} =2{Sum of the two services} other{Sum of the {count} services}}'**
+  String providerPackSumCaption(int count);
+
+  /// P11/P11a: a service does not cover the pack wilaya.
+  ///
+  /// In en, this message translates to:
+  /// **'Doesn’t cover {wilaya}'**
+  String providerPackItemNotCovering(String wilaya);
+
+  /// P11: an item is a draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Not published — clients cannot book the pack'**
+  String get providerPackItemDraft;
+
+  /// P11: an item is hidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden by Eventor — clients cannot book the pack'**
+  String get providerPackItemHidden;
+
+  /// P11 field.
+  ///
+  /// In en, this message translates to:
+  /// **'Pack price (DA)'**
+  String get providerPackPriceLabel;
+
+  /// P11 price helper.
+  ///
+  /// In en, this message translates to:
+  /// **'Must be below the sum of the items.'**
+  String get providerPackPriceHelper;
+
+  /// P11 price: not below the sum.
+  ///
+  /// In en, this message translates to:
+  /// **'That is not below the sum of the items — clients would pay as much or more than booking them one by one.'**
+  String get providerPackPriceNotBelow;
+
+  /// P11 saving line, before the amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients save'**
+  String get providerPackClientsSave;
+
+  /// P11 saving line, after the amount.
+  ///
+  /// In en, this message translates to:
+  /// **'· {percent}% off booking them separately'**
+  String providerPackSavingPercent(int percent);
+
+  /// P11 section.
+  ///
+  /// In en, this message translates to:
+  /// **'Event and place'**
+  String get providerPackEventPlace;
+
+  /// P11 row.
+  ///
+  /// In en, this message translates to:
+  /// **'Event type'**
+  String get providerPackEventType;
+
+  /// P11 row.
+  ///
+  /// In en, this message translates to:
+  /// **'Wilaya'**
+  String get providerPackWilaya;
+
+  /// Wilaya picker body.
+  ///
+  /// In en, this message translates to:
+  /// **'Every service in the pack must cover it.'**
+  String get providerPackWilayaPickerBody;
+
+  /// Wilaya picker row detail.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No service covers it} =1{1 service covers it} other{{count} services cover it}}'**
+  String providerPackWilayaCovering(int count);
+
+  /// P13 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pack photos'**
+  String get providerPackPhotosTitle;
+
+  /// P12 danger button.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this pack'**
+  String get providerPackDeleteButton;
+
+  /// P12 danger caption.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting is permanent and is refused while the pack still has upcoming bookings. The services inside it are not affected.'**
+  String get providerPackDeleteCaption;
+
+  /// Confirm sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this pack?'**
+  String get providerPackDeleteTitle;
+
+  /// Confirm sheet body.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting is permanent. The services inside it are not affected.'**
+  String get providerPackDeleteBody;
+
+  /// Refused sheet title (pack).
+  ///
+  /// In en, this message translates to:
+  /// **'This pack cannot be deleted yet'**
+  String get providerPackDeleteRefusedTitle;
+
+  /// P11 error: services count.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose 2 to 6 services.'**
+  String get providerPackServicesRange;
+
+  /// Toast: Photos on an unsaved pack that cannot be saved yet.
+  ///
+  /// In en, this message translates to:
+  /// **'To add photos, first give the pack an English name, 2 to 6 services, a price, an event type and a wilaya.'**
+  String get providerPackPhotosNeedDraft;
+
+  /// P14 body.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients cannot see this pack until everything below is filled in. Your draft is already saved.'**
+  String get providerPackChecklistBody;
+
+  /// P14 row.
+  ///
+  /// In en, this message translates to:
+  /// **'English name'**
+  String get providerPackCheckEnglish;
+
+  /// P14 row.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic name'**
+  String get providerPackCheckArabic;
+
+  /// P14 row.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 2 published services'**
+  String get providerPackCheckServices;
+
+  /// P14 row.
+  ///
+  /// In en, this message translates to:
+  /// **'A price below the sum of the items'**
+  String get providerPackCheckPrice;
+
+  /// P14 row.
+  ///
+  /// In en, this message translates to:
+  /// **'A wilaya every service covers'**
+  String get providerPackCheckWilaya;
+
+  /// P14 row: only when the account blocks publishing.
+  ///
+  /// In en, this message translates to:
+  /// **'An approved profile'**
+  String get providerPackCheckProfile;
+
+  /// P14 primary.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Fix this} =2{Fix these two} other{Fix these {count}}}'**
+  String providerPackFixThese(int count);
+
+  /// P11a title.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose services'**
+  String get providerPackChooseTitle;
+
+  /// P11a rule caption.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick 2 to 6 of your published services. Drafts and hidden services cannot go in a pack.'**
+  String get providerPackChooseRule;
+
+  /// P11a count caption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{None chosen} other{{count} chosen}}'**
+  String providerPackChosenCount(int count);
+
+  /// P11a count caption: before the sum.
+  ///
+  /// In en, this message translates to:
+  /// **'sum'**
+  String get providerPackChosenSum;
+
+  /// P11a primary.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Done} other{Done · {count} chosen}}'**
+  String providerPackChooseDone(int count);
+
+  /// P11a disabled reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft — cannot go in a pack'**
+  String get providerPackReasonDraft;
+
+  /// P11a disabled reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden — cannot go in a pack'**
+  String get providerPackReasonHidden;
+
+  /// P11a disabled reason when the wilaya name is unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Doesn’t cover the pack’s wilaya'**
+  String get providerPackReasonNotCoveringAny;
+
+  /// P11a toast: the seventh pick.
+  ///
+  /// In en, this message translates to:
+  /// **'A pack holds up to 6 services.'**
+  String get providerPackChooseFull;
+
+  /// P11a hint below 2.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose at least 2.'**
+  String get providerPackChooseMin;
+
+  /// P11a empty.
+  ///
+  /// In en, this message translates to:
+  /// **'You have no services yet.'**
+  String get providerPackChooseEmpty;
 }
 
 class _AppLocalizationsDelegate

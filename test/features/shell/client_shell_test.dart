@@ -63,15 +63,6 @@ void main() {
       expect(tester.widget<NavItem>(tab(strings.navHome)).isActive, isFalse);
     });
 
-    testWidgets('says the unbuilt tabs are on their way', (WidgetTester tester) async {
-      await startClient(tester);
-      final AppLocalizations strings = l10n(tester);
-
-      await openTab(tester, strings.navMessages);
-
-      expect(find.text(strings.tabComingSoonTitle), findsOneWidget);
-    });
-
     testWidgets('shows unread conversations on Messages', (WidgetTester tester) async {
       final TestApp app = await startClient(tester);
 

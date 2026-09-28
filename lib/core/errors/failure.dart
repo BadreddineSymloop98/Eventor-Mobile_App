@@ -196,4 +196,38 @@ abstract final class ApiErrorCode {
   static const String bookingNotDisputable = 'BOOKING_NOT_DISPUTABLE';
   static const String disputeWindowClosed = 'DISPUTE_WINDOW_CLOSED';
   static const String notOwner = 'NOT_OWNER';
+
+  // Section 10 · the provider's services, packs and availability.
+
+  /// Publishing a service with something missing; `details.missing` lists
+  /// the `publishMissing` keys (P9).
+  static const String servicePublishInvalid = 'SERVICE_PUBLISH_INVALID';
+
+  /// Publishing a pack with something missing; `details.missing` (P14).
+  static const String packPublishInvalid = 'PACK_PUBLISH_INVALID';
+  static const String packWilayaNotCovered = 'PACK_WILAYA_NOT_COVERED';
+
+  /// Deleting a service or pack with accepted bookings still ahead (P7b).
+  static const String serviceHasBookings = 'SERVICE_HAS_BOOKINGS';
+  static const String serviceInPacks = 'SERVICE_IN_PACKS';
+  static const String packHasBookings = 'PACK_HAS_BOOKINGS';
+  static const String serviceInvalidTransition = 'SERVICE_INVALID_TRANSITION';
+  static const String packInvalidTransition = 'PACK_INVALID_TRANSITION';
+  static const String packServiceNotFound = 'PACK_SERVICE_NOT_FOUND';
+  static const String packServiceOtherProvider = 'PACK_SERVICE_OTHER_PROVIDER';
+  static const String providerProfileMissing = 'PROVIDER_PROFILE_MISSING';
+  static const String categoryHidden = 'CATEGORY_HIDDEN';
+  static const String wilayaClosed = 'WILAYA_CLOSED';
+
+  static const String photoLimitReached = 'PHOTO_LIMIT_REACHED';
+  static const String photoOrderInvalid = 'PHOTO_ORDER_INVALID';
+  static const String photoNotFound = 'PHOTO_NOT_FOUND';
+  static const String fileNotFound = 'FILE_NOT_FOUND';
+  static const String fileNotReady = 'FILE_NOT_READY';
+
+  static const String availabilityDatePast = 'AVAILABILITY_DATE_PAST';
+  static const String availabilityServiceInvalid = 'AVAILABILITY_SERVICE_INVALID';
+  static const String availabilityBlockNotRemovable = 'AVAILABILITY_BLOCK_NOT_REMOVABLE';
+  static const String availabilityBlockNotFound = 'AVAILABILITY_BLOCK_NOT_FOUND';
+  static const String monthInvalid = 'MONTH_INVALID';
 }

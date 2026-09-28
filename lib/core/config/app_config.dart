@@ -24,6 +24,8 @@ class AppConfig {
     this.bookingReplyDeadlineHours = 48,
     this.budgetItemsMax = 60,
     this.messageMaxLength = 4000,
+    this.photosPerService = 12,
+    this.photosPerPack = 6,
     this.documentExtensions = const <String>[
       'pdf',
       'jpg',
@@ -70,6 +72,10 @@ class AppConfig {
       budgetItemsMax: _int(limits['budgetItemsMax']) ?? fallback.budgetItemsMax,
       messageMaxLength:
           _int(limits['messageMaxLength']) ?? fallback.messageMaxLength,
+      photosPerService: _int(limits['photosPerService']) ??
+          _int(uploads['maxPhotosPerService']) ??
+          fallback.photosPerService,
+      photosPerPack: _int(limits['photosPerPack']) ?? fallback.photosPerPack,
       documentExtensions: _stringList(limits['documentAcceptedExtensions']) ??
           fallback.documentExtensions,
     );
@@ -134,6 +140,10 @@ class AppConfig {
 
   /// The longest message body anywhere a message can be sent.
   final int messageMaxLength;
+
+  /// How many photos a service (P8) and a pack (P13) may hold.
+  final int photosPerService;
+  final int photosPerPack;
 
   /// What a verification document may be, as file extensions, lower-cased.
   final List<String> documentExtensions;

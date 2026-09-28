@@ -9,10 +9,11 @@ import '../core/catalog/favourites_repository.dart';
 import '../core/catalog/models/catalog_models.dart';
 import '../core/catalog/service_query.dart';
 import '../core/errors/failure.dart';
-import '../core/models/account.dart' show UserRole;
+import '../core/models/account.dart' show UserRole, VerificationStatus;
 import '../core/network/api_page.dart';
 import 'mock_backend.dart';
 import 'mock_budget.dart';
+import 'mock_calendar_booking.dart';
 import 'mock_catalog_data.dart';
 import 'mock_communes_data.dart';
 import 'mock_messaging.dart';
@@ -504,7 +505,7 @@ class _MockCatalog {
   DayState _dayState(String serviceId, DateTime day) {
     final DateTime date = DateTime(day.year, day.month, day.day);
     if (date.isBefore(_firstBookable)) return DayState.blocked;
-    if (_MockBookings(this).heldByMe(serviceId, date)) return DayState.busy;
+    if (_MockBookings(this).dayFull(serviceId, date)) return DayState.busy;
     final int h =
         (_seed(serviceId) + date.day * 7 + date.month * 13 + date.year) % 11;
     if (h == 0 || h == 3) return DayState.busy;
@@ -728,10 +729,9 @@ class _MockCatalog {
 
   // -------------------------------------------------------------- bookings
 
-  /// The signed-in client's bookings, rendered from the store in
+  /// The signed-in client's bookings, rendered from the shared store in
   /// `mock_bookings.dart`. Empty for anyone but a client.
   List<Map<String, Object?>> bookings() => _MockBookings(this).rendered();
-
 
   List<Map<String, Object?>> categories() => <Map<String, Object?>>[
         for (final Map<String, Object?> c in mockCatalogCategories)
@@ -969,6 +969,10 @@ class MockCatalogLookups {
           },
     ];
   }
+
+  /// The provider's side of the shared booking store, in the same language
+  /// as these lookups.
+  MockProviderBookings get providerBookings => MockProviderBookings._(_catalog);
 
   /// One of the signed-in client's bookings, or `null` — someone else's
   /// reads as missing, as live.

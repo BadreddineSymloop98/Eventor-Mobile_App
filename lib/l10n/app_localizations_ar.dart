@@ -881,12 +881,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navProfile => 'الملف الشخصي';
 
   @override
-  String get tabComingSoonTitle => 'قريبًا';
-
-  @override
-  String get tabComingSoonBody => 'هذا القسم من Eventor قيد التحضير.';
-
-  @override
   String get profileFavourites => 'المفضلة';
 
   @override
@@ -3329,4 +3323,1542 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get invoiceDownloadNoticeText => 'اكتمل التنزيل · اضغط للفتح';
+
+  @override
+  String get availabilityTitle => 'التوفّر';
+
+  @override
+  String get availabilityLegendFree => 'متاح';
+
+  @override
+  String get availabilityLegendPartial => 'محجوب جزئيًا';
+
+  @override
+  String get availabilityLegendBlocked => 'محجوب';
+
+  @override
+  String get availabilityLegendHeld => 'طلب محجوز مؤقتًا';
+
+  @override
+  String get availabilityLegendBooked => 'محجوز';
+
+  @override
+  String get availabilityToday => 'اليوم';
+
+  @override
+  String availabilityNotice(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'يجب أن يحجز العملاء قبل $count يوم على الأقل.',
+      many: 'يجب أن يحجز العملاء قبل $count يومًا على الأقل.',
+      few: 'يجب أن يحجز العملاء قبل $count أيام على الأقل.',
+      two: 'يجب أن يحجز العملاء قبل يومين على الأقل.',
+      one: 'يجب أن يحجز العملاء قبل يوم واحد على الأقل.',
+      zero: 'يمكن للعملاء الحجز لأي يوم.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get availabilityTapHint => 'اضغط على يوم لمعرفة ما فيه أو لحجبه.';
+
+  @override
+  String get availabilityBlockDay => 'حجب يوم';
+
+  @override
+  String availabilityDaySummary(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'يوجد $count أمر في هذا اليوم.',
+      many: 'يوجد $count أمرًا في هذا اليوم.',
+      few: 'توجد $count أمور في هذا اليوم.',
+      two: 'يوجد أمران في هذا اليوم.',
+      one: 'يوجد أمر واحد في هذا اليوم.',
+      zero: 'لا شيء في هذا اليوم بعد.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get availabilityDayRemoveHint =>
+      'يمكن إزالة الحجب الذي أضفته أنت فقط.';
+
+  @override
+  String get availabilityDayPast => 'مضى هذا اليوم ولا يمكن تغيير شيء فيه.';
+
+  @override
+  String get availabilityItemBlockedAllDay => 'محجوب طوال اليوم';
+
+  @override
+  String get availabilityItemBlockedSlot => 'محجوب';
+
+  @override
+  String availabilityItemBooked(String reference) {
+    return 'محجوز — $reference';
+  }
+
+  @override
+  String availabilityItemHeld(String reference) {
+    return 'طلب محجوز مؤقتًا — $reference';
+  }
+
+  @override
+  String get availabilityAllServices => 'كل الخدمات';
+
+  @override
+  String availabilityItemNote(String note) {
+    return '«$note»';
+  }
+
+  @override
+  String get availabilityRemove => 'إزالة';
+
+  @override
+  String get availabilityCannotRemove => 'لا يمكن إزالته';
+
+  @override
+  String get availabilityWhyBooked =>
+      'حجز مقبول. يمكن إلغاؤه أو تغيير موعده من صفحة الحجز.';
+
+  @override
+  String get availabilityWhyHeld => 'طلب ينتظر ردّك يحجز هذا اليوم مؤقتًا.';
+
+  @override
+  String get availabilityBlockWholeDay => 'حجب اليوم كاملًا';
+
+  @override
+  String get availabilityBlockSlot => 'حجب فترة زمنية';
+
+  @override
+  String get availabilityBlockAnotherSlot => 'حجب فترة أخرى';
+
+  @override
+  String get availabilityClose => 'إغلاق';
+
+  @override
+  String get availabilityAlreadyBlocked =>
+      'هذا اليوم محجوب بالفعل لكل الخدمات.';
+
+  @override
+  String get availabilityFullyBooked =>
+      'هذا اليوم محجوز بالكامل، فلا يبقى فيه ما يُحجب.';
+
+  @override
+  String availabilityBlockDayTitle(String day) {
+    return 'حجب $day';
+  }
+
+  @override
+  String availabilityBlockSlotTitle(String day) {
+    return 'حجب جزء من $day';
+  }
+
+  @override
+  String get availabilityBlockDayBody =>
+      'لن يتمكن العملاء من حجز هذا اليوم. يمكنك إزالة الحجب في أي وقت.';
+
+  @override
+  String get availabilityBlockSlotBody =>
+      'يظل بإمكان العملاء حجز بقية اليوم. يمكنك إزالة الحجب في أي وقت.';
+
+  @override
+  String get availabilityModeWholeDay => 'اليوم كامل';
+
+  @override
+  String get availabilityModeSlot => 'فترة زمنية';
+
+  @override
+  String get availabilityModeSelected => 'محدّد';
+
+  @override
+  String get availabilityServicesLabel => 'الخدمات المشمولة';
+
+  @override
+  String get availabilityServicesSubtitle =>
+      'احجب كل الخدمات أو خدمة واحدة فقط.';
+
+  @override
+  String get availabilityServicesFailed => 'تعذّر تحميل خدماتك. حاول مرة أخرى.';
+
+  @override
+  String get availabilityNoteLabel => 'ملاحظة (تراها أنت فقط)';
+
+  @override
+  String get availabilityNoteHint => 'مثال: زفاف عائلي';
+
+  @override
+  String get availabilityConfirmDay => 'احجب اليوم';
+
+  @override
+  String get availabilityConfirmSlot => 'احجب الفترة';
+
+  @override
+  String get availabilityCancel => 'إلغاء';
+
+  @override
+  String get availabilitySlotHelper =>
+      'يظل بإمكان العملاء الحجز خارج هذه الساعات.';
+
+  @override
+  String get availabilityTimesMissing => 'اختر بداية الفترة ونهايتها.';
+
+  @override
+  String get availabilityHeldWarning =>
+      'يوجد طلب ينتظر ردّك في هذا اليوم. الحجب لا يرفض الطلب.';
+
+  @override
+  String get availabilityBookedWarning =>
+      'يوجد حجز مقبول في هذا اليوم. الحجب لا يلغي الحجز.';
+
+  @override
+  String get availabilityErrorDatePast => 'مضى هذا اليوم. اختر يومًا آخر.';
+
+  @override
+  String get availabilityErrorServiceInvalid =>
+      'لم يعد بالإمكان حجب هذه الخدمة. اختر خدمة أخرى أو احجب كل الخدمات.';
+
+  @override
+  String get availabilityErrorNotRemovable =>
+      'لم يعد بالإمكان إزالة هذا الحجب. تم تحديث التقويم.';
+
+  @override
+  String get availabilityErrorNotFound =>
+      'تمت إزالة هذا الحجب مسبقًا. تم تحديث التقويم.';
+
+  @override
+  String availabilityBlockedDayToast(String day) {
+    return 'تم حجب $day.';
+  }
+
+  @override
+  String availabilityBlockedSlotToast(String day) {
+    return 'تم حجب جزء من $day.';
+  }
+
+  @override
+  String get availabilityRemovedToast => 'تمت إزالة الحجب.';
+
+  @override
+  String get availabilityRestoredToast => 'تمت إعادة الحجب.';
+
+  @override
+  String get providerRequestsTabTitle => 'الطلبات';
+
+  @override
+  String get providerRequestsChipRequests => 'الطلبات';
+
+  @override
+  String get providerRequestsChipUpcoming => 'القادمة';
+
+  @override
+  String get providerRequestsChipPast => 'السابقة';
+
+  @override
+  String get providerRequestsEmptyTitle => 'لا توجد طلبات بعد';
+
+  @override
+  String providerRequestsEmptyBody(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours ساعة',
+      few: '$hours ساعات',
+      two: 'ساعتان',
+      one: 'ساعة واحدة',
+    );
+    return 'عندما يطلب عميل حجز إحدى خدماتك، يصلك الطلب هنا. أمامك $_temp0 لقبوله أو رفضه قبل أن تنتهي صلاحيته.';
+  }
+
+  @override
+  String get providerRequestsEmptyUpcomingTitle => 'لا حجوزات قادمة';
+
+  @override
+  String get providerRequestsEmptyUpcomingBody =>
+      'تظهر هنا الطلبات التي تقبلها حتى يوم المناسبة.';
+
+  @override
+  String get providerRequestsEmptyPastTitle => 'لا توجد حجوزات سابقة بعد';
+
+  @override
+  String get providerRequestsEmptyPastBody =>
+      'بعد انتهاء المناسبة، ينتقل الحجز إلى هنا مع فاتورته.';
+
+  @override
+  String get providerRequestsReviewBody =>
+      'نراجع مستنداتك حاليًا. تبقى خدماتك غير منشورة حتى ذلك الحين، فلا يستطيع العملاء إرسال طلبات إليك بعد.';
+
+  @override
+  String get providerRequestsRejectedBody =>
+      'لم تُقبل بعض مستنداتك. تبقى خدماتك غير منشورة حتى تتم الموافقة على ملفك، فلا يستطيع العملاء إرسال طلبات إليك بعد.';
+
+  @override
+  String get providerRequestsSeeDocuments => 'عرض مستنداتي';
+
+  @override
+  String providerRequestsReplyWithin(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'أجب خلال $hours ساعة',
+      few: 'أجب خلال $hours ساعات',
+      two: 'أجب خلال ساعتين',
+      one: 'أجب خلال ساعة',
+      zero: 'أجب الآن',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String providerRequestsAccepted(String name) {
+    return 'تم قبول طلب $name — تجده الآن ضمن القادمة.';
+  }
+
+  @override
+  String get providerBookingTitleRequest => 'الطلب';
+
+  @override
+  String providerBookingStepRequestedBy(String client) {
+    return 'طلب من $client';
+  }
+
+  @override
+  String get providerBookingStepYourReply => 'ردّك';
+
+  @override
+  String get providerBookingStepYouAccepted => 'قبلت الطلب';
+
+  @override
+  String get providerBookingStepYouDeclined => 'رفضت الطلب';
+
+  @override
+  String providerBookingStepCancelledBy(String client) {
+    return 'أُلغي من طرف $client';
+  }
+
+  @override
+  String get providerBookingStepCancelledByEventor => 'أُلغي من طرف Eventor';
+
+  @override
+  String get providerBookingStepConfirmEvent => 'أكّد المناسبة';
+
+  @override
+  String get providerBookingStepWaitingBoth => 'في انتظار تأكيدكما';
+
+  @override
+  String providerBookingStepYouConfirmed(String client) {
+    return 'أكّدت · في انتظار $client';
+  }
+
+  @override
+  String providerBookingStepClientConfirmed(String client) {
+    return 'تأكيد من $client · في انتظار تأكيدك';
+  }
+
+  @override
+  String get providerBookingStepBothConfirmed => 'أكّدتما كلاكما';
+
+  @override
+  String providerBookingStepClientProposed(String client) {
+    return 'موعد جديد مقترح من $client';
+  }
+
+  @override
+  String get providerBookingStepYouProposed => 'اقترحت موعدًا جديدًا';
+
+  @override
+  String providerBookingStepWaitingFor(String client) {
+    return 'في انتظار $client';
+  }
+
+  @override
+  String providerBookingYourService(String category) {
+    return 'خدمتك · $category';
+  }
+
+  @override
+  String get providerBookingYourPack => 'باقتك';
+
+  @override
+  String get providerBookingTheEvent => 'المناسبة';
+
+  @override
+  String get providerBookingClientNote => 'ملاحظة العميل';
+
+  @override
+  String get providerBookingTotalOnSite => 'المجموع · يدفعه العميل في المكان';
+
+  @override
+  String get providerBookingCashNote =>
+      'يدفع لك العميل نقدًا يوم المناسبة. لا يُقتطع أي مبلغ عبر Eventor.';
+
+  @override
+  String get providerBookingClientSection => 'العميل';
+
+  @override
+  String get providerBookingContactHidden => 'مخفي حتى تقبل الطلب';
+
+  @override
+  String get providerBookingContactNotShared => 'غير مُشارَك';
+
+  @override
+  String providerBookingContactPending(String client) {
+    return 'يظهر هنا رقم الهاتف والبريد الإلكتروني لـ$client فور قبولك الطلب.';
+  }
+
+  @override
+  String providerBookingContactAccepted(String client) {
+    return 'يظهر رقم الهاتف والبريد الإلكتروني لـ$client لأنك قبلت هذا الحجز.';
+  }
+
+  @override
+  String providerBookingContactUntilClosed(String client) {
+    return 'يبقى رقم الهاتف والبريد الإلكتروني لـ$client ظاهرين حتى يُغلق الحجز.';
+  }
+
+  @override
+  String get providerBookingContactDeclined =>
+      'لا تُشارَك بيانات التواصل أبدًا في طلب رفضته.';
+
+  @override
+  String get providerBookingContactHistory =>
+      'تبقى بيانات التواصل ظاهرة ما دام هذا الحجز ضمن سجلّك.';
+
+  @override
+  String get providerBookingContactWithdrawn =>
+      'لا تُشارَك بيانات التواصل في طلب أُلغي.';
+
+  @override
+  String get providerBookingPolicySetByYou => 'أنت من حدّدها';
+
+  @override
+  String providerBookingMessageClient(String client) {
+    return 'مراسلة $client';
+  }
+
+  @override
+  String get providerBookingAcceptRequest => 'قبول الطلب';
+
+  @override
+  String get providerBookingConfirmEvent => 'أكّد المناسبة';
+
+  @override
+  String get providerBookingDeclinedTitle => 'لقد رفضت هذا الطلب';
+
+  @override
+  String providerBookingDeclinedBody(String client) {
+    return 'أصبح التاريخ متاحًا من جديد في تقويمك، وتم إبلاغ $client.';
+  }
+
+  @override
+  String providerBookingCancelledByClientTitle(String client) {
+    return 'أُلغي هذا الحجز من طرف $client';
+  }
+
+  @override
+  String get providerBookingCancelledByClientBody =>
+      'أصبح التاريخ متاحًا من جديد في تقويمك، وأُلغيت الفاتورة.';
+
+  @override
+  String providerBookingCancelledByYouBody(String client) {
+    return 'تم إبلاغ $client، وأصبح التاريخ متاحًا من جديد في تقويمك، وأُلغيت الفاتورة.';
+  }
+
+  @override
+  String get providerBookingCancelledByEventorTitle =>
+      'أُلغي هذا الحجز من طرف Eventor';
+
+  @override
+  String providerBookingRequestWithdrawnTitle(String client) {
+    return 'أُلغي هذا الطلب من طرف $client';
+  }
+
+  @override
+  String get providerBookingRequestWithdrawnBody =>
+      'أصبح التاريخ متاحًا من جديد في تقويمك.';
+
+  @override
+  String providerBookingReviewTitle(String client) {
+    return 'يمكن لـ$client تقييم هذا الحجز';
+  }
+
+  @override
+  String get providerBookingReviewBody =>
+      'يظهر التقييم في قسم التقييمات، حيث يمكنك الردّ عليه مرة واحدة. أمام العملاء 60 يومًا بعد المناسبة لكتابة تقييم.';
+
+  @override
+  String providerBookingProposalTitle(String client) {
+    return 'موعد جديد مقترح من $client';
+  }
+
+  @override
+  String providerBookingProposalHelper(String date, String client) {
+    return 'إذا رفضت، يبقى حجز $date قائمًا وقد يُلغى من طرف $client.';
+  }
+
+  @override
+  String providerBookingProposalSentTitle(String date) {
+    return 'تم إرسال الاقتراح: $date';
+  }
+
+  @override
+  String providerBookingProposalSentBody(String date, String client) {
+    return 'يبقى الحجز في $date حتى يصل ردّ $client.';
+  }
+
+  @override
+  String get providerBookingWithdraw => 'سحب';
+
+  @override
+  String providerBookingProposalSentToast(String client) {
+    return 'تم إرسال الاقتراح. سيُبلَّغ $client.';
+  }
+
+  @override
+  String providerBookingCancelBody(String client) {
+    return 'سيُبلَّغ $client فورًا، وسيُحرَّر التاريخ في تقويمك وتُلغى الفاتورة. لا يمكن التراجع عن هذا.';
+  }
+
+  @override
+  String get providerBookingCancelReasonHint =>
+      'مثال: القاعة مغلقة للصيانة في ذلك اليوم';
+
+  @override
+  String get providerBookingCancelNote =>
+      'يعتمد عليك العملاء: لا تُلغِ إلا إذا لم يكن هناك حل آخر. اقتراح موعد جديد غالبًا ما يكون أفضل.';
+
+  @override
+  String get providerBookingCancelKeep => 'الإبقاء على الحجز';
+
+  @override
+  String get providerBookingDeclineTitle => 'رفض هذا الطلب؟';
+
+  @override
+  String get providerBookingDeclineReasonLabel => 'لماذا ترفض الطلب؟';
+
+  @override
+  String get providerBookingProblemClientNoShow => 'لم يحضر العميل';
+
+  @override
+  String get providerBookingProblemCancellation => 'خلاف حول الإلغاء';
+
+  @override
+  String get providerBookingLegendFree => 'متاح';
+
+  @override
+  String get providerBookingLegendBlocked => 'محجوب من طرفك';
+
+  @override
+  String get providerBookingRescheduleFootnote =>
+      'تظهر الأيام المحجوزة أو المحجوبة من طرفك بلون باهت.';
+
+  @override
+  String get providerBookingTimeHelper =>
+      'الأوقات التي طلبها العميل، ما لم تغيّرها.';
+
+  @override
+  String get providerBookingRescheduleReasonHint =>
+      'مثال: القاعة متاحة فقط في الأسبوع التالي';
+
+  @override
+  String providerBookingRescheduleReasonError(String client) {
+    return 'اذكر السبب — يطّلع عليه $client أولًا.';
+  }
+
+  @override
+  String providerBookingRescheduleHold(String date, String client) {
+    return 'يبقى حجز $date كما هو حتى يصل ردّ $client. وإذا رُفض الاقتراح، لا يتغيّر شيء ويبقى السعر نفسه.';
+  }
+
+  @override
+  String providerBookingReschedulePendingNote(String client) {
+    return 'ينتقل الطلب إلى التاريخ الجديد فورًا ويُبلَّغ $client. ويمكنك بعدها قبوله.';
+  }
+
+  @override
+  String get providerBookingRescheduleTakenBody =>
+      'لم تعد متاحًا في ذلك اليوم. اختر تاريخًا آخر.';
+
+  @override
+  String providerBookingCheckInBody(String client, String date) {
+    return 'أقيمت المناسبة مع $client يوم $date. أكّد قبل أن نغلق الحجز — الأمر لا يستغرق سوى نقرة واحدة.';
+  }
+
+  @override
+  String providerBookingAllGoodBody(String client) {
+    return 'جرت المناسبة كما هو متفق عليه. نغلق الحجز ويمكن لـ$client كتابة تقييم.';
+  }
+
+  @override
+  String get providerBookingProblemBody =>
+      'لم يحضر العميل، أو حدث خطأ آخر. نفتح نزاعًا ويتدخّل فريق الدعم.';
+
+  @override
+  String get providerBookingRemindTomorrow => 'ذكّرني غدًا';
+
+  @override
+  String get providerBookingCheckInFootnote =>
+      'إذا لم يردّ أي منكما، يُغلق الحجز تلقائيًا بعد 72 ساعة من المناسبة.';
+
+  @override
+  String providerBookingCheckInWaiting(String client) {
+    return 'شكرًا! يُغلق الحجز فور وصول تأكيد $client أيضًا.';
+  }
+
+  @override
+  String get providerBookingCheckInNothing =>
+      'لا يوجد ما يستدعي التأكيد في هذا الحجز الآن.';
+
+  @override
+  String get providerBookingOpen => 'عرض الحجز';
+
+  @override
+  String get providerServiceTabTitle => 'خدماتي';
+
+  @override
+  String get providerPackTabTitle => 'باقاتي';
+
+  @override
+  String get providerServiceChipServices => 'خدماتي';
+
+  @override
+  String get providerServiceChipPacks => 'الباقات';
+
+  @override
+  String get providerServiceEmptyTitle => 'لا توجد خدمات بعد';
+
+  @override
+  String get providerServiceEmptyBody =>
+      'الخدمة هي ما يجده العملاء ويحجزونه — باقة أو جلسة أو تأجير. أضف واحدة، ثم انشرها عندما تصبح جاهزة.';
+
+  @override
+  String providerServiceRatingLine(int count, String rating) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$rating · $count تقييم',
+      many: '$rating · $count تقييمًا',
+      few: '$rating · $count تقييمات',
+      two: '$rating · تقييمان',
+      one: '$rating · تقييم واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceNoReviews => 'لا تقييمات بعد';
+
+  @override
+  String get providerServiceNotPublishedYet => 'لم تُنشر بعد';
+
+  @override
+  String providerServiceHiddenOn(String date) {
+    return 'أُخفيت في $date';
+  }
+
+  @override
+  String providerServicePhotosCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count صورة',
+      many: '$count صورة',
+      few: '$count صور',
+      two: 'صورتان',
+      one: 'صورة واحدة',
+      zero: 'بلا صور',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String providerServiceBookingsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count حجز',
+      many: '$count حجزًا',
+      few: '$count حجوزات',
+      two: 'حجزان',
+      one: 'حجز واحد',
+      zero: 'بلا حجوزات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String providerServiceMissingNote(String items) {
+    return 'ناقص قبل النشر: $items';
+  }
+
+  @override
+  String get providerServiceMissingTitleEn => 'العنوان بالإنجليزية';
+
+  @override
+  String get providerServiceMissingTitleAr => 'العنوان بالعربية';
+
+  @override
+  String get providerServiceMissingDescriptionEn => 'الوصف بالإنجليزية';
+
+  @override
+  String get providerServiceMissingDescriptionAr => 'الوصف بالعربية';
+
+  @override
+  String get providerServiceMissingPrice => 'سعر أساسي';
+
+  @override
+  String get providerServiceMissingPhotos => 'صورة';
+
+  @override
+  String get providerServiceMissingCategory => 'فئة';
+
+  @override
+  String get providerServiceMissingWilayas => 'ولاية مفتوحة';
+
+  @override
+  String get providerServiceListSeparator => '، ';
+
+  @override
+  String providerServiceNotVisibleClosed(int count, String wilayas) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'غير ظاهرة للعملاء — $wilayas مغلقة على Eventor حاليًا',
+      one: 'غير ظاهرة للعملاء — $wilayas مغلقة على Eventor حاليًا',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceNotVisibleNoWilaya =>
+      'غير ظاهرة للعملاء — لا تغطي أي ولاية مفتوحة على Eventor';
+
+  @override
+  String get providerServiceNotVisibleReview =>
+      'غير ظاهرة للعملاء — ملفك قيد المراجعة';
+
+  @override
+  String get providerServiceNotVisibleBlocked =>
+      'غير ظاهرة للعملاء — حسابك محظور';
+
+  @override
+  String get providerServiceHiddenFinal =>
+      'أخفت Eventor هذه الخدمة. لا يراها العملاء ولا يمكنك نشرها من جديد، لكن تعديلاتك تُحفظ.';
+
+  @override
+  String get providerServiceHiddenReviewable =>
+      'أخفت Eventor هذه الخدمة ولا يراها العملاء. أصلحها ثم تواصل مع الدعم لمراجعتها من جديد، وتعديلاتك تُحفظ.';
+
+  @override
+  String providerServiceHiddenMessage(String message) {
+    return 'ملاحظة Eventor: «$message»';
+  }
+
+  @override
+  String get providerServiceUnpublish => 'إلغاء النشر';
+
+  @override
+  String get providerServiceEdit => 'تعديل';
+
+  @override
+  String get providerServicePublish => 'نشر';
+
+  @override
+  String get providerServicePublished => 'نُشرت — يمكن للعملاء إيجادها الآن';
+
+  @override
+  String get providerServiceUnpublished => 'أُلغي النشر — عادت مسودة';
+
+  @override
+  String get providerServiceDraftSaved => 'حُفظت المسودة';
+
+  @override
+  String get providerServiceChangesSaved => 'حُفظت التغييرات';
+
+  @override
+  String get providerServiceDeleted => 'حُذفت الخدمة';
+
+  @override
+  String get providerServiceUnpublishTitle => 'إلغاء نشر هذه الخدمة؟';
+
+  @override
+  String get providerServiceUnpublishBody =>
+      'تخرج من نتائج البحث ومن ملفك فورًا وتعود إلى مسوداتك. تبقى الحجوزات المقبولة كما هي.';
+
+  @override
+  String get providerServiceKeepPublished => 'الإبقاء عليها منشورة';
+
+  @override
+  String get providerServiceDeleteTitle => 'حذف هذه الخدمة؟';
+
+  @override
+  String get providerServiceDeleteBody =>
+      'الحذف نهائي، وتُلغى الطلبات التي ما زالت تنتظر ردك عليها.';
+
+  @override
+  String get providerServiceDeleteConfirm => 'حذف';
+
+  @override
+  String get providerServiceDeleteKeep => 'الإبقاء عليها';
+
+  @override
+  String get providerServiceDeleteButton => 'حذف هذه الخدمة';
+
+  @override
+  String get providerServiceDeleteCaption =>
+      'الحذف نهائي، ويُرفض ما دامت الخدمة مرتبطة بحجوزات قادمة أو مُدرجة في باقة.';
+
+  @override
+  String get providerServiceDeleteRefusedTitle => 'لا يمكن حذف هذه الخدمة بعد';
+
+  @override
+  String get providerServiceDeleteRefusedBody =>
+      'الحذف محجوب ما دام هذا قائمًا. يمكنك إلغاء النشر الآن فتخرج من نتائج البحث فورًا.';
+
+  @override
+  String get providerServiceDeleteRefusedBodyPlain =>
+      'الحذف محجوب ما دام هذا قائمًا.';
+
+  @override
+  String providerServiceBlockerBookings(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'هناك $count حجز مقبول لم يحن بعد',
+      many: 'هناك $count حجزًا مقبولًا لم يحن بعد',
+      few: 'هناك $count حجوزات مقبولة لم تحن بعد',
+      two: 'هناك حجزان مقبولان لم يحينا بعد',
+      one: 'هناك حجز مقبول لم يحن بعد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceBlockerBookingsUncounted =>
+      'هناك حجوزات مقبولة لم تحن بعد';
+
+  @override
+  String providerServiceBlockerPacks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'إنها ضمن $count من باقاتك',
+      many: 'إنها ضمن $count من باقاتك',
+      few: 'إنها ضمن $count من باقاتك',
+      two: 'إنها ضمن باقتين من باقاتك',
+      one: 'إنها ضمن إحدى باقاتك',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceBlockerPacksUncounted => 'ما زالت ضمن إحدى باقاتك';
+
+  @override
+  String get providerServiceUnpublishInstead => 'إلغاء النشر بدلًا من ذلك';
+
+  @override
+  String get providerServiceCancel => 'إلغاء';
+
+  @override
+  String get providerServiceEditTitle => 'تعديل الخدمة';
+
+  @override
+  String get providerServiceLangEnglish => 'English';
+
+  @override
+  String get providerServiceLangArabic => 'عربي';
+
+  @override
+  String providerServiceLangArabicMissing(String what) {
+    String _temp0 = intl.Intl.selectLogic(what, {
+      'both': 'ما زالت النسخة العربية تحتاج عنوانًا ووصفًا. كلاهما مطلوب قبل النشر.',
+      'title': 'ما زالت النسخة العربية تحتاج عنوانًا، وهو مطلوب قبل النشر.',
+      'other': 'ما زالت النسخة العربية تحتاج وصفًا، وهو مطلوب قبل النشر.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String providerServiceLangEnglishMissing(String what) {
+    String _temp0 = intl.Intl.selectLogic(what, {
+      'both': 'ما زالت النسخة الإنجليزية تحتاج عنوانًا ووصفًا. كلاهما مطلوب قبل النشر.',
+      'title': 'ما زالت النسخة الإنجليزية تحتاج عنوانًا، وهو مطلوب قبل النشر.',
+      'other': 'ما زالت النسخة الإنجليزية تحتاج وصفًا، وهو مطلوب قبل النشر.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceLangComplete =>
+      'النسختان الإنجليزية والعربية مكتملتان.';
+
+  @override
+  String get providerServiceLangCompleteLive =>
+      'النسختان الإنجليزية والعربية مكتملتان. هذه الخدمة منشورة، لذا تظهر التعديلات للعملاء فورًا.';
+
+  @override
+  String get providerServiceBasics => 'الأساسيات';
+
+  @override
+  String get providerServicePricing => 'التسعير';
+
+  @override
+  String get providerServiceCapacity => 'السعة';
+
+  @override
+  String get providerServiceIncluded => 'ما تشمله الخدمة';
+
+  @override
+  String get providerServiceExtras => 'الإضافات';
+
+  @override
+  String get providerServiceWilayas => 'الولايات المغطّاة';
+
+  @override
+  String get providerServicePolicy => 'سياسة الإلغاء';
+
+  @override
+  String get providerServicePhotos => 'الصور';
+
+  @override
+  String get providerServiceCategory => 'الفئة';
+
+  @override
+  String get providerServiceChoose => 'اختر';
+
+  @override
+  String providerServiceTitleLabel(String language) {
+    String _temp0 = intl.Intl.selectLogic(language, {
+      'ar': 'العنوان (بالعربية)',
+      'other': 'العنوان (بالإنجليزية)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String providerServiceDescriptionLabel(String language) {
+    String _temp0 = intl.Intl.selectLogic(language, {
+      'ar': 'الوصف (بالعربية)',
+      'other': 'الوصف (بالإنجليزية)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String providerServicePolicyLabel(String language) {
+    String _temp0 = intl.Intl.selectLogic(language, {
+      'ar': 'تظهر للعملاء قبل الحجز (بالعربية)',
+      'other': 'تظهر للعملاء قبل الحجز (بالإنجليزية)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceBasePriceLabel => 'السعر الأساسي (دج)';
+
+  @override
+  String get providerServiceBasePriceHelper => 'السعر الابتدائي قبل أي إضافات.';
+
+  @override
+  String get providerServiceStartingPriceLabel => 'السعر الابتدائي (دج)';
+
+  @override
+  String get providerServiceStartingPriceHelper =>
+      'يرى العملاء «حسب الطلب». هذا المبلغ هو ما تحتسبه الباقة لها.';
+
+  @override
+  String get providerServicePriceTypeLabel => 'نوع السعر';
+
+  @override
+  String providerServicePriceTypeOption(String type) {
+    String _temp0 = intl.Intl.selectLogic(type, {
+      'per_event': 'للمناسبة',
+      'per_hour': 'للساعة',
+      'per_person': 'للشخص',
+      'per_day': 'لليوم',
+      'other': 'حسب الطلب',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServiceMaxEventsLabel => 'أقصى عدد مناسبات في اليوم';
+
+  @override
+  String get providerServiceMaxGuestsLabel => 'أقصى عدد ضيوف';
+
+  @override
+  String get providerServiceMaxGuestsNone => 'اتركه فارغًا إن لم يكن هناك حد';
+
+  @override
+  String providerServiceRange(int min, int max) {
+    return 'بين $min و$max';
+  }
+
+  @override
+  String get providerServiceFieldRequired => 'مطلوب';
+
+  @override
+  String get providerServiceAddFact => 'إضافة معلومة';
+
+  @override
+  String get providerServiceEditFact => 'تعديل معلومة';
+
+  @override
+  String get providerServiceNoFacts => 'لا شيء بعد — المدة، الفريق، التسليم…';
+
+  @override
+  String get providerServiceFactSheetBody =>
+      'يقرأها العملاء بلغتهم، لذا نحتاج اللغتين.';
+
+  @override
+  String get providerServiceFactLabelEn => 'التسمية (بالإنجليزية)';
+
+  @override
+  String get providerServiceFactValueEn => 'القيمة (بالإنجليزية)';
+
+  @override
+  String get providerServiceFactLabelAr => 'التسمية (بالعربية)';
+
+  @override
+  String get providerServiceFactValueAr => 'القيمة (بالعربية)';
+
+  @override
+  String get providerServiceSheetSave => 'حفظ';
+
+  @override
+  String get providerServiceRemove => 'إزالة';
+
+  @override
+  String get providerServiceAddExtra => 'إضافة خدمة إضافية';
+
+  @override
+  String get providerServiceEditExtra => 'تعديل خدمة إضافية';
+
+  @override
+  String get providerServiceNoExtras => 'لا إضافات بعد';
+
+  @override
+  String get providerServiceExtraSheetBody =>
+      'خيار مدفوع يمكن للعملاء إضافته إلى حجزهم.';
+
+  @override
+  String get providerServiceExtraNameEn => 'الاسم (بالإنجليزية)';
+
+  @override
+  String get providerServiceExtraNameAr => 'الاسم (بالعربية)';
+
+  @override
+  String get providerServiceExtraNameArHelper =>
+      'إلى أن تضيفه، يرى من يقرأ بالعربية الاسم الإنجليزي.';
+
+  @override
+  String get providerServiceExtraPrice => 'السعر (دج)';
+
+  @override
+  String get providerServiceAddWilaya => '+ إضافة ولاية';
+
+  @override
+  String get providerServiceWilayaPickerBody =>
+      'تظهر الولايات المفتوحة على Eventor فقط.';
+
+  @override
+  String providerServiceRemoveWilaya(String name) {
+    return 'إزالة $name';
+  }
+
+  @override
+  String get providerServiceNoWilayas =>
+      'أضف ولاية مفتوحة واحدة على الأقل قبل النشر.';
+
+  @override
+  String providerServicePhotosAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مضافة',
+      many: '$count مضافة',
+      few: '$count مضافة',
+      two: 'صورتان',
+      one: 'صورة واحدة',
+      zero: 'لا توجد بعد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServicePhotosNeedDraft =>
+      'لإضافة الصور، حدّد أولًا الفئة والعنوان بالإنجليزية والسعر الأساسي ونوع السعر.';
+
+  @override
+  String get providerServiceDraftSavedForPhotos =>
+      'حُفظت المسودة — أضف صورك الآن';
+
+  @override
+  String get providerServiceSaveDraft => 'حفظ كمسودة';
+
+  @override
+  String get providerServiceSave => 'حفظ';
+
+  @override
+  String get providerServiceSaveChanges => 'حفظ التغييرات';
+
+  @override
+  String get providerServiceFixFields => 'أكمل الحقول المحددة بالأحمر.';
+
+  @override
+  String get providerServiceNotVerifiedTitle => 'يُتاح النشر بعد الموافقة';
+
+  @override
+  String get providerServiceNotVerifiedBody =>
+      'ما زالت وثائقك قيد المراجعة. مسودتك محفوظة — انشرها فور الموافقة على ملفك.';
+
+  @override
+  String get providerServiceGotIt => 'حسنًا';
+
+  @override
+  String get providerServiceChecklistTitle => 'غير جاهزة للنشر بعد';
+
+  @override
+  String get providerServiceChecklistBody =>
+      'لن يرى العملاء هذه الخدمة حتى تكتمل كل النقاط أدناه. مسودتك محفوظة بالفعل.';
+
+  @override
+  String get providerServiceCheckEnglish => 'العنوان والوصف بالإنجليزية';
+
+  @override
+  String get providerServiceCheckArabic => 'العنوان والوصف بالعربية';
+
+  @override
+  String get providerServiceCheckPrice => 'سعر أساسي';
+
+  @override
+  String get providerServiceCheckPhotos => 'صورة واحدة على الأقل';
+
+  @override
+  String get providerServiceCheckCategory => 'فئة يمكن للعملاء تصفحها';
+
+  @override
+  String get providerServiceCheckWilayas => 'ولاية مفتوحة واحدة على الأقل';
+
+  @override
+  String get providerServiceCheckDone => 'مكتمل';
+
+  @override
+  String get providerServiceCheckMissing => 'ناقص';
+
+  @override
+  String get providerServiceFixEnglish => 'أضف النص الإنجليزي';
+
+  @override
+  String get providerServiceFixArabic => 'أضف النص العربي';
+
+  @override
+  String get providerServiceFixPrice => 'أضف سعرًا';
+
+  @override
+  String get providerServiceFixPhotos => 'أضف صورًا';
+
+  @override
+  String get providerServiceFixCategory => 'اختر فئة';
+
+  @override
+  String get providerServiceFixWilayas => 'أضف ولاية';
+
+  @override
+  String get providerServiceKeepDraft => 'الإبقاء كمسودة';
+
+  @override
+  String get providerServicePhotosHelper =>
+      'الصورة الأولى هي الغلاف الذي يراه العملاء. اضغط على صورة لجعلها الغلاف أو نقلها أو إزالتها.';
+
+  @override
+  String get providerPackPhotosHelper =>
+      'الصورة الأولى هي الغلاف الذي يظهر في نتائج البحث. اضغط على صورة لجعلها الغلاف أو نقلها أو إزالتها.';
+
+  @override
+  String providerServicePhotosCounter(int count, int max) {
+    String _temp0 = intl.Intl.pluralLogic(
+      max,
+      locale: localeName,
+      other: '$count من $max صورة',
+      few: '$count من $max صور',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServicePhotoCover => 'الغلاف';
+
+  @override
+  String get providerServicePhotoProcessing => 'قيد المعالجة';
+
+  @override
+  String get providerServicePhotoFailed => 'تعذّرت المعالجة';
+
+  @override
+  String get providerServicePhotoUploading => 'جارٍ الرفع';
+
+  @override
+  String get providerServicePhotoUploadFailed => 'لم تُرسل';
+
+  @override
+  String get providerServicePhotoRetry => 'إعادة';
+
+  @override
+  String get providerServiceAddPhoto => 'إضافة صورة';
+
+  @override
+  String providerServicePhotosFull(int max) {
+    String _temp0 = intl.Intl.pluralLogic(
+      max,
+      locale: localeName,
+      other: 'هذا أقصى ما يتسع له المعرض — $max صورة. أزل صورة لإضافة أخرى.',
+      few: 'هذا أقصى ما يتسع له المعرض — $max صور. أزل صورة لإضافة أخرى.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerServicePhotosEmpty =>
+      'لا صور بعد — أول صورة تضيفها تصبح الغلاف.';
+
+  @override
+  String get providerServicePhotoActionsTitle => 'هذه الصورة';
+
+  @override
+  String get providerServicePhotoMakeCover => 'اجعلها الغلاف';
+
+  @override
+  String get providerServicePhotoMoveEarlier => 'انقلها إلى الأمام';
+
+  @override
+  String get providerServicePhotoMoveLater => 'انقلها إلى الخلف';
+
+  @override
+  String get providerServicePhotoRemoveTitle => 'إزالة هذه الصورة؟';
+
+  @override
+  String get providerServicePhotoRemoveBody => 'ستُحذف من المعرض نهائيًا.';
+
+  @override
+  String get providerServicePhotoLastRefused =>
+      'الخدمة المنشورة تحتاج صورة واحدة على الأقل. ألغِ نشرها أولًا لإزالة الأخيرة.';
+
+  @override
+  String providerServicePhotoLabel(int index) {
+    return 'الصورة $index';
+  }
+
+  @override
+  String get providerPackEmptyTitle => 'لا توجد باقات بعد';
+
+  @override
+  String get providerPackEmptyBody =>
+      'الباقة تجمع خدمتين منشورتين أو أكثر بسعر أقل من مجموعها — للعملاء الذين يخططون لمناسبة كاملة.';
+
+  @override
+  String providerPackEmptyNeedsServices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'الباقة تجمع خدمتين منشورتين أو أكثر بسعر أقل من مجموعها.',
+      one: 'الباقة تجمع خدمتين منشورتين أو أكثر بسعر أقل من مجموعها. لديك خدمة منشورة واحدة، فلا يوجد ما يُجمع بعد.',
+      zero: 'الباقة تجمع خدمتين منشورتين أو أكثر بسعر أقل من مجموعها. ليس لديك خدمة منشورة بعد، فلا يوجد ما يُجمع.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackCreate => 'إنشاء باقة';
+
+  @override
+  String get providerPackPublishAnother => 'انشر خدمة أخرى';
+
+  @override
+  String get providerPackStatusUnpublished => 'غير منشورة';
+
+  @override
+  String providerPackServicesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count خدمة',
+      many: '$count خدمة',
+      few: '$count خدمات',
+      two: 'خدمتان',
+      one: 'خدمة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackSaves => 'يوفّر';
+
+  @override
+  String get providerPackSumOfItems => 'مجموع العناصر';
+
+  @override
+  String providerPackAttentionItem(String service) {
+    return 'تحتاج انتباهك — لم تعد «$service» منشورة، لذا لا يستطيع العملاء حجز هذه الباقة';
+  }
+
+  @override
+  String get providerPackAttentionDeleted =>
+      'تحتاج انتباهك — حُذفت خدمة منها، لذا لا يستطيع العملاء حجز هذه الباقة';
+
+  @override
+  String get providerPackAttentionProfile =>
+      'تحتاج انتباهك — لا يستطيع العملاء حجزها ما دام ملفك غير معتمد';
+
+  @override
+  String get providerPackPriceRule =>
+      'يجب أن يكون سعر الباقة أقل من مجموع خدماتها قبل النشر';
+
+  @override
+  String get providerPackUnpublishTitle => 'إلغاء نشر هذه الباقة؟';
+
+  @override
+  String get providerPackUnpublishBody =>
+      'لن يجدها العملاء ولن يحجزوها بعد الآن. تبقى الحجوزات المقبولة كما هي.';
+
+  @override
+  String get providerPackPublished => 'نُشرت الباقة — يمكن للعملاء حجزها الآن';
+
+  @override
+  String get providerPackUnpublished => 'أُلغي نشر الباقة';
+
+  @override
+  String get providerPackDeleted => 'حُذفت الباقة';
+
+  @override
+  String get providerPackCreateTitle => 'إنشاء باقة';
+
+  @override
+  String get providerPackEditTitle => 'تعديل الباقة';
+
+  @override
+  String get providerPackLangArabicMissing =>
+      'ما زال الاسم بالعربية ناقصًا، وهو مطلوب قبل النشر.';
+
+  @override
+  String get providerPackLangEnglishMissing =>
+      'ما زال الاسم بالإنجليزية ناقصًا، وهو مطلوب للحفظ.';
+
+  @override
+  String get providerPackLangCompleteLive =>
+      'النسختان الإنجليزية والعربية مكتملتان. هذه الباقة منشورة، لذا تظهر التعديلات للعملاء فورًا.';
+
+  @override
+  String providerPackNameLabel(String language) {
+    String _temp0 = intl.Intl.selectLogic(language, {
+      'ar': 'اسم الباقة (بالعربية)',
+      'other': 'اسم الباقة (بالإنجليزية)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackServicesSection => 'خدمات هذه الباقة';
+
+  @override
+  String get providerPackEditServices => 'إضافة خدمات أو إزالتها';
+
+  @override
+  String get providerPackNoServices =>
+      'اختر من خدمتين إلى ست من خدماتك المنشورة.';
+
+  @override
+  String providerPackSumCaption(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'مجموع الخدمات الـ$count',
+      many: 'مجموع الخدمات الـ$count',
+      few: 'مجموع الخدمات الـ$count',
+      two: 'مجموع الخدمتين',
+      one: 'مجموع الخدمة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String providerPackItemNotCovering(String wilaya) {
+    return 'لا تغطي $wilaya';
+  }
+
+  @override
+  String get providerPackItemDraft => 'غير منشورة — لا يمكن للعملاء حجز الباقة';
+
+  @override
+  String get providerPackItemHidden =>
+      'أخفتها Eventor — لا يمكن للعملاء حجز الباقة';
+
+  @override
+  String get providerPackPriceLabel => 'سعر الباقة (دج)';
+
+  @override
+  String get providerPackPriceHelper => 'يجب أن يكون أقل من مجموع العناصر.';
+
+  @override
+  String get providerPackPriceNotBelow =>
+      'هذا ليس أقل من مجموع العناصر — سيدفع العملاء مثل حجزها منفردة أو أكثر.';
+
+  @override
+  String get providerPackClientsSave => 'يوفّر العملاء';
+
+  @override
+  String providerPackSavingPercent(int percent) {
+    return '· $percent٪';
+  }
+
+  @override
+  String get providerPackEventPlace => 'المناسبة والمكان';
+
+  @override
+  String get providerPackEventType => 'نوع المناسبة';
+
+  @override
+  String get providerPackWilaya => 'الولاية';
+
+  @override
+  String get providerPackWilayaPickerBody => 'يجب أن تغطيها كل خدمات الباقة.';
+
+  @override
+  String providerPackWilayaCovering(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تغطيها $count خدمة',
+      many: 'تغطيها $count خدمة',
+      few: 'تغطيها $count خدمات',
+      two: 'تغطيها خدمتان',
+      one: 'تغطيها خدمة واحدة',
+      zero: 'لا تغطيها أي خدمة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackPhotosTitle => 'صور الباقة';
+
+  @override
+  String get providerPackDeleteButton => 'حذف هذه الباقة';
+
+  @override
+  String get providerPackDeleteCaption =>
+      'الحذف نهائي ويُرفض ما دامت الباقة مرتبطة بحجوزات قادمة. لا تتأثر الخدمات التي بداخلها.';
+
+  @override
+  String get providerPackDeleteTitle => 'حذف هذه الباقة؟';
+
+  @override
+  String get providerPackDeleteBody =>
+      'الحذف نهائي، ولا تتأثر الخدمات التي بداخلها.';
+
+  @override
+  String get providerPackDeleteRefusedTitle => 'لا يمكن حذف هذه الباقة بعد';
+
+  @override
+  String get providerPackServicesRange => 'اختر من خدمتين إلى ست خدمات.';
+
+  @override
+  String get providerPackPhotosNeedDraft =>
+      'لإضافة الصور، حدّد أولًا اسم الباقة بالإنجليزية ومن خدمتين إلى ست خدمات والسعر ونوع المناسبة والولاية.';
+
+  @override
+  String get providerPackChecklistBody =>
+      'لن يرى العملاء هذه الباقة حتى تكتمل كل النقاط أدناه. مسودتك محفوظة بالفعل.';
+
+  @override
+  String get providerPackCheckEnglish => 'الاسم بالإنجليزية';
+
+  @override
+  String get providerPackCheckArabic => 'الاسم بالعربية';
+
+  @override
+  String get providerPackCheckServices => 'خدمتان منشورتان على الأقل';
+
+  @override
+  String get providerPackCheckPrice => 'سعر أقل من مجموع العناصر';
+
+  @override
+  String get providerPackCheckWilaya => 'ولاية تغطيها كل الخدمات';
+
+  @override
+  String get providerPackCheckProfile => 'ملف معتمد';
+
+  @override
+  String providerPackFixThese(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أصلح هذه الأمور',
+      many: 'أصلح هذه الأمور',
+      few: 'أصلح هذه الأمور',
+      two: 'أصلح هذين الأمرين',
+      one: 'أصلح هذا الأمر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackChooseTitle => 'اختر الخدمات';
+
+  @override
+  String get providerPackChooseRule =>
+      'اختر من خدمتين إلى ست من خدماتك المنشورة. لا يمكن إدراج المسودات أو الخدمات المخفية في باقة.';
+
+  @override
+  String providerPackChosenCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مختارة',
+      many: '$count مختارة',
+      few: '$count مختارة',
+      two: 'خدمتان مختارتان',
+      one: 'خدمة واحدة مختارة',
+      zero: 'لا شيء مختار',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackChosenSum => 'المجموع';
+
+  @override
+  String providerPackChooseDone(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم · $count مختارة',
+      many: 'تم · $count مختارة',
+      few: 'تم · $count مختارة',
+      two: 'تم · خدمتان',
+      one: 'تم · خدمة واحدة',
+      zero: 'تم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get providerPackReasonDraft => 'مسودة — لا يمكن إدراجها في باقة';
+
+  @override
+  String get providerPackReasonHidden => 'مخفية — لا يمكن إدراجها في باقة';
+
+  @override
+  String get providerPackReasonNotCoveringAny => 'لا تغطي ولاية الباقة';
+
+  @override
+  String get providerPackChooseFull => 'تضم الباقة ست خدمات على الأكثر.';
+
+  @override
+  String get providerPackChooseMin => 'اختر خدمتين على الأقل.';
+
+  @override
+  String get providerPackChooseEmpty => 'ليس لديك خدمات بعد.';
 }

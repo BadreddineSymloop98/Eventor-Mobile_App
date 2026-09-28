@@ -50,12 +50,15 @@ class NotificationsView extends StatelessWidget {
       case ChatTarget(:final String conversationId):
         await context.push(AppRoutes.chatFor(conversationId));
       case BookingTarget(:final String bookingId):
-        // A provider's booking screens are not built yet.
-        if (context.read<SessionController>().user?.isProvider ?? true) {
-          showComingSoon(context, context.l10n.comingSoon);
-        } else {
-          await context.push(AppRoutes.bookingFor(bookingId));
-        }
+        // P2 for a provider, B4 for a client: the router keeps each side
+        // off the other's booking screens.
+        final bool isProvider =
+            context.read<SessionController>().user?.isProvider ?? false;
+        await context.push(
+          isProvider
+              ? AppRoutes.providerBookingFor(bookingId)
+              : AppRoutes.bookingFor(bookingId),
+        );
       case VerificationTarget():
         // The provider home shows where the review stands now.
         context.go(AppRoutes.providerHome);

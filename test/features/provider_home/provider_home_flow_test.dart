@@ -67,7 +67,7 @@ void main() {
       final AppLocalizations strings = l10n(tester);
 
       await tapAndSettle(tester, button(strings.requestDecline).first);
-      expect(find.text(strings.declineTitle), findsOneWidget);
+      expect(find.text(strings.providerBookingDeclineTitle), findsOneWidget);
       expect(isTappable(tester, strings.declineConfirm), isFalse);
 
       await tester.enterText(find.byType(TextField).last, 'Already booked that day');
@@ -76,7 +76,7 @@ void main() {
       await tapAndSettle(tester, button(strings.declineConfirm));
 
       expect(app.provider.calls, contains('decline:req-1:Already booked that day'));
-      expect(find.text(strings.declineTitle), findsNothing);
+      expect(find.text(strings.providerBookingDeclineTitle), findsNothing);
       expect(find.text(strings.providerDeclined), findsOneWidget);
     });
 
