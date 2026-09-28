@@ -135,52 +135,89 @@ extension DesignNum on num {
 ///
 /// The scheme is white surfaces, purple chrome, gold reserved for accent.
 abstract final class AppColors {
-  // The primitive ramp. Private on purpose — see the class comment.
-  static const Color _navy50 = Color(0xFFF5EEFB);
-  static const Color _navy900 = Color(0xFF2B075D);
+  // The primitive ramp, named as the design's "Primitives" collection names
+  // it. Private on purpose — see the class comment.
+  static const Color _purple50 = Color(0xFFF5EEFB);
   static const Color _purple300 = Color(0xFFAE70D2);
+  static const Color _purple900 = Color(0xFF2B075D);
+  static const Color _purple950 = Color(0xFF1D0440);
+  static const Color _gold50 = Color(0xFFFAF2E2);
   static const Color _gold400 = Color(0xFFCD963A);
   static const Color _gold700 = Color(0xFF9A6C1D);
   static const Color _neutral0 = Color(0xFFFFFFFF);
-  static const Color _neutral200 = Color(0xFFD3C4DE);
-  static const Color _neutral600 = Color(0xFF5D476E);
+  static const Color _neutral50 = Color(0xFFF7F7F8);
+  static const Color _neutral100 = Color(0xFFEFEFF1);
+  static const Color _neutral200 = Color(0xFFE6E6EA);
+  static const Color _neutral600 = Color(0xFF6B6B75);
+  static const Color _neutral900 = Color(0xFF1A1A1F);
   static const Color _amber700 = Color(0xFFB45309);
   static const Color _green700 = Color(0xFF15803D);
+  static const Color _red50 = Color(0xFFFEF2F2);
   static const Color _red700 = Color(0xFFB91C1C);
+  static const Color _red800 = Color(0xFF991B1B);
 
   /// The brand colour, and the seed the Material scheme is derived from.
   ///
   /// It sits at 16.3:1 on white, so brand text and brand fills never have a
   /// contrast question to answer.
-  static const Color brand = _navy900;
+  static const Color brand = _purple900;
 
   // Backgrounds.
-  /// The tint behind a screen. The only tint in the system.
-  static const Color bgCanvas = _navy50;
+  /// The grey behind a screen, under the white cards.
+  static const Color bgCanvas = _neutral50;
 
   /// Cards, sheets and anything raised off [bgCanvas].
   static const Color bgSurface = _neutral0;
-  static const Color bgBrand = _navy900;
+
+  /// A surface while it is being pressed — a row, an inverse button.
+  static const Color bgSurfacePressed = _neutral100;
+  static const Color bgBrand = _purple900;
+
+  /// [bgBrand] while it is being pressed.
+  static const Color bgBrandPressed = _purple950;
+
+  /// The pale purple wash: an icon tile, a pressed outlined button.
+  static const Color bgBrandSubtle = _purple50;
   static const Color bgAccent = _gold700;
+  static const Color bgAccentSubtle = _gold50;
   static const Color bgDisabled = _neutral200;
 
-  /// Ground for a modal barrier or a photo scrim. Used at partial opacity.
-  static const Color bgOverlay = _navy900;
+  /// Ground for a destructive action, and its pressed and quiet variants.
+  static const Color bgDanger = _red700;
+  static const Color bgDangerPressed = _red800;
+  static const Color bgDangerSubtle = _red50;
+
+  /// Ground for a brand photo scrim. Used at partial opacity.
+  static const Color bgOverlay = _purple900;
+
+  /// Ground for a neutral overlay. Used at partial opacity.
+  static const Color bgOverlayNeutral = _neutral600;
+
+  /// The modal barrier behind a bottom sheet or dialog.
+  ///
+  /// Always used at 50% — [scrimOpacity] — never solid. Neutral rather than
+  /// brand, so a sheet over a purple screen does not turn it into a bruise.
+  static const Color bgScrim = _neutral900;
+
+  /// The opacity [bgScrim] is painted at.
+  static const double scrimOpacity = 0.5;
 
   /// The warm end of the *brand* photo scrim.
   ///
   /// The splash fades from this at the top to [bgOverlay] at the bottom, which
   /// keeps the image readable through the lighter part of the gradient instead
-  /// of flattening it to purple.
-  static const Color scrimHighlight = _neutral600;
+  /// of flattening it to purple. Outside the published ramp — it is a
+  /// photographic treatment, pinned here so the ramp's move to true greys does
+  /// not recolour the splash.
+  static const Color scrimHighlight = Color(0xFF5D476E);
 
   /// The deep end of the *neutral* photo scrim.
   ///
-  /// A near-black plum, and the one colour in the app outside the published
-  /// ramp — the design uses it only to darken photographs. Every photographic
-  /// screen except the splash uses this rather than [bgOverlay]: the splash is
-  /// about the brand, so it is tinted purple, while the rest are about the
-  /// copy over the image, and purple would fight the photograph.
+  /// A near-black plum, and outside the published ramp — the design uses it
+  /// only to darken photographs. Every photographic screen except the splash
+  /// uses this rather than [bgOverlay]: the splash is about the brand, so it is
+  /// tinted purple, while the rest are about the copy over the image, and
+  /// purple would fight the photograph.
   static const Color scrimDeep = Color(0xFF1B1221);
 
   /// The light wash across the top of a neutral-scrimmed photograph.
@@ -188,12 +225,20 @@ abstract final class AppColors {
   /// Lifts the status bar area off the image so white chrome reads against it.
   static const Color scrimLift = Color(0xFFF5F5F5);
 
+  /// The pale gradient behind an icon tile ([IconContainer], [ServiceThumb]),
+  /// top-start to bottom-end, and its hairline. Raw values in the design
+  /// rather than variables, so they are raw here too.
+  static const Color tileGradientStart = Color(0xFFFAF6FE);
+  static const Color tileGradientEnd = Color(0xFFE9DAF7);
+  static const Color tileBorder = Color(0xFFEBDEF8);
+
   // Text.
-  static const Color textPrimary = _navy900;
+  static const Color textPrimary = _neutral900;
   static const Color textSecondary = _neutral600;
-  static const Color textBrand = _navy900;
+  static const Color textBrand = _purple900;
   static const Color textAccent = _gold700;
   static const Color textDisabled = _neutral200;
+  static const Color textDanger = _red700;
 
   /// Text on a [bgBrand] fill.
   static const Color textOnBrand = _neutral0;
@@ -207,14 +252,18 @@ abstract final class AppColors {
   /// Text on a [bgAccent] fill.
   static const Color textOnAccent = _neutral0;
 
+  /// Text on a [bgDanger] fill.
+  static const Color textOnDanger = _neutral0;
+
   // Borders.
   static const Color borderDefault = _neutral200;
 
   /// Borders, dividers and icon strokes that should read as brand without
   /// shouting. 3.5:1 on white.
   static const Color borderBrandSubtle = _purple300;
-  static const Color borderBrand = _navy900;
+  static const Color borderBrand = _purple900;
   static const Color borderAccent = _gold700;
+  static const Color borderDanger = _red700;
 
   /// Outline for a control sitting on a brand fill or a scrimmed photograph,
   /// where [borderDefault] would disappear.
@@ -222,9 +271,11 @@ abstract final class AppColors {
 
   // Icons.
   static const Color iconDefault = _neutral600;
-  static const Color iconBrand = _navy900;
+  static const Color iconBrand = _purple900;
   static const Color iconOnBrand = _neutral0;
   static const Color iconAccent = _gold700;
+  static const Color iconOnBrandAccent = _gold400;
+  static const Color iconDanger = _red700;
 
   // Booking status. Named for the state, not the colour, so the mapping is
   // the design's to change.
@@ -232,9 +283,10 @@ abstract final class AppColors {
   static const Color statusAccepted = _green700;
   static const Color statusDeclined = _red700;
   static const Color statusCompleted = _neutral600;
+  static const Color statusCancelled = _neutral600;
 
   // Ratings.
-  static const Color ratingFilled = _navy900;
+  static const Color ratingFilled = _purple900;
   static const Color ratingEmpty = _neutral200;
 }
 
@@ -310,6 +362,8 @@ abstract final class AppRadii {
   /// rounded on its short axis.
   static const double full = 999;
 
+  static const BorderRadius xsAll = BorderRadius.all(Radius.circular(xs));
+  static const BorderRadius smAll = BorderRadius.all(Radius.circular(sm));
   static const BorderRadius mdAll = BorderRadius.all(Radius.circular(md));
   static const BorderRadius lgAll = BorderRadius.all(Radius.circular(lg));
   static const BorderRadius fullAll = BorderRadius.all(Radius.circular(full));
@@ -333,9 +387,16 @@ abstract final class AppSizes {
 
   // Avatars.
   static const double avatarSm = 32;
+
+  /// The conversation list row's avatar (14).
+  static const double avatarList = 48;
+
   static const double avatarMd = 40;
   static const double avatarLg = 56;
   static const double avatarXl = 80;
+
+  /// The chat thread's header avatar (15).
+  static const double avatarChatHeader = 36;
 
   /// Widest the main content column is allowed to get.
   ///
@@ -356,7 +417,7 @@ abstract final class AppSizes {
 /// just the names.
 abstract final class AppFontFamilies {
   /// Latin copy.
-  static const String latin = 'Inter';
+  static const String latin = 'Figtree';
 
   /// Arabic copy.
   static const String arabic = 'Cairo';
@@ -365,7 +426,7 @@ abstract final class AppFontFamilies {
 /// The type ramp, in fixed logical pixels.
 ///
 /// The design ships **two** ramps, not one. Cairo needs about a point more
-/// than Inter to read at the same size, and its line heights are looser, so
+/// than Figtree to read at the same size, and its line heights are looser, so
 /// every Arabic role is its own value rather than the Latin value in a
 /// different font. [forLocale] picks the pair; `AppTheme` feeds the result
 /// into [ThemeData], so a widget reads
@@ -384,7 +445,7 @@ abstract final class AppFontFamilies {
 /// literally would set the type about three times too tight. Every value below
 /// is the converted one, with the design's percentage in a comment.
 abstract final class AppTextStyles {
-  /// Latin (Inter). Figma role names in the comments.
+  /// Latin (Figtree). Figma role names in the comments.
   static const TextTheme latin = TextTheme(
     // Display/L
     displayLarge: TextStyle(
@@ -572,28 +633,35 @@ abstract final class AppTextStyles {
           : overlineLatin;
 }
 
-/// Drop shadows, tinted with the brand purple rather than with black so that
-/// a raised surface reads as part of the same palette.
+/// Drop shadows, as the design's `elevation/*` effect styles publish them.
 ///
-/// Each level is two layers: a tight contact shadow and a wider ambient one.
+/// Neutral near-black (`#101014`) at a few percent rather than brand-tinted:
+/// the design keeps colour for content and lets depth stay quiet. Each level
+/// is two layers — a tight contact shadow and a wider ambient one. The alpha
+/// is baked into each colour so the lists stay `const`: 4% is `0x0A`, 3% is
+/// `0x08`, 6% is `0x0F`.
 abstract final class AppElevation {
+  /// `elevation/sm` — cards resting on the canvas.
   static const List<BoxShadow> sm = <BoxShadow>[
-    BoxShadow(color: Color(0x0F2B075D), offset: Offset(0, 1), blurRadius: 2),
-    BoxShadow(color: Color(0x1A2B075D), offset: Offset(0, 1), blurRadius: 3),
+    BoxShadow(color: Color(0x0A101014), offset: Offset(0, 1), blurRadius: 2),
+    BoxShadow(color: Color(0x08101014), offset: Offset(0, 1), blurRadius: 3),
   ];
 
+  /// `elevation/md` — sticky action bars.
   static const List<BoxShadow> md = <BoxShadow>[
-    BoxShadow(color: Color(0x0F2B075D), offset: Offset(0, 2), blurRadius: 4),
-    BoxShadow(color: Color(0x142B075D), offset: Offset(0, 4), blurRadius: 8),
+    BoxShadow(color: Color(0x0A101014), offset: Offset(0, 2), blurRadius: 4),
+    BoxShadow(color: Color(0x0A101014), offset: Offset(0, 4), blurRadius: 8),
   ];
 
+  /// `elevation/lg` — sheets and anything floating over the screen.
   static const List<BoxShadow> lg = <BoxShadow>[
-    BoxShadow(color: Color(0x0F2B075D), offset: Offset(0, 4), blurRadius: 8),
-    BoxShadow(color: Color(0x1F2B075D), offset: Offset(0, 12), blurRadius: 24),
+    BoxShadow(color: Color(0x0A101014), offset: Offset(0, 4), blurRadius: 8),
+    BoxShadow(color: Color(0x0F101014), offset: Offset(0, 12), blurRadius: 24),
   ];
 
-  /// The ring drawn around a focused control. A spread with no blur and no
-  /// offset, so it reads as an outline rather than as a shadow.
+  /// `focus-ring` — drawn around a control that holds keyboard focus. A
+  /// spread with no blur and no offset, so it reads as an outline rather than
+  /// as a shadow.
   static const List<BoxShadow> focusRing = <BoxShadow>[
     BoxShadow(color: Color(0x5963149F), spreadRadius: 3),
   ];

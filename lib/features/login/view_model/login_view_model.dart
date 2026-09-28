@@ -1,28 +1,59 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 
 import '../../../core/base/base_view_model.dart';
 import '../../../core/constants/input_rules.dart';
+import '../../../core/errors/failure.dart';
 import '../../../core/errors/validation_error.dart';
+import '../../../core/models/account.dart';
+import '../../../core/routing/app_routes.dart';
+import '../../../core/session/session_controller.dart';
+import '../../auth/data/auth_repository.dart';
 
-/// Drives the login screen.
+/// What the banner above the login form is reporting.
+enum LoginProblem {
+  /// `07b` — `INVALID_CREDENTIALS`.
+  wrongCredentials,
+
+  /// `07c` — `EMAIL_NOT_VERIFIED`, with a link to send a new code.
+  unverified,
+
+  /// `07d` — `ACCOUNT_LOCKED`, until [LoginViewModel.lockedUntil].
+  locked,
+
+  /// `ACCOUNT_BLOCKED` — the admin's message is the body.
+  blocked,
+
+  /// `ROLE_NOT_ALLOWED_IN_APP` — an admin account.
+  notAllowed,
+
+  /// The session ended on its own and the router brought the user here.
+  sessionExpired,
+}
+
+/// Drives the login screen — `07` and its error states `07b`–`07d`.
 ///
-/// It owns the form: the text controllers, the focus nodes, the validation
-/// results and the sign-in call. Keeping all of it here means the form can be
-/// tested without building a widget.
-///
-/// Validation runs twice over. As the user types it answers "is this field
-/// valid yet?", which drives the instruction under each field and whether the
-/// button can be tapped. On submit it runs again to produce the errors —
-/// values set programmatically bypass both the formatters and the listeners.
-///
-/// Errors come out as types rather than sentences: this class has no
-/// [BuildContext] and so cannot look up a localised string. The view turns
-/// them into text.
+/// Validation here is only "is there something that looks like an address,
+/// and is there a password": the API sets no password minimum on login, and
+/// refusing to send a short password would lock out anyone whose old password
+/// predates today's rule.
 class LoginViewModel extends BaseViewModel {
-  LoginViewModel() {
+  LoginViewModel({
+    required this._auth,
+    required this._session,
+    String? initialEmail,
+    bool sessionExpired = false,
+  }) {
+    emailController.text = initialEmail ?? '';
+    if (sessionExpired) _problem = LoginProblem.sessionExpired;
     emailController.addListener(_onFieldChanged);
     passwordController.addListener(_onFieldChanged);
+    _onFieldChanged();
   }
+
+  final AuthRepository _auth;
+  final SessionController _session;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -30,86 +61,194 @@ class LoginViewModel extends BaseViewModel {
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
 
-  bool _isEmailValid = false;
-  bool _isPasswordValid = false;
+  bool _canSubmit = false;
   EmailError? _emailError;
   PasswordError? _passwordError;
 
-  /// Whether each field currently satisfies its format.
-  ///
-  /// The fields hide their instruction once this turns true.
-  bool get isEmailValid => _isEmailValid;
-  bool get isPasswordValid => _isPasswordValid;
+  LoginProblem? _problem;
+  String? _serverMessage;
+  DateTime? _blockedUntil;
+  String? _unverifiedEmail;
+  DateTime? _lockedUntil;
+  Timer? _lockTimer;
+  bool _isSendingCode = false;
 
-  /// Whether the form is complete enough to submit.
-  bool get canSubmit => _isEmailValid && _isPasswordValid;
-
+  bool get canSubmit => _canSubmit && !isLocked;
   EmailError? get emailError => _emailError;
   PasswordError? get passwordError => _passwordError;
 
-  /// Moves the keyboard on from the email field to the password field.
+  /// What the banner reports, or `null` for no banner.
+  LoginProblem? get problem => _problem;
+
+  /// The server's own sentence, for [LoginProblem.blocked].
+  String? get serverMessage => _serverMessage;
+
+  /// When a [LoginProblem.blocked] block ends; `null` when it has no end.
+  DateTime? get blockedUntil => _blockedUntil;
+
+  /// The address the unverified account belongs to — the server echoes it.
+  String? get unverifiedEmail => _unverifiedEmail;
+
+  /// When the lock ends, for [LoginProblem.locked].
+  DateTime? get lockedUntil => _lockedUntil;
+  bool get isLocked => _lockedUntil != null;
+
+  bool get isSendingCode => _isSendingCode;
+
   void moveFocusToPassword() => passwordFocusNode.requestFocus();
 
-  /// Validates the form and signs the user in.
-  ///
-  /// Returns whether the caller may continue to the next screen.
-  Future<bool> signIn() async {
-    if (!_validate()) return false;
+  /// Validates and signs in. On success the session takes over and the router
+  /// moves the user on; nothing to return.
+  Future<void> signIn() async {
+    if (isBusy || isLocked || !_validate()) return;
 
-    final bool? succeeded = await runGuarded(_authenticate);
-    return succeeded ?? false;
+    _problem = null;
+    final String email = emailController.text.trim();
+
+    final bool signedIn = await runGuarded(() async {
+          final AppUser user = await _auth.login(
+            email: email,
+            password: passwordController.text,
+          );
+          _session.signedIn(user);
+          return true;
+        }) ??
+        false;
+
+    if (!signedIn) _handleFailure(email);
   }
 
-  /// Placeholder for the real authentication call.
-  ///
-  /// There is no backend yet, so any input that passes validation is accepted.
-  Future<bool> _authenticate() async => true;
+  /// `07c` — sends a fresh code and returns what `10b` needs, or `null` if it
+  /// could not be sent.
+  Future<VerifyEmailArgs?> sendNewCode() async {
+    final String email = _unverifiedEmail ?? emailController.text.trim();
+    _isSendingCode = true;
+    notifyListeners();
 
-  /// Re-checks both fields on every keystroke, but notifies only when an
-  /// answer actually changes — otherwise typing would rebuild the screen for
-  /// nothing.
-  void _onFieldChanged() {
-    final bool isEmailValid = _validateEmail(emailController.text.trim()) == null;
-    final bool isPasswordValid =
-        _validatePassword(passwordController.text) == null;
+    final CodeSent? sent = await runGuarded(
+      () => _auth.resendVerification(email),
+    );
 
-    if (isEmailValid == _isEmailValid && isPasswordValid == _isPasswordValid) {
-      return;
+    _isSendingCode = false;
+    if (sent == null) {
+      final Failure? error = failure;
+      // A code sent moments ago is still valid — carry on to enter it.
+      if (error is ApiFailure && error.code == ApiErrorCode.codeResendTooSoon) {
+        clearFailure();
+        return VerifyEmailArgs(
+          email: email,
+          resendAfterSeconds:
+              error.retryAfterSeconds ?? CodeSent.defaultResendSeconds,
+        );
+      }
+      notifyListeners();
+      return null;
     }
-
-    _isEmailValid = isEmailValid;
-    _isPasswordValid = isPasswordValid;
     notifyListeners();
+    return VerifyEmailArgs(
+      email: sent.email.isEmpty ? email : sent.email,
+      resendAfterSeconds: sent.resendAfterSeconds,
+    );
   }
 
-  /// Fills [emailError] and [passwordError], and reports whether the form is
-  /// valid.
-  bool _validate() {
-    _emailError = _validateEmail(emailController.text.trim());
-    _passwordError = _validatePassword(passwordController.text);
-    notifyListeners();
+  void _handleFailure(String email) {
+    final Failure? error = failure;
+    if (error is! ApiFailure) return; // Network and the rest: the view toasts.
 
+    switch (error.code) {
+      case ApiErrorCode.invalidCredentials:
+        _problem = LoginProblem.wrongCredentials;
+        // The password is the likelier typo, and it is secret — clear it so
+        // the next attempt starts clean. The address stays.
+        passwordController.clear();
+      case ApiErrorCode.emailNotVerified:
+        _problem = LoginProblem.unverified;
+        _unverifiedEmail = error.details?['email'] as String? ?? email;
+      case ApiErrorCode.accountLocked:
+        _problem = LoginProblem.locked;
+        _startLock(error.retryAfterSeconds ?? 15 * 60);
+      case ApiErrorCode.accountBlocked:
+        _problem = LoginProblem.blocked;
+        _serverMessage =
+            error.details?['message'] as String? ?? error.message;
+        _blockedUntil = DateTime.tryParse(
+          error.details?['blockedUntil'] as String? ?? '',
+        )?.toLocal();
+      case ApiErrorCode.roleNotAllowedInApp:
+        _problem = LoginProblem.notAllowed;
+        _serverMessage = error.message;
+      default:
+        return; // Unknown code: the view shows the server's message.
+    }
+    clearFailure();
+  }
+
+  void _startLock(int seconds) {
+    _lockTimer?.cancel();
+    _lockedUntil = DateTime.now().add(Duration(seconds: seconds));
+    _lockTimer = Timer(Duration(seconds: seconds), () {
+      _lockedUntil = null;
+      if (_problem == LoginProblem.locked) _problem = null;
+      notifyListeners();
+    });
+  }
+
+  bool _validate() {
+    _emailError = _validateEmail(emailController.text);
+    _passwordError =
+        passwordController.text.isEmpty ? const PasswordRequired() : null;
+    notifyListeners();
     return _emailError == null && _passwordError == null;
   }
 
-  EmailError? _validateEmail(String email) {
+  void _onFieldChanged() {
+    final bool canSubmit = InputRules.emailPattern.hasMatch(
+          emailController.text.trim(),
+        ) &&
+        passwordController.text.isNotEmpty;
+
+    bool changed = canSubmit != _canSubmit;
+    _canSubmit = canSubmit;
+
+    // An error is a verdict on the value it was given; once that value
+    // changes the verdict no longer applies.
+    if (_emailError != null && emailController.text.isNotEmpty) {
+      _emailError = null;
+      changed = true;
+    }
+    if (_passwordError != null && passwordController.text.isNotEmpty) {
+      _passwordError = null;
+      changed = true;
+    }
+    // "Wrong email or password" is about the pair that was sent; editing
+    // either retires it. The lock and the blocked notice are not about the
+    // typing and stay.
+    if (_problem == LoginProblem.wrongCredentials &&
+        passwordController.text.isNotEmpty) {
+      _problem = null;
+      changed = true;
+    }
+    // "Confirm your email first" names one address; typing another makes it
+    // about the wrong account, and its "Send a new code" would go astray.
+    if (_problem == LoginProblem.unverified &&
+        emailController.text.trim() != _unverifiedEmail) {
+      _problem = null;
+      _unverifiedEmail = null;
+      changed = true;
+    }
+    if (changed) notifyListeners();
+  }
+
+  static EmailError? _validateEmail(String value) {
+    final String email = value.trim();
     if (email.isEmpty) return const EmailRequired();
     if (!InputRules.emailPattern.hasMatch(email)) return const EmailInvalid();
     return null;
   }
 
-  PasswordError? _validatePassword(String password) {
-    if (password.isEmpty) return const PasswordRequired();
-    if (password.length < InputRules.minPasswordLength) {
-      return const PasswordTooShort(InputRules.minPasswordLength);
-    }
-    return null;
-  }
-
   @override
   void dispose() {
-    emailController.removeListener(_onFieldChanged);
-    passwordController.removeListener(_onFieldChanged);
+    _lockTimer?.cancel();
     emailController.dispose();
     passwordController.dispose();
     emailFocusNode.dispose();

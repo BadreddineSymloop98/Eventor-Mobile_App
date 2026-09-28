@@ -1,0 +1,12 @@
+{"data": {
+  "id": "c-lumiere", "kind": "direct", "status": "open",
+  "other": {"id": "p-lumiere", "name": "Studio Lumière", "avatarUrl": "https://files.example/a.jpg?exp=1&sig=x", "role": "provider", "blocked": false},
+  "lastMessage": "Perfect — I'll hold Sat 14 Mar for you.", "lastMessageAt": "2026-03-12T09:24:00.000Z", "unreadCount": 2,
+  "booking": {"id": "b-1", "reference": "EVT-000123", "status": "pending", "eventDate": "2026-03-14", "title": "Wedding photo & video coverage", "total": "57000.00"},
+  "canWrite": true,
+  "participants": [
+    {"id": "u-me", "name": "Amina Benali", "avatarUrl": null, "role": "client", "blocked": false},
+    {"id": "p-lumiere", "name": "Studio Lumière", "avatarUrl": null, "role": "provider", "blocked": false}
+  ],
+  "contactUnmasked": false, "disputeId": null, "closedReason": null, "createdAt": "2026-03-01T10:00:00.000Z"
+}}

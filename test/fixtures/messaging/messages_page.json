@@ -1,0 +1,8 @@
+{"data": [
+  {"id": "m-1", "conversationId": "c-lumiere", "kind": "system", "senderId": null, "mine": false, "body": "Booking requested · phone numbers stay hidden until the provider accepts.", "masked": false, "imageUrl": null, "imageLargeUrl": null, "createdAt": "2026-03-11T08:55:00.000Z"},
+  {"id": "m-2", "conversationId": "c-lumiere", "kind": "text", "senderId": "p-lumiere", "mine": false, "body": "Good morning — I saw your request for 14 March.", "masked": false, "imageUrl": null, "imageLargeUrl": null, "createdAt": "2026-03-12T09:02:00.000Z"},
+  {"id": "m-3", "conversationId": "c-lumiere", "kind": "text", "senderId": "u-me", "mine": true, "body": "Full day please. My number is [phone hidden]", "masked": true, "imageUrl": null, "imageLargeUrl": null, "createdAt": "2026-03-12T09:20:00.000Z"},
+  {"id": "m-4", "conversationId": "c-lumiere", "kind": "attachment", "senderId": "p-lumiere", "mine": false, "body": "Last month at Salle Yasmine", "masked": false, "imageUrl": "https://files.example/i4.jpg?exp=1&sig=a", "imageLargeUrl": "https://files.example/i4-large.jpg?exp=1&sig=b", "createdAt": "2026-03-12T09:24:00.000Z"},
+  {"id": "m-5", "conversationId": "c-lumiere", "kind": "attachment", "senderId": "p-lumiere", "mine": false, "body": "[removed by Eventor]", "masked": false, "imageUrl": null, "imageLargeUrl": null, "createdAt": "2026-03-12T09:30:00.000Z"},
+  {"id": "m-6", "conversationId": "c-lumiere", "kind": "sticker", "senderId": "p-lumiere", "mine": false, "body": "hi", "masked": false, "imageUrl": null, "imageLargeUrl": null, "createdAt": "2026-03-12T09:31:00.000Z"}
+], "meta": {"limit": 30, "hasMore": true, "nextBefore": "m-1"}}

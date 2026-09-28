@@ -1,0 +1,191 @@
+{
+  "data": {
+    "fullName": "Amina Benali",
+    "avatarUrl": null,
+    "wilaya": {
+      "code": 16,
+      "name": "Alger",
+      "nameEn": "Alger",
+      "nameAr": "الجزائر"
+    },
+    "unreadNotifications": 2,
+    "unreadConversations": 3,
+    "categories": [
+      {
+        "id": "bb28c638-c0ea-4140-b9d9-fd5535a6c4b6",
+        "slug": "salles-des-fetes",
+        "name": "Venues",
+        "nameEn": "Venues",
+        "nameAr": "قاعات الحفلات",
+        "icon": "building",
+        "position": 0,
+        "servicesCount": 5
+      },
+      {
+        "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+        "slug": "photographie",
+        "name": "Photography",
+        "nameEn": "Photography",
+        "nameAr": "التصوير",
+        "icon": "camera",
+        "position": 1,
+        "servicesCount": 7
+      },
+      {
+        "id": "d892155b-2c9b-4e0f-8fb5-db15b54af350",
+        "slug": "traiteur",
+        "name": "Catering",
+        "nameEn": "Catering",
+        "nameAr": "الإطعام",
+        "icon": "utensils",
+        "position": 2,
+        "servicesCount": 7
+      }
+    ],
+    "upcomingBookings": [
+      {
+        "id": "b-1",
+        "reference": "EVT-000123",
+        "providerName": "Studio Lumière",
+        "providerAvatarUrl": null,
+        "title": "Wedding photo & video coverage",
+        "category": {
+          "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+          "slug": "photographie",
+          "name": "Photography",
+          "nameEn": "Photography",
+          "nameAr": "التصوير",
+          "icon": "camera"
+        },
+        "eventDate": "2026-10-14",
+        "startTime": "13:00",
+        "status": "accepted",
+        "coverUrl": null
+      }
+    ],
+    "budget": {
+      "exists": true,
+      "spentTotal": "180000.00",
+      "totalAmount": "400000.00",
+      "spentPercent": 45,
+      "bookedCount": 3,
+      "itemsCount": 6
+    },
+    "packs": [
+      {
+        "id": "e03b28ba-30dd-4eb0-ada3-4d74d878ffee",
+        "name": "Mariage Vue sur Mer",
+        "nameEn": "Mariage Vue sur Mer",
+        "nameAr": "زفاف بإطلالة على البحر",
+        "eventType": "wedding",
+        "wilaya": {
+          "code": 31,
+          "name": "Oran",
+          "nameEn": "Oran",
+          "nameAr": "وهران"
+        },
+        "price": "399000.00",
+        "sumOfItems": "453500.00",
+        "savings": "54500.00",
+        "savingsPercent": 12,
+        "itemsCount": 3,
+        "categoryNames": [
+          "Venues",
+          "Catering",
+          "Decoration"
+        ],
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/11c72bf8-9642-485e-91d7-a8c002bc599d?variant=medium&exp=1790240163&sig=7UkINWfSRY7trTzHnnNJ6m2PPdKDWACOWBFwbzuZKOE",
+        "avgRating": "0.00",
+        "ratingCount": 0,
+        "bookingsCount": 0,
+        "provider": {
+          "id": "94305376-287a-4966-9546-8c3afd247e88",
+          "businessName": "Salle El Bahia",
+          "category": {
+            "id": "bb28c638-c0ea-4140-b9d9-fd5535a6c4b6",
+            "slug": "salles-des-fetes",
+            "name": "Venues",
+            "nameEn": "Venues",
+            "nameAr": "قاعات الحفلات",
+            "icon": "building"
+          },
+          "avatarUrl": null,
+          "verified": true,
+          "avgRating": "3.80",
+          "ratingCount": 5,
+          "completedBookingsCount": 5,
+          "yearsActive": 14,
+          "avgReplyMinutes": null,
+          "replyTime": null,
+          "acceptingBookings": true
+        },
+        "isFavourite": false
+      }
+    ],
+    "nearbyServices": [
+      {
+        "id": "892e3d17-0f2e-4348-a5f0-5a0df2b285ef",
+        "title": "Wedding photo & video coverage",
+        "titleEn": "Wedding photo & video coverage",
+        "titleAr": "تغطية زفاف بالصورة والفيديو",
+        "category": {
+          "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+          "slug": "photographie",
+          "name": "Photography",
+          "nameEn": "Photography",
+          "nameAr": "التصوير",
+          "icon": "camera"
+        },
+        "basePrice": "120000.00",
+        "priceType": "per_event",
+        "priceTypeLabel": "per event",
+        "avgRating": "5.00",
+        "ratingCount": 2,
+        "bookingsCount": 2,
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/944630eb-2dad-47f4-a9e1-280fd69bee3b?variant=medium&exp=1790240162&sig=7RezEfgShv6vboib-1XNTV3aWDbm45yhmfNXLopG5Fw",
+        "wilayas": [
+          {
+            "code": 9,
+            "name": "Blida",
+            "nameEn": "Blida",
+            "nameAr": "البليدة"
+          },
+          {
+            "code": 16,
+            "name": "Alger",
+            "nameEn": "Alger",
+            "nameAr": "الجزائر"
+          },
+          {
+            "code": 42,
+            "name": "Tipaza",
+            "nameEn": "Tipaza",
+            "nameAr": "تيبازة"
+          }
+        ],
+        "provider": {
+          "id": "3552815d-6aca-43fc-ace8-0409ee3a762e",
+          "businessName": "Studio Lumière",
+          "category": {
+            "id": "7d3855dd-4bd3-430a-9ffc-09d4f269eb4a",
+            "slug": "photographie",
+            "name": "Photography",
+            "nameEn": "Photography",
+            "nameAr": "التصوير",
+            "icon": "camera"
+          },
+          "avatarUrl": null,
+          "verified": true,
+          "avgRating": "4.80",
+          "ratingCount": 5,
+          "completedBookingsCount": 7,
+          "yearsActive": 15,
+          "avgReplyMinutes": null,
+          "replyTime": null,
+          "acceptingBookings": true
+        },
+        "isFavourite": false
+      }
+    ]
+  }
+}
