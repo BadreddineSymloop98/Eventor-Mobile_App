@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/ui_helpers.dart';
 import '../../../core/localization/app_localizations_x.dart';
-import '../../../core/widgets/content_container.dart';
-import '../../../core/widgets/language_switch.dart';
-import '../../../core/widgets/main_button.dart';
-import '../../../core/widgets/photo_backdrop.dart';
+import '../../../core/widgets/atoms/page_dots.dart';
+import '../../../core/widgets/layout/content_container.dart';
+import '../../../core/widgets/molecules/language_switch.dart';
+import '../../../core/widgets/molecules/main_button.dart';
+import '../../../core/widgets/layout/photo_backdrop.dart';
 import '../../../l10n/app_localizations.dart';
 import '../model/onboarding_section.dart';
 import '../view_model/onboarding_view_model.dart';
-import 'widgets/page_indicator.dart';
 
 /// A swipeable introduction to the app, over full-bleed photography.
 ///
@@ -94,23 +95,25 @@ class _OnboardingViewState extends State<OnboardingView> {
 
   Future<void> _goToNextSection(BuildContext context) async {
     final OnboardingViewModel viewModel = context.read<OnboardingViewModel>();
-    final NavigatorState navigator = Navigator.of(context);
+    final GoRouter router = GoRouter.of(context);
 
     final String? nextRoute = await viewModel.goToNextSection();
 
     // A null route means onboarding simply advanced a section.
     if (nextRoute == null || !context.mounted) return;
-    await navigator.pushReplacementNamed(nextRoute);
+    // `go`, not `push`: onboarding is finished and must not be walkable back
+    // into.
+    router.go(nextRoute);
   }
 
   Future<void> _skip(BuildContext context) async {
     final OnboardingViewModel viewModel = context.read<OnboardingViewModel>();
-    final NavigatorState navigator = Navigator.of(context);
+    final GoRouter router = GoRouter.of(context);
 
     final String nextRoute = await viewModel.finish();
 
     if (!context.mounted) return;
-    await navigator.pushReplacementNamed(nextRoute);
+    router.go(nextRoute);
   }
 
   @override
@@ -147,23 +150,32 @@ class _OnboardingViewState extends State<OnboardingView> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        AnimatedSwitcher(
-                          duration: OnboardingView._copyFade,
-                          switchInCurve: Curves.easeOutCubic,
-                          switchOutCurve: Curves.easeInCubic,
-                          transitionBuilder: OnboardingView._riseAndFade,
-                          child: _Copy(
-                            // Keyed so the switcher treats each section's copy
-                            // as a different child and actually transitions.
-                            key: ValueKey<int>(viewModel.currentIndex),
-                            section: OnboardingViewModel
-                                .sections[viewModel.currentIndex],
+                        // The copy sits over the pager and is not interactive,
+                        // so a swipe that starts on it must reach the pager
+                        // underneath — otherwise the middle of the screen,
+                        // where a thumb naturally swipes, would not page.
+                        IgnorePointer(
+                          child: AnimatedSwitcher(
+                            duration: OnboardingView._copyFade,
+                            switchInCurve: Curves.easeOutCubic,
+                            switchOutCurve: Curves.easeInCubic,
+                            transitionBuilder: OnboardingView._riseAndFade,
+                            child: _Copy(
+                              // Keyed so the switcher treats each section's
+                              // copy as a different child and transitions.
+                              key: ValueKey<int>(viewModel.currentIndex),
+                              section: OnboardingViewModel
+                                  .sections[viewModel.currentIndex],
+                            ),
                           ),
                         ),
                         SizedBox(height: AppSpacing.xl.dh),
-                        PageIndicator(
-                          count: viewModel.sectionCount,
-                          currentIndex: viewModel.currentIndex,
+                        Center(
+                          child: PageDots(
+                            count: viewModel.sectionCount,
+                            currentIndex: viewModel.currentIndex,
+                            tone: PageDotsTone.inverse,
+                          ),
                         ),
                         SizedBox(height: AppSpacing.xl.dh),
                         MainButton(
@@ -207,6 +219,8 @@ class _TopBar extends StatelessWidget {
             label: context.l10n.skip,
             style: MainButtonStyle.ghost,
             tone: MainButtonTone.inverse,
+            // The label, not the box, lines up with the screen margin.
+            flushStart: true,
             onPressed: onSkip,
           ),
           const LanguageSwitch(),

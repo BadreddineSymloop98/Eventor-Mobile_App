@@ -1,132 +1,96 @@
-import 'package:eventor/core/errors/validation_error.dart';
-import 'package:eventor/core/widgets/app_text_field.dart';
-import 'package:eventor/core/widgets/back_icon_button.dart';
-import 'package:eventor/core/widgets/main_button.dart';
-import 'package:eventor/core/widgets/photo_sheet_layout.dart';
+import 'package:eventor/core/errors/failure.dart';
+import 'package:eventor/core/routing/app_routes.dart';
+import 'package:eventor/core/widgets/molecules/app_text_field.dart';
 import 'package:eventor/features/forgot_password/view/forgot_password_view.dart';
-import 'package:eventor/features/forgot_password/view_model/forgot_password_view_model.dart';
 import 'package:eventor/features/login/view/login_view.dart';
+import 'package:eventor/features/reset_password/view/reset_code_view.dart';
 import 'package:eventor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/test_app.dart';
+import '../feature_test_helpers.dart';
 
 void main() {
-  /// Walks from welcome through login into the reset form, the way a user
-  /// gets there.
-  Future<void> pumpForgotPassword(
-    WidgetTester tester, {
-    Locale? locale,
-  }) async {
-    await tester.pumpWidget(
-      await buildTestApp(hasSeenOnboarding: true, locale: locale),
+  /// Login, then 09 pushed over it — Back to log in pops to it.
+  Future<TestApp> pumpForgot(WidgetTester tester, {Locale? locale}) async {
+    final TestApp app = await buildTestApp(
+      hasSeenOnboarding: true,
+      locale: locale,
     );
-    await passSplash(tester);
-
-    await tester.tap(find.text(l10n(tester).welcomeHaveAccount));
+    await startAt(tester, app, AppRoutes.login);
+    app.services.router.push(AppRoutes.forgotPassword);
     await tester.pumpAndSettle();
-    await tester.tap(find.text(l10n(tester).forgotPassword));
-    await tester.pumpAndSettle();
-
     expect(find.byType(ForgotPasswordView), findsOneWidget);
+    return app;
   }
 
-  group('ForgotPasswordView', () {
-    testWidgets('asks for one address and nothing else',
-        (WidgetTester tester) async {
-      await pumpForgotPassword(tester);
+  group('ForgotPasswordView (09)', () {
+    testWidgets('asks for the address and waits for a valid one', (
+      WidgetTester tester,
+    ) async {
+      await pumpForgot(tester);
       final AppLocalizations strings = l10n(tester);
 
-      expect(find.byType(PhotoSheetLayout), findsOneWidget);
       expect(find.text(strings.forgotPasswordTitle), findsOneWidget);
-      expect(find.text(strings.forgotPasswordSubtitle), findsOneWidget);
-      // One field: the whole point of the screen.
-      expect(find.byType(AppTextField), findsOneWidget);
+      expect(isTappable(tester, strings.sendCode), isFalse);
+
+      await typeInto(tester, find.byType(AppTextField), 'amina@example.com');
+      expect(isTappable(tester, strings.sendCode), isTrue);
     });
 
-    testWidgets('Send is unavailable until the address is plausible',
-        (WidgetTester tester) async {
-      await pumpForgotPassword(tester);
-      final SemanticsHandle handle = tester.ensureSemantics();
-      final String send = l10n(tester).sendResetLink;
+    testWidgets('Send code asks for one and moves on to 10', (
+      WidgetTester tester,
+    ) async {
+      final TestApp app = await pumpForgot(tester);
 
-      void expectEnabled({required bool enabled}) {
-        expect(
-          tester.getSemantics(find.widgetWithText(MainButton, send)),
-          isSemantics(label: send, isButton: true, isEnabled: enabled),
-        );
-      }
+      await typeInto(tester, find.byType(AppTextField), 'amina@example.com');
+      await tapAndSettle(tester, button(l10n(tester).sendCode));
 
-      expectEnabled(enabled: false);
-
-      await tester.enterText(find.byType(AppTextField), 'nope');
-      await tester.pump();
-      expectEnabled(enabled: false);
-
-      await tester.enterText(find.byType(AppTextField), 'user@example.com');
-      await tester.pump();
-      expectEnabled(enabled: true);
-
-      handle.dispose();
+      expect(app.auth.forgotten, <String>['amina@example.com']);
+      expect(find.byType(ResetCodeView), findsOneWidget);
+      expect(
+        find.text(l10n(tester).resetCodeSubtitle('amina@example.com')),
+        findsOneWidget,
+      );
     });
 
-    testWidgets('goes back to the login form it came from',
-        (WidgetTester tester) async {
-      await pumpForgotPassword(tester);
+    testWidgets('a request that never arrived is toasted, and stays', (
+      WidgetTester tester,
+    ) async {
+      final TestApp app = await pumpForgot(tester);
+      app.auth.forgotError = const NetworkFailure();
 
-      await tester.tap(find.text(l10n(tester).backToLogIn));
-      await tester.pumpAndSettle();
+      await typeInto(tester, find.byType(AppTextField), 'amina@example.com');
+      await tapAndSettle(tester, button(l10n(tester).sendCode));
 
-      expect(find.byType(LoginView), findsOneWidget);
-      expect(find.byType(ForgotPasswordView), findsNothing);
+      expect(find.text(l10n(tester).errorNetwork), findsOneWidget);
+      expect(find.byType(ForgotPasswordView), findsOneWidget);
     });
 
-    testWidgets('the back control returns to login too',
-        (WidgetTester tester) async {
-      await pumpForgotPassword(tester);
+    testWidgets('Back to log in returns to the form underneath', (
+      WidgetTester tester,
+    ) async {
+      await pumpForgot(tester);
 
-      await tester.tap(find.byType(BackIconButton));
-      await tester.pumpAndSettle();
+      await tapAndSettle(tester, button(l10n(tester).backToLogIn));
 
       expect(find.byType(LoginView), findsOneWidget);
     });
-  });
 
-  group('ForgotPasswordViewModel', () {
-    late ForgotPasswordViewModel viewModel;
+    testWidgets('keeps the address left to right in Arabic', (
+      WidgetTester tester,
+    ) async {
+      await pumpForgot(tester, locale: arabicLocale);
 
-    setUp(() => viewModel = ForgotPasswordViewModel());
-    tearDown(() => viewModel.dispose());
-
-    test('rejects an empty address', () async {
-      expect(await viewModel.sendResetLink(), isFalse);
-      expect(viewModel.emailError, isA<EmailRequired>());
-    });
-
-    test('rejects a malformed address', () async {
-      viewModel.emailController.text = 'not-an-email';
-      expect(await viewModel.sendResetLink(), isFalse);
-      expect(viewModel.emailError, isA<EmailInvalid>());
-    });
-
-    test('accepts a plausible one, ignoring surrounding whitespace', () async {
-      viewModel.emailController.text = '  user@example.com  ';
-      expect(await viewModel.sendResetLink(), isTrue);
-      expect(viewModel.emailError, isNull);
-    });
-
-    test('notifies only when the answer changes', () {
-      int notifications = 0;
-      viewModel.addListener(() => notifications++);
-
-      viewModel.emailController.text = 'u';
-      viewModel.emailController.text = 'us';
-      expect(notifications, 0, reason: 'still not fillable');
-
-      viewModel.emailController.text = 'user@example.com';
-      expect(notifications, 1);
-      expect(viewModel.canSubmit, isTrue);
+      expect(
+        Directionality.of(tester.element(find.byType(ForgotPasswordView))),
+        TextDirection.rtl,
+      );
+      expect(
+        tester.widget<AppTextField>(find.byType(AppTextField)).textDirection,
+        TextDirection.ltr,
+      );
     });
   });
 }

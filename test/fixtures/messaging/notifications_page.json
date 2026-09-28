@@ -1,0 +1,6 @@
+{"data": [
+  {"id": "n-1", "type": "booking.accepted", "title": "Booking accepted", "body": "Studio Lumière accepted your request for Sat 14 Mar.", "data": {"bookingId": "b-1", "href": "booking/b-1"}, "group": "today", "read": false, "readAt": null, "createdAt": "2026-03-12T09:24:00.000Z"},
+  {"id": "n-2", "type": "message.new", "title": "New message", "body": "Salle Yasmine: Yes, the hall is free that weekend.", "data": {"conversationId": "c-yasmine"}, "group": "today", "read": false, "readAt": null, "createdAt": "2026-03-12T08:10:00.000Z"},
+  {"id": "n-3", "type": "review.request", "title": "Leave a review", "body": "How was your engagement session with Studio Lumière ?", "data": null, "group": "this_week", "read": true, "readAt": "2026-03-10T10:00:00.000Z", "createdAt": "2026-03-08T10:00:00.000Z"},
+  {"id": "n-4", "type": "system.maintenance", "title": "Planned maintenance", "body": "Eventor will be unavailable on Sunday night.", "data": {"href": "https://eventor.dz/status", "conversationId": 42}, "group": "someday", "read": true, "readAt": null, "createdAt": "2026-02-01T10:00:00.000Z"}
+], "meta": {"page": 1, "limit": 20, "total": 4, "totalPages": 1}}

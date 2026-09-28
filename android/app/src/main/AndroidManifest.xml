@@ -1,4 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The app talks to the Eventor API. Debug and profile builds get this
+         from their own manifests; a release build needs it here. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- B8 "Download PDF" saves the invoice into Downloads. Android 10+
+         needs no permission for that (MediaStore); 9 and older do. -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"/>
+    <!-- The "download complete" notification after B8 "Download PDF".
+         Android 13+ asks the user, on the first download only. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <application
         android:label="eventor"
         android:name="${applicationName}"
@@ -24,6 +36,21 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- An admin's invite email links to ${APP_PUBLIC_URL}/set-password
+                 (screens 10f / 10g). The public web host is not known yet, so
+                 this uses the API host for now — change android:host once it
+                 is. autoVerify only takes effect once that host serves
+                 /.well-known/assetlinks.json for this app; until then Android
+                 offers the app in a chooser instead of opening it directly. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="https"
+                    android:host="api.eventor.72-60-190-211.sslip.io"
+                    android:pathPrefix="/set-password"/>
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
@@ -40,6 +67,22 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <!-- The download notification checks for a PDF viewer to open the
+             invoice with, falling back to the Downloads app when none. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:mimeType="application/pdf"/>
+        </intent>
+        <!-- url_launcher: "Contact support" (mailto) and the terms page
+             (https) must be able to find an app to open them on Android 11+. -->
+        <intent>
+            <action android:name="android.intent.action.SENDTO"/>
+            <data android:scheme="mailto"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
         </intent>
     </queries>
 </manifest>

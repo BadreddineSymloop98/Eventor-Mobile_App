@@ -1,0 +1,13 @@
+{"data": {
+  "id": "c-dispute", "kind": "dispute", "status": "open",
+  "other": {"id": "u-support", "name": "Eventor support", "avatarUrl": null, "role": "support", "blocked": false},
+  "lastMessage": "Support: we have both sides' evidence.", "lastMessageAt": "2026-03-02T10:00:00.000Z", "unreadCount": 0,
+  "booking": {"id": "b-2", "reference": "EVT-2041", "status": "completed", "eventDate": "2026-02-20", "title": "Engagement photos", "total": "30000.00"},
+  "canWrite": true,
+  "participants": [
+    {"id": "u-me", "name": "Amina Benali", "avatarUrl": null, "role": "client", "blocked": false},
+    {"id": "p-lumiere", "name": "Studio Lumière", "avatarUrl": null, "role": "provider", "blocked": false},
+    {"id": "u-support", "name": "Eventor support", "avatarUrl": null, "role": "support", "blocked": false}
+  ],
+  "contactUnmasked": true, "disputeId": "d-2041", "closedReason": null, "createdAt": "2026-02-25T09:00:00.000Z"
+}}

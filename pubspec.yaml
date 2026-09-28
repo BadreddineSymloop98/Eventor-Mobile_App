@@ -61,6 +61,31 @@ dependencies:
 
   # Left unpinned so the version shipped with flutter_localizations wins.
   intl: any
+  # HTTP. Chosen over `http` for its interceptors: the bearer token, the
+  # Accept-Language header and the single-flight refresh of a rotating refresh
+  # token all live in one place instead of around every call.
+  dio: ^5.11.1
+
+  # Routing. One `redirect` decides where anyone may be from the session,
+  # onboarding and verification state, which is what bounces a user to login
+  # when a session expires mid-use.
+  go_router: ^18.0.1
+
+  # Tokens, in the OS keychain/keystore. SharedPreferences is plaintext on
+  # disk, which is no place for a 30-day refresh token.
+  flutter_secure_storage: ^11.2.0
+
+  # Opens the support mail link (10g) and the terms/privacy pages.
+  url_launcher: ^6.3.2
+
+  # B8 "Share": hands the invoice PDF to another app (WhatsApp, email…).
+  # "Download PDF" saves it instead, through the app's own `eventor/downloads`
+  # channel.
+  share_plus: ^13.3.0
+
+  # B8's invoice PDF, drawn in the app from the same data as the screen so
+  # the two match, in the app's language (Arabic right to left). Pure Dart.
+  pdf: ^3.13.1
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +120,13 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    # Mock builds only: the mock catalog's photos (see assets/mock/photos/CREDITS.md).
+    - assets/mock/photos/
+    # B8's invoice PDF. A PDF cannot pick a weight from a variable font — it
+    # would draw Figtree at its default, Light — so it embeds static Regular
+    # and SemiBold cuts of the same two typefaces (Google Fonts instances,
+    # same OFL licences as the files in assets/fonts/).
+    - assets/fonts/pdf/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -113,9 +145,9 @@ flutter:
   # Upstream (unsubsetted) files from github.com/google/fonts. Both are
   # SIL Open Font License 1.1 — the licences sit beside them.
   fonts:
-    - family: Inter
+    - family: Figtree
       fonts:
-        - asset: assets/fonts/Inter-Variable.ttf
+        - asset: assets/fonts/Figtree-Variable.ttf
     - family: Cairo
       fonts:
         - asset: assets/fonts/Cairo-Variable.ttf

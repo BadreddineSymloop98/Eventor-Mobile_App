@@ -1,0 +1,145 @@
+{
+  "data": {
+    "id": "0d12c8ac-8ca9-4ac4-bddd-046320d7a064",
+    "name": "Soirée Henné",
+    "nameEn": "Soirée Henné",
+    "nameAr": "سهرة الحناء",
+    "eventType": "henna",
+    "wilaya": {
+      "code": 16,
+      "name": "Alger",
+      "nameEn": "Alger",
+      "nameAr": "الجزائر"
+    },
+    "price": "7000.00",
+    "sumOfItems": "8200.00",
+    "savings": "1200.00",
+    "savingsPercent": 14.6,
+    "itemsCount": 2,
+    "categoryNames": [
+      "Catering",
+      "Catering"
+    ],
+    "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/e5ea0d05-eea4-465a-a63d-8965db1d1894?variant=medium&exp=1790240198&sig=lUNTQFfdGq_x8N5-bRLkFw6RbSwtEiJ8yHEZ5f1SLeg",
+    "avgRating": "4.00",
+    "ratingCount": 3,
+    "bookingsCount": 4,
+    "provider": {
+      "id": "6db77516-86a1-49ef-8b57-2c610c4e90ca",
+      "businessName": "Traiteur El Djazair",
+      "category": {
+        "id": "d892155b-2c9b-4e0f-8fb5-db15b54af350",
+        "slug": "traiteur",
+        "name": "Catering",
+        "nameEn": "Catering",
+        "nameAr": "الإطعام",
+        "icon": "utensils"
+      },
+      "avatarUrl": null,
+      "verified": true,
+      "avgRating": "4.50",
+      "ratingCount": 14,
+      "completedBookingsCount": 17,
+      "yearsActive": 10,
+      "avgReplyMinutes": null,
+      "replyTime": null,
+      "acceptingBookings": true
+    },
+    "isFavourite": false,
+    "description": "Henna night dinner with the service team.",
+    "descriptionEn": "Henna night dinner with the service team.",
+    "descriptionAr": "عشاء ليلة الحناء مع فريق الخدمة.",
+    "maxGuests": null,
+    "photos": [
+      {
+        "id": "e5ea0d05-eea4-465a-a63d-8965db1d1894",
+        "thumbUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/e5ea0d05-eea4-465a-a63d-8965db1d1894?variant=thumb&exp=1790240198&sig=iwzeniv-WKZei0WKbOy1FmEQo30iz9WJUAU9QmgCixY",
+        "mediumUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/e5ea0d05-eea4-465a-a63d-8965db1d1894?variant=medium&exp=1790240198&sig=lUNTQFfdGq_x8N5-bRLkFw6RbSwtEiJ8yHEZ5f1SLeg",
+        "largeUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/e5ea0d05-eea4-465a-a63d-8965db1d1894?exp=1790240198&sig=yW_-tZDcIQKVNFZQfLvtyOG5V_IZds0IeVeFXADj_MI",
+        "width": 1200,
+        "height": 800
+      }
+    ],
+    "items": [
+      {
+        "serviceId": "0eee6a75-2bc2-4a7c-a150-2377eddad5e0",
+        "title": "Henna night dinner",
+        "titleEn": "Henna night dinner",
+        "titleAr": "عشاء ليلة الحناء",
+        "category": {
+          "id": "d892155b-2c9b-4e0f-8fb5-db15b54af350",
+          "slug": "traiteur",
+          "name": "Catering",
+          "nameEn": "Catering",
+          "nameAr": "الإطعام",
+          "icon": "utensils"
+        },
+        "price": "2200.00",
+        "priceType": "per_person",
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/61fd98b9-3574-40bb-b67d-c930a85f89a7?variant=thumb&exp=1790240198&sig=Jx31-OGbHUQ_MRLiI6hIUZRBExjENazVdBn5u6jTjsY",
+        "position": 0
+      },
+      {
+        "serviceId": "6435499e-1636-4f5c-8727-d66e26007062",
+        "title": "Waiters & service team",
+        "titleEn": "Waiters & service team",
+        "titleAr": "فريق النُدُل والخدمة",
+        "category": {
+          "id": "d892155b-2c9b-4e0f-8fb5-db15b54af350",
+          "slug": "traiteur",
+          "name": "Catering",
+          "nameEn": "Catering",
+          "nameAr": "الإطعام",
+          "icon": "utensils"
+        },
+        "price": "6000.00",
+        "priceType": "per_hour",
+        "coverUrl": "https://api.eventor.72-60-190-211.sslip.io/api/v1/files/739a7704-29a2-4f35-8701-649909c49051?variant=thumb&exp=1790240198&sig=b_291Vxy7_mpaHsFmQUasj3GwTZjUnBdK6EtdzrGRko",
+        "position": 1
+      }
+    ],
+    "wilayas": [
+      {
+        "code": 9,
+        "name": "Blida",
+        "nameEn": "Blida",
+        "nameAr": "البليدة"
+      }
+    ],
+    "recentReviews": [
+      {
+        "id": "01ebd41b-0fe8-44c6-adae-bbc195d914df",
+        "authorName": "Rania D.",
+        "authorAvatarUrl": null,
+        "rating": 3,
+        "comment": "الخدمة جيدة لكن التواصل قبل الحفل كان بطيئًا بعض الشيء.",
+        "redacted": false,
+        "reply": null,
+        "repliedAt": null,
+        "createdAt": "2026-08-28T23:05:20.704Z"
+      },
+      {
+        "id": "8ec865c8-b632-4a94-b87b-252cb5c16377",
+        "authorName": "Amel B.",
+        "authorAvatarUrl": null,
+        "rating": 5,
+        "comment": "ممتاز، تواصلوا معي على الرقم 0770 45 12 98 للحجز بدون عمولة.",
+        "redacted": false,
+        "reply": null,
+        "repliedAt": null,
+        "createdAt": "2026-08-18T21:07:39.141Z"
+      },
+      {
+        "id": "c077ddc8-2719-4c9a-b2a1-8d05294ca85f",
+        "authorName": "Zakaria H.",
+        "authorAvatarUrl": null,
+        "rating": 4,
+        "comment": "Friendly, on time and very flexible when we changed the schedule.",
+        "redacted": false,
+        "reply": "Thanks for the feedback, we have contacted you to make it right.",
+        "repliedAt": "2026-07-18T08:27:42.837Z",
+        "createdAt": "2026-07-17T22:27:42.837Z"
+      }
+    ]
+  }
+}
