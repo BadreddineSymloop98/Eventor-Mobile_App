@@ -16,11 +16,12 @@ void main() {
   FiltersViewModel build({
     ServiceQuery initial = const ServiceQuery(q: 'photo'),
     int? homeWilaya = 16,
+    FakeReferenceRepository? reference,
   }) {
     final FiltersViewModel viewModel = FiltersViewModel(
       initial: initial,
       catalog: catalog,
-      reference: FakeReferenceRepository(),
+      reference: reference ?? FakeReferenceRepository(),
       homeWilaya: homeWilaya,
       debounce: const Duration(milliseconds: 300),
     );
@@ -128,6 +129,30 @@ void main() {
       expect(
         viewModel.wilayaChips.map((Wilaya w) => w.code),
         <int>[16, 9, 42],
+      );
+    });
+
+    test('adds the busiest wilayas after the city, in place when picked', () async {
+      final FakeReferenceRepository reference = FakeReferenceRepository()
+        ..wilayaList = const <Wilaya>[
+          Wilaya(code: 9, nameEn: 'Blida', nameAr: 'البليدة', servicesCount: 3),
+          Wilaya(code: 16, nameEn: 'Alger', nameAr: 'الجزائر', servicesCount: 40),
+          Wilaya(code: 19, nameEn: 'Sétif', nameAr: 'سطيف', servicesCount: 5),
+          Wilaya(code: 25, nameEn: 'Constantine', nameAr: 'قسنطينة', servicesCount: 12),
+          Wilaya(code: 31, nameEn: 'Oran', nameAr: 'وهران', servicesCount: 20),
+          Wilaya(code: 42, nameEn: 'Tipaza', nameAr: 'تيبازة'),
+        ];
+      final FiltersViewModel viewModel = build(reference: reference);
+      await flushAsync();
+
+      // The city, then the top four by services — Alger counted once.
+      expect(viewModel.wilayaChips.map((Wilaya w) => w.code), <int>[16, 31, 25, 19]);
+
+      viewModel.setWilayas(<int>{25, 42});
+
+      expect(
+        viewModel.wilayaChips.map((Wilaya w) => w.code),
+        <int>[16, 31, 25, 19, 42],
       );
     });
 

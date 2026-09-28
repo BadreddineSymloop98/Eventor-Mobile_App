@@ -95,6 +95,10 @@ abstract interface class AuthRepository {
   /// same whether or not the address has an account.
   Future<void> forgotPassword(String email);
 
+  /// Checks a reset code without spending it, so 10 can refuse it before 10a
+  /// asks for a password. A wrong code still counts as an attempt.
+  Future<void> verifyResetCode({required String email, required String code});
+
   /// Sets a new password with the emailed code. Every session is revoked, so
   /// the user signs in again afterwards.
   Future<void> resetPassword({
@@ -180,6 +184,18 @@ class ApiAuthRepository implements AuthRepository {
     await _api.post(
       '/app/auth/forgot',
       body: <String, Object?>{'email': email},
+      isPublic: true,
+    );
+  }
+
+  @override
+  Future<void> verifyResetCode({
+    required String email,
+    required String code,
+  }) async {
+    await _api.post(
+      '/app/auth/reset/verify',
+      body: <String, Object?>{'email': email, 'code': code},
       isPublic: true,
     );
   }

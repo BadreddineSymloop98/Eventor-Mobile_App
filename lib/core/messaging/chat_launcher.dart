@@ -23,7 +23,7 @@ mixin ChatLauncher on BaseViewModel {
     _isOpeningChat = true;
     notifyListeners();
     try {
-      final ConversationRow? row = await chatMessaging.findWith(userId, name);
+      final ConversationRow? row = await chatMessaging.findWith(userId);
       return row == null
           ? AppRoutes.chatDraftFor(userId: userId, name: name)
           : AppRoutes.chatFor(row.id);

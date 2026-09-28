@@ -681,8 +681,13 @@ List<Map<String, Object?>> mockNotificationSeeds(DateTime now) {
     ),
     notification(
       7,
-      'dispute.update',
+      'dispute.message',
       daysAgo(15, 10, 0),
+      // Typed ids, as the API sends them since 2026-09-27.
+      data: <String, Object?>{
+        'disputeId': 'mock-dispute-2041',
+        'conversationId': 'mock-chat-dispute',
+      },
       titleEn: 'Dispute update',
       bodyEn: 'Eventor support replied on your dispute for EVT-2041.',
       titleAr: 'تحديث النزاع',

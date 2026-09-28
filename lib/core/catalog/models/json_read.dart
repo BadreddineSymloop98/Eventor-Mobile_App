@@ -14,6 +14,15 @@ String? readStringOrNull(Map<String, Object?> json, String key) {
   return value == null || value.isEmpty ? null : value;
 }
 
+/// A two-decimal figure the API sends as a string ("4.80") or, since
+/// 2026-09-27 for pack ratings, as a number (4.8) — read as the string
+/// the app formats from either way.
+String readDecimal(Map<String, Object?> json, String key) {
+  final Object? value = json[key];
+  if (value is num) return value.toStringAsFixed(2);
+  return value is String ? value : '';
+}
+
 int readInt(Map<String, Object?> json, String key) =>
     (json[key] as num?)?.toInt() ?? 0;
 

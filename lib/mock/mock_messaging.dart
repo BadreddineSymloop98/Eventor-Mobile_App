@@ -178,7 +178,7 @@ class MockMessagingStore {
     'kind': thread.json['kind'],
     'status': thread.json['status'],
     'other': thread.json['other'],
-    'lastMessage': thread.json['lastMessage'],
+    'lastMessage': _lastMessage(thread),
     'lastMessageAt': thread.json['lastMessageAt'],
     'unreadCount': thread.json['unreadCount'],
     'booking': _booking(thread.json['booking'] as Map<String, Object?>?),
@@ -190,9 +190,25 @@ class MockMessagingStore {
     'participants': thread.json['participants'],
     'contactUnmasked': thread.json['contactUnmasked'],
     'disputeId': thread.json['disputeId'],
-    'closedReason': thread.json['closedReason'],
+    // The reason stays internal to the server; only the fact is sent.
+    'closedByModeration': thread.json['closedReason'] != null,
     'createdAt': thread.json['createdAt'],
   };
+
+  static const String _removedBody = '[removed by Eventor]';
+
+  /// `{body, kind, mine}`, as the live API has sent it since 2026-09-27.
+  Map<String, Object?>? _lastMessage(_Thread thread) {
+    final String? body = thread.json['lastMessage'] as String?;
+    final Map<String, Object?>? last =
+        thread.messages.isEmpty ? null : thread.messages.last;
+    if (body == null && last == null) return null;
+    return <String, Object?>{
+      'body': body ?? last?['body'] ?? '',
+      'kind': last?['kind'] ?? 'text',
+      'mine': last?['mine'] ?? false,
+    };
+  }
 
   // --------------------------------------------------------- conversations
 
@@ -260,7 +276,11 @@ class MockMessagingStore {
     );
     final bool hasMore = start > 0;
     return <String, Object?>{
-      'data': items,
+      // The server flags a message an admin removed (since 2026-09-27).
+      'data': <Map<String, Object?>>[
+        for (final Map<String, Object?> m in items)
+          <String, Object?>{...m, 'removed': m['body'] == _removedBody},
+      ],
       'meta': <String, Object?>{
         'limit': _messagePageSize,
         'hasMore': hasMore,
@@ -307,6 +327,8 @@ class MockMessagingStore {
   /// accepted booking ([_Thread] `contactUnmasked`) is never masked.
   (String, bool) _mask(_Thread thread, String body) {
     if (thread.json['contactUnmasked'] == true) return (body, false);
+    // A dispute is read by an admin: never masked, whichever route sent it.
+    if (thread.json['disputeId'] != null) return (body, false);
     final String masked = body.replaceAll(_phonePattern, _phoneHidden);
     return (masked, masked != body);
   }
@@ -677,14 +699,13 @@ class MockMessagingRepository implements MessagingRepository {
   }
 
   @override
-  Future<ConversationRow?> findWith(String userId, String name) async {
-    final String trimmedName = name.trim();
-    if (trimmedName.isEmpty) return null;
-
-    final ApiPage<ConversationRow> page = await conversations(q: trimmedName);
-    for (final ConversationRow row in page.items) {
-      if (row.kind == ConversationKind.direct && row.other?.id == userId) {
-        return row;
+  Future<ConversationRow?> findWith(String userId) async {
+    // As live: the direct chat with that user, found by id, however far
+    // down the list it is.
+    await _call();
+    for (final _Thread thread in _store._inbox().threads) {
+      if (thread.kind == 'direct' && thread.other?['id'] == userId) {
+        return ConversationRow.fromJson(_store._rowJson(thread));
       }
     }
     return null;
@@ -721,6 +742,15 @@ class MockNotificationsRepository implements NotificationsRepository {
   Future<int> markAllRead() async {
     await _call();
     return _store._markNotificationsRead((Map<String, Object?> _) => true);
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    await _call();
+    // Idempotent, as the repository contract says.
+    _store._inbox().notifications.removeWhere(
+      (Map<String, Object?> n) => n['id'] == id,
+    );
   }
 
   @override

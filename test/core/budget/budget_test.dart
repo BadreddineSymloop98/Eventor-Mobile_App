@@ -196,6 +196,21 @@ void main() {
       expect(repository.itemLimit, 1);
     });
 
+    test('uses the configured limit before any refusal', () async {
+      final _NoMaxRepository repository = _NoMaxRepository(configured: 60);
+
+      expect(repository.itemLimit, 60);
+    });
+
+    test('a refusal outranks the configured limit', () async {
+      final _NoMaxRepository repository = _NoMaxRepository(configured: 60);
+      repository.remember(testBudget(items: <BudgetItem>[testLine(), testLine(id: 'l-2')]));
+
+      await expectLater(repository.refuse(), throwsA(isA<ApiFailure>()));
+
+      expect(repository.itemLimit, 2);
+    });
+
     test('falls back to the count it was refused at when there is no max', () async {
       final _NoMaxRepository repository = _NoMaxRepository();
       repository.remember(testBudget(items: <BudgetItem>[testLine(), testLine(id: 'l-2')]));
@@ -226,6 +241,13 @@ void main() {
 }
 
 class _NoMaxRepository with BudgetItemLimitMemory {
+  _NoMaxRepository({this.configured});
+
+  final int? configured;
+
+  @override
+  int? get configuredItemLimit => configured;
+
   Future<Budget> refuse() => learningLimit(
         () async => throw const ApiFailure(
           statusCode: 422,

@@ -156,16 +156,44 @@ abstract final class ApiErrorCode {
   static const String recipientInvalid = 'RECIPIENT_INVALID';
   static const String userNotFound = 'USER_NOT_FOUND';
   static const String messageNotFound = 'MESSAGE_NOT_FOUND';
+  static const String notificationNotFound = 'NOTIFICATION_NOT_FOUND';
 
   // Budget.
   static const String budgetNotFound = 'BUDGET_NOT_FOUND';
   static const String budgetItemNotFound = 'BUDGET_ITEM_NOT_FOUND';
   static const String budgetItemLimit = 'BUDGET_ITEM_LIMIT';
   static const String bookingNotFound = 'BOOKING_NOT_FOUND';
+  static const String budgetBookingAlreadyLinked = 'BUDGET_BOOKING_ALREADY_LINKED';
 
   // Provider.
   static const String providerNotVerified = 'PROVIDER_NOT_VERIFIED';
   static const String bookingInvalidTransition = 'BOOKING_INVALID_TRANSITION';
   static const String dateUnavailable = 'DATE_UNAVAILABLE';
   static const String notAProvider = 'NOT_A_PROVIDER';
+
+  // Client bookings.
+  static const String minNotice = 'MIN_NOTICE';
+  static const String providerNotAccepting = 'PROVIDER_NOT_ACCEPTING';
+  static const String serviceUnavailableForBooking =
+      'SERVICE_UNAVAILABLE_FOR_BOOKING';
+  static const String packUnavailable = 'PACK_UNAVAILABLE';
+  static const String communeNotFound = 'COMMUNE_NOT_FOUND';
+  static const String communeWilayaMismatch = 'COMMUNE_WILAYA_MISMATCH';
+  static const String bookingExtraInvalid = 'BOOKING_EXTRA_INVALID';
+  static const String bookingNotEditable = 'BOOKING_NOT_EDITABLE';
+  static const String bookingDatePast = 'BOOKING_DATE_PAST';
+  static const String reschedulePendingExists = 'RESCHEDULE_PENDING_EXISTS';
+  static const String rescheduleNotFound = 'RESCHEDULE_NOT_FOUND';
+  static const String rescheduleNotPending = 'RESCHEDULE_NOT_PENDING';
+  static const String checkInNotAllowed = 'CHECK_IN_NOT_ALLOWED';
+  static const String checkInDisputed = 'CHECK_IN_DISPUTED';
+  static const String checkInTooEarly = 'CHECK_IN_TOO_EARLY';
+  static const String invoiceNotFound = 'INVOICE_NOT_FOUND';
+  static const String reviewExists = 'REVIEW_EXISTS';
+  static const String reviewNotAllowed = 'REVIEW_NOT_ALLOWED';
+  static const String reviewWindowClosed = 'REVIEW_WINDOW_CLOSED';
+  static const String disputeAlreadyOpen = 'DISPUTE_ALREADY_OPEN';
+  static const String bookingNotDisputable = 'BOOKING_NOT_DISPUTABLE';
+  static const String disputeWindowClosed = 'DISPUTE_WINDOW_CLOSED';
+  static const String notOwner = 'NOT_OWNER';
 }

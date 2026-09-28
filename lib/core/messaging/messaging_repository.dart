@@ -58,10 +58,9 @@ abstract interface class MessagingRepository {
 
   /// The direct conversation already open with [userId], if there is one —
   /// a provider's profile "Message" button skips [start] when it finds one.
-  /// [name] narrows the server-side search; support and dispute threads
-  /// never match, even when [userId] happens to sit in one of those too.
-  /// A blank [name] returns `null` without a request.
-  Future<ConversationRow?> findWith(String userId, String name);
+  /// Support and dispute threads never match, even when [userId] happens to
+  /// sit in one of those too.
+  Future<ConversationRow?> findWith(String userId);
 }
 
 /// [MessagingRepository] against the live API.
@@ -200,15 +199,17 @@ class ApiMessagingRepository implements MessagingRepository {
   }
 
   @override
-  Future<ConversationRow?> findWith(String userId, String name) async {
-    final String trimmedName = name.trim();
-    if (trimmedName.isEmpty) return null;
-
-    final ApiPage<ConversationRow> page = await conversations(q: trimmedName);
-    for (final ConversationRow row in page.items) {
-      if (row.kind == ConversationKind.direct && row.other?.id == userId) {
-        return row;
-      }
+  Future<ConversationRow?> findWith(String userId) async {
+    // The server returns only the direct chat with that user — an empty
+    // list when there is none (since 2026-09-27; the app used to search by
+    // name and match the id).
+    final ApiPage<Map<String, Object?>> result = await _api.getPage(
+      '/app/conversations',
+      query: <String, Object?>{'userId': userId, 'limit': 1},
+    );
+    for (final Map<String, Object?> json in result.items) {
+      final ConversationRow row = ConversationRow.fromJson(json);
+      if (row.kind == ConversationKind.direct) return row;
     }
     return null;
   }

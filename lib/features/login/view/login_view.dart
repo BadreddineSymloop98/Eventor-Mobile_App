@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/input_rules.dart';
 import '../../../core/constants/ui_helpers.dart';
 import '../../../core/errors/failure.dart';
+import '../../../core/formatting/date_format.dart';
 import '../../../core/localization/app_localizations_x.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/widgets/layout/photo_sheet_layout.dart';
@@ -225,7 +226,13 @@ class _ProblemBanner extends StatelessWidget {
         ),
       LoginProblem.blocked => InlineBanner(
           title: l10n.loginBlockedTitle,
-          message: viewModel.serverMessage,
+          message: <String>[
+            ?viewModel.serverMessage,
+            if (viewModel.blockedUntil case final DateTime until)
+              l10n.loginBlockedUntil(
+                dayMonthYear(until, Localizations.localeOf(context).languageCode),
+              ),
+          ].join('\n'),
         ),
       LoginProblem.notAllowed => InlineBanner(
           title: l10n.loginNotAllowedTitle,

@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../../core/base/base_view_model.dart';
 import '../../../core/constants/input_rules.dart';
+import '../../../core/errors/failure.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../auth/data/auth_repository.dart';
 import '../../auth/view/code_entry_sheet.dart';
@@ -9,10 +10,10 @@ import '../../auth/view_model/resend_countdown.dart';
 
 /// Drives `10 Verify code` in the password reset.
 ///
-/// The API has no call that checks a reset code on its own — the code is only
-/// judged when `10a` sends it with the new password. So this screen checks
-/// only that six digits were entered and carries them forward; if `10a` finds
-/// the code wrong or expired, it comes back here with that [problem].
+/// The code is checked here, without being spent, before `10a` asks for a
+/// password — a wrong code is never found out after typing it twice. `10a`
+/// sends it again with the password; should it have expired meanwhile, `10a`
+/// comes back here with that [problem].
 class ResetCodeViewModel extends BaseViewModel with ResendCountdown {
   ResetCodeViewModel({required this._auth, required this.email}) {
     codeController.addListener(_onCodeChanged);
@@ -44,10 +45,29 @@ class ResetCodeViewModel extends BaseViewModel with ResendCountdown {
     return sent;
   }
 
-  /// What `10a` needs, or `null` while the code is incomplete.
-  ResetPasswordArgs? proceed() => canSubmit
-      ? ResetPasswordArgs(email: email, code: codeController.text)
-      : null;
+  /// Checks the code; what `10a` needs when it is good, `null` when it is
+  /// incomplete or refused — [problem] or [failure] then says why.
+  Future<ResetPasswordArgs?> verify() async {
+    if (!canSubmit || isBusy) return null;
+    final String code = codeController.text;
+    final bool? valid = await runGuarded(() async {
+      await _auth.verifyResetCode(email: email, code: code);
+      return true;
+    });
+    if (valid == true) return ResetPasswordArgs(email: email, code: code);
+
+    final Failure? error = failure;
+    if (error is ApiFailure) {
+      if (error.code == ApiErrorCode.codeInvalid) {
+        reportProblem(ResetCodeProblem.invalid);
+        clearFailure();
+      } else if (error.code == ApiErrorCode.codeExpired) {
+        reportProblem(ResetCodeProblem.expired);
+        clearFailure();
+      }
+    }
+    return null;
+  }
 
   /// `10a` found the code wrong or expired.
   void reportProblem(ResetCodeProblem problem) {

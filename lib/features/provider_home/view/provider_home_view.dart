@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/bookings/models/booking_card.dart';
+import '../../../core/catalog/models/catalog_ref.dart';
 import '../../../core/catalog/models/pack.dart' show EventType;
+import '../../../core/config/app_config.dart';
 import '../../../core/constants/ui_helpers.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/formatting/date_format.dart';
@@ -27,7 +30,8 @@ import '../view_model/provider_home_view_model.dart';
 import 'widgets/provider_home_widgets.dart';
 
 /// Screen 21 — the provider's Home, the first tab — and, until the profile
-/// is approved, 21a (pending) and 21b (rejected) in its place.
+/// is approved, 21a (pending) and 21b (rejected) in its place; 21c while an
+/// admin has the account blocked.
 ///
 /// Requests are answered here: Accept at once, Decline through P3's sheet.
 /// Everything the request, service and calendar modules will own says
@@ -125,9 +129,10 @@ class _ProviderHomeViewState extends State<ProviderHomeView> {
         onDecline: (BookingCard r) => _decline(viewModel, r),
         onComingSoon: _comingSoon,
       );
-    } else if (home.state == ProviderHomeState.blocked) {
-      // Signing out; the redirect takes over.
-      body = const ProviderHomeSkeleton();
+    } else if (home.isBlocked) {
+      body = _BlockedContent(
+        supportEmail: context.read<AppConfigRepository>().current.supportEmail,
+      );
     } else {
       body = _UnverifiedContent(
         home: home,
@@ -157,7 +162,9 @@ class _ProviderHomeViewState extends State<ProviderHomeView> {
                   hasUnread: hasUnread,
                   onBell: () => context.push(AppRoutes.notifications),
                   accepting: home != null && home.isVerified ? home.acceptingBookings : null,
-                  onAvailability: home == null || viewModel.isSavingAvailability
+                  onAvailability: home == null ||
+                          home.isBlocked ||
+                          viewModel.isSavingAvailability
                       ? null
                       : () => _availability(viewModel, home.acceptingBookings),
                 ),
@@ -217,7 +224,10 @@ class _VerifiedContent extends StatelessWidget {
     final String? accepting = viewModel.accepting;
 
     String when(BookingCard booking) => <String>[
-          if (booking.eventType case final EventType type) l10n.eventTypeLabel(type),
+          if (booking.category case final CategoryRef category)
+            category.name.of(language)
+          else if (booking.eventType case final EventType type)
+            l10n.eventTypeLabel(type),
           shortDate(booking.eventDate, language),
         ].join(' · ');
 
@@ -315,6 +325,7 @@ class _VerifiedContent extends StatelessWidget {
                   key: ValueKey<String>(service.id),
                   title: service.title.of(language),
                   price: formatAmount(service.basePrice),
+                  unit: l10n.priceUnit(service.priceType),
                   photoUrl: service.coverUrl,
                   badge: ServiceStatusBadge(switch (service.status) {
                     ProviderServiceStatus.published => ServiceStatusKind.published,
@@ -377,6 +388,55 @@ class _UnverifiedContent extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.textSecondary),
               ),
             ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// 21c: what a blocked provider sees. The home carries no reason — the admin's
+/// words come with the sign-in refusal — so this says what the block means
+/// and how to appeal.
+class _BlockedContent extends StatelessWidget {
+  const _BlockedContent({required this.supportEmail});
+
+  final String? supportEmail;
+
+  Future<void> _contactSupport(BuildContext context, String address) async {
+    final Uri mail = Uri(
+      scheme: 'mailto',
+      path: address,
+      queryParameters: <String, String>{
+        'subject': context.l10n.supportEmailSubject,
+      },
+    );
+    await launchUrl(mail);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations l10n = context.l10n;
+    final String? support = supportEmail;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(AppSpacing.md.dw, AppSpacing.md.dh, AppSpacing.md.dw, 0),
+          child: StateCard.empty(
+            icon: AppIcons.alertTriangle,
+            title: l10n.providerBlockedTitle,
+            body: l10n.providerBlockedBody,
+            actionLabel: support == null ? null : l10n.contactSupport,
+            onAction: support == null ? null : () => _contactSupport(context, support),
+          ),
+        ),
+        _section(
+          title: l10n.providerServicesTitle,
+          child: Text(
+            l10n.providerBlockedServices,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.textSecondary),
           ),
         ),
       ],

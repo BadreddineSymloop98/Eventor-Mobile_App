@@ -163,13 +163,10 @@ void main() {
     });
 
     test('findWith returns the direct row with that provider', () async {
-      final ConversationRow? row = await messaging.findWith(
-        lumiereId,
-        'Studio',
-      );
+      final ConversationRow? row = await messaging.findWith(lumiereId);
 
       expect(row?.id, 'mock-chat-lumiere');
-      expect(await messaging.findWith(lumiereId, '   '), isNull);
+      expect(await messaging.findWith('nobody'), isNull);
     });
   });
 
@@ -589,7 +586,7 @@ void main() {
       messaging.reportUser(lumiereId, ReportReason.spam, null),
       expired,
     );
-    await expectLater(messaging.findWith(lumiereId, 'Studio'), expired);
+    await expectLater(messaging.findWith(lumiereId), expired);
     await expectLater(notifications.list(), expired);
     await expectLater(notifications.markRead(<String>['x']), expired);
     await expectLater(notifications.markAllRead(), expired);

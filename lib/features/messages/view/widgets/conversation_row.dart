@@ -37,7 +37,9 @@ class ConversationTile extends StatelessWidget {
 
     final Widget preview = switch (row.previewKind) {
       PreviewKind.text => Text(
-        row.lastMessage ?? '',
+        row.lastMessageMine
+            ? l10n.messagesPreviewMine(row.lastMessage ?? '')
+            : row.lastMessage ?? '',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: previewStyle,
@@ -46,7 +48,12 @@ class ConversationTile extends StatelessWidget {
         children: <Widget>[
           AppIcon(AppIcons.image, size: AppSizes.iconSm, color: previewColor),
           SizedBox(width: AppSpacing.xs2.dw),
-          Flexible(child: Text(l10n.chatPhoto, style: previewStyle)),
+          Flexible(
+            child: Text(
+              row.lastMessageMine ? l10n.messagesPreviewMine(l10n.chatPhoto) : l10n.chatPhoto,
+              style: previewStyle,
+            ),
+          ),
         ],
       ),
       PreviewKind.removed => Text(

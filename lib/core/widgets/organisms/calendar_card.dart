@@ -22,8 +22,19 @@ class CalendarCard extends StatelessWidget {
     required this.onMonthChanged,
     required this.onRetry,
     required this.notes,
+    this.marked,
+    this.legend = const CalendarLegendLabels(),
+    this.footer,
     super.key,
   });
+
+  /// The booking's current day, outlined (B6).
+  final DateTime? marked;
+  final CalendarLegendLabels legend;
+
+  /// Replaces the "Selected: …" line under the grid — the time block and
+  /// the date-and-time summary of B1, B6 and B9.
+  final Widget? footer;
 
   final DateTime month;
   final DateTime firstMonth;
@@ -84,8 +95,13 @@ class CalendarCard extends StatelessWidget {
                   onSelect: onSelect,
                   onMonthChanged: onMonthChanged,
                   firstMonth: firstMonth,
+                  marked: marked,
+                  legend: legend,
                 ),
-              if (picked != null) ...<Widget>[
+              if (footer case final Widget below) ...<Widget>[
+                SizedBox(height: AppSpacing.sm.dh),
+                below,
+              ] else if (picked != null) ...<Widget>[
                 SizedBox(height: AppSpacing.sm.dh),
                 Container(
                   padding: EdgeInsetsDirectional.symmetric(

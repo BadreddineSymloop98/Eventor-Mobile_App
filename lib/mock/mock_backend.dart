@@ -354,6 +354,7 @@ class MockBackend {
     _lockedUntil.clear();
     _codeSentAt.clear();
     _providerBookings.clear();
+    _clientBookings.clear();
     _seedFavourites();
     _seedBudgets();
     await _save();
@@ -403,6 +404,15 @@ class MockBackend {
           ];
         });
       }
+      final Object? clientBookings = json['clientBookings'];
+      if (clientBookings is Map<String, Object?>) {
+        clientBookings.forEach((String email, Object? rows) {
+          _clientBookings[email] = <Map<String, Object?>>[
+            for (final Object? row in rows as List<Object?>)
+              Map<String, Object?>.of(row! as Map<String, Object?>),
+          ];
+        });
+      }
       final Object? budgets = json['budgets'];
       if (budgets is Map<String, Object?>) {
         budgets.forEach((String email, Object? budget) {
@@ -433,6 +443,7 @@ class MockBackend {
           'favourites': _favourites,
           'budgets': _budgets,
           'providerBookings': _providerBookings,
+          'clientBookings': _clientBookings,
         }),
       );
 
@@ -621,6 +632,15 @@ class MockBackend {
     return account;
   }
 
+  /// Screen 10's check: the same rules as [resetPassword], nothing spent.
+  void verifyResetCode(String email, String submitted) {
+    if (accountByEmail(email) == null) {
+      throw _failure(
+          422, ApiErrorCode.codeInvalid, 'The verification code is incorrect.');
+    }
+    checkCode(submitted);
+  }
+
   Future<void> resetPassword(
     String email,
     String submitted,
@@ -722,6 +742,16 @@ class MockBackend {
     return row;
   }
 
+  /// `DELETE /app/me/favourites?serviceId=|packId=` — idempotent, like live.
+  Future<void> removeFavouriteByTarget(String kind, String targetId) async {
+    final MockAccount account = _requireClient();
+    _favourites[account.email]?.removeWhere(
+      (Map<String, Object?> row) =>
+          row['kind'] == kind && row['targetId'] == targetId,
+    );
+    await _save();
+  }
+
   /// `DELETE /app/me/favourites/{id}`.
   Future<void> removeFavourite(String id) async {
     final MockAccount account = _requireClient();
@@ -804,6 +834,25 @@ class MockBackend {
     await _save();
   }
 
+  // --------------------------------------------------------------- client
+
+  /// Each client's bookings, per account email, as the mock's own stored
+  /// records (see `mock_bookings.dart`) — rendered per request, in the
+  /// request's language.
+  final Map<String, List<Map<String, Object?>>> _clientBookings =
+      <String, List<Map<String, Object?>>>{};
+
+  /// The signed-in client's booking records. Seeded lazily from [seed] the
+  /// first time, so every restore of an older state still has them.
+  List<Map<String, Object?>> clientBookings(
+    List<Map<String, Object?>> Function(MockAccount account) seed,
+  ) {
+    final MockAccount account = requireSession();
+    return _clientBookings.putIfAbsent(account.email, () => seed(account));
+  }
+
+  Future<void> saveClientBookings() => _save();
+
   // ------------------------------------------------------------- provider
 
   /// Requests and bookings made to each provider, per account email, as
@@ -845,7 +894,13 @@ class MockBackend {
         403,
         ApiErrorCode.accountBlocked,
         'This account is blocked.',
-        details: <String, Object?>{'message': account.blockedMessage},
+        details: <String, Object?>{
+          'message': account.blockedMessage,
+          'blockedUntil': DateTime.fromMillisecondsSinceEpoch(_nowMs)
+              .add(const Duration(days: 14))
+              .toUtc()
+              .toIso8601String(),
+        },
       );
 
   ApiFailure _failure(

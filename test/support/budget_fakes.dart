@@ -8,6 +8,8 @@ import 'package:eventor/core/errors/failure.dart';
 import 'package:eventor/core/formatting/money_format.dart';
 import 'package:eventor/core/network/api_page.dart';
 
+import 'booking_fakes.dart';
+
 /// A category for budget lines.
 CategoryRef testCategory({
   String id = 'cat-venue',
@@ -249,15 +251,9 @@ BookingCard testBooking({
     );
 
 /// [BookingsRepository] with one scripted list per tab.
-class FakeBookingsRepository implements BookingsRepository {
-  final Map<BookingTab, List<BookingCard>> tabs = <BookingTab, List<BookingCard>>{};
-
-  /// `list:<tab>:<limit>`.
-  final List<String> calls = <String>[];
-
-  /// Thrown by the next call only.
-  Failure? failNext;
-
+/// The budget's view of the bookings: one page per tab, logged as
+/// `list:<tab>:<limit>`. Every other call is [ScriptedBookingsRepository]'s.
+class FakeBookingsRepository extends ScriptedBookingsRepository {
   @override
   Future<ApiPage<BookingCard>> list({
     required BookingTab tab,

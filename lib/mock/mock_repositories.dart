@@ -6,6 +6,8 @@ import '../core/reference/reference_repository.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/documents_repository.dart';
 import 'mock_backend.dart';
+import 'mock_catalog_data.dart';
+import 'mock_communes_data.dart';
 import 'mock_provider.dart';
 import 'mock_reference_data.dart';
 
@@ -70,6 +72,15 @@ class MockAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<void> verifyResetCode({
+    required String email,
+    required String code,
+  }) async {
+    await _backend.delay();
+    _backend.verifyResetCode(email, code);
+  }
+
+  @override
   Future<void> resetPassword({
     required String email,
     required String code,
@@ -119,13 +130,38 @@ class MockReferenceRepository implements ReferenceRepository {
   @override
   Future<List<Wilaya>> wilayas() async {
     await _backend.delay();
-    return mockWilayas;
+    // Counted from the catalog snapshot, as the server counts its services.
+    final Map<int, int> counts = <int, int>{};
+    for (final Map<String, Object?> service in mockCatalogServices) {
+      for (final Object? code in service['wilayas']! as List<Object?>) {
+        counts.update(code! as int, (int n) => n + 1, ifAbsent: () => 1);
+      }
+    }
+    return <Wilaya>[
+      for (final Wilaya w in mockWilayas)
+        Wilaya(
+          code: w.code,
+          nameEn: w.nameEn,
+          nameAr: w.nameAr,
+          servicesCount: counts[w.code] ?? 0,
+        ),
+    ];
   }
 
   @override
   Future<List<ServiceCategory>> categories() async {
     await _backend.delay();
     return mockCategories;
+  }
+
+  @override
+  Future<List<Commune>> communes(int wilayaCode) async {
+    await _backend.delay();
+    return <Commune>[
+      for (final Map<String, Object?> row
+          in mockCommunes[wilayaCode] ?? const <Map<String, Object?>>[])
+        Commune.fromJson(row),
+    ]..sort((Commune a, Commune b) => a.nameEn.compareTo(b.nameEn));
   }
 }
 

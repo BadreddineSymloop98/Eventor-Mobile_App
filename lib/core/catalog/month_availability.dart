@@ -69,6 +69,36 @@ mixin MonthAvailability on BaseViewModel {
   /// Retries the month on screen.
   Future<void> retryMonth() => showMonth(visibleMonth);
 
+  /// Lets go of the picked day — B1b, or a screen that starts over.
+  void clearSelection() {
+    if (_selected == null) return;
+    _selected = null;
+    notifyListeners();
+  }
+
+  /// [day] was taken by someone else meanwhile (B1b): it is struck through
+  /// where it stands and, if it was the picked one, let go of.
+  void markTaken(DateTime day) {
+    final Availability? month = _months[_key(day)];
+    if (month != null) _months[_key(day)] = month.withBusy(day);
+    final DateTime? picked = _selected;
+    if (picked != null &&
+        picked.year == day.year &&
+        picked.month == day.month &&
+        picked.day == day.day) {
+      _selected = null;
+    }
+    notifyListeners();
+  }
+
+  /// Opens on [day]'s month and picks it when it can be requested — the day
+  /// chosen on 12 or 20 carried into B1 or B9.
+  Future<void> openOn(DateTime? day) async {
+    if (day == null) return showMonth(visibleMonth);
+    await showMonth(day);
+    selectDate(day);
+  }
+
   /// Picks [day] if it can be requested; anything else is ignored.
   void selectDate(DateTime day) {
     if (!canPickDates) return;

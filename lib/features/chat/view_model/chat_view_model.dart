@@ -153,9 +153,9 @@ class ChatViewModel extends BaseViewModel {
     }
   }
 
-  /// The first message is capped by the API at 4000; the send route has no
-  /// cap of its own, so the same one applies to every message (D7).
-  static const int maxTextLength = 4000;
+  /// The longest message body, from the server's `limits` — the same cap
+  /// on every send route.
+  int get maxTextLength => _config.messageMaxLength;
 
   /// The report note's API limit (D16).
   static const int maxNoteLength = 2000;
@@ -231,6 +231,11 @@ class ChatViewModel extends BaseViewModel {
     return ComposerMode.open;
   }
 
+  /// A closed thread Eventor closed — the server's flag, or a send it
+  /// refused as closed — rather than one that merely cannot take messages.
+  bool get isClosedByEventor =>
+      _closedBySend || (_detail?.closedByModeration ?? false);
+
   /// The ⋯ menu reports the other person, so it has nobody to act on in a
   /// support or dispute chat, or when the account is gone.
   bool get showsMenu {
@@ -239,13 +244,11 @@ class ChatViewModel extends BaseViewModel {
     return detail.kind == ConversationKind.direct && detail.other != null;
   }
 
-  /// Dispute chats write through a text-only route; a draft's first message
-  /// must be text (the API requires a body).
+  /// A draft's first message must be text (the API requires a body). Every
+  /// other thread takes photos — dispute chats too, through the normal send
+  /// route (confirmed by the API on 2026-09-27).
   bool get canAttach =>
-      !isDraft &&
-      _detail != null &&
-      _detail?.kind != ConversationKind.dispute &&
-      composerMode == ComposerMode.open;
+      !isDraft && _detail != null && composerMode == ComposerMode.open;
 
   // ------------------------------------------------------------- reading
 
@@ -507,7 +510,7 @@ class ChatViewModel extends BaseViewModel {
 
   Future<SendOutcome> send(String text) async {
     final String body = text.trim();
-    // A draft or a dispute chat takes text only, whatever was attached.
+    // A draft takes text only, whatever was attached.
     final PickedImage? image = canAttach ? _attachment : null;
     if (composerMode != ComposerMode.open) return const SendIgnored();
     if (body.isEmpty && image == null) return const SendIgnored();
@@ -556,10 +559,8 @@ class ChatViewModel extends BaseViewModel {
   Future<SendOutcome> _deliver(ChatEntry entry) async {
     if (isDraft) return _start(entry);
     final String id = _id!;
-    final ConversationDetail? detail = _detail;
     final ChatMessage message = entry.message;
     final PickedImage? image = entry.localImage;
-    final String? disputeId = detail?.disputeId;
     try {
       final ChatMessage sent;
       if (image != null) {
@@ -568,9 +569,6 @@ class ChatViewModel extends BaseViewModel {
           image,
           caption: message.body.isEmpty ? null : message.body,
         );
-      } else if (detail?.kind == ConversationKind.dispute &&
-          disputeId != null) {
-        sent = await _messaging.sendDisputeText(disputeId, message.body);
       } else {
         sent = await _messaging.sendText(id, message.body);
       }

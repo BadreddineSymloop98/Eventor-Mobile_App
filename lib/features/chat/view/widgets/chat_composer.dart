@@ -5,7 +5,6 @@ import '../../../../core/localization/app_localizations_x.dart';
 import '../../../../core/messaging/picked_image.dart';
 import '../../../../core/widgets/atoms/app_icon.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../view_model/chat_view_model.dart';
 
 /// 15's composer: "+", the field and Send, with the picked photo's chip
 /// above them.
@@ -18,6 +17,7 @@ class ChatComposer extends StatelessWidget {
     required this.onAttach,
     required this.onRemoveAttachment,
     required this.onSend,
+    required this.maxLength,
     this.attachment,
     super.key,
   });
@@ -34,6 +34,9 @@ class ChatComposer extends StatelessWidget {
   final VoidCallback onAttach;
   final VoidCallback onRemoveAttachment;
   final VoidCallback onSend;
+
+  /// The server's cap on a message body.
+  final int maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +116,7 @@ class ChatComposer extends StatelessWidget {
                   controller: controller,
                   minLines: 1,
                   maxLines: 5,
-                  maxLength: ChatViewModel.maxTextLength,
+                  maxLength: maxLength,
                   // The cap is a safety net, not something to count down.
                   buildCounter: (
                     BuildContext context, {

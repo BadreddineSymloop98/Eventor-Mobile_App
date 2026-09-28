@@ -2,6 +2,14 @@
     <!-- The app talks to the Eventor API. Debug and profile builds get this
          from their own manifests; a release build needs it here. -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- B8 "Download PDF" saves the invoice into Downloads. Android 10+
+         needs no permission for that (MediaStore); 9 and older do. -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"/>
+    <!-- The "download complete" notification after B8 "Download PDF".
+         Android 13+ asks the user, on the first download only. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:label="eventor"
@@ -59,6 +67,12 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <!-- The download notification checks for a PDF viewer to open the
+             invoice with, falling back to the Downloads app when none. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:mimeType="application/pdf"/>
         </intent>
         <!-- url_launcher: "Contact support" (mailto) and the terms page
              (https) must be able to find an app to open them on Android 11+. -->

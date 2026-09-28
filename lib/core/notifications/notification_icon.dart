@@ -22,7 +22,12 @@ AppIcons notificationIcon(String type) {
       event.startsWith('reschedule')) {
     return AppIcons.calendar;
   }
-  if (area == 'review') return AppIcons.starFilled;
+  if (area == 'review' || area == 'review_reply') return AppIcons.starFilled;
+  if (type == 'verification.approved') return AppIcons.check;
+  if (type == 'verification.rejected' || type == 'academic_request.cancelled') {
+    return AppIcons.close;
+  }
+  if (area == 'report') return AppIcons.alertTriangle;
 
   return AppIcons.bell;
 }

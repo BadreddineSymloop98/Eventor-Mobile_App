@@ -49,8 +49,44 @@ class NotificationsView extends StatelessWidget {
     switch (n.target) {
       case ChatTarget(:final String conversationId):
         await context.push(AppRoutes.chatFor(conversationId));
+      case BookingTarget(:final String bookingId):
+        // A provider's booking screens are not built yet.
+        if (context.read<SessionController>().user?.isProvider ?? true) {
+          showComingSoon(context, context.l10n.comingSoon);
+        } else {
+          await context.push(AppRoutes.bookingFor(bookingId));
+        }
+      case VerificationTarget():
+        // The provider home shows where the review stands now.
+        context.go(AppRoutes.providerHome);
       case UnsupportedTarget():
         showComingSoon(context, context.l10n.comingSoon);
+    }
+  }
+
+  /// Swipe-to-delete: gone at once, deleted on the server once the Undo
+  /// toast goes away — the same pattern as removing a favourite (17).
+  Future<void> _remove(BuildContext context, AppNotification n) async {
+    final NotificationsViewModel viewModel = context
+        .read<NotificationsViewModel>();
+    final AppLocalizations l10n = context.l10n;
+    final int index = viewModel.removeLocally(n);
+    if (index < 0) return;
+    bool undone = false;
+    final SnackBarClosedReason reason = await showAppToast(
+      context,
+      l10n.notificationDeleted,
+      tone: AppToastTone.info,
+      actionLabel: l10n.undo,
+      onAction: () {
+        undone = true;
+        viewModel.undoRemove(n, index);
+      },
+    ).closed;
+    if (undone || reason == SnackBarClosedReason.action) return;
+    final Failure? failure = await viewModel.commitRemove(n, index);
+    if (failure != null && context.mounted) {
+      showAppToast(context, l10n.forFailure(failure), tone: AppToastTone.error);
     }
   }
 
@@ -124,7 +160,14 @@ class NotificationsView extends StatelessWidget {
           DividedCard(
             children: <Widget>[
               for (final AppNotification n in section.items)
-                _NotificationItem(n, onTap: () => _open(context, n)),
+                Dismissible(
+                  key: ValueKey<String>('notification-${n.id}'),
+                  // Toward the reading start, as list swipes go.
+                  direction: DismissDirection.endToStart,
+                  background: const _DeleteBackground(),
+                  onDismissed: (_) => _remove(context, n),
+                  child: _NotificationItem(n, onTap: () => _open(context, n)),
+                ),
             ],
           ),
           SizedBox(height: AppSpacing.lg.dh),
@@ -363,6 +406,24 @@ class _NotificationItem extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// What shows under a notification being swiped away.
+class _DeleteBackground extends StatelessWidget {
+  const _DeleteBackground();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: AppColors.bgDanger,
+      alignment: AlignmentDirectional.centerEnd,
+      padding: EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.lg.dw),
+      child: Semantics(
+        label: context.l10n.notificationDelete,
+        child: const AppIcon(AppIcons.trash, color: AppColors.iconOnBrand),
       ),
     );
   }

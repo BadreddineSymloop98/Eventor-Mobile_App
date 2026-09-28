@@ -109,11 +109,31 @@ class ApiClient {
     String path, {
     Object? body,
     bool isPublic = false,
+    Map<String, String>? headers,
   }) {
     return _send(
-      () => _dio.post<Object?>(path, data: body, options: _options(isPublic)),
+      () => _dio.post<Object?>(
+        path,
+        data: body,
+        options: _options(isPublic).copyWith(headers: headers),
+      ),
       isPublic: isPublic,
     );
+  }
+
+  /// A file the server streams back — the invoice PDF. Signed in only.
+  Future<Uint8List> getBytes(String path) async {
+    final Object? body = await _send(
+      () => _dio.get<Object?>(
+        path,
+        options: _options(false).copyWith(responseType: ResponseType.bytes),
+      ),
+      isPublic: false,
+      unwrap: false,
+    );
+    if (body is Uint8List) return body;
+    if (body is List<int>) return Uint8List.fromList(body);
+    throw UnexpectedFailure(cause: body);
   }
 
   /// A list endpoint, keeping the paging `meta` that [get] discards.
@@ -160,9 +180,13 @@ class ApiClient {
 
   /// Returns `data` for a route that answers with one — the budget sends
   /// itself back recomputed.
-  Future<Object?> delete(String path) {
+  Future<Object?> delete(String path, {Map<String, Object?>? query}) {
     return _send(
-      () => _dio.delete<Object?>(path, options: _options(false)),
+      () => _dio.delete<Object?>(
+        path,
+        queryParameters: query,
+        options: _options(false),
+      ),
       isPublic: false,
     );
   }

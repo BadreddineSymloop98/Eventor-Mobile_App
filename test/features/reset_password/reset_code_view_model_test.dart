@@ -32,29 +32,68 @@ void main() {
     return viewModel;
   }
 
-  group('ResetCodeViewModel proceed', () {
-    test('only checks that six digits were entered', () {
+  group('ResetCodeViewModel verify', () {
+    test('does nothing until six digits are entered', () async {
       final ResetCodeViewModel viewModel = build();
 
       viewModel.codeController.text = '12345';
       expect(viewModel.canSubmit, isFalse);
-      expect(viewModel.proceed(), isNull);
+      expect(await viewModel.verify(), isNull);
+      expect(auth.resetChecks, isEmpty);
 
       viewModel.codeController.text = '123456';
       expect(viewModel.canSubmit, isTrue);
     });
 
-    test('carries the address and the code forward to 10a', () {
+    test('checks the code, then carries it forward to 10a', () async {
       final ResetCodeViewModel viewModel = build();
       viewModel.codeController.text = '123456';
 
-      final ResetPasswordArgs? args = viewModel.proceed();
+      final ResetPasswordArgs? args = await viewModel.verify();
 
+      expect(auth.resetChecks.single, (email: email, code: '123456'));
       expect(args, isNotNull);
       expect(args!.email, email);
       expect(args.code, '123456');
-      // Nothing checks the code here — the API has no call for it.
+      // Checking does not reset anything.
       expect(auth.resets, isEmpty);
+    });
+
+    test('a wrong code stays here as 10c, the code kept to correct', () async {
+      auth.verifyResetError = apiFailure(ApiErrorCode.codeInvalid);
+      final ResetCodeViewModel viewModel = build();
+      viewModel.codeController.text = '123456';
+
+      expect(await viewModel.verify(), isNull);
+
+      expect(viewModel.problem, CodeProblem.invalid);
+      expect(viewModel.codeController.text, '123456');
+      expect(viewModel.failure, isNull);
+    });
+
+    test('an expired code clears it and opens Resend at once', () async {
+      auth.verifyResetError = apiFailure(ApiErrorCode.codeExpired);
+      final ResetCodeViewModel viewModel = build();
+      viewModel.codeController.text = '123456';
+
+      expect(await viewModel.verify(), isNull);
+
+      expect(viewModel.problem, CodeProblem.expired);
+      expect(viewModel.codeController.text, isEmpty);
+      expect(viewModel.canResend, isTrue);
+      expect(viewModel.failure, isNull);
+    });
+
+    test('any other refusal is left for the view to report', () async {
+      auth.verifyResetError = const NetworkFailure();
+      final ResetCodeViewModel viewModel = build();
+      viewModel.codeController.text = '123456';
+
+      expect(await viewModel.verify(), isNull);
+
+      expect(viewModel.problem, isNull);
+      expect(viewModel.failure, isA<NetworkFailure>());
+      expect(viewModel.isBusy, isFalse);
     });
   });
 

@@ -40,6 +40,7 @@ class ResubmitDocumentsViewModel extends BaseViewModel {
     required this._documents,
     required this._session,
     this._picker = pickDocumentFile,
+    this._acceptedExtensions = InputRules.documentExtensions,
   }) {
     load();
   }
@@ -47,6 +48,9 @@ class ResubmitDocumentsViewModel extends BaseViewModel {
   final DocumentsRepository _documents;
   final SessionController _session;
   final DocumentPicker _picker;
+
+  /// From the server's `limits.documentAcceptedExtensions`, lower-cased.
+  final List<String> _acceptedExtensions;
 
   ProviderDocuments? _current;
   final Map<ProviderDocumentType, ResubmitSlot> _slots =
@@ -178,7 +182,7 @@ class ResubmitDocumentsViewModel extends BaseViewModel {
   }
 
   DocumentError? _check(DocumentFile file) {
-    if (!InputRules.isAcceptableDocumentType(file.extension)) {
+    if (!_acceptedExtensions.contains(file.extension.toLowerCase())) {
       return const DocumentWrongType();
     }
     if (file.sizeInBytes > maxMegabytes * 1024 * 1024) {

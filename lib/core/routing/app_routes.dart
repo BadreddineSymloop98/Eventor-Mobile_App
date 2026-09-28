@@ -1,3 +1,4 @@
+import '../bookings/bookings_repository.dart';
 import '../budget/budget_repository.dart';
 import '../catalog/models/pack.dart';
 import '../catalog/service_query.dart';
@@ -102,6 +103,13 @@ abstract final class AppRoutes {
   /// `18h`. Carries [LinkBookingArgs] as `extra`.
   static const String budgetLinkBooking = '/budget/link';
 
+  /// Section 9: one booking, and what can be done to it. `/booking`, not
+  /// `/bookings`, so a booking never reads as the Bookings tab.
+  static const String booking = '/booking';
+
+  /// `B2` — carries [RequestSentArgs] as `extra`.
+  static const String bookingSent = '/booking/sent';
+
   /// `21` / `21a` / `21b` — the provider's first tab.
   static const String providerHome = '/provider';
 
@@ -158,6 +166,36 @@ abstract final class AppRoutes {
 
   static String budgetLineFor(String id) => '$budgetLines/$id';
 
+  /// `B1`, from 12, on the day picked there.
+  static String bookServiceFor(String id, {DateTime? date}) =>
+      _withDate('$services/$id/book', date);
+
+  /// `B9`, from 20, on the day picked there.
+  static String bookPackFor(String id, {DateTime? date}) =>
+      _withDate('$packs/$id/book', date);
+
+  /// `B9a` — carries B9's view model as `extra`.
+  static String packReviewFor(String id) => '$packs/$id/book/review';
+
+  /// `B4` and its variants.
+  static String bookingFor(String id) => '$booking/$id';
+
+  /// `B6` — carries the [BookingDetail] as `extra`.
+  static String rescheduleFor(String id) => '$booking/$id/reschedule';
+
+  /// `B7` — carries the [BookingDetail] as `extra`.
+  static String checkInFor(String id) => '$booking/$id/check-in';
+
+  /// `B8`.
+  static String invoiceFor(String id) => '$booking/$id/invoice';
+
+  static String _withDate(String path, DateTime? date) => Uri(
+        path: path,
+        queryParameters: date == null
+            ? null
+            : <String, String>{'date': apiDate(date)},
+      ).toString();
+
   /// `15`'s own thread.
   static String chatFor(String id) => '$conversations/$id';
 
@@ -203,7 +241,8 @@ abstract final class AppRoutes {
       path.startsWith('$packs/') ||
       path == favourites ||
       path == budget ||
-      path.startsWith('$budget/');
+      path.startsWith('$budget/') ||
+      path.startsWith('$booking/');
 
   /// The screens only a provider may see: their shell and their documents.
   /// A client is sent to [home] instead. Chat (`15`) and the bell (`16`) are
@@ -282,4 +321,15 @@ class BookingLinkChoice {
   const BookingLinkChoice(this.booking);
 
   final LinkedBooking? booking;
+}
+
+/// What B2 shows: the booking just made, and how soon the provider
+/// usually answers.
+class RequestSentArgs {
+  const RequestSentArgs({required this.booking, this.replyTime});
+
+  final BookingDetail booking;
+
+  /// "2 h", from the provider's profile.
+  final String? replyTime;
 }

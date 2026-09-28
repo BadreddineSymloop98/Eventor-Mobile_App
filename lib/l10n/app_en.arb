@@ -2707,5 +2707,1545 @@
   "budgetDeleteUnavailable": "Deleting a budget is not available yet.",
   "@budgetDeleteUnavailable": {
     "description": "Toast when the server has no delete route yet."
+  },
+  "messagesPreviewMine": "You: {message}",
+  "@messagesPreviewMine": {
+    "description": "Inbox preview of a message the user sent themselves.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "chatClosedPlain": "This conversation is closed. You can still read it.",
+  "@chatClosedPlain": {
+    "description": "Composer notice on a closed conversation that Eventor did not close."
+  },
+  "notificationDeleted": "Notification deleted",
+  "@notificationDeleted": {
+    "description": "Toast after swiping a notification away; it carries Undo."
+  },
+  "notificationDelete": "Delete notification",
+  "@notificationDelete": {
+    "description": "Accessibility label of the swipe-to-delete action."
+  },
+  "providerBlockedTitle": "Your account is blocked",
+  "@providerBlockedTitle": {
+    "description": "Screen 21c title."
+  },
+  "providerBlockedBody": "You cannot receive or answer requests while the block is in place. Your bookings, messages and history are kept.",
+  "@providerBlockedBody": {
+    "description": "Screen 21c body."
+  },
+  "providerBlockedServices": "Your services are hidden from clients while the account is blocked.",
+  "@providerBlockedServices": {
+    "description": "Screen 21c note under Your services."
+  },
+  "loginBlockedUntil": "Blocked until {date}.",
+  "@loginBlockedUntil": {
+    "description": "Login banner line with the end date of a temporary block.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingAddress": "Address (optional)",
+  "@bookingAddress": {
+    "description": "B1 address field label."
+  },
+  "bookingAddressHint": "Venue, street…",
+  "@bookingAddressHint": {
+    "description": "B1 address field hint."
+  },
+  "bookingAddressLabel": "Address",
+  "@bookingAddressLabel": {
+    "description": "Row label for the event address."
+  },
+  "bookingCancelBooking": "Cancel booking",
+  "@bookingCancelBooking": {
+    "description": "B4 accepted: cancel button."
+  },
+  "bookingCancelRequest": "Cancel request",
+  "@bookingCancelRequest": {
+    "description": "B4a pending: cancel button."
+  },
+  "bookingCancellationPolicy": "Cancellation policy",
+  "@bookingCancellationPolicy": {
+    "description": "B4 section heading."
+  },
+  "bookingCommune": "Commune",
+  "@bookingCommune": {
+    "description": "Commune field / row label."
+  },
+  "bookingCommunePlaceholder": "Choose a commune (optional)",
+  "@bookingCommunePlaceholder": {
+    "description": "B1 commune placeholder."
+  },
+  "bookingContact": "Contact",
+  "@bookingContact": {
+    "description": "B4 section heading."
+  },
+  "bookingDate": "Date",
+  "@bookingDate": {
+    "description": "Row label."
+  },
+  "bookingDateError": "Pick an available day.",
+  "@bookingDateError": {
+    "description": "B1/B6 missing date."
+  },
+  "bookingDateRefused": "This day can no longer be booked — pick another.",
+  "@bookingDateRefused": {
+    "description": "The quote refused the picked day."
+  },
+  "bookingDateTime": "Date and time",
+  "@bookingDateTime": {
+    "description": "B1 section heading."
+  },
+  "bookingDetailTitle": "Booking",
+  "@bookingDetailTitle": {
+    "description": "B4 top bar title."
+  },
+  "bookingEventType": "Event type",
+  "@bookingEventType": {
+    "description": "Row label."
+  },
+  "bookingEventTypeError": "Pick the type of event.",
+  "@bookingEventTypeError": {
+    "description": "B1 missing event type."
+  },
+  "bookingExtras": "Extras",
+  "@bookingExtras": {
+    "description": "B1 section heading."
+  },
+  "bookingFailedKept": "Nothing was lost — everything you filled in is still here.",
+  "@bookingFailedKept": {
+    "description": "B1a: appended to a server error."
+  },
+  "bookingFailedOffline": "You appear to be offline. Nothing was lost — everything you filled in is still here. Tap Try again when you have a connection.",
+  "@bookingFailedOffline": {
+    "description": "B1a banner body when offline."
+  },
+  "bookingFailedTitle": "Couldn’t send your request",
+  "@bookingFailedTitle": {
+    "description": "B1a banner title."
+  },
+  "bookingFindSimilar": "Find similar services",
+  "@bookingFindSimilar": {
+    "description": "B4b declined: primary button."
+  },
+  "bookingFrom": "From",
+  "@bookingFrom": {
+    "description": "Start time field."
+  },
+  "bookingGuests": "Guests",
+  "@bookingGuests": {
+    "description": "Guests label."
+  },
+  "bookingGuestsError": "Add the number of guests — the price is per person.",
+  "@bookingGuestsError": {
+    "description": "B1 per-person service without guests."
+  },
+  "bookingGuestsHelper": "Helps the provider prepare.",
+  "@bookingGuestsHelper": {
+    "description": "Under the guests label."
+  },
+  "bookingLeaveReview": "Leave a review",
+  "@bookingLeaveReview": {
+    "description": "B4d primary button."
+  },
+  "bookingNoCommune": "Not specified",
+  "@bookingNoCommune": {
+    "description": "Commune sheet: no commune."
+  },
+  "bookingNoDate": "No date selected — choose an available day",
+  "@bookingNoDate": {
+    "description": "Selection summary without a date."
+  },
+  "bookingNoTime": "No time",
+  "@bookingNoTime": {
+    "description": "Time sheet: no time."
+  },
+  "bookingNoWilayas": "This service lists no wilaya yet.",
+  "@bookingNoWilayas": {
+    "description": "Toast when there is no wilaya to pick."
+  },
+  "bookingNotAcceptingBody": "They are not taking requests right now. Everything you entered is saved; you can message them meanwhile.",
+  "@bookingNotAcceptingBody": {
+    "description": "Banner body when the provider paused bookings."
+  },
+  "bookingNote": "Note for the provider (optional)",
+  "@bookingNote": {
+    "description": "B1 note label."
+  },
+  "bookingNoteHint": "Anything they should know",
+  "@bookingNoteHint": {
+    "description": "B1 note hint."
+  },
+  "bookingPackSaving": "Pack saving",
+  "@bookingPackSaving": {
+    "description": "Price line: the pack discount."
+  },
+  "bookingPackSection": "Pack",
+  "@bookingPackSection": {
+    "description": "B4 section heading for a pack booking."
+  },
+  "bookingPhoneHidden": "Hidden",
+  "@bookingPhoneHidden": {
+    "description": "B4 contact: phone not shared."
+  },
+  "bookingPickNewDate": "Pick a new date",
+  "@bookingPickNewDate": {
+    "description": "B1b button."
+  },
+  "bookingPrice": "Price",
+  "@bookingPrice": {
+    "description": "Section heading."
+  },
+  "bookingProposeDate": "Propose a new date",
+  "@bookingProposeDate": {
+    "description": "B4 accepted: reschedule button."
+  },
+  "bookingProviderConfirmsTime": "The provider confirms the exact time after your request.",
+  "@bookingProviderConfirmsTime": {
+    "description": "Note under the calendar."
+  },
+  "bookingReportProblem": "Report a problem",
+  "@bookingReportProblem": {
+    "description": "B4: opens the problem sheet."
+  },
+  "bookingSearchCommune": "Search a commune",
+  "@bookingSearchCommune": {
+    "description": "Commune sheet search hint."
+  },
+  "bookingSearchWilaya": "Search a wilaya",
+  "@bookingSearchWilaya": {
+    "description": "Wilaya sheet search hint."
+  },
+  "bookingSend": "Send request",
+  "@bookingSend": {
+    "description": "B1 primary button."
+  },
+  "bookingServiceSection": "Service",
+  "@bookingServiceSection": {
+    "description": "B4 section heading."
+  },
+  "bookingTakenTitleUndated": "That date was just taken",
+  "@bookingTakenTitleUndated": {
+    "description": "B1b title without a date."
+  },
+  "bookingTime": "Time",
+  "@bookingTime": {
+    "description": "Row label."
+  },
+  "bookingTimeHelper": "Optional — the provider confirms the exact time.",
+  "@bookingTimeHelper": {
+    "description": "Under the time pickers."
+  },
+  "bookingTimeHelperHourly": "Needed: the price is per hour.",
+  "@bookingTimeHelperHourly": {
+    "description": "Under the time pickers for a per-hour service."
+  },
+  "bookingTimeOverline": "TIME",
+  "@bookingTimeOverline": {
+    "description": "Overline above the time pickers."
+  },
+  "bookingTo": "To",
+  "@bookingTo": {
+    "description": "End time field."
+  },
+  "bookingTooSoonBody": "Dates now need more notice. Everything else you entered is saved — pick a later day.",
+  "@bookingTooSoonBody": {
+    "description": "Banner body: MIN_NOTICE."
+  },
+  "bookingTooSoonTitle": "That date is now too soon",
+  "@bookingTooSoonTitle": {
+    "description": "Banner title: MIN_NOTICE."
+  },
+  "bookingTotalCaption": "total",
+  "@bookingTotalCaption": {
+    "description": "Caption under the total on the sticky bar."
+  },
+  "bookingTotalOnSite": "Total · pay on site",
+  "@bookingTotalOnSite": {
+    "description": "Price card total row."
+  },
+  "bookingTryAgain": "Try again",
+  "@bookingTryAgain": {
+    "description": "B1a button."
+  },
+  "bookingViewInvoice": "View invoice",
+  "@bookingViewInvoice": {
+    "description": "Opens B8."
+  },
+  "bookingWhere": "Where",
+  "@bookingWhere": {
+    "description": "Section heading / row label."
+  },
+  "bookingWilaya": "Wilaya",
+  "@bookingWilaya": {
+    "description": "Wilaya field / row label."
+  },
+  "bookingWilayaError": "Choose where the event takes place.",
+  "@bookingWilayaError": {
+    "description": "B1 missing wilaya."
+  },
+  "bookingWilayaPlaceholder": "Choose a wilaya",
+  "@bookingWilayaPlaceholder": {
+    "description": "B1 wilaya placeholder."
+  },
+  "bookingYourEvent": "Your event",
+  "@bookingYourEvent": {
+    "description": "Section heading."
+  },
+  "bookingYourNote": "Your note",
+  "@bookingYourNote": {
+    "description": "B4 section heading for the client note."
+  },
+  "bookingsEmptyCancelled": "Nothing cancelled",
+  "@bookingsEmptyCancelled": {
+    "description": "B3 empty cancelled tab."
+  },
+  "bookingsEmptyCancelledBody": "Cancelled and declined bookings show up here.",
+  "@bookingsEmptyCancelledBody": {
+    "description": "B3 empty cancelled tab body."
+  },
+  "bookingsEmptyPast": "No past bookings yet",
+  "@bookingsEmptyPast": {
+    "description": "B3 empty past tab."
+  },
+  "bookingsEmptyPastBody": "Once an event is behind you, it moves here with its invoice.",
+  "@bookingsEmptyPastBody": {
+    "description": "B3 empty past tab body."
+  },
+  "bookingsEmptyPending": "No requests waiting",
+  "@bookingsEmptyPending": {
+    "description": "B3 empty pending tab."
+  },
+  "bookingsEmptyPendingBody": "Requests you send wait here until the provider answers.",
+  "@bookingsEmptyPendingBody": {
+    "description": "B3 empty pending tab body."
+  },
+  "bookingsEmptyUpcoming": "No upcoming bookings",
+  "@bookingsEmptyUpcoming": {
+    "description": "B3 empty upcoming tab."
+  },
+  "bookingsEmptyUpcomingBody": "Accepted bookings with the event still ahead show up here.",
+  "@bookingsEmptyUpcomingBody": {
+    "description": "B3 empty upcoming tab body."
+  },
+  "bookingsFindService": "Find a service",
+  "@bookingsFindService": {
+    "description": "B3 empty state action."
+  },
+  "bookingsTabCancelled": "Cancelled",
+  "@bookingsTabCancelled": {
+    "description": "B3 tab."
+  },
+  "bookingsTabPast": "Past",
+  "@bookingsTabPast": {
+    "description": "B3 tab."
+  },
+  "bookingsTabPending": "Pending",
+  "@bookingsTabPending": {
+    "description": "B3 tab."
+  },
+  "bookingsTabUpcoming": "Upcoming",
+  "@bookingsTabUpcoming": {
+    "description": "B3 tab."
+  },
+  "bookingsTitle": "My bookings",
+  "@bookingsTitle": {
+    "description": "B3 title."
+  },
+  "cancelBookingConfirm": "Yes, cancel booking",
+  "@cancelBookingConfirm": {
+    "description": "B5 danger button."
+  },
+  "cancelBookingDone": "Booking cancelled.",
+  "@cancelBookingDone": {
+    "description": "Toast after cancelling a booking."
+  },
+  "cancelBookingKeep": "Keep my booking",
+  "@cancelBookingKeep": {
+    "description": "B5 ghost button."
+  },
+  "cancelBookingTitle": "Cancel this booking?",
+  "@cancelBookingTitle": {
+    "description": "B5 title."
+  },
+  "cancelReasonHint": "A few words for the provider",
+  "@cancelReasonHint": {
+    "description": "B5 reason hint."
+  },
+  "cancelReasonLabel": "Why are you cancelling?",
+  "@cancelReasonLabel": {
+    "description": "B5 reason label."
+  },
+  "cancelRequestConfirm": "Yes, cancel request",
+  "@cancelRequestConfirm": {
+    "description": "B5 on a pending request: danger button."
+  },
+  "cancelRequestDone": "Request cancelled.",
+  "@cancelRequestDone": {
+    "description": "Toast after cancelling a request."
+  },
+  "cancelRequestKeep": "Keep my request",
+  "@cancelRequestKeep": {
+    "description": "B5 on a pending request: ghost button."
+  },
+  "cancelRequestTitle": "Cancel this request?",
+  "@cancelRequestTitle": {
+    "description": "B5 on a pending request: title."
+  },
+  "cancelNothingPaid": "Payment is cash on the day, so nothing has been paid through Eventor.",
+  "@cancelNothingPaid": {
+    "description": "B5 note when the provider set no policy."
+  },
+  "cancelledByOtherBody": "You owe nothing — no payment had been made.",
+  "@cancelledByOtherBody": {
+    "description": "B4c when the provider or Eventor cancelled."
+  },
+  "cancelledByYouTitle": "You cancelled this booking",
+  "@cancelledByYouTitle": {
+    "description": "B4c callout title."
+  },
+  "checkInAllGood": "All good",
+  "@checkInAllGood": {
+    "description": "B7 choice."
+  },
+  "checkInAllGoodBody": "The service happened as agreed. We close the booking and you can leave a review.",
+  "@checkInAllGoodBody": {
+    "description": "B7 choice body."
+  },
+  "checkInCalloutAction": "Tell us how it went",
+  "@checkInCalloutAction": {
+    "description": "B4 after the event: opens B7."
+  },
+  "checkInCalloutTitle": "How did it go?",
+  "@checkInCalloutTitle": {
+    "description": "B4 after the event: callout title."
+  },
+  "checkInClosed": "Thanks — the booking is closed.",
+  "@checkInClosed": {
+    "description": "Toast after All good closes it."
+  },
+  "checkInFootnote": "If nothing is reported, the booking closes on its own 3 days after the event.",
+  "@checkInFootnote": {
+    "description": "B7 footer."
+  },
+  "checkInHeading": "How did it go?",
+  "@checkInHeading": {
+    "description": "B7 heading."
+  },
+  "checkInNotNow": "Not now",
+  "@checkInNotNow": {
+    "description": "B7 ghost button."
+  },
+  "checkInProblem": "There was a problem",
+  "@checkInProblem": {
+    "description": "B7 choice."
+  },
+  "checkInProblemBody": "No-show, late, or not what was agreed. We open a dispute and support steps in.",
+  "@checkInProblemBody": {
+    "description": "B7 choice body."
+  },
+  "checkInTitle": "After the event",
+  "@checkInTitle": {
+    "description": "B7 top bar title."
+  },
+  "contactNoteAccepted": "Phone numbers are shared because this booking is accepted.",
+  "@contactNoteAccepted": {
+    "description": "B4 contact note."
+  },
+  "contactNoteCancelled": "Phone numbers are no longer shared for cancelled bookings.",
+  "@contactNoteCancelled": {
+    "description": "B4c contact note."
+  },
+  "contactNoteCompleted": "Phone numbers stay visible after the event.",
+  "@contactNoteCompleted": {
+    "description": "B4d contact note."
+  },
+  "contactNoteDeclined": "Phone numbers are not shared for declined requests.",
+  "@contactNoteDeclined": {
+    "description": "B4b contact note."
+  },
+  "declinedBody": "Nothing was charged, and nothing is held for you.",
+  "@declinedBody": {
+    "description": "B4b callout body."
+  },
+  "disputeOpenBody": "Eventor support is looking into it and will write to you in Messages.",
+  "@disputeOpenBody": {
+    "description": "B4 banner while a dispute is open."
+  },
+  "invoiceBackToBooking": "Back to booking",
+  "@invoiceBackToBooking": {
+    "description": "B8 ghost button."
+  },
+  "invoiceBilledTo": "BILLED TO",
+  "@invoiceBilledTo": {
+    "description": "B8 overline."
+  },
+  "invoiceBooking": "BOOKING",
+  "@invoiceBooking": {
+    "description": "B8 overline."
+  },
+  "invoiceDiscount": "Discount",
+  "@invoiceDiscount": {
+    "description": "B8 row."
+  },
+  "invoiceDownload": "Download PDF",
+  "@invoiceDownload": {
+    "description": "B8 primary button."
+  },
+  "invoiceFrom": "FROM",
+  "@invoiceFrom": {
+    "description": "B8 overline: the issuer."
+  },
+  "invoiceOverline": "INVOICE",
+  "@invoiceOverline": {
+    "description": "B8 overline."
+  },
+  "invoicePaidInCash": "Paid in cash",
+  "@invoicePaidInCash": {
+    "description": "B8 pill once completed."
+  },
+  "invoicePayOnTheDay": "Pay in cash on the day",
+  "@invoicePayOnTheDay": {
+    "description": "B8 pill before the event."
+  },
+  "invoiceServiceBy": "SERVICE BY",
+  "@invoiceServiceBy": {
+    "description": "B8 overline: the provider."
+  },
+  "invoiceSubtotal": "Subtotal",
+  "@invoiceSubtotal": {
+    "description": "B8 row."
+  },
+  "invoiceTitle": "Invoice",
+  "@invoiceTitle": {
+    "description": "B8 top bar title."
+  },
+  "invoiceTotalPaid": "Total paid",
+  "@invoiceTotalPaid": {
+    "description": "B8 total once completed."
+  },
+  "invoiceTotalToPay": "Total to pay",
+  "@invoiceTotalToPay": {
+    "description": "B8 total before the event."
+  },
+  "invoiceVoidedBody": "It was voided when the booking was cancelled. Nothing is owed.",
+  "@invoiceVoidedBody": {
+    "description": "B8 banner on a voided invoice."
+  },
+  "invoiceVoidedTitle": "This invoice is void",
+  "@invoiceVoidedTitle": {
+    "description": "B8 banner title."
+  },
+  "packBookingContinue": "Continue",
+  "@packBookingContinue": {
+    "description": "B9 primary button."
+  },
+  "packBookingTitle": "Book this pack",
+  "@packBookingTitle": {
+    "description": "B9 title."
+  },
+  "packLegendBusy": "A service is busy",
+  "@packLegendBusy": {
+    "description": "B9 calendar legend."
+  },
+  "packLegendTooSoon": "Too soon / past",
+  "@packLegendTooSoon": {
+    "description": "B9 calendar legend."
+  },
+  "packPriceCaption": "pack price",
+  "@packPriceCaption": {
+    "description": "B9 sticky bar caption."
+  },
+  "packReviewDatePlace": "Date and place",
+  "@packReviewDatePlace": {
+    "description": "B9a section heading."
+  },
+  "packReviewPackPrice": "Pack price",
+  "@packReviewPackPrice": {
+    "description": "B9a row."
+  },
+  "packReviewSend": "Send pack request",
+  "@packReviewSend": {
+    "description": "B9a primary button."
+  },
+  "packReviewTitle": "Review your pack",
+  "@packReviewTitle": {
+    "description": "B9a title."
+  },
+  "packReviewYouSave": "You save",
+  "@packReviewYouSave": {
+    "description": "B9a row."
+  },
+  "problemBehaviour": "Behaviour",
+  "@problemBehaviour": {
+    "description": "Problem type chip."
+  },
+  "problemCancel": "Cancel",
+  "@problemCancel": {
+    "description": "Problem sheet ghost button."
+  },
+  "problemDamage": "Damage or safety",
+  "@problemDamage": {
+    "description": "Problem type chip."
+  },
+  "problemDescriptionHelper": "Eventor support reads this, along with your chat.",
+  "@problemDescriptionHelper": {
+    "description": "Problem description helper."
+  },
+  "problemDescriptionHint": "What happened, and when",
+  "@problemDescriptionHint": {
+    "description": "Problem description hint."
+  },
+  "problemDescriptionLabel": "What happened?",
+  "@problemDescriptionLabel": {
+    "description": "Problem description label."
+  },
+  "problemDone": "Problem reported. Eventor support will contact you in Messages.",
+  "@problemDone": {
+    "description": "Toast after reporting a problem."
+  },
+  "problemLate": "Late or incomplete",
+  "@problemLate": {
+    "description": "Problem type chip."
+  },
+  "problemNoShow": "The provider didn’t come",
+  "@problemNoShow": {
+    "description": "Problem type chip."
+  },
+  "problemNotAsDescribed": "Not as described",
+  "@problemNotAsDescribed": {
+    "description": "Problem type chip."
+  },
+  "problemOther": "Something else",
+  "@problemOther": {
+    "description": "Problem type chip."
+  },
+  "problemPrice": "Price disagreement",
+  "@problemPrice": {
+    "description": "Problem type chip."
+  },
+  "problemSubmit": "Report the problem",
+  "@problemSubmit": {
+    "description": "Problem sheet danger button."
+  },
+  "problemTitle": "What went wrong?",
+  "@problemTitle": {
+    "description": "Problem sheet title."
+  },
+  "problemTypeLabel": "What was the problem?",
+  "@problemTypeLabel": {
+    "description": "Problem sheet chips label."
+  },
+  "proposalCurrent": "current",
+  "@proposalCurrent": {
+    "description": "B6a caption under the old date."
+  },
+  "proposalDecline": "Decline",
+  "@proposalDecline": {
+    "description": "B6a secondary button."
+  },
+  "proposalDeclined": "You kept the original date.",
+  "@proposalDeclined": {
+    "description": "Toast after declining a proposal."
+  },
+  "proposalProposed": "proposed",
+  "@proposalProposed": {
+    "description": "B6a caption under the new date."
+  },
+  "proposalWithdraw": "Withdraw my proposal",
+  "@proposalWithdraw": {
+    "description": "B4 banner action on the client’s own proposal."
+  },
+  "proposalWithdrawn": "Proposal withdrawn — the date stays as it was.",
+  "@proposalWithdrawn": {
+    "description": "Toast after withdrawing."
+  },
+  "requestBookingTitle": "Request booking",
+  "@requestBookingTitle": {
+    "description": "B1 title."
+  },
+  "requestSentHeading": "Your request is on its way",
+  "@requestSentHeading": {
+    "description": "B2 heading."
+  },
+  "requestSentNext": "What happens next",
+  "@requestSentNext": {
+    "description": "B2 section heading."
+  },
+  "requestSentReference": "Reference",
+  "@requestSentReference": {
+    "description": "B2 fact label."
+  },
+  "requestSentTitle": "Request sent",
+  "@requestSentTitle": {
+    "description": "B2 title."
+  },
+  "requestSentViewBooking": "View booking",
+  "@requestSentViewBooking": {
+    "description": "B2 primary button."
+  },
+  "requestSentStep2": "They accept, or suggest another date",
+  "@requestSentStep2": {
+    "description": "B2 step 2 title."
+  },
+  "requestSentStep2Body": "Their phone number is shared once accepted.",
+  "@requestSentStep2Body": {
+    "description": "B2 step 2 body."
+  },
+  "requestSentStep3": "You pay on the day",
+  "@requestSentStep3": {
+    "description": "B2 step 3 title."
+  },
+  "requestSentStep3Body": "In cash, directly to the provider. Eventor charges you nothing.",
+  "@requestSentStep3Body": {
+    "description": "B2 step 3 body."
+  },
+  "rescheduleCurrentlyBooked": "CURRENTLY BOOKED",
+  "@rescheduleCurrentlyBooked": {
+    "description": "B6 overline."
+  },
+  "rescheduleCurrentlyRequested": "CURRENTLY REQUESTED",
+  "@rescheduleCurrentlyRequested": {
+    "description": "B6 overline on a pending request."
+  },
+  "rescheduleFailedTitle": "Couldn’t send the new date",
+  "@rescheduleFailedTitle": {
+    "description": "B6 failure banner."
+  },
+  "rescheduleLegendCurrent": "Current booking",
+  "@rescheduleLegendCurrent": {
+    "description": "B6 calendar legend."
+  },
+  "rescheduleMove": "Change the date",
+  "@rescheduleMove": {
+    "description": "B6 button on a pending request."
+  },
+  "rescheduleMoved": "Date changed.",
+  "@rescheduleMoved": {
+    "description": "Toast after moving a pending request."
+  },
+  "rescheduleNewDate": "New date and time",
+  "@rescheduleNewDate": {
+    "description": "B6 section heading."
+  },
+  "rescheduleProposedCaption": "proposed",
+  "@rescheduleProposedCaption": {
+    "description": "B6 sticky bar caption."
+  },
+  "rescheduleReasonError": "Say why — the provider reads this first.",
+  "@rescheduleReasonError": {
+    "description": "B6 missing reason."
+  },
+  "rescheduleReasonHint": "The hall was double-booked…",
+  "@rescheduleReasonHint": {
+    "description": "B6 reason hint."
+  },
+  "rescheduleReasonLabel": "Why the change?",
+  "@rescheduleReasonLabel": {
+    "description": "B6 reason label."
+  },
+  "rescheduleSend": "Send proposal",
+  "@rescheduleSend": {
+    "description": "B6 primary button."
+  },
+  "rescheduleSent": "Proposal sent. You’ll be notified when they answer.",
+  "@rescheduleSent": {
+    "description": "Toast after proposing."
+  },
+  "rescheduleTitle": "Propose a new date",
+  "@rescheduleTitle": {
+    "description": "B6 title."
+  },
+  "rescheduleTitlePending": "Change the date",
+  "@rescheduleTitlePending": {
+    "description": "B6 title on a pending request."
+  },
+  "reviewBody": "Your review helps other clients choose.",
+  "@reviewBody": {
+    "description": "Review sheet subtitle."
+  },
+  "reviewCalloutTitle": "How was it?",
+  "@reviewCalloutTitle": {
+    "description": "B4d callout title."
+  },
+  "reviewCommentHelper": "Published on their profile.",
+  "@reviewCommentHelper": {
+    "description": "Review comment helper."
+  },
+  "reviewCommentHint": "What went well, what could be better",
+  "@reviewCommentHint": {
+    "description": "Review comment hint."
+  },
+  "reviewCommentLabel": "Your review",
+  "@reviewCommentLabel": {
+    "description": "Review comment label."
+  },
+  "reviewDone": "Thanks — your review is published.",
+  "@reviewDone": {
+    "description": "Toast after reviewing."
+  },
+  "reviewLater": "Later",
+  "@reviewLater": {
+    "description": "Review sheet ghost button."
+  },
+  "reviewSubmit": "Publish review",
+  "@reviewSubmit": {
+    "description": "Review sheet primary button."
+  },
+  "stepCancelledByYou": "Cancelled by you",
+  "@stepCancelledByYou": {
+    "description": "Timeline step."
+  },
+  "stepCompleted": "Completed",
+  "@stepCompleted": {
+    "description": "Timeline step."
+  },
+  "stepConfirmAfter": "Confirm after the event",
+  "@stepConfirmAfter": {
+    "description": "Timeline step subtitle."
+  },
+  "stepEventDay": "Event day",
+  "@stepEventDay": {
+    "description": "Timeline step."
+  },
+  "stepHowDidItGo": "Tell us how it went",
+  "@stepHowDidItGo": {
+    "description": "Timeline step subtitle after the event."
+  },
+  "stepNewDateProposed": "New date proposed",
+  "@stepNewDateProposed": {
+    "description": "Timeline step (B6a)."
+  },
+  "stepNotApplicable": "Not applicable",
+  "@stepNotApplicable": {
+    "description": "Timeline step subtitle."
+  },
+  "stepRequested": "Requested",
+  "@stepRequested": {
+    "description": "Timeline step."
+  },
+  "stepWaitingForYou": "waiting for you",
+  "@stepWaitingForYou": {
+    "description": "Timeline step subtitle."
+  },
+  "stepYouConfirmed": "you confirmed all went well",
+  "@stepYouConfirmed": {
+    "description": "Timeline step subtitle."
+  },
+  "stepperLess": "Less",
+  "@stepperLess": {
+    "description": "Stepper minus, for screen readers."
+  },
+  "stepperMore": "More",
+  "@stepperMore": {
+    "description": "Stepper plus, for screen readers."
+  },
+  "bookingBasePrice": "Base price · {unit}",
+  "@bookingBasePrice": {
+    "description": "Price line sub-label.",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingBookAgain": "Book {provider} again",
+  "@bookingBookAgain": {
+    "description": "B4c primary button.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCallLabel": "Call {provider}",
+  "@bookingCallLabel": {
+    "description": "Phone number, for screen readers.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCashFootnote": "Payment is cash, directly to {provider} on the day. Eventor charges you nothing.",
+  "@bookingCashFootnote": {
+    "description": "Footnote under the price.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingCompletedOn": "Completed {date}",
+  "@bookingCompletedOn": {
+    "description": "B4d under the reference.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingGuestsCount": "{count, plural, =1{1 guest} other{{count} guests}}",
+  "@bookingGuestsCount": {
+    "description": "A number of guests.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingGuestsMax": "Up to {max} guests.",
+  "@bookingGuestsMax": {
+    "description": "Under the guests label.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingMessageProvider": "Message {provider}",
+  "@bookingMessageProvider": {
+    "description": "Message button.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingNotAcceptingTitle": "{provider} paused new bookings",
+  "@bookingNotAcceptingTitle": {
+    "description": "Banner title.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingNoticeDays": "{count, plural, =1{Dates need at least 1 day’s notice.} other{Dates need at least {count} days’ notice.}}",
+  "@bookingNoticeDays": {
+    "description": "Note under the calendar.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingPolicySetBy": "Set by {provider}",
+  "@bookingPolicySetBy": {
+    "description": "B4 policy caption.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingRequestedOn": "Requested {date}",
+  "@bookingRequestedOn": {
+    "description": "B4 under the reference.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingTakenBody": "{provider} accepted another booking for that date while you were filling this in. Everything else you entered is saved — pick another date to carry on.",
+  "@bookingTakenBody": {
+    "description": "B1b banner body.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingTakenTitle": "{date} was just taken",
+  "@bookingTakenTitle": {
+    "description": "B1b banner title.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingWilayaSheetBody": "Where {provider} works.",
+  "@bookingWilayaSheetBody": {
+    "description": "Wilaya sheet subtitle.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelBodyShort": "{provider} is told straight away and the slot is released.",
+  "@cancelBodyShort": {
+    "description": "B5a body.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelBookingBody": "{provider} is told straight away and the slot is released. This cannot be undone — you would have to request the date again.",
+  "@cancelBookingBody": {
+    "description": "B5 body.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelDaysBefore": "{days, plural, =0{Your event is today.} =1{Your event is tomorrow.} other{You are {days} days before the event.}}",
+  "@cancelDaysBefore": {
+    "description": "B5 note: how far off the event is.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "cancelPolicyQuote": "{provider}’s policy: “{policy}”",
+  "@cancelPolicyQuote": {
+    "description": "B5 note: the provider’s policy.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "policy": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelReasonHelper": "{provider} will see this reason.",
+  "@cancelReasonHelper": {
+    "description": "B5 reason helper.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelRequestBody": "{provider} is told straight away and your hold on the date is released.",
+  "@cancelRequestBody": {
+    "description": "B5 body on a pending request.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelledByOtherTitle": "{provider} cancelled this booking",
+  "@cancelledByOtherTitle": {
+    "description": "B4c callout title.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelledByYouBody": "{provider} has been notified. You owe nothing — no payment had been made.",
+  "@cancelledByYouBody": {
+    "description": "B4c callout body.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "checkInBody": "Your event was on {date}. Let us know before we close the booking — it takes one tap.",
+  "@checkInBody": {
+    "description": "B7 body.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "checkInCalloutBody": "Confirm that {provider} delivered as agreed, or report a problem.",
+  "@checkInCalloutBody": {
+    "description": "B4 after the event: callout body.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "checkInWaiting": "Thanks! It closes once {provider} confirms too.",
+  "@checkInWaiting": {
+    "description": "Toast after All good.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "contactNotePending": "The phone number appears once {provider} accepts your request.",
+  "@contactNotePending": {
+    "description": "B4a contact note.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "declinedTitle": "{provider} declined this request",
+  "@declinedTitle": {
+    "description": "B4b callout title.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "disputeOpenTitle": "Problem reported · {reference}",
+  "@disputeOpenTitle": {
+    "description": "B4 banner while a dispute is open.",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceFootnote": "Issued by Eventor for your records. The payment itself goes directly to {provider}.",
+  "@invoiceFootnote": {
+    "description": "B8 footnote.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceIssued": "Issued {date}",
+  "@invoiceIssued": {
+    "description": "B8 issue date.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePaidNote": "Paid in cash to {provider} on {date}. Nothing was added to your total.",
+  "@invoicePaidNote": {
+    "description": "B8 under the total once completed.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceShareSubject": "Eventor invoice {number}",
+  "@invoiceShareSubject": {
+    "description": "Share sheet subject.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceToPayNote": "To pay in cash to {provider} on {date}. Eventor adds nothing to your total.",
+  "@invoiceToPayNote": {
+    "description": "B8 under the total before the event.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "packBookingDaysIntro": "Only days when all {count} services in the pack are free can be selected.",
+  "@packBookingDaysIntro": {
+    "description": "B9 intro.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packBookingSummary": "{count} services, all from {provider} · {wilaya}",
+  "@packBookingSummary": {
+    "description": "B9 pack card.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "wilaya": {
+        "type": "String"
+      }
+    }
+  },
+  "packLegendAllFree": "All {count} free",
+  "@packLegendAllFree": {
+    "description": "B9 calendar legend.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packReviewOneRequest": "All {count} services are provided by {provider}. Booking the pack sends one request for all of them.",
+  "@packReviewOneRequest": {
+    "description": "B9a note.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "packReviewSum": "Sum of the {count} services",
+  "@packReviewSum": {
+    "description": "B9a row.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "problemBody": "Tell us what happened with {provider}. Eventor support steps in; payment was cash, so there are no refunds or fees.",
+  "@problemBody": {
+    "description": "Problem sheet subtitle.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "problemDescriptionTooShort": "{count, plural, =1{1 more character, please.} other{{count} more characters, please.}}",
+  "@problemDescriptionTooShort": {
+    "description": "Problem description too short.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "proposalAccept": "Accept {date}",
+  "@proposalAccept": {
+    "description": "B6a primary button.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "proposalAccepted": "New date accepted: {date}.",
+  "@proposalAccepted": {
+    "description": "Toast after accepting.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "proposalConsequence": "If you decline, the {date} booking stands and {provider} may cancel it.",
+  "@proposalConsequence": {
+    "description": "B6a consequence line.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "proposalMineBody": "Your current date stays held until {provider} answers.",
+  "@proposalMineBody": {
+    "description": "B4 banner on the client’s own proposal.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "proposalMineTitle": "You proposed {date}",
+  "@proposalMineTitle": {
+    "description": "B4 banner on the client’s own proposal.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "proposalTitle": "{provider} proposes a new date",
+  "@proposalTitle": {
+    "description": "B6a banner title.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "reasonGiven": "Reason given: “{reason}”",
+  "@reasonGiven": {
+    "description": "B4b/B4c quoted reason.",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "requestSentStep1": "{provider} reviews your request",
+  "@requestSentStep1": {
+    "description": "B2 step 1 title.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "requestSentStep1Deadline": "They have {hours} h to answer — we’ll notify you.",
+  "@requestSentStep1Deadline": {
+    "description": "B2 step 1 body without a reply time.",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "requestSentStep1Usually": "Usually within {time} — we’ll notify you.",
+  "@requestSentStep1Usually": {
+    "description": "B2 step 1 body.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "rescheduleBookedDays": "Days {provider} is already booked are struck through.",
+  "@rescheduleBookedDays": {
+    "description": "B6 note under the calendar.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "rescheduleHoldNote": "Your {date} slot stays held until {provider} answers. If they decline, the original booking is unchanged and the price does not change.",
+  "@rescheduleHoldNote": {
+    "description": "B6 hold notice.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "reschedulePendingNote": "Your request moves to the new date straight away; {provider} still has to accept it.",
+  "@reschedulePendingNote": {
+    "description": "B6 note on a pending request.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "rescheduleReasonHelper": "{provider} will read this.",
+  "@rescheduleReasonHelper": {
+    "description": "B6 reason helper.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "rescheduleTakenBody": "{provider} is no longer free that day. Pick another date.",
+  "@rescheduleTakenBody": {
+    "description": "B6 date taken.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewCalloutBody": "Your review of {provider} helps other clients choose.",
+  "@reviewCalloutBody": {
+    "description": "B4d callout body.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewCommentTooShort": "At least {count} characters.",
+  "@reviewCommentTooShort": {
+    "description": "Review comment too short.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewStars": "{count, plural, =1{1 star} other{{count} stars}}",
+  "@reviewStars": {
+    "description": "A star, for screen readers.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewTitle": "Review {provider}",
+  "@reviewTitle": {
+    "description": "Review sheet title.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "stepAcceptedBy": "Accepted by {provider}",
+  "@stepAcceptedBy": {
+    "description": "Timeline step.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "stepCancelledBy": "Cancelled by {provider}",
+  "@stepCancelledBy": {
+    "description": "Timeline step.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "stepDeclinedBy": "Declined by {provider}",
+  "@stepDeclinedBy": {
+    "description": "Timeline step.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "stepRepliesWithinHours": "Replies within {hours} h",
+  "@stepRepliesWithinHours": {
+    "description": "Timeline step subtitle.",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "stepUsuallyReplies": "Usually replies within {time}",
+  "@stepUsuallyReplies": {
+    "description": "Timeline step subtitle.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "stepWaitingFor": "Waiting for {provider}",
+  "@stepWaitingFor": {
+    "description": "Timeline step.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "stepYouConfirmedWaiting": "You confirmed · waiting for {provider}",
+  "@stepYouConfirmedWaiting": {
+    "description": "Timeline step subtitle.",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingNextDay": "next day",
+  "@bookingNextDay": {
+    "description": "To picker: this end time is on the day after the event date."
+  },
+  "bookingNextDayMark": "+1 day",
+  "@bookingNextDayMark": {
+    "description": "After an end time that falls on the next day (event past midnight)."
+  },
+  "bookingDurationHalfHour": "30 min",
+  "@bookingDurationHalfHour": {
+    "description": "To picker: event length of half an hour."
+  },
+  "bookingDurationHours": "{count} h",
+  "@bookingDurationHours": {
+    "description": "To picker: event length in whole hours.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingDurationHoursHalf": "{count} h 30 min",
+  "@bookingDurationHoursHalf": {
+    "description": "To picker: event length in hours and a half.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingGuestsTooMany": "Up to {max} guests for this booking.",
+  "@bookingGuestsTooMany": {
+    "description": "Guests typed above the service or pack cap.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceShare": "Share",
+  "@invoiceShare": {
+    "description": "B8 top bar: send the invoice PDF to another app."
+  },
+  "invoiceSavedToDownloads": "Invoice saved to Downloads.",
+  "@invoiceSavedToDownloads": {
+    "description": "B8 toast after the PDF is saved (Android)."
+  },
+  "invoiceSavedToFiles": "Invoice saved to Files › Eventor.",
+  "@invoiceSavedToFiles": {
+    "description": "B8 toast after the PDF is saved (iOS)."
+  },
+  "invoiceOpen": "Open",
+  "@invoiceOpen": {
+    "description": "B8 toast action: open the saved PDF."
+  },
+  "invoiceSaveFailed": "Couldn’t save the invoice on this phone. Try again.",
+  "@invoiceSaveFailed": {
+    "description": "B8 toast: writing the PDF failed."
+  },
+  "invoiceSaveDenied": "Allow storage access to save the invoice.",
+  "@invoiceSaveDenied": {
+    "description": "B8 toast: storage permission refused (Android 9 and older)."
+  },
+  "invoiceNoPdfApp": "No app on this phone can open PDFs.",
+  "@invoiceNoPdfApp": {
+    "description": "B8 toast: Open tapped but no PDF viewer is installed."
+  },
+  "downloadsChannelName": "Downloads",
+  "@downloadsChannelName": {
+    "description": "Android notification category for finished downloads (system settings)."
+  },
+  "invoiceDownloadNoticeText": "Download complete · Tap to open",
+  "@invoiceDownloadNoticeText": {
+    "description": "Android notification text under the saved invoice file name."
   }
 }

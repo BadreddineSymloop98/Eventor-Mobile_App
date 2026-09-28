@@ -278,6 +278,36 @@ void main() {
       expect(viewModel.failure, isNull);
     });
 
+    test('ACCOUNT_BLOCKED reads when the block ends', () async {
+      auth.loginError = apiFailure(
+        ApiErrorCode.accountBlocked,
+        statusCode: 403,
+        details: <String, Object?>{
+          'message': 'Suspended pending review.',
+          'blockedUntil': '2026-10-11T00:00:00.000Z',
+        },
+      );
+      final LoginViewModel viewModel = filled();
+
+      await viewModel.signIn();
+
+      expect(viewModel.blockedUntil, DateTime.utc(2026, 10, 11).toLocal());
+    });
+
+    test('ACCOUNT_BLOCKED with a null blockedUntil has no end', () async {
+      auth.loginError = apiFailure(
+        ApiErrorCode.accountBlocked,
+        statusCode: 403,
+        details: <String, Object?>{'message': 'Blocked.', 'blockedUntil': null},
+      );
+      final LoginViewModel viewModel = filled();
+
+      await viewModel.signIn();
+
+      expect(viewModel.problem, LoginProblem.blocked);
+      expect(viewModel.blockedUntil, isNull);
+    });
+
     test(
       'ACCOUNT_BLOCKED without details falls back to the server message',
       () async {

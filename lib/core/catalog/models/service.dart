@@ -32,7 +32,7 @@ class ServiceCard {
       category: category == null ? null : CategoryRef.fromJson(category),
       basePrice: readString(json, 'basePrice'),
       priceType: PriceType.fromApi(json['priceType'] as String?),
-      avgRating: readString(json, 'avgRating'),
+      avgRating: readDecimal(json, 'avgRating'),
       ratingCount: readInt(json, 'ratingCount'),
       bookingsCount: readInt(json, 'bookingsCount'),
       coverUrl: readStringOrNull(json, 'coverUrl'),

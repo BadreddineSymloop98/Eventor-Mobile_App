@@ -295,25 +295,22 @@ void main() {
           'meta': <String, Object?>{'page': 1, 'limit': 20, 'total': rows.length, 'totalPages': 1},
         });
 
-    test('queries by name and returns the matching row', () async {
+    test('asks for the chat with that user and returns it', () async {
       adapter.respond = (RequestOptions request) async => pageOf(<Map<String, Object?>>[
             rowJson(id: 'c-a', kind: 'direct', otherId: 'p-yasmine'),
           ]);
 
-      final ConversationRow? row = await messaging.findWith('p-yasmine', 'Salle Yasmine');
+      final ConversationRow? row = await messaging.findWith('p-yasmine');
 
-      expect(lastRequest().uri.queryParameters['q'], 'Salle Yasmine');
+      expect(lastRequest().uri.queryParameters['userId'], 'p-yasmine');
+      expect(lastRequest().uri.queryParameters['q'], isNull);
       expect(row?.id, 'c-a');
     });
 
-    test('returns null when the name matches a different id', () async {
-      adapter.respond = (RequestOptions request) async => pageOf(<Map<String, Object?>>[
-            rowJson(id: 'c-a', kind: 'direct', otherId: 'p-other'),
-          ]);
+    test('returns null when there is no chat with that user', () async {
+      adapter.respond = (RequestOptions request) async => pageOf(<Map<String, Object?>>[]);
 
-      final ConversationRow? row = await messaging.findWith('p-yasmine', 'Salle Yasmine');
-
-      expect(row, isNull);
+      expect(await messaging.findWith('p-yasmine'), isNull);
     });
 
     test('does not return a dispute row with the same other id', () async {
@@ -321,16 +318,9 @@ void main() {
             rowJson(id: 'c-dispute', kind: 'dispute', otherId: 'p-yasmine'),
           ]);
 
-      final ConversationRow? row = await messaging.findWith('p-yasmine', 'Salle Yasmine');
+      final ConversationRow? row = await messaging.findWith('p-yasmine');
 
       expect(row, isNull);
-    });
-
-    test('returns null without a request for a blank name', () async {
-      final ConversationRow? row = await messaging.findWith('p-yasmine', '   ');
-
-      expect(row, isNull);
-      expect(adapter.requests, isEmpty);
     });
   });
 

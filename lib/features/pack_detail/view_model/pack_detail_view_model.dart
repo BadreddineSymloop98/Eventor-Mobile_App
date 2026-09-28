@@ -7,8 +7,7 @@ import '../../../core/errors/failure.dart';
 /// Screen 20 — one Ready Pack: its detail, then its calendar, where a day is
 /// available only when every service in the pack is free.
 ///
-/// Its calendar replaces B9 (decision 7): "Request pack" will go straight to
-/// B9a with the day picked here.
+/// "Request pack" opens B9 on the day picked here (section 9 decision 2).
 class PackDetailViewModel extends BaseViewModel with MonthAvailability {
   PackDetailViewModel({
     required this.id,

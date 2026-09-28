@@ -61,15 +61,17 @@ class ApiFavouritesRepository implements FavouritesRepository {
     return Favourite.fromJson(data! as Map<String, Object?>);
   }
 
-  /// Cards and details only say whether something is saved, not under which
-  /// row — and DELETE takes the row. Saving again is idempotent and returns
-  /// that row, so it is asked for first. Two calls where the API could take
-  /// one; see the backend asks in the spec.
+  /// One call, by what was saved rather than by row. Idempotent on the
+  /// server: something no longer saved still answers 204, so a double tap
+  /// on the heart never errors.
   @override
-  Future<void> remove(FavouriteTarget target) async {
-    final Favourite row = await add(target);
-    await removeById(row.id);
-  }
+  Future<void> remove(FavouriteTarget target) => _api.delete(
+        _path,
+        query: <String, Object?>{
+          if (target.kind == FavouriteKind.service) 'serviceId': target.id,
+          if (target.kind == FavouriteKind.pack) 'packId': target.id,
+        },
+      );
 
   @override
   Future<void> removeById(String favouriteId) async {

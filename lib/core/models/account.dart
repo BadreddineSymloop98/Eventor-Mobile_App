@@ -43,17 +43,27 @@ enum VerificationStatus {
 
 /// A wilaya — one of Algeria's 58 provinces — as the API names it.
 class Wilaya {
-  const Wilaya({required this.code, required this.nameEn, required this.nameAr});
+  const Wilaya({
+    required this.code,
+    required this.nameEn,
+    required this.nameAr,
+    this.servicesCount = 0,
+  });
 
   factory Wilaya.fromJson(Map<String, Object?> json) => Wilaya(
         code: (json['code']! as num).toInt(),
         nameEn: json['nameEn'] as String? ?? json['name'] as String? ?? '',
         nameAr: json['nameAr'] as String? ?? json['name'] as String? ?? '',
+        servicesCount: (json['servicesCount'] as num? ?? 0).toInt(),
       );
 
   final int code;
   final String nameEn;
   final String nameAr;
+
+  /// Services in the app that cover it — what 11a's top wilayas rank by.
+  /// `0` where the API does not say (an account's own wilaya).
+  final int servicesCount;
 
   /// The name in [languageCode], falling back to English.
   String nameFor(String languageCode) =>
@@ -64,6 +74,40 @@ class Wilaya {
 
   @override
   int get hashCode => code.hashCode;
+}
+
+/// A commune of a wilaya — where exactly an event takes place (B1).
+class Commune {
+  const Commune({
+    required this.id,
+    required this.wilayaCode,
+    required this.nameEn,
+    required this.nameAr,
+    this.postalCode,
+  });
+
+  factory Commune.fromJson(Map<String, Object?> json) => Commune(
+        id: json['id']! as String,
+        wilayaCode: (json['wilayaCode'] as num? ?? 0).toInt(),
+        nameEn: json['nameEn'] as String? ?? json['name'] as String? ?? '',
+        nameAr: json['nameAr'] as String? ?? '',
+        postalCode: json['postalCode'] as String?,
+      );
+
+  final String id;
+  final int wilayaCode;
+  final String nameEn;
+  final String nameAr;
+  final String? postalCode;
+
+  String nameFor(String languageCode) =>
+      languageCode == 'ar' && nameAr.isNotEmpty ? nameAr : nameEn;
+
+  @override
+  bool operator ==(Object other) => other is Commune && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 /// A service category — the provider picks theirs at sign-up.

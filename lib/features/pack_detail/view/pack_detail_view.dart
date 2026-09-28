@@ -255,8 +255,9 @@ class _PackContent extends StatelessWidget {
                 MessageIconButton(onPressed: () => _comingSoon(context)),
                 MainButton(
                   label: l10n.requestPack,
-                  // B9a is not built; the day picked here is kept for it.
-                  onPressed: () => _comingSoon(context),
+                  onPressed: () => context.push(
+                    AppRoutes.bookPackFor(pack.id, date: viewModel.selectedDate),
+                  ),
                 ),
               ],
             )

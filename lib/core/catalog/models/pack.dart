@@ -82,7 +82,7 @@ class PackCard {
         // "Photography · Photography · Photography" otherwise.
         categoryNames: readStrings(json, 'categoryNames').toSet().toList(),
         coverUrl: readStringOrNull(json, 'coverUrl'),
-        avgRating: readString(json, 'avgRating'),
+        avgRating: readDecimal(json, 'avgRating'),
         ratingCount: readInt(json, 'ratingCount'),
         bookingsCount: readInt(json, 'bookingsCount'),
         provider: ProviderSummary.fromJson(

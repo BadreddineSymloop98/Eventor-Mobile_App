@@ -8,10 +8,13 @@ import 'app_bottom_sheet.dart';
 
 /// One choice in a [showSelectionSheet].
 class SelectionOption<T> {
-  const SelectionOption({required this.value, required this.label});
+  const SelectionOption({required this.value, required this.label, this.detail});
 
   final T value;
   final String label;
+
+  /// A quieter note at the row's end — the To picker's "next day · 8 h".
+  final String? detail;
 }
 
 /// Opens a sheet listing [options] and returns what was picked — the design's
@@ -280,6 +283,15 @@ class _OptionList<T> extends StatelessWidget {
                           ),
                         ),
                       ),
+                      if (option.detail case final String detail) ...<Widget>[
+                        SizedBox(width: AppSpacing.sm.dw),
+                        Text(
+                          detail,
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
                       SizedBox(width: AppSpacing.sm.dw),
                       AnimatedOpacity(
                         duration: const Duration(milliseconds: 120),

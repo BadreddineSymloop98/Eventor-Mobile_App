@@ -90,8 +90,9 @@ abstract interface class BudgetRepository {
   /// throws `ROUTE_NOT_FOUND`.
   Future<void> delete();
 
-  /// How many lines a budget may hold, once the server has said — it only
-  /// does when an add is refused. `null` until then.
+  /// How many lines a budget may hold: the server's `limits.budgetItemsMax`,
+  /// or the `{max}` of a refused add, whichever was heard last. `null` when
+  /// neither is known.
   int? get itemLimit;
 }
 
@@ -101,7 +102,10 @@ mixin BudgetItemLimitMemory {
   int? _itemLimit;
   int _lastItemsCount = 0;
 
-  int? get itemLimit => _itemLimit;
+  /// The limit the config states, when the repository was given one.
+  int? get configuredItemLimit => null;
+
+  int? get itemLimit => _itemLimit ?? configuredItemLimit;
 
   /// Every budget that comes back passes through here, so a refusal can be
   /// dated against the latest count.
@@ -128,9 +132,16 @@ mixin BudgetItemLimitMemory {
 
 /// [BudgetRepository] against the live API.
 class ApiBudgetRepository with BudgetItemLimitMemory implements BudgetRepository {
-  ApiBudgetRepository(this._api);
+  ApiBudgetRepository(this._api, {this._itemsMax});
 
   final ApiClient _api;
+
+  /// Reads `/app/config`'s `limits.budgetItemsMax` — through a function,
+  /// since the config loads after this repository is made.
+  final int Function()? _itemsMax;
+
+  @override
+  int? get configuredItemLimit => _itemsMax?.call();
   static const String _path = '/app/me/budget';
 
   @override

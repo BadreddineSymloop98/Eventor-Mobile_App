@@ -13,8 +13,9 @@ export '../../home/view_model/home_view_model.dart' show Greeting;
 ///
 /// Answering a request (Accept here, Decline through its sheet) reloads the
 /// home, so the counters and both lists move together; a refusal that means
-/// the request changed meanwhile reloads too. A blocked account is signed
-/// out — the API refuses it everywhere, and Login says why.
+/// the request changed meanwhile reloads too. A blocked account stays signed
+/// in and sees 21c: it can still read its chats and history (user decision,
+/// 2026-09-27).
 class ProviderHomeViewModel extends BaseViewModel {
   ProviderHomeViewModel({
     required this._provider,
@@ -160,7 +161,6 @@ class ProviderHomeViewModel extends BaseViewModel {
       unreadConversations: home.counts.unreadMessages,
       unreadNotifications: home.counts.unreadNotifications,
     );
-    if (home.state == ProviderHomeState.blocked) _session.signOut();
   }
 
   static bool _isStale(Failure failure) =>

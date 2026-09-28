@@ -1,4 +1,5 @@
 import '../catalog/models/json_read.dart';
+import '../errors/failure.dart';
 import '../network/api_client.dart';
 import 'models/app_notification.dart';
 
@@ -14,6 +15,9 @@ abstract interface class NotificationsRepository {
 
   /// Marks every notification read. Returns the new unread total.
   Future<int> markAllRead();
+
+  /// Removes one for good. One that is already gone counts as removed.
+  Future<void> delete(String id);
 
   /// `GET /app/me`'s two badge counts. A field the server omits reads as 0.
   Future<({int notifications, int conversations})> counts();
@@ -62,6 +66,15 @@ class ApiNotificationsRepository implements NotificationsRepository {
       notifications: readInt(object, 'unreadNotifications'),
       conversations: readInt(object, 'unreadConversations'),
     );
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    try {
+      await _api.delete('/app/me/notifications/$id');
+    } on ApiFailure catch (failure) {
+      if (failure.code != ApiErrorCode.notificationNotFound) rethrow;
+    }
   }
 
   static int _unread(Object? data) =>

@@ -1,5 +1,4 @@
 import '../network/api_client.dart';
-import 'merged_service_pages.dart';
 import 'models/catalog_models.dart';
 import 'service_query.dart';
 
@@ -65,12 +64,6 @@ class ApiCatalogRepository implements CatalogRepository {
 
   Future<List<CategoryWithCount>>? _categories;
 
-  /// Multi-category lists being paged through, most recently used last —
-  /// the results on screen and the drawer's count, with room to spare.
-  final Map<(ServiceQuery, int), MergedServicePages> _merges =
-      <(ServiceQuery, int), MergedServicePages>{};
-  static const int _mergesKept = 4;
-
   @override
   Future<HomeFeed> home() async =>
       HomeFeed.fromJson(_object(await _api.get('/app/home')));
@@ -105,35 +98,10 @@ class ApiCatalogRepository implements CatalogRepository {
     ServiceQuery query, {
     int page = 1,
     int limit = _pageSize,
-  }) {
-    // The API takes one categoryId per request (a second is a 400), so
-    // several are asked for one by one and merged.
-    if (query.categoryIds.length > 1) return _merged(query, limit, page).page(page);
-    return _servicesPage(query, page, limit);
-  }
-
-  MergedServicePages _merged(ServiceQuery query, int limit, int page) {
-    final (ServiceQuery, int) key = (query, limit);
-    // Page 1 starts afresh: a first load, or a pull to refresh.
-    MergedServicePages? merge = page == 1 ? null : _merges.remove(key);
-    merge ??= MergedServicePages(
-      categoryIds: query.categoryIds.toList()..sort(),
-      order: query.order,
-      pageSize: limit,
-      fetch: (String categoryId, int number, int size) => _servicesPage(
-        query.copyWith(categoryIds: <String>{categoryId}),
-        number,
-        size,
-      ),
-    );
-    _merges
-      ..remove(key)
-      ..[key] = merge;
-    while (_merges.length > _mergesKept) {
-      _merges.remove(_merges.keys.first);
-    }
-    return merge;
-  }
+  }) =>
+      // Several categories go out as a repeated categoryId, in one request
+      // (accepted by the API since 2026-09-27).
+      _servicesPage(query, page, limit);
 
   Future<ApiPage<ServiceCard>> _servicesPage(
     ServiceQuery query,

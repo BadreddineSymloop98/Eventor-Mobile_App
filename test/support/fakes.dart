@@ -79,6 +79,8 @@ class FakeAuthRepository implements AuthRepository {
   final List<({String email, String password})> logins =
       <({String email, String password})>[];
   final List<String> forgotten = <String>[];
+  final List<({String email, String code})> resetChecks =
+      <({String email, String code})>[];
   final List<({String email, String code, String password})> resets =
       <({String email, String code, String password})>[];
   final List<({String token, String password})> setPasswords =
@@ -92,6 +94,7 @@ class FakeAuthRepository implements AuthRepository {
   Failure? resendError;
   Failure? loginError;
   Failure? forgotError;
+  Failure? verifyResetError;
   Failure? resetError;
   Failure? setPasswordError;
   Failure? updateWilayaError;
@@ -154,6 +157,16 @@ class FakeAuthRepository implements AuthRepository {
     forgotten.add(email);
     await _wait();
     if (forgotError != null) throw forgotError!;
+  }
+
+  @override
+  Future<void> verifyResetCode({
+    required String email,
+    required String code,
+  }) async {
+    resetChecks.add((email: email, code: code));
+    await _wait();
+    if (verifyResetError != null) throw verifyResetError!;
   }
 
   @override
@@ -221,16 +234,30 @@ class FakeReferenceRepository implements ReferenceRepository {
 
   bool fail = false;
 
+  /// What [wilayas] answers.
+  List<Wilaya> wilayaList = sampleWilayas;
+
   @override
   Future<List<Wilaya>> wilayas() async {
     if (fail) throw const NetworkFailure();
-    return sampleWilayas;
+    return wilayaList;
   }
 
   @override
   Future<List<ServiceCategory>> categories() async {
     if (fail) throw const NetworkFailure();
     return sampleCategories;
+  }
+
+  /// What [communes] answers, for any wilaya.
+  List<Commune> communeList = const <Commune>[
+    Commune(id: 'com-hydra', wilayaCode: 16, nameEn: 'Hydra', nameAr: 'حيدرة'),
+  ];
+
+  @override
+  Future<List<Commune>> communes(int wilayaCode) async {
+    if (fail) throw const NetworkFailure();
+    return communeList;
   }
 }
 
@@ -768,7 +795,7 @@ class FakeMessagingRepository implements MessagingRepository {
       participants: base.participants,
       contactUnmasked: base.contactUnmasked,
       disputeId: base.disputeId,
-      closedReason: base.closedReason,
+      closedByModeration: base.closedByModeration,
       createdAt: DateTime(2026, 3, 12, 15),
     );
     details['c-new'] = created;
@@ -802,8 +829,8 @@ class FakeMessagingRepository implements MessagingRepository {
   }
 
   @override
-  Future<ConversationRow?> findWith(String userId, String name) async {
-    await _enter('findWith:$userId:$name', error: () => findError);
+  Future<ConversationRow?> findWith(String userId) async {
+    await _enter('findWith:$userId', error: () => findError);
     for (final ConversationRow row in rows) {
       if (row.kind == ConversationKind.direct && row.other?.id == userId) {
         return row;
@@ -887,6 +914,16 @@ class FakeNotificationsRepository implements NotificationsRepository {
   Future<int> markAllRead() async {
     await _enter('markAllRead');
     return _markRead((AppNotification _) => true);
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    await _enter('delete:$id');
+    items = items.where((AppNotification n) => n.id != id).toList();
+    countsResult = (
+      notifications: items.where((AppNotification n) => !n.read).length,
+      conversations: countsResult.conversations,
+    );
   }
 
   @override

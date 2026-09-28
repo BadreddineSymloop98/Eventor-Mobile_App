@@ -1,5 +1,7 @@
+import '../../catalog/models/catalog_ref.dart';
 import '../../catalog/models/json_read.dart';
 import '../../catalog/models/pack.dart' show EventType;
+import '../../models/account.dart' show Wilaya;
 
 /// One of the client Bookings tab's four lists — the API's `tab`.
 enum BookingTab {
@@ -18,12 +20,20 @@ enum BookingTab {
   String get apiValue => name;
 }
 
-/// What the server allows on a booking right now — `allowedActions`. Only the
-/// ones a built screen draws are named; the rest are ignored.
+/// What the server allows on a booking right now — `allowedActions`. A
+/// value this build does not know is ignored.
 enum BookingAction {
   accept('accept'),
   decline('decline'),
-  message('message');
+  message('message'),
+  cancel('cancel'),
+  complete('complete'),
+  reschedule('reschedule'),
+  respondReschedule('respond_reschedule'),
+  checkIn('check_in'),
+  review('review'),
+  dispute('dispute'),
+  invoice('invoice');
 
   const BookingAction(this.apiValue);
 
@@ -49,12 +59,18 @@ class BookingCard {
     required this.title,
     required this.providerName,
     this.counterpartyName = '',
+    this.category,
     this.eventType,
     this.startTime,
     this.endTime,
     this.total = '0.00',
     this.allowedActions = const <BookingAction>{},
     this.createdAt,
+    this.wilaya,
+    this.guests,
+    this.coverUrl,
+    this.serviceId,
+    this.packId,
   });
 
   factory BookingCard.fromJson(Map<String, Object?> json) {
@@ -64,6 +80,7 @@ class BookingCard {
     // A provider's business name when it has one — what the client knows
     // them by — or their own name.
     final String business = readString(party, 'businessName');
+    final Map<String, Object?>? category = readObject(json, 'category');
     return BookingCard(
       id: json['id']! as String,
       reference: readString(json, 'reference'),
@@ -72,6 +89,7 @@ class BookingCard {
       title: LocalizedText.read(json, 'title'),
       providerName: business.isNotEmpty ? business : fullName,
       counterpartyName: fullName,
+      category: category == null ? null : CategoryRef.fromJson(category),
       eventType: json['eventType'] == null
           ? null
           : EventType.fromApi(json['eventType'] as String?),
@@ -83,6 +101,13 @@ class BookingCard {
           ?BookingAction.fromApi(action),
       },
       createdAt: readDateOrNull(json, 'createdAt'),
+      wilaya: readObject(json, 'wilaya') == null
+          ? null
+          : Wilaya.fromJson(readObject(json, 'wilaya')!),
+      guests: readIntOrNull(json, 'guests'),
+      coverUrl: readStringOrNull(json, 'coverUrl'),
+      serviceId: readStringOrNull(json, 'serviceId'),
+      packId: readStringOrNull(json, 'packId'),
     );
   }
 
@@ -105,6 +130,10 @@ class BookingCard {
 
   /// The other side's own name — the client, on a provider's screens.
   final String counterpartyName;
+
+  /// The booked service's category; `null` for a pack booking (since
+  /// 2026-09-27).
+  final CategoryRef? category;
   final EventType? eventType;
 
   /// `"18:00"`, or `null` for a whole-day booking.
@@ -117,6 +146,15 @@ class BookingCard {
 
   /// When the request was made — the reply deadline counts from it.
   final DateTime? createdAt;
+
+  /// Where the event is, when the client said.
+  final Wilaya? wilaya;
+  final int? guests;
+  final String? coverUrl;
+
+  /// What was booked — one of the two.
+  final String? serviceId;
+  final String? packId;
 
   bool can(BookingAction action) => allowedActions.contains(action);
 }

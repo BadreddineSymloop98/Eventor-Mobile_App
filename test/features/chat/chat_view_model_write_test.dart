@@ -85,12 +85,14 @@ void main() {
       expect(newest(viewModel).entry.message.id, 'sent-1');
     });
 
-    test('dispute chats write through the dispute route', () async {
+    test('dispute chats write through the normal route', () async {
       final ChatViewModel viewModel = await ready(conversationId: 'c-dispute');
 
       await viewModel.send('x');
 
-      expect(h.messaging.calls, contains('sendDisputeText:d-2041:x'));
+      // The dispute route is text-only; the conversation's own one takes
+      // photos too (2026-09-27).
+      expect(h.messaging.calls, contains('sendText:c-dispute:x'));
     });
   });
 
@@ -186,14 +188,14 @@ void main() {
       expect((outcome as SendPhotoRejected).problem, ImageProblem.tooLarge);
     });
 
-    test('disputes and drafts take no photos', () async {
+    test('drafts take no photos; disputes do', () async {
       final ChatViewModel dispute = await ready(conversationId: 'c-dispute');
       final ChatViewModel draft = h.build(
         draft: const ChatDraftPeer(userId: 'p-1', name: 'Salle Yasmine'),
       );
       final ChatViewModel direct = await ready();
 
-      expect(dispute.canAttach, isFalse);
+      expect(dispute.canAttach, isTrue);
       expect(draft.canAttach, isFalse);
       expect(direct.canAttach, isTrue);
     });

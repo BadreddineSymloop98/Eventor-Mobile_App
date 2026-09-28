@@ -132,7 +132,7 @@ class _BookingRow extends StatelessWidget {
     return _ChoiceRow(
       title: booking.providerName,
       subtitle: <String>[
-        booking.title.of(language),
+        booking.category?.name.of(language) ?? booking.title.of(language),
         shortDate(booking.eventDate, language),
         booking.reference,
       ].where((String part) => part.isNotEmpty).join(' · '),

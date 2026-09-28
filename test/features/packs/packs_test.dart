@@ -174,13 +174,12 @@ void main() {
       expect(find.textContaining('cancellation'), findsNothing);
     });
 
-    testWidgets('20 requesting is coming soon', (WidgetTester tester) async {
-      await open(tester, AppRoutes.packFor('k-1'));
+    testWidgets('20 opens B9 to book the pack', (WidgetTester tester) async {
+      final TestApp app = await open(tester, AppRoutes.packFor('k-1'));
 
-      await tester.tap(button(l10n(tester).requestPack));
-      await tester.pump();
+      await tapAndSettle(tester, button(l10n(tester).requestPack));
 
-      expect(find.text(l10n(tester).comingSoon), findsOneWidget);
+      expect(location(app), AppRoutes.bookPackFor('k-1'));
     });
 
     testWidgets('20 swaps the bar when bookings are paused', (WidgetTester tester) async {

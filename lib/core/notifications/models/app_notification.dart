@@ -20,7 +20,15 @@ enum NotificationGroup {
 /// defensively because its shape varies by `type` and a future `type` this
 /// build does not know sends fields it cannot predict.
 class NotificationData {
-  const NotificationData({this.conversationId, this.bookingId, this.href});
+  const NotificationData({
+    this.conversationId,
+    this.bookingId,
+    this.disputeId,
+    this.requestId,
+    this.reviewId,
+    this.reportId,
+    this.href,
+  });
 
   /// `null` (no `data` field on the notification) reads the same as an
   /// empty object: every field `null`. A value under one of these keys
@@ -37,12 +45,25 @@ class NotificationData {
     return NotificationData(
       conversationId: stringOrNull('conversationId'),
       bookingId: stringOrNull('bookingId'),
+      disputeId: stringOrNull('disputeId'),
+      requestId: stringOrNull('requestId'),
+      reviewId: stringOrNull('reviewId'),
+      reportId: stringOrNull('reportId'),
       href: stringOrNull('href'),
     );
   }
 
+  // Typed ids since 2026-09-27, as the notification's type requires. The
+  // API asks for these to be followed rather than [href] parsed.
   final String? conversationId;
   final String? bookingId;
+  final String? disputeId;
+  final String? requestId;
+  final String? reviewId;
+  final String? reportId;
+
+  /// A web path relative to the public site, when there is one. Never
+  /// parsed — the ids above say where to go.
   final String? href;
 }
 
@@ -56,6 +77,18 @@ class ChatTarget extends NotificationTarget {
   const ChatTarget(this.conversationId);
 
   final String conversationId;
+}
+
+/// A booking moved — B4 for a client.
+class BookingTarget extends NotificationTarget {
+  const BookingTarget(this.bookingId);
+
+  final String bookingId;
+}
+
+/// A provider's verification was decided — their home says how it went.
+class VerificationTarget extends NotificationTarget {
+  const VerificationTarget();
 }
 
 /// Nothing in the app to open yet — the row is still readable, just not
@@ -101,13 +134,18 @@ class AppNotification {
   final bool read;
   final DateTime createdAt;
 
-  /// A conversation to open, or nowhere — the only target this build
-  /// knows how to follow.
+  /// Where this build can take the user: a conversation (messages and
+  /// disputes carry one), the provider home for a verification decision, or
+  /// nowhere yet.
   NotificationTarget get target {
     final String? conversationId = data.conversationId;
-    return conversationId == null
-        ? const UnsupportedTarget()
-        : ChatTarget(conversationId);
+    if (conversationId != null) return ChatTarget(conversationId);
+    if (type.startsWith('verification.')) return const VerificationTarget();
+    final String? bookingId = data.bookingId;
+    if (bookingId != null && type.startsWith('booking.')) {
+      return BookingTarget(bookingId);
+    }
+    return const UnsupportedTarget();
   }
 
   AppNotification copyWith({bool? read}) => AppNotification(

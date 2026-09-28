@@ -232,7 +232,8 @@ class _HomeContent extends StatelessWidget {
             onAction: () => context.go(AppRoutes.bookings),
             child: UpcomingBookingsList(
               bookings: feed.upcomingBookings,
-              onOpen: (_) => onComingSoon(),
+              onOpen: (UpcomingBooking booking) =>
+                  context.push(AppRoutes.bookingFor(booking.id)),
             ),
           ),
         section(

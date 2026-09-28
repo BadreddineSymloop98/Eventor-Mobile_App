@@ -224,6 +224,7 @@ class MockProviderRepository implements ProviderRepository {
           account,
           _lookups.providerServices(account.businessName),
           _backend.now,
+          category: _lookups.category(account.categoryId),
         ),
       );
 
@@ -263,8 +264,9 @@ class MockProviderRepository implements ProviderRepository {
   static List<Map<String, Object?>> _seedBookings(
     MockAccount account,
     List<Map<String, Object?>> services,
-    DateTime now,
-  ) {
+    DateTime now, {
+    Map<String, Object?>? category,
+  }) {
     Map<String, Object?> booking({
       required int n,
       required String client,
@@ -290,6 +292,8 @@ class MockProviderRepository implements ProviderRepository {
         'titleAr': service['titleAr'] ?? account.businessName,
         'serviceId': service['id'],
         'packId': null,
+        // The provider's own category — every mock service is in it.
+        'category': category,
         'coverUrl': null,
         'wilaya': null,
         'guests': 150,

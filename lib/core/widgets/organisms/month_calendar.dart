@@ -8,6 +8,23 @@ import '../../localization/app_localizations_x.dart';
 import '../atoms/app_icon.dart';
 import '../atoms/skeleton.dart';
 
+/// What the calendar's key calls each state, when a screen words it its own
+/// way — B9 says "All 3 free" and "A service is busy". A `null` keeps the
+/// default wording; [marked] adds B6's "Current booking" entry.
+class CalendarLegendLabels {
+  const CalendarLegendLabels({
+    this.available,
+    this.booked,
+    this.unavailable,
+    this.marked,
+  });
+
+  final String? available;
+  final String? booked;
+  final String? unavailable;
+  final String? marked;
+}
+
 /// A month of a service's or a pack's availability — "Pick a date" on 12 and
 /// 20.
 ///
@@ -25,8 +42,14 @@ class MonthCalendar extends StatelessWidget {
     required this.onMonthChanged,
     this.firstMonth,
     this.showLegend = true,
+    this.marked,
+    this.legend = const CalendarLegendLabels(),
     super.key,
   });
+
+  /// The booking's current day, outlined — B6 "Current booking".
+  final DateTime? marked;
+  final CalendarLegendLabels legend;
 
   /// Any day in the month shown.
   final DateTime month;
@@ -95,7 +118,7 @@ class MonthCalendar extends StatelessWidget {
         _grid(context),
         if (showLegend) ...<Widget>[
           SizedBox(height: AppSpacing.sm.dh),
-          const _Legend(),
+          _Legend(labels: legend),
         ],
       ],
     );
@@ -161,12 +184,16 @@ class MonthCalendar extends StatelessWidget {
     final DayState state = states.stateOf(date);
     final DateTime? chosen = selected;
     final bool isSelected = chosen != null && _sameDay(chosen, date);
+    final DateTime? current = marked;
+    final bool isMarked =
+        !isSelected && current != null && _sameDay(current, date);
     final ValueChanged<DateTime>? pick = onSelect;
     final bool canPick = pick != null && state == DayState.available;
     final TextStyle? base = Theme.of(context).textTheme.bodyMedium;
 
     final (Color? fill, Color text) = switch (state) {
       _ when isSelected => (AppColors.bgBrand, AppColors.textOnBrand),
+      _ when isMarked => (AppColors.bgBrandSubtle, AppColors.textBrand),
       DayState.available => (AppColors.bgBrandSubtle, AppColors.textPrimary),
       DayState.busy => (null, AppColors.textSecondary),
       DayState.blocked => (null, AppColors.textDisabled),
@@ -186,13 +213,16 @@ class MonthCalendar extends StatelessWidget {
           decoration: BoxDecoration(
             color: fill,
             borderRadius: AppRadii.smAll,
+            border: isMarked
+                ? Border.all(color: AppColors.borderBrand, width: 1.5)
+                : null,
           ),
           child: Text(
             '$day',
             textDirection: TextDirection.ltr,
             style: base?.copyWith(
               color: text,
-              decoration: state == DayState.busy && !isSelected
+              decoration: state == DayState.busy && !isSelected && !isMarked
                   ? TextDecoration.lineThrough
                   : null,
             ),
@@ -287,7 +317,9 @@ class _Arrow extends StatelessWidget {
 }
 
 class _Legend extends StatelessWidget {
-  const _Legend();
+  const _Legend({required this.labels});
+
+  final CalendarLegendLabels labels;
 
   @override
   Widget build(BuildContext context) {
@@ -319,15 +351,34 @@ class _Legend extends StatelessWidget {
       runSpacing: AppSpacing.xs.dh,
       children: <Widget>[
         item(box(AppColors.bgBrand), context.l10n.calendarSelected),
-        item(box(AppColors.bgBrandSubtle), context.l10n.calendarAvailable),
+        item(
+          box(AppColors.bgBrandSubtle),
+          labels.available ?? context.l10n.calendarAvailable,
+        ),
         item(
           Text(
             '—',
             style: style?.copyWith(decoration: TextDecoration.lineThrough),
           ),
-          context.l10n.calendarBooked,
+          labels.booked ?? context.l10n.calendarBooked,
         ),
-        item(box(null, outlined: true), context.l10n.calendarUnavailable),
+        item(
+          box(null, outlined: true),
+          labels.unavailable ?? context.l10n.calendarUnavailable,
+        ),
+        if (labels.marked case final String marked)
+          item(
+            Container(
+              width: AppSpacing.sm.dw,
+              height: AppSpacing.sm.dw,
+              decoration: BoxDecoration(
+                color: AppColors.bgBrandSubtle,
+                borderRadius: AppRadii.xsAll,
+                border: Border.all(color: AppColors.borderBrand, width: 1.5),
+              ),
+            ),
+            marked,
+          ),
       ],
     );
   }

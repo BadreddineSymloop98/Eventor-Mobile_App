@@ -1,6 +1,7 @@
 import '../../../features/auth/data/documents_repository.dart';
 import '../../bookings/models/booking_card.dart';
 import '../../catalog/models/json_read.dart';
+import '../../catalog/models/price_type.dart';
 
 /// Which home a provider sees — the API's `state`.
 enum ProviderHomeState {
@@ -13,7 +14,8 @@ enum ProviderHomeState {
   /// 21b: at least one document was refused.
   rejected,
 
-  /// The account was blocked by an admin.
+  /// 21c: the account was blocked by an admin — services hidden, chats
+  /// read-only, no request can be answered.
   blocked;
 
   static ProviderHomeState fromApi(String? value) => switch (value) {
@@ -100,6 +102,7 @@ class ProviderServiceRow {
     required this.status,
     required this.basePrice,
     required this.coverUrl,
+    this.priceType = PriceType.perEvent,
   });
 
   factory ProviderServiceRow.fromJson(Map<String, Object?> json) =>
@@ -109,15 +112,19 @@ class ProviderServiceRow {
         status: ProviderServiceStatus.fromApi(json['status'] as String?),
         basePrice: readString(json, 'basePrice'),
         coverUrl: readStringOrNull(json, 'coverUrl'),
+        priceType: PriceType.fromApi(json['priceType'] as String?),
       );
 
   final String id;
   final LocalizedText title;
   final ProviderServiceStatus status;
 
-  /// The API's money string. The row carries no price type, so no unit.
+  /// The API's money string.
   final String basePrice;
   final String? coverUrl;
+
+  /// The row's unit — "per day" (since 2026-09-27).
+  final PriceType priceType;
 }
 
 /// Screens 21, 21a and 21b from one `GET /app/provider/home`.
@@ -179,6 +186,7 @@ class ProviderHome {
   final List<ProviderServiceRow> services;
 
   bool get isVerified => state == ProviderHomeState.verified;
+  bool get isBlocked => state == ProviderHomeState.blocked;
 
   ProviderHome copyWith({bool? acceptingBookings}) => ProviderHome(
         state: state,

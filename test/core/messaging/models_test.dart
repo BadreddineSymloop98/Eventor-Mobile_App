@@ -257,4 +257,78 @@ void main() {
       expect(ConversationFilter.booking.apiValue, 'booking');
     });
   });
+
+  group('2026-09-27 shapes', () {
+    Map<String, Object?> lumiere() => Map<String, Object?>.of(
+          fixtureList('conversations_page.json', dir: 'messaging')
+              .firstWhere((Map<String, Object?> r) => r['id'] == 'c-lumiere'),
+        );
+
+    test('lastMessage as an object says who sent it', () {
+      final ConversationRow row = ConversationRow.fromJson(
+        lumiere()
+          ..['lastMessage'] = <String, Object?>{
+            'body': 'See you Saturday',
+            'kind': 'text',
+            'mine': true,
+          },
+      );
+
+      expect(row.lastMessage, 'See you Saturday');
+      expect(row.lastMessageMine, isTrue);
+      expect(row.previewKind, PreviewKind.text);
+    });
+
+    test('a photo without a caption previews as a photo', () {
+      final ConversationRow row = ConversationRow.fromJson(
+        lumiere()
+          ..['lastMessage'] = <String, Object?>{
+            'body': '',
+            'kind': 'attachment',
+            'mine': false,
+          },
+      );
+
+      expect(row.lastMessageKind, MessageKind.attachment);
+      expect(row.previewKind, PreviewKind.photo);
+    });
+
+    test('the old plain-text lastMessage still reads', () {
+      final ConversationRow row =
+          ConversationRow.fromJson(lumiere()..['lastMessage'] = 'Hello');
+
+      expect(row.lastMessage, 'Hello');
+      expect(row.lastMessageMine, isFalse);
+      expect(row.lastMessageKind, isNull);
+    });
+
+    test('a message flagged removed is removed, whatever its body', () {
+      final ChatMessage message = ChatMessage.fromJson(<String, Object?>{
+        'id': 'm-x',
+        'conversationId': 'c-lumiere',
+        'kind': 'text',
+        'senderId': 'p-lumiere',
+        'mine': false,
+        'body': 'Retiré par Eventor',
+        'masked': false,
+        'removed': true,
+        'createdAt': '2026-03-12T09:30:00.000Z',
+      });
+
+      expect(message.isRemoved, isTrue);
+    });
+
+    test('closedByModeration tells an Eventor close from a plain one', () {
+      final Map<String, Object?> json =
+          fixtureData('conversation_detail.json', dir: 'messaging');
+
+      expect(ConversationDetail.fromJson(json).closedByModeration, isFalse);
+      expect(
+        ConversationDetail.fromJson(
+          Map<String, Object?>.of(json)..['closedByModeration'] = true,
+        ).closedByModeration,
+        isTrue,
+      );
+    });
+  });
 }

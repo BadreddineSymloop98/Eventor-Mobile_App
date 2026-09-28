@@ -16,7 +16,9 @@ void main() {
 
   group('AppNotification', () {
     test('n-1 has nowhere to go — no conversationId in its data', () {
-      expect(byId('n-1').target, isA<UnsupportedTarget>());
+      // A booking notification opens the booking (section 9).
+      expect(byId('n-1').target, isA<BookingTarget>());
+      expect((byId('n-1').target as BookingTarget).bookingId, 'b-1');
     });
 
     test('n-2 opens its conversation', () {
@@ -76,6 +78,43 @@ void main() {
       expect(notificationIcon('booking.created'), AppIcons.bell);
       expect(notificationIcon(''), AppIcons.bell);
       expect(notificationIcon('weird'), AppIcons.bell);
+    });
+  });
+
+  group('2026-09-27 types', () {
+    AppNotification withType(String type, Map<String, Object?> data) =>
+        AppNotification.fromJson(<String, Object?>{
+          ...fixtureList('notifications_page.json', dir: 'messaging').first,
+          'type': type,
+          'data': data,
+        });
+
+    test('verification notifications open the provider home', () {
+      expect(
+        withType('verification.approved', <String, Object?>{}).target,
+        isA<VerificationTarget>(),
+      );
+      expect(
+        withType('verification.rejected', <String, Object?>{}).target,
+        isA<VerificationTarget>(),
+      );
+    });
+
+    test('a dispute message opens its conversation and keeps its ids', () {
+      final AppNotification n = withType('dispute.message', <String, Object?>{
+        'disputeId': 'd-2041',
+        'conversationId': 'c-dispute',
+      });
+
+      expect(n.data.disputeId, 'd-2041');
+      expect((n.target as ChatTarget).conversationId, 'c-dispute');
+    });
+
+    test('the new types get their icons', () {
+      expect(notificationIcon('verification.approved'), AppIcons.check);
+      expect(notificationIcon('verification.rejected'), AppIcons.close);
+      expect(notificationIcon('academic_request.cancelled'), AppIcons.close);
+      expect(notificationIcon('report.resolved'), AppIcons.alertTriangle);
     });
   });
 }

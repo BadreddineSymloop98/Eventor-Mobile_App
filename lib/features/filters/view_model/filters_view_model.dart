@@ -14,8 +14,9 @@ import '../../../core/reference/reference_repository.dart';
 /// that arrives after a newer one was asked for is dropped.
 ///
 /// Adapted to the API (spec §2.6): any number of categories (merged on
-/// live, one request each), wilayas as your city plus
-/// whatever is selected with the rest behind "All wilayas", no event type.
+/// live, one request each), wilayas as your city, the top ones by services
+/// and whatever is selected, with the rest behind "All wilayas"; no event
+/// type.
 class FiltersViewModel extends BaseViewModel {
   FiltersViewModel({
     required ServiceQuery initial,
@@ -53,22 +54,25 @@ class FiltersViewModel extends BaseViewModel {
   /// Every open wilaya, for the drill-in.
   List<Wilaya> get allWilayas => _wilayas;
 
-  /// The chips shown inline: the client's own city first, then whatever else
-  /// is selected, by code. The rest are one tap away in the drill-in.
+  /// How many of the busiest wilayas get a chip of their own.
+  static const int topWilayaCount = 4;
+
+  /// The chips shown inline: the client's own city, then the
+  /// [topWilayaCount] with the most services, then whatever else is
+  /// selected, by code. A chip keeps its place when it is selected, so the
+  /// row never jumps under the finger. The rest are one tap away in the
+  /// drill-in.
   List<Wilaya> get wilayaChips {
-    final Set<int> codes = <int>{
-      ?_homeWilaya,
-      ..._query.wilayaCodes,
-    };
-    final List<Wilaya> chips = _wilayas
-        .where((Wilaya w) => codes.contains(w.code))
+    final List<Wilaya> top = _wilayas
+        .where((Wilaya w) => w.servicesCount > 0)
         .toList()
-      ..sort((Wilaya a, Wilaya b) {
-        if (a.code == _homeWilaya) return -1;
-        if (b.code == _homeWilaya) return 1;
-        return a.code.compareTo(b.code);
-      });
-    return chips;
+      ..sort((Wilaya a, Wilaya b) => b.servicesCount.compareTo(a.servicesCount));
+    final Set<int> shown = <int>{};
+    return <Wilaya>[
+      ..._wilayas.where((Wilaya w) => w.code == _homeWilaya),
+      ...top.take(topWilayaCount),
+      ..._wilayas.where((Wilaya w) => _query.wilayaCodes.contains(w.code)),
+    ].where((Wilaya w) => shown.add(w.code)).toList();
   }
 
   Future<void> _loadOptions() async {

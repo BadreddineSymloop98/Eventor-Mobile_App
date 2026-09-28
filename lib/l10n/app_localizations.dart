@@ -3607,6 +3607,1740 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deleting a budget is not available yet.'**
   String get budgetDeleteUnavailable;
+
+  /// Inbox preview of a message the user sent themselves.
+  ///
+  /// In en, this message translates to:
+  /// **'You: {message}'**
+  String messagesPreviewMine(String message);
+
+  /// Composer notice on a closed conversation that Eventor did not close.
+  ///
+  /// In en, this message translates to:
+  /// **'This conversation is closed. You can still read it.'**
+  String get chatClosedPlain;
+
+  /// Toast after swiping a notification away; it carries Undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification deleted'**
+  String get notificationDeleted;
+
+  /// Accessibility label of the swipe-to-delete action.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete notification'**
+  String get notificationDelete;
+
+  /// Screen 21c title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is blocked'**
+  String get providerBlockedTitle;
+
+  /// Screen 21c body.
+  ///
+  /// In en, this message translates to:
+  /// **'You cannot receive or answer requests while the block is in place. Your bookings, messages and history are kept.'**
+  String get providerBlockedBody;
+
+  /// Screen 21c note under Your services.
+  ///
+  /// In en, this message translates to:
+  /// **'Your services are hidden from clients while the account is blocked.'**
+  String get providerBlockedServices;
+
+  /// Login banner line with the end date of a temporary block.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked until {date}.'**
+  String loginBlockedUntil(String date);
+
+  /// B1 address field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Address (optional)'**
+  String get bookingAddress;
+
+  /// B1 address field hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Venue, street…'**
+  String get bookingAddressHint;
+
+  /// Row label for the event address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get bookingAddressLabel;
+
+  /// B4 accepted: cancel button.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel booking'**
+  String get bookingCancelBooking;
+
+  /// B4a pending: cancel button.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel request'**
+  String get bookingCancelRequest;
+
+  /// B4 section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation policy'**
+  String get bookingCancellationPolicy;
+
+  /// Commune field / row label.
+  ///
+  /// In en, this message translates to:
+  /// **'Commune'**
+  String get bookingCommune;
+
+  /// B1 commune placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a commune (optional)'**
+  String get bookingCommunePlaceholder;
+
+  /// B4 section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get bookingContact;
+
+  /// Row label.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get bookingDate;
+
+  /// B1/B6 missing date.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick an available day.'**
+  String get bookingDateError;
+
+  /// The quote refused the picked day.
+  ///
+  /// In en, this message translates to:
+  /// **'This day can no longer be booked — pick another.'**
+  String get bookingDateRefused;
+
+  /// B1 section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Date and time'**
+  String get bookingDateTime;
+
+  /// B4 top bar title.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking'**
+  String get bookingDetailTitle;
+
+  /// Row label.
+  ///
+  /// In en, this message translates to:
+  /// **'Event type'**
+  String get bookingEventType;
+
+  /// B1 missing event type.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the type of event.'**
+  String get bookingEventTypeError;
+
+  /// B1 section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Extras'**
+  String get bookingExtras;
+
+  /// B1a: appended to a server error.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was lost — everything you filled in is still here.'**
+  String get bookingFailedKept;
+
+  /// B1a banner body when offline.
+  ///
+  /// In en, this message translates to:
+  /// **'You appear to be offline. Nothing was lost — everything you filled in is still here. Tap Try again when you have a connection.'**
+  String get bookingFailedOffline;
+
+  /// B1a banner title.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t send your request'**
+  String get bookingFailedTitle;
+
+  /// B4b declined: primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Find similar services'**
+  String get bookingFindSimilar;
+
+  /// Start time field.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get bookingFrom;
+
+  /// Guests label.
+  ///
+  /// In en, this message translates to:
+  /// **'Guests'**
+  String get bookingGuests;
+
+  /// B1 per-person service without guests.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the number of guests — the price is per person.'**
+  String get bookingGuestsError;
+
+  /// Under the guests label.
+  ///
+  /// In en, this message translates to:
+  /// **'Helps the provider prepare.'**
+  String get bookingGuestsHelper;
+
+  /// B4d primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a review'**
+  String get bookingLeaveReview;
+
+  /// Commune sheet: no commune.
+  ///
+  /// In en, this message translates to:
+  /// **'Not specified'**
+  String get bookingNoCommune;
+
+  /// Selection summary without a date.
+  ///
+  /// In en, this message translates to:
+  /// **'No date selected — choose an available day'**
+  String get bookingNoDate;
+
+  /// Time sheet: no time.
+  ///
+  /// In en, this message translates to:
+  /// **'No time'**
+  String get bookingNoTime;
+
+  /// Toast when there is no wilaya to pick.
+  ///
+  /// In en, this message translates to:
+  /// **'This service lists no wilaya yet.'**
+  String get bookingNoWilayas;
+
+  /// Banner body when the provider paused bookings.
+  ///
+  /// In en, this message translates to:
+  /// **'They are not taking requests right now. Everything you entered is saved; you can message them meanwhile.'**
+  String get bookingNotAcceptingBody;
+
+  /// B1 note label.
+  ///
+  /// In en, this message translates to:
+  /// **'Note for the provider (optional)'**
+  String get bookingNote;
+
+  /// B1 note hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything they should know'**
+  String get bookingNoteHint;
+
+  /// Price line: the pack discount.
+  ///
+  /// In en, this message translates to:
+  /// **'Pack saving'**
+  String get bookingPackSaving;
+
+  /// B4 section heading for a pack booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Pack'**
+  String get bookingPackSection;
+
+  /// B4 contact: phone not shared.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden'**
+  String get bookingPhoneHidden;
+
+  /// B1b button.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a new date'**
+  String get bookingPickNewDate;
+
+  /// Section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get bookingPrice;
+
+  /// B4 accepted: reschedule button.
+  ///
+  /// In en, this message translates to:
+  /// **'Propose a new date'**
+  String get bookingProposeDate;
+
+  /// Note under the calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'The provider confirms the exact time after your request.'**
+  String get bookingProviderConfirmsTime;
+
+  /// B4: opens the problem sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Report a problem'**
+  String get bookingReportProblem;
+
+  /// Commune sheet search hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search a commune'**
+  String get bookingSearchCommune;
+
+  /// Wilaya sheet search hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search a wilaya'**
+  String get bookingSearchWilaya;
+
+  /// B1 primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get bookingSend;
+
+  /// B4 section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get bookingServiceSection;
+
+  /// B1b title without a date.
+  ///
+  /// In en, this message translates to:
+  /// **'That date was just taken'**
+  String get bookingTakenTitleUndated;
+
+  /// Row label.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get bookingTime;
+
+  /// Under the time pickers.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional — the provider confirms the exact time.'**
+  String get bookingTimeHelper;
+
+  /// Under the time pickers for a per-hour service.
+  ///
+  /// In en, this message translates to:
+  /// **'Needed: the price is per hour.'**
+  String get bookingTimeHelperHourly;
+
+  /// Overline above the time pickers.
+  ///
+  /// In en, this message translates to:
+  /// **'TIME'**
+  String get bookingTimeOverline;
+
+  /// End time field.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get bookingTo;
+
+  /// Banner body: MIN_NOTICE.
+  ///
+  /// In en, this message translates to:
+  /// **'Dates now need more notice. Everything else you entered is saved — pick a later day.'**
+  String get bookingTooSoonBody;
+
+  /// Banner title: MIN_NOTICE.
+  ///
+  /// In en, this message translates to:
+  /// **'That date is now too soon'**
+  String get bookingTooSoonTitle;
+
+  /// Caption under the total on the sticky bar.
+  ///
+  /// In en, this message translates to:
+  /// **'total'**
+  String get bookingTotalCaption;
+
+  /// Price card total row.
+  ///
+  /// In en, this message translates to:
+  /// **'Total · pay on site'**
+  String get bookingTotalOnSite;
+
+  /// B1a button.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get bookingTryAgain;
+
+  /// Opens B8.
+  ///
+  /// In en, this message translates to:
+  /// **'View invoice'**
+  String get bookingViewInvoice;
+
+  /// Section heading / row label.
+  ///
+  /// In en, this message translates to:
+  /// **'Where'**
+  String get bookingWhere;
+
+  /// Wilaya field / row label.
+  ///
+  /// In en, this message translates to:
+  /// **'Wilaya'**
+  String get bookingWilaya;
+
+  /// B1 missing wilaya.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose where the event takes place.'**
+  String get bookingWilayaError;
+
+  /// B1 wilaya placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a wilaya'**
+  String get bookingWilayaPlaceholder;
+
+  /// Section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Your event'**
+  String get bookingYourEvent;
+
+  /// B4 section heading for the client note.
+  ///
+  /// In en, this message translates to:
+  /// **'Your note'**
+  String get bookingYourNote;
+
+  /// B3 empty cancelled tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing cancelled'**
+  String get bookingsEmptyCancelled;
+
+  /// B3 empty cancelled tab body.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled and declined bookings show up here.'**
+  String get bookingsEmptyCancelledBody;
+
+  /// B3 empty past tab.
+  ///
+  /// In en, this message translates to:
+  /// **'No past bookings yet'**
+  String get bookingsEmptyPast;
+
+  /// B3 empty past tab body.
+  ///
+  /// In en, this message translates to:
+  /// **'Once an event is behind you, it moves here with its invoice.'**
+  String get bookingsEmptyPastBody;
+
+  /// B3 empty pending tab.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests waiting'**
+  String get bookingsEmptyPending;
+
+  /// B3 empty pending tab body.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests you send wait here until the provider answers.'**
+  String get bookingsEmptyPendingBody;
+
+  /// B3 empty upcoming tab.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming bookings'**
+  String get bookingsEmptyUpcoming;
+
+  /// B3 empty upcoming tab body.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted bookings with the event still ahead show up here.'**
+  String get bookingsEmptyUpcomingBody;
+
+  /// B3 empty state action.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a service'**
+  String get bookingsFindService;
+
+  /// B3 tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get bookingsTabCancelled;
+
+  /// B3 tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get bookingsTabPast;
+
+  /// B3 tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get bookingsTabPending;
+
+  /// B3 tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get bookingsTabUpcoming;
+
+  /// B3 title.
+  ///
+  /// In en, this message translates to:
+  /// **'My bookings'**
+  String get bookingsTitle;
+
+  /// B5 danger button.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, cancel booking'**
+  String get cancelBookingConfirm;
+
+  /// Toast after cancelling a booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking cancelled.'**
+  String get cancelBookingDone;
+
+  /// B5 ghost button.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep my booking'**
+  String get cancelBookingKeep;
+
+  /// B5 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this booking?'**
+  String get cancelBookingTitle;
+
+  /// B5 reason hint.
+  ///
+  /// In en, this message translates to:
+  /// **'A few words for the provider'**
+  String get cancelReasonHint;
+
+  /// B5 reason label.
+  ///
+  /// In en, this message translates to:
+  /// **'Why are you cancelling?'**
+  String get cancelReasonLabel;
+
+  /// B5 on a pending request: danger button.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, cancel request'**
+  String get cancelRequestConfirm;
+
+  /// Toast after cancelling a request.
+  ///
+  /// In en, this message translates to:
+  /// **'Request cancelled.'**
+  String get cancelRequestDone;
+
+  /// B5 on a pending request: ghost button.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep my request'**
+  String get cancelRequestKeep;
+
+  /// B5 on a pending request: title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this request?'**
+  String get cancelRequestTitle;
+
+  /// B5 note when the provider set no policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment is cash on the day, so nothing has been paid through Eventor.'**
+  String get cancelNothingPaid;
+
+  /// B4c when the provider or Eventor cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'You owe nothing — no payment had been made.'**
+  String get cancelledByOtherBody;
+
+  /// B4c callout title.
+  ///
+  /// In en, this message translates to:
+  /// **'You cancelled this booking'**
+  String get cancelledByYouTitle;
+
+  /// B7 choice.
+  ///
+  /// In en, this message translates to:
+  /// **'All good'**
+  String get checkInAllGood;
+
+  /// B7 choice body.
+  ///
+  /// In en, this message translates to:
+  /// **'The service happened as agreed. We close the booking and you can leave a review.'**
+  String get checkInAllGoodBody;
+
+  /// B4 after the event: opens B7.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us how it went'**
+  String get checkInCalloutAction;
+
+  /// B4 after the event: callout title.
+  ///
+  /// In en, this message translates to:
+  /// **'How did it go?'**
+  String get checkInCalloutTitle;
+
+  /// Toast after All good closes it.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks — the booking is closed.'**
+  String get checkInClosed;
+
+  /// B7 footer.
+  ///
+  /// In en, this message translates to:
+  /// **'If nothing is reported, the booking closes on its own 3 days after the event.'**
+  String get checkInFootnote;
+
+  /// B7 heading.
+  ///
+  /// In en, this message translates to:
+  /// **'How did it go?'**
+  String get checkInHeading;
+
+  /// B7 ghost button.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get checkInNotNow;
+
+  /// B7 choice.
+  ///
+  /// In en, this message translates to:
+  /// **'There was a problem'**
+  String get checkInProblem;
+
+  /// B7 choice body.
+  ///
+  /// In en, this message translates to:
+  /// **'No-show, late, or not what was agreed. We open a dispute and support steps in.'**
+  String get checkInProblemBody;
+
+  /// B7 top bar title.
+  ///
+  /// In en, this message translates to:
+  /// **'After the event'**
+  String get checkInTitle;
+
+  /// B4 contact note.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone numbers are shared because this booking is accepted.'**
+  String get contactNoteAccepted;
+
+  /// B4c contact note.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone numbers are no longer shared for cancelled bookings.'**
+  String get contactNoteCancelled;
+
+  /// B4d contact note.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone numbers stay visible after the event.'**
+  String get contactNoteCompleted;
+
+  /// B4b contact note.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone numbers are not shared for declined requests.'**
+  String get contactNoteDeclined;
+
+  /// B4b callout body.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was charged, and nothing is held for you.'**
+  String get declinedBody;
+
+  /// B4 banner while a dispute is open.
+  ///
+  /// In en, this message translates to:
+  /// **'Eventor support is looking into it and will write to you in Messages.'**
+  String get disputeOpenBody;
+
+  /// B8 ghost button.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to booking'**
+  String get invoiceBackToBooking;
+
+  /// B8 overline.
+  ///
+  /// In en, this message translates to:
+  /// **'BILLED TO'**
+  String get invoiceBilledTo;
+
+  /// B8 overline.
+  ///
+  /// In en, this message translates to:
+  /// **'BOOKING'**
+  String get invoiceBooking;
+
+  /// B8 row.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get invoiceDiscount;
+
+  /// B8 primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Download PDF'**
+  String get invoiceDownload;
+
+  /// B8 overline: the issuer.
+  ///
+  /// In en, this message translates to:
+  /// **'FROM'**
+  String get invoiceFrom;
+
+  /// B8 overline.
+  ///
+  /// In en, this message translates to:
+  /// **'INVOICE'**
+  String get invoiceOverline;
+
+  /// B8 pill once completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in cash'**
+  String get invoicePaidInCash;
+
+  /// B8 pill before the event.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay in cash on the day'**
+  String get invoicePayOnTheDay;
+
+  /// B8 overline: the provider.
+  ///
+  /// In en, this message translates to:
+  /// **'SERVICE BY'**
+  String get invoiceServiceBy;
+
+  /// B8 row.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get invoiceSubtotal;
+
+  /// B8 top bar title.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get invoiceTitle;
+
+  /// B8 total once completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Total paid'**
+  String get invoiceTotalPaid;
+
+  /// B8 total before the event.
+  ///
+  /// In en, this message translates to:
+  /// **'Total to pay'**
+  String get invoiceTotalToPay;
+
+  /// B8 banner on a voided invoice.
+  ///
+  /// In en, this message translates to:
+  /// **'It was voided when the booking was cancelled. Nothing is owed.'**
+  String get invoiceVoidedBody;
+
+  /// B8 banner title.
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice is void'**
+  String get invoiceVoidedTitle;
+
+  /// B9 primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get packBookingContinue;
+
+  /// B9 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Book this pack'**
+  String get packBookingTitle;
+
+  /// B9 calendar legend.
+  ///
+  /// In en, this message translates to:
+  /// **'A service is busy'**
+  String get packLegendBusy;
+
+  /// B9 calendar legend.
+  ///
+  /// In en, this message translates to:
+  /// **'Too soon / past'**
+  String get packLegendTooSoon;
+
+  /// B9 sticky bar caption.
+  ///
+  /// In en, this message translates to:
+  /// **'pack price'**
+  String get packPriceCaption;
+
+  /// B9a section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Date and place'**
+  String get packReviewDatePlace;
+
+  /// B9a row.
+  ///
+  /// In en, this message translates to:
+  /// **'Pack price'**
+  String get packReviewPackPrice;
+
+  /// B9a primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Send pack request'**
+  String get packReviewSend;
+
+  /// B9a title.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your pack'**
+  String get packReviewTitle;
+
+  /// B9a row.
+  ///
+  /// In en, this message translates to:
+  /// **'You save'**
+  String get packReviewYouSave;
+
+  /// Problem type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Behaviour'**
+  String get problemBehaviour;
+
+  /// Problem sheet ghost button.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get problemCancel;
+
+  /// Problem type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Damage or safety'**
+  String get problemDamage;
+
+  /// Problem description helper.
+  ///
+  /// In en, this message translates to:
+  /// **'Eventor support reads this, along with your chat.'**
+  String get problemDescriptionHelper;
+
+  /// Problem description hint.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened, and when'**
+  String get problemDescriptionHint;
+
+  /// Problem description label.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened?'**
+  String get problemDescriptionLabel;
+
+  /// Toast after reporting a problem.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem reported. Eventor support will contact you in Messages.'**
+  String get problemDone;
+
+  /// Problem type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Late or incomplete'**
+  String get problemLate;
+
+  /// Problem type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'The provider didn’t come'**
+  String get problemNoShow;
+
+  /// Problem type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Not as described'**
+  String get problemNotAsDescribed;
+
+  /// Problem type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Something else'**
+  String get problemOther;
+
+  /// Problem type chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Price disagreement'**
+  String get problemPrice;
+
+  /// Problem sheet danger button.
+  ///
+  /// In en, this message translates to:
+  /// **'Report the problem'**
+  String get problemSubmit;
+
+  /// Problem sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'What went wrong?'**
+  String get problemTitle;
+
+  /// Problem sheet chips label.
+  ///
+  /// In en, this message translates to:
+  /// **'What was the problem?'**
+  String get problemTypeLabel;
+
+  /// B6a caption under the old date.
+  ///
+  /// In en, this message translates to:
+  /// **'current'**
+  String get proposalCurrent;
+
+  /// B6a secondary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get proposalDecline;
+
+  /// Toast after declining a proposal.
+  ///
+  /// In en, this message translates to:
+  /// **'You kept the original date.'**
+  String get proposalDeclined;
+
+  /// B6a caption under the new date.
+  ///
+  /// In en, this message translates to:
+  /// **'proposed'**
+  String get proposalProposed;
+
+  /// B4 banner action on the client’s own proposal.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw my proposal'**
+  String get proposalWithdraw;
+
+  /// Toast after withdrawing.
+  ///
+  /// In en, this message translates to:
+  /// **'Proposal withdrawn — the date stays as it was.'**
+  String get proposalWithdrawn;
+
+  /// B1 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Request booking'**
+  String get requestBookingTitle;
+
+  /// B2 heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Your request is on its way'**
+  String get requestSentHeading;
+
+  /// B2 section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'What happens next'**
+  String get requestSentNext;
+
+  /// B2 fact label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get requestSentReference;
+
+  /// B2 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent'**
+  String get requestSentTitle;
+
+  /// B2 primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'View booking'**
+  String get requestSentViewBooking;
+
+  /// B2 step 2 title.
+  ///
+  /// In en, this message translates to:
+  /// **'They accept, or suggest another date'**
+  String get requestSentStep2;
+
+  /// B2 step 2 body.
+  ///
+  /// In en, this message translates to:
+  /// **'Their phone number is shared once accepted.'**
+  String get requestSentStep2Body;
+
+  /// B2 step 3 title.
+  ///
+  /// In en, this message translates to:
+  /// **'You pay on the day'**
+  String get requestSentStep3;
+
+  /// B2 step 3 body.
+  ///
+  /// In en, this message translates to:
+  /// **'In cash, directly to the provider. Eventor charges you nothing.'**
+  String get requestSentStep3Body;
+
+  /// B6 overline.
+  ///
+  /// In en, this message translates to:
+  /// **'CURRENTLY BOOKED'**
+  String get rescheduleCurrentlyBooked;
+
+  /// B6 overline on a pending request.
+  ///
+  /// In en, this message translates to:
+  /// **'CURRENTLY REQUESTED'**
+  String get rescheduleCurrentlyRequested;
+
+  /// B6 failure banner.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t send the new date'**
+  String get rescheduleFailedTitle;
+
+  /// B6 calendar legend.
+  ///
+  /// In en, this message translates to:
+  /// **'Current booking'**
+  String get rescheduleLegendCurrent;
+
+  /// B6 button on a pending request.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the date'**
+  String get rescheduleMove;
+
+  /// Toast after moving a pending request.
+  ///
+  /// In en, this message translates to:
+  /// **'Date changed.'**
+  String get rescheduleMoved;
+
+  /// B6 section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'New date and time'**
+  String get rescheduleNewDate;
+
+  /// B6 sticky bar caption.
+  ///
+  /// In en, this message translates to:
+  /// **'proposed'**
+  String get rescheduleProposedCaption;
+
+  /// B6 missing reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Say why — the provider reads this first.'**
+  String get rescheduleReasonError;
+
+  /// B6 reason hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The hall was double-booked…'**
+  String get rescheduleReasonHint;
+
+  /// B6 reason label.
+  ///
+  /// In en, this message translates to:
+  /// **'Why the change?'**
+  String get rescheduleReasonLabel;
+
+  /// B6 primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Send proposal'**
+  String get rescheduleSend;
+
+  /// Toast after proposing.
+  ///
+  /// In en, this message translates to:
+  /// **'Proposal sent. You’ll be notified when they answer.'**
+  String get rescheduleSent;
+
+  /// B6 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Propose a new date'**
+  String get rescheduleTitle;
+
+  /// B6 title on a pending request.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the date'**
+  String get rescheduleTitlePending;
+
+  /// Review sheet subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your review helps other clients choose.'**
+  String get reviewBody;
+
+  /// B4d callout title.
+  ///
+  /// In en, this message translates to:
+  /// **'How was it?'**
+  String get reviewCalloutTitle;
+
+  /// Review comment helper.
+  ///
+  /// In en, this message translates to:
+  /// **'Published on their profile.'**
+  String get reviewCommentHelper;
+
+  /// Review comment hint.
+  ///
+  /// In en, this message translates to:
+  /// **'What went well, what could be better'**
+  String get reviewCommentHint;
+
+  /// Review comment label.
+  ///
+  /// In en, this message translates to:
+  /// **'Your review'**
+  String get reviewCommentLabel;
+
+  /// Toast after reviewing.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks — your review is published.'**
+  String get reviewDone;
+
+  /// Review sheet ghost button.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get reviewLater;
+
+  /// Review sheet primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish review'**
+  String get reviewSubmit;
+
+  /// Timeline step.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled by you'**
+  String get stepCancelledByYou;
+
+  /// Timeline step.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get stepCompleted;
+
+  /// Timeline step subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm after the event'**
+  String get stepConfirmAfter;
+
+  /// Timeline step.
+  ///
+  /// In en, this message translates to:
+  /// **'Event day'**
+  String get stepEventDay;
+
+  /// Timeline step subtitle after the event.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us how it went'**
+  String get stepHowDidItGo;
+
+  /// Timeline step (B6a).
+  ///
+  /// In en, this message translates to:
+  /// **'New date proposed'**
+  String get stepNewDateProposed;
+
+  /// Timeline step subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not applicable'**
+  String get stepNotApplicable;
+
+  /// Timeline step.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get stepRequested;
+
+  /// Timeline step subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'waiting for you'**
+  String get stepWaitingForYou;
+
+  /// Timeline step subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'you confirmed all went well'**
+  String get stepYouConfirmed;
+
+  /// Stepper minus, for screen readers.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get stepperLess;
+
+  /// Stepper plus, for screen readers.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get stepperMore;
+
+  /// Price line sub-label.
+  ///
+  /// In en, this message translates to:
+  /// **'Base price · {unit}'**
+  String bookingBasePrice(String unit);
+
+  /// B4c primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Book {provider} again'**
+  String bookingBookAgain(String provider);
+
+  /// Phone number, for screen readers.
+  ///
+  /// In en, this message translates to:
+  /// **'Call {provider}'**
+  String bookingCallLabel(String provider);
+
+  /// Footnote under the price.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment is cash, directly to {provider} on the day. Eventor charges you nothing.'**
+  String bookingCashFootnote(String provider);
+
+  /// B4d under the reference.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed {date}'**
+  String bookingCompletedOn(String date);
+
+  /// A number of guests.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 guest} other{{count} guests}}'**
+  String bookingGuestsCount(int count);
+
+  /// Under the guests label.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {max} guests.'**
+  String bookingGuestsMax(int max);
+
+  /// Message button.
+  ///
+  /// In en, this message translates to:
+  /// **'Message {provider}'**
+  String bookingMessageProvider(String provider);
+
+  /// Banner title.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} paused new bookings'**
+  String bookingNotAcceptingTitle(String provider);
+
+  /// Note under the calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Dates need at least 1 day’s notice.} other{Dates need at least {count} days’ notice.}}'**
+  String bookingNoticeDays(int count);
+
+  /// B4 policy caption.
+  ///
+  /// In en, this message translates to:
+  /// **'Set by {provider}'**
+  String bookingPolicySetBy(String provider);
+
+  /// B4 under the reference.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested {date}'**
+  String bookingRequestedOn(String date);
+
+  /// B1b banner body.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} accepted another booking for that date while you were filling this in. Everything else you entered is saved — pick another date to carry on.'**
+  String bookingTakenBody(String provider);
+
+  /// B1b banner title.
+  ///
+  /// In en, this message translates to:
+  /// **'{date} was just taken'**
+  String bookingTakenTitle(String date);
+
+  /// Wilaya sheet subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where {provider} works.'**
+  String bookingWilayaSheetBody(String provider);
+
+  /// B5a body.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} is told straight away and the slot is released.'**
+  String cancelBodyShort(String provider);
+
+  /// B5 body.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} is told straight away and the slot is released. This cannot be undone — you would have to request the date again.'**
+  String cancelBookingBody(String provider);
+
+  /// B5 note: how far off the event is.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Your event is today.} =1{Your event is tomorrow.} other{You are {days} days before the event.}}'**
+  String cancelDaysBefore(int days);
+
+  /// B5 note: the provider’s policy.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider}’s policy: “{policy}”'**
+  String cancelPolicyQuote(String provider, String policy);
+
+  /// B5 reason helper.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} will see this reason.'**
+  String cancelReasonHelper(String provider);
+
+  /// B5 body on a pending request.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} is told straight away and your hold on the date is released.'**
+  String cancelRequestBody(String provider);
+
+  /// B4c callout title.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} cancelled this booking'**
+  String cancelledByOtherTitle(String provider);
+
+  /// B4c callout body.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} has been notified. You owe nothing — no payment had been made.'**
+  String cancelledByYouBody(String provider);
+
+  /// B7 body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your event was on {date}. Let us know before we close the booking — it takes one tap.'**
+  String checkInBody(String date);
+
+  /// B4 after the event: callout body.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm that {provider} delivered as agreed, or report a problem.'**
+  String checkInCalloutBody(String provider);
+
+  /// Toast after All good.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks! It closes once {provider} confirms too.'**
+  String checkInWaiting(String provider);
+
+  /// B4a contact note.
+  ///
+  /// In en, this message translates to:
+  /// **'The phone number appears once {provider} accepts your request.'**
+  String contactNotePending(String provider);
+
+  /// B4b callout title.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} declined this request'**
+  String declinedTitle(String provider);
+
+  /// B4 banner while a dispute is open.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem reported · {reference}'**
+  String disputeOpenTitle(String reference);
+
+  /// B8 footnote.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued by Eventor for your records. The payment itself goes directly to {provider}.'**
+  String invoiceFootnote(String provider);
+
+  /// B8 issue date.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued {date}'**
+  String invoiceIssued(String date);
+
+  /// B8 under the total once completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in cash to {provider} on {date}. Nothing was added to your total.'**
+  String invoicePaidNote(String provider, String date);
+
+  /// Share sheet subject.
+  ///
+  /// In en, this message translates to:
+  /// **'Eventor invoice {number}'**
+  String invoiceShareSubject(String number);
+
+  /// B8 under the total before the event.
+  ///
+  /// In en, this message translates to:
+  /// **'To pay in cash to {provider} on {date}. Eventor adds nothing to your total.'**
+  String invoiceToPayNote(String provider, String date);
+
+  /// B9 intro.
+  ///
+  /// In en, this message translates to:
+  /// **'Only days when all {count} services in the pack are free can be selected.'**
+  String packBookingDaysIntro(int count);
+
+  /// B9 pack card.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} services, all from {provider} · {wilaya}'**
+  String packBookingSummary(int count, String provider, String wilaya);
+
+  /// B9 calendar legend.
+  ///
+  /// In en, this message translates to:
+  /// **'All {count} free'**
+  String packLegendAllFree(int count);
+
+  /// B9a note.
+  ///
+  /// In en, this message translates to:
+  /// **'All {count} services are provided by {provider}. Booking the pack sends one request for all of them.'**
+  String packReviewOneRequest(int count, String provider);
+
+  /// B9a row.
+  ///
+  /// In en, this message translates to:
+  /// **'Sum of the {count} services'**
+  String packReviewSum(int count);
+
+  /// Problem sheet subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what happened with {provider}. Eventor support steps in; payment was cash, so there are no refunds or fees.'**
+  String problemBody(String provider);
+
+  /// Problem description too short.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 more character, please.} other{{count} more characters, please.}}'**
+  String problemDescriptionTooShort(int count);
+
+  /// B6a primary button.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept {date}'**
+  String proposalAccept(String date);
+
+  /// Toast after accepting.
+  ///
+  /// In en, this message translates to:
+  /// **'New date accepted: {date}.'**
+  String proposalAccepted(String date);
+
+  /// B6a consequence line.
+  ///
+  /// In en, this message translates to:
+  /// **'If you decline, the {date} booking stands and {provider} may cancel it.'**
+  String proposalConsequence(String date, String provider);
+
+  /// B4 banner on the client’s own proposal.
+  ///
+  /// In en, this message translates to:
+  /// **'Your current date stays held until {provider} answers.'**
+  String proposalMineBody(String provider);
+
+  /// B4 banner on the client’s own proposal.
+  ///
+  /// In en, this message translates to:
+  /// **'You proposed {date}'**
+  String proposalMineTitle(String date);
+
+  /// B6a banner title.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} proposes a new date'**
+  String proposalTitle(String provider);
+
+  /// B4b/B4c quoted reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason given: “{reason}”'**
+  String reasonGiven(String reason);
+
+  /// B2 step 1 title.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} reviews your request'**
+  String requestSentStep1(String provider);
+
+  /// B2 step 1 body without a reply time.
+  ///
+  /// In en, this message translates to:
+  /// **'They have {hours} h to answer — we’ll notify you.'**
+  String requestSentStep1Deadline(int hours);
+
+  /// B2 step 1 body.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually within {time} — we’ll notify you.'**
+  String requestSentStep1Usually(String time);
+
+  /// B6 note under the calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Days {provider} is already booked are struck through.'**
+  String rescheduleBookedDays(String provider);
+
+  /// B6 hold notice.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {date} slot stays held until {provider} answers. If they decline, the original booking is unchanged and the price does not change.'**
+  String rescheduleHoldNote(String date, String provider);
+
+  /// B6 note on a pending request.
+  ///
+  /// In en, this message translates to:
+  /// **'Your request moves to the new date straight away; {provider} still has to accept it.'**
+  String reschedulePendingNote(String provider);
+
+  /// B6 reason helper.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} will read this.'**
+  String rescheduleReasonHelper(String provider);
+
+  /// B6 date taken.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} is no longer free that day. Pick another date.'**
+  String rescheduleTakenBody(String provider);
+
+  /// B4d callout body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your review of {provider} helps other clients choose.'**
+  String reviewCalloutBody(String provider);
+
+  /// Review comment too short.
+  ///
+  /// In en, this message translates to:
+  /// **'At least {count} characters.'**
+  String reviewCommentTooShort(int count);
+
+  /// A star, for screen readers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 star} other{{count} stars}}'**
+  String reviewStars(int count);
+
+  /// Review sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Review {provider}'**
+  String reviewTitle(String provider);
+
+  /// Timeline step.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted by {provider}'**
+  String stepAcceptedBy(String provider);
+
+  /// Timeline step.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled by {provider}'**
+  String stepCancelledBy(String provider);
+
+  /// Timeline step.
+  ///
+  /// In en, this message translates to:
+  /// **'Declined by {provider}'**
+  String stepDeclinedBy(String provider);
+
+  /// Timeline step subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replies within {hours} h'**
+  String stepRepliesWithinHours(int hours);
+
+  /// Timeline step subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually replies within {time}'**
+  String stepUsuallyReplies(String time);
+
+  /// Timeline step.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {provider}'**
+  String stepWaitingFor(String provider);
+
+  /// Timeline step subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You confirmed · waiting for {provider}'**
+  String stepYouConfirmedWaiting(String provider);
+
+  /// To picker: this end time is on the day after the event date.
+  ///
+  /// In en, this message translates to:
+  /// **'next day'**
+  String get bookingNextDay;
+
+  /// After an end time that falls on the next day (event past midnight).
+  ///
+  /// In en, this message translates to:
+  /// **'+1 day'**
+  String get bookingNextDayMark;
+
+  /// To picker: event length of half an hour.
+  ///
+  /// In en, this message translates to:
+  /// **'30 min'**
+  String get bookingDurationHalfHour;
+
+  /// To picker: event length in whole hours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} h'**
+  String bookingDurationHours(int count);
+
+  /// To picker: event length in hours and a half.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} h 30 min'**
+  String bookingDurationHoursHalf(int count);
+
+  /// Guests typed above the service or pack cap.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {max} guests for this booking.'**
+  String bookingGuestsTooMany(int max);
+
+  /// B8 top bar: send the invoice PDF to another app.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get invoiceShare;
+
+  /// B8 toast after the PDF is saved (Android).
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice saved to Downloads.'**
+  String get invoiceSavedToDownloads;
+
+  /// B8 toast after the PDF is saved (iOS).
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice saved to Files › Eventor.'**
+  String get invoiceSavedToFiles;
+
+  /// B8 toast action: open the saved PDF.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get invoiceOpen;
+
+  /// B8 toast: writing the PDF failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t save the invoice on this phone. Try again.'**
+  String get invoiceSaveFailed;
+
+  /// B8 toast: storage permission refused (Android 9 and older).
+  ///
+  /// In en, this message translates to:
+  /// **'Allow storage access to save the invoice.'**
+  String get invoiceSaveDenied;
+
+  /// B8 toast: Open tapped but no PDF viewer is installed.
+  ///
+  /// In en, this message translates to:
+  /// **'No app on this phone can open PDFs.'**
+  String get invoiceNoPdfApp;
+
+  /// Android notification category for finished downloads (system settings).
+  ///
+  /// In en, this message translates to:
+  /// **'Downloads'**
+  String get downloadsChannelName;
+
+  /// Android notification text under the saved invoice file name.
+  ///
+  /// In en, this message translates to:
+  /// **'Download complete · Tap to open'**
+  String get invoiceDownloadNoticeText;
 }
 
 class _AppLocalizationsDelegate

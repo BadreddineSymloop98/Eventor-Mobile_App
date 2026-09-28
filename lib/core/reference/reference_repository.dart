@@ -9,6 +9,10 @@ import '../network/api_client.dart';
 abstract interface class ReferenceRepository {
   Future<List<Wilaya>> wilayas();
   Future<List<ServiceCategory>> categories();
+
+  /// The communes of one wilaya, by name — B1's Commune field. Kept per
+  /// wilaya once loaded.
+  Future<List<Commune>> communes(int wilayaCode);
 }
 
 class ApiReferenceRepository implements ReferenceRepository {
@@ -18,12 +22,15 @@ class ApiReferenceRepository implements ReferenceRepository {
 
   List<Wilaya>? _wilayas;
   List<ServiceCategory>? _categories;
+  final Map<int, List<Commune>> _communes = <int, List<Commune>>{};
 
   @override
   Future<List<Wilaya>> wilayas() async {
     return _wilayas ??= (await _list('/app/wilayas'))
         .map(Wilaya.fromJson)
         .toList()
+      // The server ranks them by services; every picker lists them by code,
+      // and 11a ranks its top chips from [Wilaya.servicesCount] itself.
       ..sort((Wilaya a, Wilaya b) => a.code.compareTo(b.code));
   }
 
@@ -31,6 +38,16 @@ class ApiReferenceRepository implements ReferenceRepository {
   Future<List<ServiceCategory>> categories() async {
     return _categories ??=
         (await _list('/app/categories')).map(ServiceCategory.fromJson).toList();
+  }
+
+  @override
+  Future<List<Commune>> communes(int wilayaCode) async {
+    final List<Commune>? known = _communes[wilayaCode];
+    if (known != null) return known;
+    return _communes[wilayaCode] =
+        (await _list('/app/wilayas/$wilayaCode/communes'))
+            .map(Commune.fromJson)
+            .toList();
   }
 
   Future<List<Map<String, Object?>>> _list(String path) async {

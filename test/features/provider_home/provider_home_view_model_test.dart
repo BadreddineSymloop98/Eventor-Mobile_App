@@ -229,11 +229,14 @@ void main() {
       expect(viewModel.home!.acceptingBookings, isTrue);
     });
 
-    test('signs a blocked account out', () async {
-      await build(FakeProviderRepository(home: providerHomeJson(state: 'blocked')));
+    test('keeps a blocked account signed in, on 21c', () async {
+      final ProviderHomeViewModel viewModel = await build(
+        FakeProviderRepository(home: providerHomeJson(state: 'blocked')),
+      );
       await flushAsync();
 
-      expect(session.isSignedIn, isFalse);
+      expect(session.isSignedIn, isTrue);
+      expect(viewModel.home!.isBlocked, isTrue);
     });
   });
 }

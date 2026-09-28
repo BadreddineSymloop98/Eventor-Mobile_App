@@ -128,7 +128,10 @@ class AppServices {
             mock,
             MockCatalogLookups(mock, languageCode: languageCode),
           )
-        : ApiBudgetRepository(api);
+        : ApiBudgetRepository(
+            api,
+            itemsMax: () => config.current.budgetItemsMax,
+          );
     final ProviderRepository provider = mock != null
         ? MockProviderRepository(
             mock,

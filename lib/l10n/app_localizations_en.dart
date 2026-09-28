@@ -2157,4 +2157,1081 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get budgetDeleteUnavailable =>
       'Deleting a budget is not available yet.';
+
+  @override
+  String messagesPreviewMine(String message) {
+    return 'You: $message';
+  }
+
+  @override
+  String get chatClosedPlain =>
+      'This conversation is closed. You can still read it.';
+
+  @override
+  String get notificationDeleted => 'Notification deleted';
+
+  @override
+  String get notificationDelete => 'Delete notification';
+
+  @override
+  String get providerBlockedTitle => 'Your account is blocked';
+
+  @override
+  String get providerBlockedBody =>
+      'You cannot receive or answer requests while the block is in place. Your bookings, messages and history are kept.';
+
+  @override
+  String get providerBlockedServices =>
+      'Your services are hidden from clients while the account is blocked.';
+
+  @override
+  String loginBlockedUntil(String date) {
+    return 'Blocked until $date.';
+  }
+
+  @override
+  String get bookingAddress => 'Address (optional)';
+
+  @override
+  String get bookingAddressHint => 'Venue, street…';
+
+  @override
+  String get bookingAddressLabel => 'Address';
+
+  @override
+  String get bookingCancelBooking => 'Cancel booking';
+
+  @override
+  String get bookingCancelRequest => 'Cancel request';
+
+  @override
+  String get bookingCancellationPolicy => 'Cancellation policy';
+
+  @override
+  String get bookingCommune => 'Commune';
+
+  @override
+  String get bookingCommunePlaceholder => 'Choose a commune (optional)';
+
+  @override
+  String get bookingContact => 'Contact';
+
+  @override
+  String get bookingDate => 'Date';
+
+  @override
+  String get bookingDateError => 'Pick an available day.';
+
+  @override
+  String get bookingDateRefused =>
+      'This day can no longer be booked — pick another.';
+
+  @override
+  String get bookingDateTime => 'Date and time';
+
+  @override
+  String get bookingDetailTitle => 'Booking';
+
+  @override
+  String get bookingEventType => 'Event type';
+
+  @override
+  String get bookingEventTypeError => 'Pick the type of event.';
+
+  @override
+  String get bookingExtras => 'Extras';
+
+  @override
+  String get bookingFailedKept =>
+      'Nothing was lost — everything you filled in is still here.';
+
+  @override
+  String get bookingFailedOffline =>
+      'You appear to be offline. Nothing was lost — everything you filled in is still here. Tap Try again when you have a connection.';
+
+  @override
+  String get bookingFailedTitle => 'Couldn’t send your request';
+
+  @override
+  String get bookingFindSimilar => 'Find similar services';
+
+  @override
+  String get bookingFrom => 'From';
+
+  @override
+  String get bookingGuests => 'Guests';
+
+  @override
+  String get bookingGuestsError =>
+      'Add the number of guests — the price is per person.';
+
+  @override
+  String get bookingGuestsHelper => 'Helps the provider prepare.';
+
+  @override
+  String get bookingLeaveReview => 'Leave a review';
+
+  @override
+  String get bookingNoCommune => 'Not specified';
+
+  @override
+  String get bookingNoDate => 'No date selected — choose an available day';
+
+  @override
+  String get bookingNoTime => 'No time';
+
+  @override
+  String get bookingNoWilayas => 'This service lists no wilaya yet.';
+
+  @override
+  String get bookingNotAcceptingBody =>
+      'They are not taking requests right now. Everything you entered is saved; you can message them meanwhile.';
+
+  @override
+  String get bookingNote => 'Note for the provider (optional)';
+
+  @override
+  String get bookingNoteHint => 'Anything they should know';
+
+  @override
+  String get bookingPackSaving => 'Pack saving';
+
+  @override
+  String get bookingPackSection => 'Pack';
+
+  @override
+  String get bookingPhoneHidden => 'Hidden';
+
+  @override
+  String get bookingPickNewDate => 'Pick a new date';
+
+  @override
+  String get bookingPrice => 'Price';
+
+  @override
+  String get bookingProposeDate => 'Propose a new date';
+
+  @override
+  String get bookingProviderConfirmsTime =>
+      'The provider confirms the exact time after your request.';
+
+  @override
+  String get bookingReportProblem => 'Report a problem';
+
+  @override
+  String get bookingSearchCommune => 'Search a commune';
+
+  @override
+  String get bookingSearchWilaya => 'Search a wilaya';
+
+  @override
+  String get bookingSend => 'Send request';
+
+  @override
+  String get bookingServiceSection => 'Service';
+
+  @override
+  String get bookingTakenTitleUndated => 'That date was just taken';
+
+  @override
+  String get bookingTime => 'Time';
+
+  @override
+  String get bookingTimeHelper =>
+      'Optional — the provider confirms the exact time.';
+
+  @override
+  String get bookingTimeHelperHourly => 'Needed: the price is per hour.';
+
+  @override
+  String get bookingTimeOverline => 'TIME';
+
+  @override
+  String get bookingTo => 'To';
+
+  @override
+  String get bookingTooSoonBody =>
+      'Dates now need more notice. Everything else you entered is saved — pick a later day.';
+
+  @override
+  String get bookingTooSoonTitle => 'That date is now too soon';
+
+  @override
+  String get bookingTotalCaption => 'total';
+
+  @override
+  String get bookingTotalOnSite => 'Total · pay on site';
+
+  @override
+  String get bookingTryAgain => 'Try again';
+
+  @override
+  String get bookingViewInvoice => 'View invoice';
+
+  @override
+  String get bookingWhere => 'Where';
+
+  @override
+  String get bookingWilaya => 'Wilaya';
+
+  @override
+  String get bookingWilayaError => 'Choose where the event takes place.';
+
+  @override
+  String get bookingWilayaPlaceholder => 'Choose a wilaya';
+
+  @override
+  String get bookingYourEvent => 'Your event';
+
+  @override
+  String get bookingYourNote => 'Your note';
+
+  @override
+  String get bookingsEmptyCancelled => 'Nothing cancelled';
+
+  @override
+  String get bookingsEmptyCancelledBody =>
+      'Cancelled and declined bookings show up here.';
+
+  @override
+  String get bookingsEmptyPast => 'No past bookings yet';
+
+  @override
+  String get bookingsEmptyPastBody =>
+      'Once an event is behind you, it moves here with its invoice.';
+
+  @override
+  String get bookingsEmptyPending => 'No requests waiting';
+
+  @override
+  String get bookingsEmptyPendingBody =>
+      'Requests you send wait here until the provider answers.';
+
+  @override
+  String get bookingsEmptyUpcoming => 'No upcoming bookings';
+
+  @override
+  String get bookingsEmptyUpcomingBody =>
+      'Accepted bookings with the event still ahead show up here.';
+
+  @override
+  String get bookingsFindService => 'Find a service';
+
+  @override
+  String get bookingsTabCancelled => 'Cancelled';
+
+  @override
+  String get bookingsTabPast => 'Past';
+
+  @override
+  String get bookingsTabPending => 'Pending';
+
+  @override
+  String get bookingsTabUpcoming => 'Upcoming';
+
+  @override
+  String get bookingsTitle => 'My bookings';
+
+  @override
+  String get cancelBookingConfirm => 'Yes, cancel booking';
+
+  @override
+  String get cancelBookingDone => 'Booking cancelled.';
+
+  @override
+  String get cancelBookingKeep => 'Keep my booking';
+
+  @override
+  String get cancelBookingTitle => 'Cancel this booking?';
+
+  @override
+  String get cancelReasonHint => 'A few words for the provider';
+
+  @override
+  String get cancelReasonLabel => 'Why are you cancelling?';
+
+  @override
+  String get cancelRequestConfirm => 'Yes, cancel request';
+
+  @override
+  String get cancelRequestDone => 'Request cancelled.';
+
+  @override
+  String get cancelRequestKeep => 'Keep my request';
+
+  @override
+  String get cancelRequestTitle => 'Cancel this request?';
+
+  @override
+  String get cancelNothingPaid =>
+      'Payment is cash on the day, so nothing has been paid through Eventor.';
+
+  @override
+  String get cancelledByOtherBody =>
+      'You owe nothing — no payment had been made.';
+
+  @override
+  String get cancelledByYouTitle => 'You cancelled this booking';
+
+  @override
+  String get checkInAllGood => 'All good';
+
+  @override
+  String get checkInAllGoodBody =>
+      'The service happened as agreed. We close the booking and you can leave a review.';
+
+  @override
+  String get checkInCalloutAction => 'Tell us how it went';
+
+  @override
+  String get checkInCalloutTitle => 'How did it go?';
+
+  @override
+  String get checkInClosed => 'Thanks — the booking is closed.';
+
+  @override
+  String get checkInFootnote =>
+      'If nothing is reported, the booking closes on its own 3 days after the event.';
+
+  @override
+  String get checkInHeading => 'How did it go?';
+
+  @override
+  String get checkInNotNow => 'Not now';
+
+  @override
+  String get checkInProblem => 'There was a problem';
+
+  @override
+  String get checkInProblemBody =>
+      'No-show, late, or not what was agreed. We open a dispute and support steps in.';
+
+  @override
+  String get checkInTitle => 'After the event';
+
+  @override
+  String get contactNoteAccepted =>
+      'Phone numbers are shared because this booking is accepted.';
+
+  @override
+  String get contactNoteCancelled =>
+      'Phone numbers are no longer shared for cancelled bookings.';
+
+  @override
+  String get contactNoteCompleted =>
+      'Phone numbers stay visible after the event.';
+
+  @override
+  String get contactNoteDeclined =>
+      'Phone numbers are not shared for declined requests.';
+
+  @override
+  String get declinedBody =>
+      'Nothing was charged, and nothing is held for you.';
+
+  @override
+  String get disputeOpenBody =>
+      'Eventor support is looking into it and will write to you in Messages.';
+
+  @override
+  String get invoiceBackToBooking => 'Back to booking';
+
+  @override
+  String get invoiceBilledTo => 'BILLED TO';
+
+  @override
+  String get invoiceBooking => 'BOOKING';
+
+  @override
+  String get invoiceDiscount => 'Discount';
+
+  @override
+  String get invoiceDownload => 'Download PDF';
+
+  @override
+  String get invoiceFrom => 'FROM';
+
+  @override
+  String get invoiceOverline => 'INVOICE';
+
+  @override
+  String get invoicePaidInCash => 'Paid in cash';
+
+  @override
+  String get invoicePayOnTheDay => 'Pay in cash on the day';
+
+  @override
+  String get invoiceServiceBy => 'SERVICE BY';
+
+  @override
+  String get invoiceSubtotal => 'Subtotal';
+
+  @override
+  String get invoiceTitle => 'Invoice';
+
+  @override
+  String get invoiceTotalPaid => 'Total paid';
+
+  @override
+  String get invoiceTotalToPay => 'Total to pay';
+
+  @override
+  String get invoiceVoidedBody =>
+      'It was voided when the booking was cancelled. Nothing is owed.';
+
+  @override
+  String get invoiceVoidedTitle => 'This invoice is void';
+
+  @override
+  String get packBookingContinue => 'Continue';
+
+  @override
+  String get packBookingTitle => 'Book this pack';
+
+  @override
+  String get packLegendBusy => 'A service is busy';
+
+  @override
+  String get packLegendTooSoon => 'Too soon / past';
+
+  @override
+  String get packPriceCaption => 'pack price';
+
+  @override
+  String get packReviewDatePlace => 'Date and place';
+
+  @override
+  String get packReviewPackPrice => 'Pack price';
+
+  @override
+  String get packReviewSend => 'Send pack request';
+
+  @override
+  String get packReviewTitle => 'Review your pack';
+
+  @override
+  String get packReviewYouSave => 'You save';
+
+  @override
+  String get problemBehaviour => 'Behaviour';
+
+  @override
+  String get problemCancel => 'Cancel';
+
+  @override
+  String get problemDamage => 'Damage or safety';
+
+  @override
+  String get problemDescriptionHelper =>
+      'Eventor support reads this, along with your chat.';
+
+  @override
+  String get problemDescriptionHint => 'What happened, and when';
+
+  @override
+  String get problemDescriptionLabel => 'What happened?';
+
+  @override
+  String get problemDone =>
+      'Problem reported. Eventor support will contact you in Messages.';
+
+  @override
+  String get problemLate => 'Late or incomplete';
+
+  @override
+  String get problemNoShow => 'The provider didn’t come';
+
+  @override
+  String get problemNotAsDescribed => 'Not as described';
+
+  @override
+  String get problemOther => 'Something else';
+
+  @override
+  String get problemPrice => 'Price disagreement';
+
+  @override
+  String get problemSubmit => 'Report the problem';
+
+  @override
+  String get problemTitle => 'What went wrong?';
+
+  @override
+  String get problemTypeLabel => 'What was the problem?';
+
+  @override
+  String get proposalCurrent => 'current';
+
+  @override
+  String get proposalDecline => 'Decline';
+
+  @override
+  String get proposalDeclined => 'You kept the original date.';
+
+  @override
+  String get proposalProposed => 'proposed';
+
+  @override
+  String get proposalWithdraw => 'Withdraw my proposal';
+
+  @override
+  String get proposalWithdrawn =>
+      'Proposal withdrawn — the date stays as it was.';
+
+  @override
+  String get requestBookingTitle => 'Request booking';
+
+  @override
+  String get requestSentHeading => 'Your request is on its way';
+
+  @override
+  String get requestSentNext => 'What happens next';
+
+  @override
+  String get requestSentReference => 'Reference';
+
+  @override
+  String get requestSentTitle => 'Request sent';
+
+  @override
+  String get requestSentViewBooking => 'View booking';
+
+  @override
+  String get requestSentStep2 => 'They accept, or suggest another date';
+
+  @override
+  String get requestSentStep2Body =>
+      'Their phone number is shared once accepted.';
+
+  @override
+  String get requestSentStep3 => 'You pay on the day';
+
+  @override
+  String get requestSentStep3Body =>
+      'In cash, directly to the provider. Eventor charges you nothing.';
+
+  @override
+  String get rescheduleCurrentlyBooked => 'CURRENTLY BOOKED';
+
+  @override
+  String get rescheduleCurrentlyRequested => 'CURRENTLY REQUESTED';
+
+  @override
+  String get rescheduleFailedTitle => 'Couldn’t send the new date';
+
+  @override
+  String get rescheduleLegendCurrent => 'Current booking';
+
+  @override
+  String get rescheduleMove => 'Change the date';
+
+  @override
+  String get rescheduleMoved => 'Date changed.';
+
+  @override
+  String get rescheduleNewDate => 'New date and time';
+
+  @override
+  String get rescheduleProposedCaption => 'proposed';
+
+  @override
+  String get rescheduleReasonError =>
+      'Say why — the provider reads this first.';
+
+  @override
+  String get rescheduleReasonHint => 'The hall was double-booked…';
+
+  @override
+  String get rescheduleReasonLabel => 'Why the change?';
+
+  @override
+  String get rescheduleSend => 'Send proposal';
+
+  @override
+  String get rescheduleSent =>
+      'Proposal sent. You’ll be notified when they answer.';
+
+  @override
+  String get rescheduleTitle => 'Propose a new date';
+
+  @override
+  String get rescheduleTitlePending => 'Change the date';
+
+  @override
+  String get reviewBody => 'Your review helps other clients choose.';
+
+  @override
+  String get reviewCalloutTitle => 'How was it?';
+
+  @override
+  String get reviewCommentHelper => 'Published on their profile.';
+
+  @override
+  String get reviewCommentHint => 'What went well, what could be better';
+
+  @override
+  String get reviewCommentLabel => 'Your review';
+
+  @override
+  String get reviewDone => 'Thanks — your review is published.';
+
+  @override
+  String get reviewLater => 'Later';
+
+  @override
+  String get reviewSubmit => 'Publish review';
+
+  @override
+  String get stepCancelledByYou => 'Cancelled by you';
+
+  @override
+  String get stepCompleted => 'Completed';
+
+  @override
+  String get stepConfirmAfter => 'Confirm after the event';
+
+  @override
+  String get stepEventDay => 'Event day';
+
+  @override
+  String get stepHowDidItGo => 'Tell us how it went';
+
+  @override
+  String get stepNewDateProposed => 'New date proposed';
+
+  @override
+  String get stepNotApplicable => 'Not applicable';
+
+  @override
+  String get stepRequested => 'Requested';
+
+  @override
+  String get stepWaitingForYou => 'waiting for you';
+
+  @override
+  String get stepYouConfirmed => 'you confirmed all went well';
+
+  @override
+  String get stepperLess => 'Less';
+
+  @override
+  String get stepperMore => 'More';
+
+  @override
+  String bookingBasePrice(String unit) {
+    return 'Base price · $unit';
+  }
+
+  @override
+  String bookingBookAgain(String provider) {
+    return 'Book $provider again';
+  }
+
+  @override
+  String bookingCallLabel(String provider) {
+    return 'Call $provider';
+  }
+
+  @override
+  String bookingCashFootnote(String provider) {
+    return 'Payment is cash, directly to $provider on the day. Eventor charges you nothing.';
+  }
+
+  @override
+  String bookingCompletedOn(String date) {
+    return 'Completed $date';
+  }
+
+  @override
+  String bookingGuestsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count guests',
+      one: '1 guest',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookingGuestsMax(int max) {
+    return 'Up to $max guests.';
+  }
+
+  @override
+  String bookingMessageProvider(String provider) {
+    return 'Message $provider';
+  }
+
+  @override
+  String bookingNotAcceptingTitle(String provider) {
+    return '$provider paused new bookings';
+  }
+
+  @override
+  String bookingNoticeDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Dates need at least $count days’ notice.',
+      one: 'Dates need at least 1 day’s notice.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bookingPolicySetBy(String provider) {
+    return 'Set by $provider';
+  }
+
+  @override
+  String bookingRequestedOn(String date) {
+    return 'Requested $date';
+  }
+
+  @override
+  String bookingTakenBody(String provider) {
+    return '$provider accepted another booking for that date while you were filling this in. Everything else you entered is saved — pick another date to carry on.';
+  }
+
+  @override
+  String bookingTakenTitle(String date) {
+    return '$date was just taken';
+  }
+
+  @override
+  String bookingWilayaSheetBody(String provider) {
+    return 'Where $provider works.';
+  }
+
+  @override
+  String cancelBodyShort(String provider) {
+    return '$provider is told straight away and the slot is released.';
+  }
+
+  @override
+  String cancelBookingBody(String provider) {
+    return '$provider is told straight away and the slot is released. This cannot be undone — you would have to request the date again.';
+  }
+
+  @override
+  String cancelDaysBefore(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'You are $days days before the event.',
+      one: 'Your event is tomorrow.',
+      zero: 'Your event is today.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String cancelPolicyQuote(String provider, String policy) {
+    return '$provider’s policy: “$policy”';
+  }
+
+  @override
+  String cancelReasonHelper(String provider) {
+    return '$provider will see this reason.';
+  }
+
+  @override
+  String cancelRequestBody(String provider) {
+    return '$provider is told straight away and your hold on the date is released.';
+  }
+
+  @override
+  String cancelledByOtherTitle(String provider) {
+    return '$provider cancelled this booking';
+  }
+
+  @override
+  String cancelledByYouBody(String provider) {
+    return '$provider has been notified. You owe nothing — no payment had been made.';
+  }
+
+  @override
+  String checkInBody(String date) {
+    return 'Your event was on $date. Let us know before we close the booking — it takes one tap.';
+  }
+
+  @override
+  String checkInCalloutBody(String provider) {
+    return 'Confirm that $provider delivered as agreed, or report a problem.';
+  }
+
+  @override
+  String checkInWaiting(String provider) {
+    return 'Thanks! It closes once $provider confirms too.';
+  }
+
+  @override
+  String contactNotePending(String provider) {
+    return 'The phone number appears once $provider accepts your request.';
+  }
+
+  @override
+  String declinedTitle(String provider) {
+    return '$provider declined this request';
+  }
+
+  @override
+  String disputeOpenTitle(String reference) {
+    return 'Problem reported · $reference';
+  }
+
+  @override
+  String invoiceFootnote(String provider) {
+    return 'Issued by Eventor for your records. The payment itself goes directly to $provider.';
+  }
+
+  @override
+  String invoiceIssued(String date) {
+    return 'Issued $date';
+  }
+
+  @override
+  String invoicePaidNote(String provider, String date) {
+    return 'Paid in cash to $provider on $date. Nothing was added to your total.';
+  }
+
+  @override
+  String invoiceShareSubject(String number) {
+    return 'Eventor invoice $number';
+  }
+
+  @override
+  String invoiceToPayNote(String provider, String date) {
+    return 'To pay in cash to $provider on $date. Eventor adds nothing to your total.';
+  }
+
+  @override
+  String packBookingDaysIntro(int count) {
+    return 'Only days when all $count services in the pack are free can be selected.';
+  }
+
+  @override
+  String packBookingSummary(int count, String provider, String wilaya) {
+    return '$count services, all from $provider · $wilaya';
+  }
+
+  @override
+  String packLegendAllFree(int count) {
+    return 'All $count free';
+  }
+
+  @override
+  String packReviewOneRequest(int count, String provider) {
+    return 'All $count services are provided by $provider. Booking the pack sends one request for all of them.';
+  }
+
+  @override
+  String packReviewSum(int count) {
+    return 'Sum of the $count services';
+  }
+
+  @override
+  String problemBody(String provider) {
+    return 'Tell us what happened with $provider. Eventor support steps in; payment was cash, so there are no refunds or fees.';
+  }
+
+  @override
+  String problemDescriptionTooShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count more characters, please.',
+      one: '1 more character, please.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String proposalAccept(String date) {
+    return 'Accept $date';
+  }
+
+  @override
+  String proposalAccepted(String date) {
+    return 'New date accepted: $date.';
+  }
+
+  @override
+  String proposalConsequence(String date, String provider) {
+    return 'If you decline, the $date booking stands and $provider may cancel it.';
+  }
+
+  @override
+  String proposalMineBody(String provider) {
+    return 'Your current date stays held until $provider answers.';
+  }
+
+  @override
+  String proposalMineTitle(String date) {
+    return 'You proposed $date';
+  }
+
+  @override
+  String proposalTitle(String provider) {
+    return '$provider proposes a new date';
+  }
+
+  @override
+  String reasonGiven(String reason) {
+    return 'Reason given: “$reason”';
+  }
+
+  @override
+  String requestSentStep1(String provider) {
+    return '$provider reviews your request';
+  }
+
+  @override
+  String requestSentStep1Deadline(int hours) {
+    return 'They have $hours h to answer — we’ll notify you.';
+  }
+
+  @override
+  String requestSentStep1Usually(String time) {
+    return 'Usually within $time — we’ll notify you.';
+  }
+
+  @override
+  String rescheduleBookedDays(String provider) {
+    return 'Days $provider is already booked are struck through.';
+  }
+
+  @override
+  String rescheduleHoldNote(String date, String provider) {
+    return 'Your $date slot stays held until $provider answers. If they decline, the original booking is unchanged and the price does not change.';
+  }
+
+  @override
+  String reschedulePendingNote(String provider) {
+    return 'Your request moves to the new date straight away; $provider still has to accept it.';
+  }
+
+  @override
+  String rescheduleReasonHelper(String provider) {
+    return '$provider will read this.';
+  }
+
+  @override
+  String rescheduleTakenBody(String provider) {
+    return '$provider is no longer free that day. Pick another date.';
+  }
+
+  @override
+  String reviewCalloutBody(String provider) {
+    return 'Your review of $provider helps other clients choose.';
+  }
+
+  @override
+  String reviewCommentTooShort(int count) {
+    return 'At least $count characters.';
+  }
+
+  @override
+  String reviewStars(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count stars',
+      one: '1 star',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String reviewTitle(String provider) {
+    return 'Review $provider';
+  }
+
+  @override
+  String stepAcceptedBy(String provider) {
+    return 'Accepted by $provider';
+  }
+
+  @override
+  String stepCancelledBy(String provider) {
+    return 'Cancelled by $provider';
+  }
+
+  @override
+  String stepDeclinedBy(String provider) {
+    return 'Declined by $provider';
+  }
+
+  @override
+  String stepRepliesWithinHours(int hours) {
+    return 'Replies within $hours h';
+  }
+
+  @override
+  String stepUsuallyReplies(String time) {
+    return 'Usually replies within $time';
+  }
+
+  @override
+  String stepWaitingFor(String provider) {
+    return 'Waiting for $provider';
+  }
+
+  @override
+  String stepYouConfirmedWaiting(String provider) {
+    return 'You confirmed · waiting for $provider';
+  }
+
+  @override
+  String get bookingNextDay => 'next day';
+
+  @override
+  String get bookingNextDayMark => '+1 day';
+
+  @override
+  String get bookingDurationHalfHour => '30 min';
+
+  @override
+  String bookingDurationHours(int count) {
+    return '$count h';
+  }
+
+  @override
+  String bookingDurationHoursHalf(int count) {
+    return '$count h 30 min';
+  }
+
+  @override
+  String bookingGuestsTooMany(int max) {
+    return 'Up to $max guests for this booking.';
+  }
+
+  @override
+  String get invoiceShare => 'Share';
+
+  @override
+  String get invoiceSavedToDownloads => 'Invoice saved to Downloads.';
+
+  @override
+  String get invoiceSavedToFiles => 'Invoice saved to Files › Eventor.';
+
+  @override
+  String get invoiceOpen => 'Open';
+
+  @override
+  String get invoiceSaveFailed =>
+      'Couldn’t save the invoice on this phone. Try again.';
+
+  @override
+  String get invoiceSaveDenied => 'Allow storage access to save the invoice.';
+
+  @override
+  String get invoiceNoPdfApp => 'No app on this phone can open PDFs.';
+
+  @override
+  String get downloadsChannelName => 'Downloads';
+
+  @override
+  String get invoiceDownloadNoticeText => 'Download complete · Tap to open';
 }

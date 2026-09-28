@@ -267,6 +267,7 @@ void main() {
           canAttach: canAttach,
           canSend: canSend,
           attachment: attachment,
+          maxLength: 4000,
           onAttach: () {},
           onRemoveAttachment: onRemove ?? () {},
           onSend: onSend ?? () {},

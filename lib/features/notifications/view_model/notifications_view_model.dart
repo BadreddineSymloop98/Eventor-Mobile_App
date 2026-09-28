@@ -147,6 +147,37 @@ class NotificationsViewModel extends BaseViewModel {
     }
   }
 
+  /// Takes [n] off the list at once and returns where it stood, or -1.
+  /// The server hears about it only once the Undo toast is gone — see
+  /// [commitRemove].
+  int removeLocally(AppNotification n) {
+    final int index = _items.indexWhere((AppNotification i) => i.id == n.id);
+    if (index < 0) return -1;
+    _items.removeAt(index);
+    notifyListeners();
+    return index;
+  }
+
+  /// Undo: puts [n] back where it was.
+  void undoRemove(AppNotification n, int index) {
+    if (_items.any((AppNotification i) => i.id == n.id)) return;
+    _items.insert(index.clamp(0, _items.length), n);
+    notifyListeners();
+  }
+
+  /// Deletes [n] on the server. Refused, it comes back to the list.
+  Future<Failure?> commitRemove(AppNotification n, int index) async {
+    try {
+      await _notifications.delete(n.id);
+      // An unread one took a dot off the bell.
+      if (!n.read) unawaited(_badges.refresh());
+      return null;
+    } on Failure catch (failure) {
+      undoRemove(n, index);
+      return failure;
+    }
+  }
+
   void _replace(ApiPage<AppNotification> page) {
     _items
       ..clear()

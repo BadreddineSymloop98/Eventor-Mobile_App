@@ -63,11 +63,20 @@ class ConversationRow {
     required this.unreadCount,
     required this.booking,
     required this.canWrite,
+    this.lastMessageMine = false,
+    this.lastMessageKind,
   });
 
   factory ConversationRow.fromJson(Map<String, Object?> json) {
     final Map<String, Object?>? other = readObject(json, 'other');
     final Map<String, Object?>? booking = readObject(json, 'booking');
+    // An object since 2026-09-27 ({body, kind, mine}); plain text before.
+    // Both are read, so an older server or a cached answer still parses.
+    final Object? last = json['lastMessage'];
+    final Map<String, Object?>? lastObject =
+        last is Map<String, Object?> ? last : null;
+    final String? lastBody =
+        lastObject != null ? readString(lastObject, 'body') : last as String?;
     return ConversationRow(
       id: json['id']! as String,
       kind: ConversationKind.fromApi(json['kind'] as String?),
@@ -75,7 +84,11 @@ class ConversationRow {
       // The other side can be null — a deleted account leaves the thread
       // behind with nobody to show.
       other: other == null ? null : ChatPerson.fromJson(other),
-      lastMessage: readStringOrNull(json, 'lastMessage'),
+      lastMessage: lastBody,
+      lastMessageMine: lastObject != null && readBool(lastObject, 'mine'),
+      lastMessageKind: lastObject == null
+          ? null
+          : MessageKind.fromApi(lastObject['kind'] as String?),
       lastMessageAt: readDateOrNull(json, 'lastMessageAt'),
       unreadCount: readInt(json, 'unreadCount'),
       booking: booking == null ? null : ChatBooking.fromJson(booking),
@@ -90,6 +103,13 @@ class ConversationRow {
   final bool isClosed;
   final ChatPerson? other;
   final String? lastMessage;
+
+  /// The newest message is the signed-in user's — the preview reads
+  /// "You: …".
+  final bool lastMessageMine;
+
+  /// `null` from a server that sent the preview as plain text.
+  final MessageKind? lastMessageKind;
   final DateTime? lastMessageAt;
   final int unreadCount;
   final ChatBooking? booking;
@@ -107,6 +127,7 @@ class ConversationRow {
     final String? message = lastMessage;
     if (message == ChatMessage.removedBody) return PreviewKind.removed;
     if (message != null && message.isNotEmpty) return PreviewKind.text;
+    if (lastMessageKind == MessageKind.attachment) return PreviewKind.photo;
     if (lastMessageAt != null) return PreviewKind.photo;
     return PreviewKind.none;
   }
@@ -124,10 +145,12 @@ class ConversationDetail extends ConversationRow {
     required super.unreadCount,
     required super.booking,
     required super.canWrite,
+    super.lastMessageMine,
+    super.lastMessageKind,
     required this.participants,
     required this.contactUnmasked,
     required this.disputeId,
-    required this.closedReason,
+    required this.closedByModeration,
     required this.createdAt,
   });
 
@@ -143,10 +166,12 @@ class ConversationDetail extends ConversationRow {
       unreadCount: row.unreadCount,
       booking: row.booking,
       canWrite: row.canWrite,
+      lastMessageMine: row.lastMessageMine,
+      lastMessageKind: row.lastMessageKind,
       participants: readList(json, 'participants', ChatPerson.fromJson),
       contactUnmasked: readBool(json, 'contactUnmasked'),
       disputeId: readStringOrNull(json, 'disputeId'),
-      closedReason: readStringOrNull(json, 'closedReason'),
+      closedByModeration: readBool(json, 'closedByModeration'),
       createdAt: readDate(json, 'createdAt'),
     );
   }
@@ -157,8 +182,9 @@ class ConversationDetail extends ConversationRow {
   final bool contactUnmasked;
   final String? disputeId;
 
-  /// Why a closed thread was closed — parsed for completeness, never shown.
-  final String? closedReason;
+  /// Eventor closed the thread. The reason stays internal; the app words
+  /// its own line.
+  final bool closedByModeration;
   final DateTime createdAt;
 
   ChatPerson? participant(String? userId) {

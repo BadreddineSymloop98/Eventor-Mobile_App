@@ -67,6 +67,7 @@ class LoginViewModel extends BaseViewModel {
 
   LoginProblem? _problem;
   String? _serverMessage;
+  DateTime? _blockedUntil;
   String? _unverifiedEmail;
   DateTime? _lockedUntil;
   Timer? _lockTimer;
@@ -81,6 +82,9 @@ class LoginViewModel extends BaseViewModel {
 
   /// The server's own sentence, for [LoginProblem.blocked].
   String? get serverMessage => _serverMessage;
+
+  /// When a [LoginProblem.blocked] block ends; `null` when it has no end.
+  DateTime? get blockedUntil => _blockedUntil;
 
   /// The address the unverified account belongs to — the server echoes it.
   String? get unverifiedEmail => _unverifiedEmail;
@@ -167,6 +171,9 @@ class LoginViewModel extends BaseViewModel {
         _problem = LoginProblem.blocked;
         _serverMessage =
             error.details?['message'] as String? ?? error.message;
+        _blockedUntil = DateTime.tryParse(
+          error.details?['blockedUntil'] as String? ?? '',
+        )?.toLocal();
       case ApiErrorCode.roleNotAllowedInApp:
         _problem = LoginProblem.notAllowed;
         _serverMessage = error.message;

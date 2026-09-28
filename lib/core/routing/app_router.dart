@@ -4,6 +4,22 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../features/auth/data/auth_repository.dart';
+import '../../features/booking_detail/view/booking_detail_view.dart';
+import '../../features/booking_detail/view_model/booking_detail_view_model.dart';
+import '../../features/booking_request/view/booking_request_view.dart';
+import '../../features/booking_request/view/pack_booking_view.dart';
+import '../../features/booking_request/view/pack_review_view.dart';
+import '../../features/booking_request/view/request_sent_view.dart';
+import '../../features/booking_request/view_model/booking_request_view_model.dart';
+import '../../features/booking_request/view_model/request_sent_view_model.dart';
+import '../../features/bookings/view/bookings_view.dart';
+import '../../features/bookings/view_model/bookings_view_model.dart';
+import '../../features/check_in/view/check_in_view.dart';
+import '../../features/check_in/view_model/check_in_view_model.dart';
+import '../../features/invoice/view/invoice_view.dart';
+import '../../features/invoice/view_model/invoice_view_model.dart';
+import '../../features/reschedule/view/reschedule_view.dart';
+import '../../features/reschedule/view_model/reschedule_view_model.dart';
 import '../../features/auth/data/documents_repository.dart';
 import '../../features/budget/view/budget_form_view.dart';
 import '../../features/budget/view/budget_view.dart';
@@ -281,6 +297,10 @@ abstract final class AppRouter {
             (BuildContext context) => DocumentsViewModel(
               documents: context.read<DocumentsRepository>(),
               session: context.read<SessionController>(),
+              acceptedExtensions: context
+                  .read<AppConfigRepository>()
+                  .current
+                  .documentExtensions,
             ),
             const DocumentsView(),
           ),
@@ -403,9 +423,11 @@ abstract final class AppRouter {
               routes: <RouteBase>[
                 GoRoute(
                   path: AppRoutes.bookings,
-                  builder: (BuildContext context, _) => PlaceholderTabView(
-                    title: context.l10n.navBookings,
-                    icon: AppIcons.calendar,
+                  builder: (_, _) => _withViewModel<BookingsViewModel>(
+                    (BuildContext context) => BookingsViewModel(
+                      bookings: context.read<BookingsRepository>(),
+                    ),
+                    const BookingsView(),
                   ),
                 ),
               ],
@@ -512,6 +534,10 @@ abstract final class AppRouter {
             (BuildContext context) => ResubmitDocumentsViewModel(
               documents: context.read<DocumentsRepository>(),
               session: context.read<SessionController>(),
+              acceptedExtensions: context
+                  .read<AppConfigRepository>()
+                  .current
+                  .documentExtensions,
             ),
             const ResubmitDocumentsView(),
           ),
@@ -563,6 +589,108 @@ abstract final class AppRouter {
                 ),
                 const ServiceDetailView(),
               ),
+        ),
+        // Section 9. B1 and B9 open on the day picked on 12 or 20 (`?date=`).
+        GoRoute(
+          path: '${AppRoutes.services}/:id/book',
+          builder: (_, GoRouterState state) =>
+              _withViewModel<BookingRequestViewModel>(
+                (BuildContext context) => _bookingRequest(
+                  context,
+                  state,
+                  serviceId: state.pathParameters['id'],
+                ),
+                const BookingRequestView(),
+              ),
+        ),
+        GoRoute(
+          path: '${AppRoutes.packs}/:id/book',
+          builder: (_, GoRouterState state) =>
+              _withViewModel<BookingRequestViewModel>(
+                (BuildContext context) => _bookingRequest(
+                  context,
+                  state,
+                  packId: state.pathParameters['id'],
+                ),
+                const PackBookingView(),
+              ),
+        ),
+        // B9a shares B9's view model; without it (a cold start) it is B9.
+        GoRoute(
+          path: '${AppRoutes.packs}/:id/book/review',
+          redirect: (_, GoRouterState state) => state.extra is BookingRequestViewModel
+              ? null
+              : AppRoutes.bookPackFor(state.pathParameters['id']!),
+          builder: (_, GoRouterState state) =>
+              ChangeNotifierProvider<BookingRequestViewModel>.value(
+                value: state.extra! as BookingRequestViewModel,
+                child: const PackReviewView(),
+              ),
+        ),
+        // `sent` first: it would otherwise match `:id`.
+        GoRoute(
+          path: AppRoutes.bookingSent,
+          redirect: (_, GoRouterState state) =>
+              state.extra is RequestSentArgs ? null : AppRoutes.bookings,
+          builder: (_, GoRouterState state) => _withViewModel<RequestSentViewModel>(
+            (BuildContext context) => RequestSentViewModel(
+              args: state.extra! as RequestSentArgs,
+              messaging: context.read<MessagingRepository>(),
+              replyDeadlineHours: context
+                  .read<AppConfigRepository>()
+                  .current
+                  .bookingReplyDeadlineHours,
+            ),
+            const RequestSentView(),
+          ),
+        ),
+        GoRoute(
+          path: '${AppRoutes.booking}/:id',
+          builder: (_, GoRouterState state) => _withViewModel<BookingDetailViewModel>(
+            (BuildContext context) => BookingDetailViewModel(
+              id: state.pathParameters['id']!,
+              bookings: context.read<BookingsRepository>(),
+              messaging: context.read<MessagingRepository>(),
+              replyDeadlineHours: context
+                  .read<AppConfigRepository>()
+                  .current
+                  .bookingReplyDeadlineHours,
+            ),
+            const BookingDetailView(),
+          ),
+        ),
+        GoRoute(
+          path: '${AppRoutes.booking}/:id/reschedule',
+          redirect: _needsBooking,
+          builder: (_, GoRouterState state) => _withViewModel<RescheduleViewModel>(
+            (BuildContext context) => RescheduleViewModel(
+              booking: state.extra! as BookingDetail,
+              bookings: context.read<BookingsRepository>(),
+              catalog: context.read<CatalogRepository>(),
+            ),
+            const RescheduleView(),
+          ),
+        ),
+        GoRoute(
+          path: '${AppRoutes.booking}/:id/check-in',
+          redirect: _needsBooking,
+          builder: (_, GoRouterState state) => _withViewModel<CheckInViewModel>(
+            (BuildContext context) => CheckInViewModel(
+              booking: state.extra! as BookingDetail,
+              bookings: context.read<BookingsRepository>(),
+            ),
+            const CheckInView(),
+          ),
+        ),
+        GoRoute(
+          path: '${AppRoutes.booking}/:id/invoice',
+          builder: (_, GoRouterState state) => _withViewModel<InvoiceViewModel>(
+            (BuildContext context) => InvoiceViewModel(
+              bookingId: state.pathParameters['id']!,
+              bookings: context.read<BookingsRepository>(),
+            ),
+            const InvoiceView(),
+          ),
         ),
         GoRoute(
           path: '${AppRoutes.providers}/:id',
@@ -666,6 +794,30 @@ abstract final class AppRouter {
       ],
     );
   }
+
+  /// B6 and B7 open with the booking they act on; without it (a cold start
+  /// on the path) they fall back to B4.
+  static String? _needsBooking(BuildContext _, GoRouterState state) =>
+      state.extra is BookingDetail
+          ? null
+          : AppRoutes.bookingFor(state.pathParameters['id']!);
+
+  /// B1 (a service) or B9 (a pack), on the day carried in `?date=`.
+  static BookingRequestViewModel _bookingRequest(
+    BuildContext context,
+    GoRouterState state, {
+    String? serviceId,
+    String? packId,
+  }) =>
+      BookingRequestViewModel(
+        serviceId: serviceId,
+        packId: packId,
+        initialDate: DateTime.tryParse(state.uri.queryParameters['date'] ?? ''),
+        catalog: context.read<CatalogRepository>(),
+        bookings: context.read<BookingsRepository>(),
+        reference: context.read<ReferenceRepository>(),
+        session: context.read<SessionController>(),
+      );
 
   static String? _needsLineArgs(BuildContext _, GoRouterState state) =>
       state.extra is ExpenseLineArgs ? null : AppRoutes.budget;

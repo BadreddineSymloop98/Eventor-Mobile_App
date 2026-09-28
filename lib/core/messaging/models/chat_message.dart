@@ -30,6 +30,7 @@ class ChatMessage {
     required this.mine,
     required this.body,
     required this.masked,
+    this.removed = false,
     required this.imageUrl,
     required this.imageLargeUrl,
     required this.createdAt,
@@ -43,6 +44,7 @@ class ChatMessage {
         mine: readBool(json, 'mine'),
         body: readString(json, 'body'),
         masked: readBool(json, 'masked'),
+        removed: readBool(json, 'removed'),
         imageUrl: readStringOrNull(json, 'imageUrl'),
         imageLargeUrl: readStringOrNull(json, 'imageLargeUrl'),
         createdAt: readDate(json, 'createdAt'),
@@ -59,11 +61,15 @@ class ChatMessage {
 
   /// Whether the server redacted a phone number or similar out of [body].
   final bool masked;
+
+  /// An admin removed it. The server's flag since 2026-09-27; [removedBody]
+  /// is still recognised for an older answer.
+  final bool removed;
   final String? imageUrl;
   final String? imageLargeUrl;
   final DateTime createdAt;
 
-  bool get isRemoved => body.trim() == removedBody;
+  bool get isRemoved => removed || body.trim() == removedBody;
 
   /// A removed attachment keeps its image fields at `null`, but checking
   /// [isRemoved] too means a future bug that leaves a stale URL behind can
@@ -81,6 +87,7 @@ class ChatMessage {
         mine: mine,
         body: body,
         masked: masked,
+        removed: removed,
         imageUrl: imageUrl,
         imageLargeUrl: imageLargeUrl,
         createdAt: createdAt,

@@ -78,6 +78,15 @@ dependencies:
   # Opens the support mail link (10g) and the terms/privacy pages.
   url_launcher: ^6.3.2
 
+  # B8 "Share": hands the invoice PDF to another app (WhatsApp, email…).
+  # "Download PDF" saves it instead, through the app's own `eventor/downloads`
+  # channel.
+  share_plus: ^13.3.0
+
+  # B8's invoice PDF, drawn in the app from the same data as the screen so
+  # the two match, in the app's language (Arabic right to left). Pure Dart.
+  pdf: ^3.13.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -113,6 +122,11 @@ flutter:
     - assets/icons/
     # Mock builds only: the mock catalog's photos (see assets/mock/photos/CREDITS.md).
     - assets/mock/photos/
+    # B8's invoice PDF. A PDF cannot pick a weight from a variable font — it
+    # would draw Figtree at its default, Light — so it embeds static Regular
+    # and SemiBold cuts of the same two typefaces (Google Fonts instances,
+    # same OFL licences as the files in assets/fonts/).
+    - assets/fonts/pdf/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

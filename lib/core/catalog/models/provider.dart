@@ -29,7 +29,7 @@ class ProviderSummary {
       category: category == null ? null : CategoryRef.fromJson(category),
       avatarUrl: readStringOrNull(json, 'avatarUrl'),
       verified: readBool(json, 'verified'),
-      avgRating: readString(json, 'avgRating'),
+      avgRating: readDecimal(json, 'avgRating'),
       ratingCount: readInt(json, 'ratingCount'),
       completedBookingsCount: readInt(json, 'completedBookingsCount'),
       yearsActive: readIntOrNull(json, 'yearsActive'),

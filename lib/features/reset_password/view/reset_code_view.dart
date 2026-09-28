@@ -20,9 +20,13 @@ class ResetCodeView extends StatelessWidget {
 
   Future<void> _continue(BuildContext context) async {
     final ResetCodeViewModel viewModel = context.read<ResetCodeViewModel>();
-    final ResetPasswordArgs? args = viewModel.proceed();
-    if (args == null) return;
     FocusScope.of(context).unfocus();
+    final ResetPasswordArgs? args = await viewModel.verify();
+    if (!context.mounted) return;
+    if (args == null) {
+      _reportUnhandled(context, viewModel);
+      return;
+    }
 
     // `10a` answers with the problem when the server refuses the code.
     final ResetCodeProblem? problem = await context.push<ResetCodeProblem>(
@@ -40,6 +44,11 @@ class ResetCodeView extends StatelessWidget {
       showAppToast(context, context.l10n.verifyCodeResent);
       return;
     }
+    _reportUnhandled(context, viewModel);
+  }
+
+  /// A refusal that is not about the code — offline, too many tries.
+  void _reportUnhandled(BuildContext context, ResetCodeViewModel viewModel) {
     final Failure? failure = viewModel.failure;
     if (failure != null) {
       showAppToast(
@@ -64,7 +73,7 @@ class ResetCodeView extends StatelessWidget {
         focusNode: viewModel.codeFocusNode,
         problem: viewModel.problem,
         canSubmit: viewModel.canSubmit,
-        isVerifying: false,
+        isVerifying: viewModel.isBusy && !viewModel.isResending,
         onVerify: () => _continue(context),
         canResend: viewModel.canResend,
         resendClock: viewModel.resendClock,

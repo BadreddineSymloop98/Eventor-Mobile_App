@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+
 import '../core/bookings/bookings_repository.dart';
 import '../core/budget/budget_repository.dart' show apiDate;
 import '../core/catalog/catalog_repository.dart';
@@ -10,25 +14,11 @@ import '../core/network/api_page.dart';
 import 'mock_backend.dart';
 import 'mock_budget.dart';
 import 'mock_catalog_data.dart';
+import 'mock_communes_data.dart';
 import 'mock_messaging.dart';
 import 'mock_reference_data.dart';
 
-/// Days from today to the seeded client's event — their bookings and their
-/// budget share the date.
-const int mockEventInDays = 21;
-
-/// The seeded client's bookings: `(id, reference, service index, days from
-/// today, status)`. Three of them sit on the seeded budget's lines; the
-/// cancelled one is there so 18h has something to leave out.
-const List<(String, String, int, int, String)> _bookingSeeds =
-    <(String, String, int, int, String)>[
-  ('mock-booking-1', 'EVT-002041', 0, mockEventInDays, 'accepted'),
-  ('mock-booking-2', 'EVT-002050', 4, 45, 'pending'),
-  ('mock-booking-3', 'EVT-002031', 2, mockEventInDays, 'accepted'),
-  ('mock-booking-4', 'EVT-002044', 16, mockEventInDays, 'accepted'),
-  ('mock-booking-5', 'EVT-001987', 6, -12, 'completed'),
-  ('mock-booking-6', 'EVT-002052', 11, mockEventInDays, 'cancelled'),
-];
+part 'mock_bookings.dart';
 
 /// Where a mock photo lives. `AppNetworkImage` loads `asset:` URLs from the
 /// bundle instead of the network.
@@ -412,7 +402,8 @@ class _MockCatalog {
           ?(_categoryRef(_services[id]?['categoryId'])?['name'] as String?),
       ],
       'coverUrl': photos.isEmpty ? null : _photoUrl(photos.first),
-      'avgRating': k['avgRating'],
+      // A number since 2026-09-27, like every pack rating on the live API.
+      'avgRating': double.parse(k['avgRating']! as String),
       'ratingCount': k['ratingCount'],
       'bookingsCount': k['bookingsCount'],
       'provider': providerSummary(k['providerId']! as String),
@@ -513,6 +504,7 @@ class _MockCatalog {
   DayState _dayState(String serviceId, DateTime day) {
     final DateTime date = DateTime(day.year, day.month, day.day);
     if (date.isBefore(_firstBookable)) return DayState.blocked;
+    if (_MockBookings(this).heldByMe(serviceId, date)) return DayState.busy;
     final int h =
         (_seed(serviceId) + date.day * 7 + date.month * 13 + date.year) % 11;
     if (h == 0 || h == 3) return DayState.busy;
@@ -736,66 +728,10 @@ class _MockCatalog {
 
   // -------------------------------------------------------------- bookings
 
-  /// The signed-in client's bookings as `AppBookingCardDto`s. Only the
-  /// seeded client has any.
-  List<Map<String, Object?>> bookings() {
-    final MockAccount account = _backend.requireSession();
-    if (account.email != 'client@eventor.test') return <Map<String, Object?>>[];
-    final DateTime now = _backend.now;
-    return <Map<String, Object?>>[
-      for (final (String id, String reference, int index, int inDays, String status)
-          in _bookingSeeds)
-        _booking(
-          id: id,
-          reference: reference,
-          service: mockCatalogServices[index],
-          date: DateTime(now.year, now.month, now.day + inDays),
-          status: status,
-          createdAt: now.subtract(const Duration(days: 30)),
-        ),
-    ];
-  }
+  /// The signed-in client's bookings, rendered from the store in
+  /// `mock_bookings.dart`. Empty for anyone but a client.
+  List<Map<String, Object?>> bookings() => _MockBookings(this).rendered();
 
-  Map<String, Object?> _booking({
-    required String id,
-    required String reference,
-    required Map<String, Object?> service,
-    required DateTime date,
-    required String status,
-    required DateTime createdAt,
-  }) {
-    final Map<String, Object?> provider = _providers[service['providerId']]!;
-    return <String, Object?>{
-      'id': id,
-      'reference': reference,
-      'status': status,
-      'disputeStatus': 'none',
-      'eventType': 'wedding',
-      'eventDate': apiDate(date),
-      'startTime': '13:00',
-      'endTime': null,
-      'title': _isArabic ? service['titleAr'] : service['titleEn'],
-      'titleEn': service['titleEn'],
-      'titleAr': service['titleAr'],
-      'serviceId': service['id'],
-      'packId': null,
-      'coverUrl': null,
-      'wilaya': null,
-      'guests': null,
-      'total': service['basePrice'],
-      'counterparty': <String, Object?>{
-        'id': provider['id'],
-        'fullName': provider['businessName'],
-        'avatarUrl': null,
-        'businessName': provider['businessName'],
-        'phone': null,
-        'email': null,
-      },
-      'conversationId': null,
-      'allowedActions': <String>[],
-      'createdAt': createdAt.toUtc().toIso8601String(),
-    };
-  }
 
   List<Map<String, Object?>> categories() => <Map<String, Object?>>[
         for (final Map<String, Object?> c in mockCatalogCategories)
@@ -972,8 +908,8 @@ class MockFavouritesRepository implements FavouritesRepository {
 
   @override
   Future<void> remove(FavouriteTarget target) async {
-    final Favourite row = await add(target);
-    await removeById(row.id);
+    await _backend.delay();
+    await _backend.removeFavouriteByTarget(target.kind.apiValue, target.id);
   }
 
   @override
@@ -1021,6 +957,7 @@ class MockCatalogLookups {
             'status': 'published',
             'visibleInApp': true,
             'basePrice': s['basePrice'],
+            'priceType': s['priceType'],
             'avgRating': s['avgRating'],
             'ratingCount': s['ratingCount'],
             'bookingsCount': s['bookingsCount'],
@@ -1043,47 +980,3 @@ class MockCatalogLookups {
   }
 }
 
-/// [BookingsRepository] on the seeded bookings, split into the API's tabs.
-class MockBookingsRepository implements BookingsRepository {
-  MockBookingsRepository(
-    this._backend, {
-    required String Function() languageCode,
-  }) : _catalog = _MockCatalog(_backend, languageCode);
-
-  final MockBackend _backend;
-  final _MockCatalog _catalog;
-
-  @override
-  Future<ApiPage<BookingCard>> list({
-    required BookingTab tab,
-    int page = 1,
-    int limit = 20,
-  }) async {
-    await _backend.delay();
-    final DateTime now = _backend.now;
-    final DateTime today = DateTime(now.year, now.month, now.day);
-    bool inTab(BookingCard b) {
-      final bool ahead = !b.eventDate.isBefore(today);
-      return switch (tab) {
-        BookingTab.upcoming => b.status == 'accepted' && ahead,
-        BookingTab.pending => b.status == 'pending',
-        BookingTab.past =>
-          b.status == 'completed' || (b.status == 'accepted' && !ahead),
-        BookingTab.cancelled =>
-          b.status == 'cancelled' || b.status == 'declined',
-      };
-    }
-
-    final List<BookingCard> found = _catalog
-        .bookings()
-        .map(BookingCard.fromJson)
-        .where(inTab)
-        .toList()
-      ..sort(
-        (BookingCard a, BookingCard b) => tab == BookingTab.past
-            ? b.eventDate.compareTo(a.eventDate)
-            : a.eventDate.compareTo(b.eventDate),
-      );
-    return _page(found, page, limit);
-  }
-}

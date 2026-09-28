@@ -176,7 +176,8 @@ void main() {
       for (int i = 6; i < MockBudgetRepository.maxItems; i++) {
         await budgets.addItem(cake);
       }
-      expect(budgets.itemLimit, isNull);
+      // Known before any refusal: the config states it.
+      expect(budgets.itemLimit, MockBudgetRepository.maxItems);
 
       await expectCode(budgets.addItem(cake), ApiErrorCode.budgetItemLimit);
 
@@ -287,8 +288,10 @@ void main() {
     test('split into the API tabs', () async {
       expect(await ids(BookingTab.upcoming), containsAll(<String>['mock-booking-1', 'mock-booking-3', 'mock-booking-4']));
       expect(await ids(BookingTab.pending), <String>['mock-booking-2']);
-      expect(await ids(BookingTab.past), <String>['mock-booking-5']);
-      expect(await ids(BookingTab.cancelled), <String>['mock-booking-6']);
+      // Past: completed, or accepted with the event behind us (B7).
+      expect(await ids(BookingTab.past), containsAll(<String>['mock-booking-5', 'mock-booking-8']));
+      // Cancelled holds the declined ones too.
+      expect(await ids(BookingTab.cancelled), containsAll(<String>['mock-booking-6', 'mock-booking-7']));
     });
 
     test("name the provider the client knows", () async {

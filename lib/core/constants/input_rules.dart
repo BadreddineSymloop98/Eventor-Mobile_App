@@ -65,6 +65,9 @@ abstract final class InputRules {
     'jpg',
     'jpeg',
     'png',
+    'webp',
+    'heic',
+    'heif',
   ];
 
   /// Stated in whole megabytes because that is how the message says it. The

@@ -44,6 +44,13 @@ class Availability {
           for (final AvailabilityDay day in days) _key(day.date): day.state,
         };
 
+  Availability._(
+    this.month,
+    this.minNoticeDays,
+    this.firstBookableDate,
+    this._byDay,
+  );
+
   factory Availability.fromJson(Map<String, Object?> json) => Availability(
         month: readString(json, 'month'),
         minNoticeDays: readInt(json, 'minNoticeDays'),
@@ -61,6 +68,15 @@ class Availability {
 
   /// The state of [day]. A day the server did not list is not bookable.
   DayState stateOf(DateTime day) => _byDay[_key(day)] ?? DayState.blocked;
+
+  /// This month with [day] fully booked — the day someone else just took
+  /// (B1b), shown struck through without a reload.
+  Availability withBusy(DateTime day) => Availability._(
+        month,
+        minNoticeDays,
+        firstBookableDate,
+        <int, DayState>{..._byDay, _key(day): DayState.busy},
+      );
 
   static int _key(DateTime day) => day.year * 10000 + day.month * 100 + day.day;
 }

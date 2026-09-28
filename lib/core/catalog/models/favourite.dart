@@ -61,7 +61,7 @@ class Favourite {
       category: category == null ? null : CategoryRef.fromJson(category),
       fromPrice: readString(json, 'fromPrice'),
       coverUrl: readStringOrNull(json, 'coverUrl'),
-      avgRating: readString(json, 'avgRating'),
+      avgRating: readDecimal(json, 'avgRating'),
       ratingCount: readInt(json, 'ratingCount'),
       available: json['available'] as bool? ?? true,
       createdAt: readDate(json, 'createdAt'),

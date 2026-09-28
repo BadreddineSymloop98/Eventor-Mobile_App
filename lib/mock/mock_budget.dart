@@ -132,9 +132,11 @@ class MockBudgetRepository with BudgetItemLimitMemory implements BudgetRepositor
   final MockBackend _backend;
   final MockCatalogLookups _lookups;
 
-  /// The server does not publish its limit; this stands in for it (user
-  /// decision, 2026-09-27).
-  static const int maxItems = 20;
+  /// The live limit (`/app/config` `limits.budgetItemsMax`, 2026-09-27).
+  static const int maxItems = 60;
+
+  @override
+  int? get configuredItemLimit => maxItems;
   static const int _maxText = 160;
 
   @override
@@ -177,7 +179,7 @@ class MockBudgetRepository with BudgetItemLimitMemory implements BudgetRepositor
             details: <String, Object?>{'max': maxItems},
           );
         }
-        _checkLine(input.toJson());
+        _checkLine(input.toJson(), items: items);
         final int now = _backend.now.millisecondsSinceEpoch;
         items.add(<String, Object?>{
           'id': 'mock-line-$now',
@@ -198,7 +200,7 @@ class MockBudgetRepository with BudgetItemLimitMemory implements BudgetRepositor
         items.indexWhere((Map<String, Object?> row) => row['id'] == item.id);
     if (index < 0) throw _itemNotFound();
     final Map<String, Object?> changes = input.changesFrom(item);
-    _checkLine(changes);
+    _checkLine(changes, items: items, lineId: item.id);
     items[index] = <String, Object?>{
       ...items[index],
       ...changes,
@@ -254,7 +256,25 @@ class MockBudgetRepository with BudgetItemLimitMemory implements BudgetRepositor
 
   /// The checks a line's fields get on the server, for whichever of them
   /// [fields] carries.
-  void _checkLine(Map<String, Object?> fields) {
+  void _checkLine(
+    Map<String, Object?> fields, {
+    required List<Map<String, Object?>> items,
+    String? lineId,
+  }) {
+    // One line per booking, as live (2026-09-27): the same amount is never
+    // counted twice.
+    if (fields['bookingId'] case final String bookingId) {
+      for (final Map<String, Object?> line in items) {
+        if (line['bookingId'] == bookingId && line['id'] != lineId) {
+          throw ApiFailure(
+            statusCode: 409,
+            code: ApiErrorCode.budgetBookingAlreadyLinked,
+            message: 'This booking is already linked to another budget line.',
+            details: <String, Object?>{'itemId': line['id']},
+          );
+        }
+      }
+    }
     if (fields.containsKey('label')) _checkText(fields['label']! as String, 'label');
     for (final String key in const <String>['plannedAmount', 'spentAmount']) {
       if (fields[key] case final String amount) _checkAmount(amount, key);

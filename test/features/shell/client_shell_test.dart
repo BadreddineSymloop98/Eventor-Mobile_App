@@ -1,7 +1,7 @@
 import 'package:eventor/core/widgets/atoms/app_icon.dart';
 import 'package:eventor/core/widgets/molecules/nav_item.dart';
+import 'package:eventor/features/bookings/view/bookings_view.dart';
 import 'package:eventor/features/shell/view/client_shell.dart';
-import 'package:eventor/features/shell/view/placeholder_tab_view.dart';
 import 'package:eventor/features/shell/view/profile_tab_view.dart';
 import 'package:eventor/features/welcome/view/welcome_view.dart';
 import 'package:eventor/l10n/app_localizations.dart';
@@ -58,7 +58,7 @@ void main() {
 
       await openTab(tester, strings.navBookings);
 
-      expect(find.byType(PlaceholderTabView), findsOneWidget);
+      expect(find.byType(BookingsView), findsOneWidget);
       expect(tester.widget<NavItem>(tab(strings.navBookings)).isActive, isTrue);
       expect(tester.widget<NavItem>(tab(strings.navHome)).isActive, isFalse);
     });

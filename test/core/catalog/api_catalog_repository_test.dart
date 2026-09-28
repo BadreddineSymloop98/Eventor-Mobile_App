@@ -84,25 +84,22 @@ void main() {
       expect(page.items, hasLength(3));
     });
 
-    test('asks for several categories one at a time, then merges them', () async {
-      // The live API rejects a second categoryId with 400 IS_UUID.
+    test('sends several categories in one request', () async {
+      // Repeated `categoryId` is accepted since 2026-09-27.
       final ApiPage<ServiceCard> page = await catalog.services(
         const ServiceQuery(categoryIds: <String>{'cat-2', 'cat-1'}),
       );
 
-      final List<List<String>?> sent = adapter.requests
+      final List<RequestOptions> sent = adapter.requests
           .where((RequestOptions r) => r.path == '/app/services')
-          .map((RequestOptions r) => r.uri.queryParametersAll['categoryId'])
           .toList();
-      expect(sent, unorderedEquals(<List<String>>[
-        <String>['cat-1'],
-        <String>['cat-2'],
-      ]));
-      // The fixture answers both with the same page: 3 rows, a total of 41.
-      expect(page.total, 82);
-      expect(page.items, hasLength(6));
-      // Both lists are spent, so there is nothing more to load.
-      expect(page.hasMore, isFalse);
+      expect(sent, hasLength(1));
+      expect(
+        sent.single.uri.queryParametersAll['categoryId'],
+        unorderedEquals(<String>['cat-1', 'cat-2']),
+      );
+      expect(page.total, 41);
+      expect(page.items, hasLength(3));
     });
 
     test('sends a single category as it is', () async {

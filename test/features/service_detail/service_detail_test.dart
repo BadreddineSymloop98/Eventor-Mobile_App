@@ -233,15 +233,13 @@ void main() {
       expect(button(strings.sendMessage), findsOneWidget);
     });
 
-    testWidgets('requesting a booking is coming soon', (
-      WidgetTester tester,
-    ) async {
-      await openService(tester, FakeCatalogRepository());
+    testWidgets('Request booking opens B1', (WidgetTester tester) async {
+      final FakeCatalogRepository catalog = FakeCatalogRepository();
+      final TestApp app = await openService(tester, catalog);
 
-      await tester.tap(button(l10n(tester).requestBooking));
-      await tester.pump();
+      await tapAndSettle(tester, button(l10n(tester).requestBooking));
 
-      expect(find.text(l10n(tester).comingSoon), findsOneWidget);
+      expect(location(app), AppRoutes.bookServiceFor(catalog.serviceDetail.id));
     });
 
     testWidgets('opens the provider', (WidgetTester tester) async {

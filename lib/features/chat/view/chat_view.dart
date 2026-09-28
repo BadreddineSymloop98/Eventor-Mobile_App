@@ -266,7 +266,9 @@ class _ChatViewState extends State<ChatView> {
           if (booking != null)
             BookingContextCard(
               booking: booking,
-              onTap: () => showComingSoon(context, l10n.comingSoon),
+              onTap: context.read<SessionController>().user?.isProvider ?? true
+                  ? () => showComingSoon(context, l10n.comingSoon)
+                  : () => context.push(AppRoutes.bookingFor(booking.id)),
             ),
           Expanded(child: _body(viewModel)),
           if (viewModel.loadState == ChatLoadState.ready) _composer(viewModel),
@@ -427,7 +429,9 @@ class _ChatViewState extends State<ChatView> {
     final AppLocalizations l10n = context.l10n;
     switch (viewModel.composerMode) {
       case ComposerMode.closed:
-        return ClosedComposer(notice: l10n.chatClosed);
+        return ClosedComposer(
+          notice: viewModel.isClosedByEventor ? l10n.chatClosed : l10n.chatClosedPlain,
+        );
       case ComposerMode.otherInactive:
         return ClosedComposer(notice: l10n.chatOtherBlocked);
       case ComposerMode.open:
@@ -447,6 +451,7 @@ class _ChatViewState extends State<ChatView> {
                     value.text.trim().isNotEmpty ||
                     viewModel.attachment != null,
                 attachment: viewModel.attachment,
+                maxLength: viewModel.maxTextLength,
                 onAttach: () => _attach(viewModel),
                 onRemoveAttachment: viewModel.clearAttachment,
                 onSend: () => _send(viewModel),

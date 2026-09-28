@@ -358,8 +358,12 @@ class _ServiceDetailContent extends StatelessWidget {
                 ),
                 MainButton(
                   label: l10n.requestBooking,
-                  // B1 is not built; the chosen date is kept for when it is.
-                  onPressed: () => _comingSoon(context),
+                  onPressed: () => context.push(
+                    AppRoutes.bookServiceFor(
+                      service.id,
+                      date: viewModel.selectedDate,
+                    ),
+                  ),
                 ),
               ],
             )
